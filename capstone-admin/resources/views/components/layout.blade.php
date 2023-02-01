@@ -4,12 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="Admin side of Municipality of Pililla Rizal" >
-
-        {{-- tailwind CDN --}}
-        <script src="https://cdn.tailwindcss.com"></script>
-        <script src="{{ asset('js/app.js') }}"></script>
-
         <title>Admin</title>
+
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body>
         {{-- view output --}}
