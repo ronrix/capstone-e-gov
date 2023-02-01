@@ -1,8 +1,13 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Http\Request;
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\Government\NewsController;
+use App\Http\Controllers\Government\LoginController;
+use App\Http\Controllers\Government\AdvisoryController;
+use App\Http\Controllers\Government\HotlinesController;
+use App\Http\Controllers\Government\ExecutivesController;
+use App\Http\Controllers\Government\JobPostingController;
+use App\Http\Controllers\Government\PopulationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +23,10 @@ use App\Http\Controllers\LoginController;
 Route::get('/', [LoginController::class, "index"]);
 
 Route::post('/login', [LoginController::class, "login"]);
+
+Route::get("/news", [NewsController::class, "index"]);
+Route::get("/advisory", [AdvisoryController::class, "index"]);
+Route::get("/executives", [ExecutivesController::class, "index"]);
+Route::get("/hotlines", [HotlinesController::class, "index"]);
+Route::get("/job-postings", [JobPostingController::class, "index"]);
+Route::get("/population", [PopulationController::class, "index"]);
