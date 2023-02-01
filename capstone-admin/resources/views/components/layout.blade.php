@@ -8,7 +8,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
+    <body {{ $attributes->merge(["class" => ""])}}>
         {{-- view output --}}
         {{$slot}}
     </body>
