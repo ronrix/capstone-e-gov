@@ -9,9 +9,13 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body>
-        @include('partials._dnl')
-        {{-- view output --}}
-        {{$slot}}
+    <body x-data :class="$store.darkMode.on === 'dark' ? 'dark' : ''">
+        <div class="dark:bg-primary-dark light:bg-white">
+            <div class="container mx-auto">
+                @include('partials._dnl')
+                {{-- view output --}}
+                {{$slot}}
+            </div>
+        </div>
     </body>
 </html>
