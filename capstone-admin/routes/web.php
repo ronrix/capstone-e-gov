@@ -20,16 +20,22 @@ use App\Http\Controllers\Government\PopulationController;
 |
 */
 
-Route::get('/', [LoginController::class, "index"]);
-
-// login
-Route::get('/dashboard', [LoginController::class, "dashboard"]);
-Route::post('/login', [LoginController::class, "login"]);
+Route::get("/", function () {
+    return redirect("login");
+});
+Route::get('/login', [LoginController::class, "index"]);
+Route::get('/logout', [LoginController::class, "logout"]);
 
 // government
-Route::get("/news", [NewsController::class, "index"]);
-Route::get("/advisory", [AdvisoryController::class, "index"]);
-Route::get("/executives", [ExecutivesController::class, "index"]);
-Route::get("/hotlines", [HotlinesController::class, "index"]);
-Route::get("/job-postings", [JobPostingController::class, "index"]);
-Route::get("/population", [PopulationController::class, "index"]);
+Route::middleware(["auth"])->group(function () {
+    Route::get('/dashboard', [LoginController::class, "dashboard"]);
+    Route::get("/news", [NewsController::class, "index"]);
+    Route::get("/advisory", [AdvisoryController::class, "index"]);
+    Route::get("/executives", [ExecutivesController::class, "index"]);
+    Route::get("/hotlines", [HotlinesController::class, "index"]);
+    Route::get("/job-postings", [JobPostingController::class, "index"]);
+    Route::get("/population", [PopulationController::class, "index"]);
+});
+
+// POST method
+Route::post('/login', [LoginController::class, "login"]);
