@@ -5,7 +5,9 @@ import $ from "jquery";
 import Alpine from 'alpinejs';
 window.Alpine = Alpine;
 
-localStorage.setItem("theme", JSON.stringify("dark"));
+if(!localStorage.getItem("theme")) {
+    localStorage.setItem("theme", JSON.stringify("dark"));
+}
 Alpine.store('darkMode', {
     on: JSON.parse(localStorage.getItem("theme")),
     toggle() {
