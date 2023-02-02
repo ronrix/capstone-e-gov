@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Government\NewsController;
-use App\Http\Controllers\Government\LoginController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Government\AdvisoryController;
 use App\Http\Controllers\Government\HotlinesController;
 use App\Http\Controllers\Government\ExecutivesController;
@@ -22,8 +22,11 @@ use App\Http\Controllers\Government\PopulationController;
 
 Route::get('/', [LoginController::class, "index"]);
 
+// login
+Route::get('/dashboard', [LoginController::class, "dashboard"]);
 Route::post('/login', [LoginController::class, "login"]);
 
+// government
 Route::get("/news", [NewsController::class, "index"]);
 Route::get("/advisory", [AdvisoryController::class, "index"]);
 Route::get("/executives", [ExecutivesController::class, "index"]);
