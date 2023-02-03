@@ -15,22 +15,26 @@ class LoginController extends Controller
             return redirect("/dashboard");
         }
 
-        return view("pages.login");
+        return inertia("Login", [
+            "title" => "Login"
+        ]);
     }
 
     // login
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
 
+        // validating the inputs
+        $request->validate(["email" => ["required"], "password" => ["required"]]);
+
+        $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials, $remember = true)) {
             // Authentication passed...
             return redirect()->intended('dashboard');
         }
 
-        return redirect()->back()->withInput($request->only("email"))->withErrors([
-            'msg' => 'The provided credentials are incorrect.'
-        ]);
+        // return error message in objects
+        return response()->json(["message" => "Username or password is incorrect", "status" => 403], 403);
     }
 
     // logout
@@ -44,6 +48,6 @@ class LoginController extends Controller
     // show the dashboard page
     public function dashboard()
     {
-        return view("pages.dashboard");
+        return inertia("Dashboard/Dashboard");
     }
 }
