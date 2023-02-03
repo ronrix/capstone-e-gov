@@ -1,14 +1,14 @@
 
 <template>
     <div class="fixed right-0 top-0 p-5 flex items-center text-white">
-        <i @click="toggleDarkMode" class="fa-solid " :class="{active: darkMode, 'fa-sun' :  darkMode, 'fa-moon text-primary-dark' : !darkMode}"></i>
+        <i @click="toggleDarkMode" class="fa-solid " :class="[darkMode ? 'fa-sun' : 'fa-moon text-primary-dark']"></i>
     </div>
 </template>
 
 <script setup>
     import { ref, onMounted } from 'vue';
 
-    const darkMode = ref(false);
+    const darkMode = ref(true);
 
     function toggleDarkMode() {
         darkMode.value = !darkMode.value;
