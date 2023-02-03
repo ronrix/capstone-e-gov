@@ -1,27 +1,21 @@
-import './bootstrap';
-import $ from "jquery";
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/inertia-vue3';
 
-// starting alpine
-import Alpine from 'alpinejs';
-window.Alpine = Alpine;
+import '../css/app.css';
+import Wrapper from "./Components/Wrapper.vue";
+import DarkMode from "./Components/DarkMode.vue";
 
-if(!localStorage.getItem("theme")) {
-    localStorage.setItem("theme", JSON.stringify("dark"));
-}
-Alpine.store('darkMode', {
-    on: JSON.parse(localStorage.getItem("theme")),
-    toggle() {
-        const theme = JSON.parse(localStorage.getItem("theme"));
-        if(theme === "dark") {
-            localStorage.setItem("theme", JSON.stringify("light"));
-            this.on = JSON.parse(localStorage.getItem("theme"));
-        }
-        else {
-            localStorage.setItem("theme", JSON.stringify("dark"));
-            this.on = JSON.parse(localStorage.getItem("theme"));
-        }
-    }
-})
-
-
-Alpine.start();
+createInertiaApp({
+    resolve: name => {
+        const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
+        return pages[`./Pages/${name}.vue`]
+    },
+    setup({ el, App, props, plugin }) {
+        const app = createApp({ render: () => h(App, props) });
+        app.component("Wrapper", Wrapper);
+        app.component("DarkMode", DarkMode);
+        app.use(plugin);
+        app.mount(el);
+    },
+    title: title => `${title} | Pililla`,
+});
