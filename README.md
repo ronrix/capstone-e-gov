@@ -11,6 +11,15 @@ The goal of this Project are to:
 - enable the public to get or access all information from the municipality
 - make the information to update realtime by providing an admin panel
 
+## Dependencies
+
+Before you work on this project make sure you have these following installed on your system.
+- [VSCode](https://code.visualstudio.com/Download)
+- [MySQL Workbench](https://dev.mysql.com/downloads/workbench/). 
+- [PHP](https://www.php.net/downloads.php)
+- [Composer](https://getcomposer.org/download/)
+- [Node](https://nodejs.org/en/download/)
+
 ## Installation
 
 To install and run this project, follow these steps:
@@ -18,20 +27,19 @@ To install and run this project, follow these steps:
 1. Make sure to install the composer into your system. Download composer here [composer](https://www.tutsmake.com/install-composer-windows/)
 2. clone the repository `git clone https://github.com/ronrix/capstone-e-gov.git`
 3. Change your branch `git branch -M develop`
-4. Install dependencies of vendors and node_modules by running these commands `composer install` and `npm install`. Make sure you already installed composer and nodejs
-5. Run the project. `npm run dev` and `php artisan serve`. Make sure to run them both. To access the project go to the link of what php artisan server is and not the server vite provided.
-6. To create the dummy data. Run this command. `php artisan migrate:refresh --seed`. Make sure you have mysql installed on your system.
-7. Make your changes
-8. Commit your changes: `git commit -m "Adding new feature"`
-9. Push your changes: `git push origin develop`
-10. Submit a pull request
+4. Install dependencies by running these commands `composer install` and `npm install`. Make sure you already installed composer and nodejs
+5. Run the project. `npm run dev` and `php artisan serve`. Make sure to run them both. 
+6. To access the project go to `localhost:8000`
+7. Run this to create dummy data `php artisan migrate:refresh --seed`. Make sure you have MySQL Workbench installed on your system
+8. Make your changes
+9. Add your changes. `git add <filename>` and commit it `git commit -m "Adding new feature"`
+10. Push your changes: `git push origin develop`. Push only to develop branch.
+11. Submit a pull request.
 
-## Folder structure
+## Where to change Frontend Designs
 
-To make changes with the frontend designs, go to these folders:
-- `resources > views`
+Go to `resources > js`. There you can see Pages and Components folder where you can create frontends.
+- This project uses VueJS for it's frontend. If you want to learn about it. Go to [documentation](https://vuejs.org/guide/introduction.html)
 
-Inside views folder, there are folders where to save the frontend files
-- `components`. Typically contains reusable views with the same designs or styles. A component can accept data and render it in a specific way. This can be access by doing this `<x-card></x-card>`.
-- `pages`. This is where you put all the pages of the webapp. Like dashboard, login page, settings page, and etc.
-- `partials`. Typically contains reusable views same as components, but a partials can't accept data. E.g footer, header, and, etc. This can be access by `@include('_partial_name')`. The conventional naming of this should be like this `'_filename.php'` shoub be prefixed with `_` underscore.
+For css styling
+- This project uses tailwind for css styles. Go to [tailwind](https://tailwindcss.com/docs/installation) if you want to learn more how to use it.
