@@ -35,3 +35,20 @@ Inside views folder, there are folders where to save the frontend files
 - `components`. Typically contains reusable views with the same designs or styles. A component can accept data and render it in a specific way. This can be access by doing this `<x-card></x-card>`.
 - `pages`. This is where you put all the pages of the webapp. Like dashboard, login page, settings page, and etc.
 - `partials`. Typically contains reusable views same as components, but a partials can't accept data. E.g footer, header, and, etc. This can be access by `@include('_partial_name')`. The conventional naming of this should be like this `'_filename.php'` shoub be prefixed with `_` underscore.
+
+
+## Docker Container
+
+To install and run this project with docker
+Make sure you have WSL2 enabled and installed ubuntu on your system
+
+1. Install docker desktop in your machine [docker](https://docs.docker.com/desktop/install/windows-install/)
+2. Clone the repository `git clone https://github.com/ronrix/capstone-e-gov.git`
+3. Run this command `composer install` if this gives error try this `composer install --ignore-platform-reqs`
+4. `php artisan sail:install`
+5. `./vendor/bin/sail up`
+6. `./vendor/bin/sail npm run dev`
+7. After that just go to `http://localhost/`
+
+Make sure you don't have any running services with port 80. If you have apache2 running kill it with `systemctl stop apache2`
+or if you have XAMPP or WAMP. stop it from running.
