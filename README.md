@@ -28,13 +28,14 @@ To install and run this project, follow these steps:
 2. clone the repository `git clone https://github.com/ronrix/capstone-e-gov.git`
 3. Change your branch `git branch -M develop`
 4. Install dependencies by running these commands `composer install` and `npm install`. Make sure you already installed composer and nodejs
-5. Run the project. `npm run dev` and `php artisan serve`. Make sure to run them both. 
-6. To access the project go to `localhost:8000`
-7. Run this to create dummy data `php artisan migrate:refresh --seed`. Make sure you have MySQL Workbench installed on your system
-8. Make your changes
-9. Add your changes. `git add <filename>` and commit it `git commit -m "Adding new feature"`
-10. Push your changes: `git push origin develop`. Push only to develop branch.
-11. Submit a pull request.
+5. create `.env` file to the root folder and copy and paste the data from`.env.example`
+6. Run the project. `npm run dev` and `php artisan serve`. Make sure to run them both. 
+7. To access the project go to `localhost:8000`
+8. Run this to create dummy data `php artisan migrate:refresh --seed`. Make sure you have MySQL Workbench installed on your system
+9. Make your changes
+10. Add your changes. `git add <filename>` and commit it `git commit -m "Adding new feature"`
+11. Push your changes: `git push origin develop`. Push only to develop branch.
+12. Submit a pull request.
 
 ## Where to change Frontend Designs
 
