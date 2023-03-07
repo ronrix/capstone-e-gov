@@ -5,6 +5,14 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit sit sapiente, veritatis commodi rerum
                 rem beatae explicabo id sequi quibusdam!</p>
         </div>
+        <div class="flex items-center justify-center">
+            <div class="m-8 border bg-red-100">
+                <p>hello po</p>
+             </div>
+            <strong class="text-blue-500">hehehehe</strong>
+           
+    </div>
+    <strong class="text-red-400 ml-56" ><i>Bolbol</i></strong>
     </DashboardWrapper>
 </template>
 

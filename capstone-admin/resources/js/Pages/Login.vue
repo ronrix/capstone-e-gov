@@ -6,8 +6,8 @@
                 <form @submit.prevent="submitForm" class="shadow-lg flex flex-col w-80 p-5 dark:bg-primary-gray rounded-md">
                     <!-- logo -->
                     <img src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 mx-auto mb-5">
-
-                    <h1 class="font-weight text-2xl text-center">Welcome Back</h1>
+                    <!-- logo -->
+                    <h1 class="text-2xl text-center">Welcome Back</h1>
                     <h3 class="text-sm text-secondary-gray text-center mb-5">Enter your credentials to login</h3>
 
                     <div class=" p-2 mb-2 rounded-md bg-tersiary-gray dark:bg-secondary-gray">
