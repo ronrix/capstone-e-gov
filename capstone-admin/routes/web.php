@@ -25,10 +25,10 @@ Route::get("/", function () {
 });
 Route::get('/login', [LoginController::class, "index"]);
 Route::get('/logout', [LoginController::class, "logout"]);
+Route::get('/dashboard', [LoginController::class, "dashboard"]);
 
 // government
 Route::middleware(["auth"])->group(function () {
-    Route::get('/dashboard', [LoginController::class, "dashboard"]);
     Route::get("/news", [NewsController::class, "index"]);
     Route::get("/advisory", [AdvisoryController::class, "index"]);
     Route::get("/executives", [ExecutivesController::class, "index"]);

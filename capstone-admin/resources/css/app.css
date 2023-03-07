@@ -6,4 +6,5 @@
 
 *, ul, li, a, span, table, td, th {
     font-family: 'Almarai', sans-serif;
+    outline: 1px dotted pink;
 }
