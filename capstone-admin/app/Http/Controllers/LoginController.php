@@ -34,7 +34,7 @@ class LoginController extends Controller
         }
 
         // return error message in objects
-        return response()->json(["message" => "Username or password is incorrect", "status" => 403], 403);
+        return redirect()->route('login.index')->with('error_msg', ["msg" => 'Invalid username or password', "status" => 400]);
     }
 
     // logout

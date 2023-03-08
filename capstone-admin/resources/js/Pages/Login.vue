@@ -1,9 +1,9 @@
 <template>
     <Head title="Login"></Head>
         <Wrapper>
-            <Notifcation :status="error_msg?.status" :msg="error_msg?.data?.message" v-if="showNotif" />
+            <Notifcation :status="$page.props.flash?.error_msg?.status" :msg="$page.props.flash?.error_msg?.msg" v-if="$page.props.flash?.error_msg?.msg" />
             <div class="container mx-auto dark:text-white light:text-primary-dark flex items-center justify-center h-full">
-                <form @submit.prevent="submitForm" class="shadow-lg flex flex-col w-80 p-5 dark:bg-primary-gray rounded-md">
+                <form @submit.prevent="submitForm" :disabled="formData.processing" class="shadow-lg flex flex-col w-80 p-5 dark:bg-primary-gray rounded-md">
                     <!-- logo -->
                     <img src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 mx-auto mb-5">
                     <!-- logo -->
@@ -26,20 +26,16 @@
 </template>
 
 <script setup>
-    import { Head } from "@inertiajs/inertia-vue3";
-    import axios from "axios";
-    import { reactive, ref, computed } from "vue";
+    import { Head, useForm } from "@inertiajs/inertia-vue3";
+    import { computed } from "vue";
     import Notifcation from "../Components/Notifcation.vue";
 
     // validation
     import useVuelidate from "@vuelidate/core";
     import { required, helpers } from "@vuelidate/validators"
 
-    // a state to show the notification
-    const showNotif = ref(false);
-
     // form state
-    const formData = reactive({
+    const formData = useForm({
         email: "",
         password: ""
     });
@@ -49,9 +45,6 @@
         password: { required: helpers.withMessage("The field password is required", required) }
     }));
     const v$ = useVuelidate(rules, formData);
-
-    // state for server error message
-    const error_msg = ref({});
     
     // function to call when form submits
     async function submitForm() {
@@ -60,23 +53,7 @@
         const valid = await v$.value.$validate();
         if(!valid) return
 
-        try {
-            const response = await axios.post("/login", formData);
-            console.log("success");
-            console.log(response);
-        } catch(err) {
-            console.log("error");
-            error_msg.value = err.response;
-            console.log(err.response);
-            
-            // reset password
-            v$.value.$reset();
-            formData.password = "";
-        } finally {
-            showNotif.value = true;
-            // this close or hide the notification modal
-            setTimeout(() => showNotif.value = false, 3000);
-
-        }
+        formData.post(route('login'));
+        formData.reset();
     }
 </script>

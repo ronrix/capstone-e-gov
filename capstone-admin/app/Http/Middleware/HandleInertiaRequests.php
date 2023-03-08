@@ -37,7 +37,10 @@ class HandleInertiaRequests extends Middleware
     public function share(Request $request): array
     {
         return array_merge(parent::share($request), [
-            //
+            // share the flash session to vue client
+            "flash" => [
+                "error_msg" => session("error_msg")
+            ]
         ]);
     }
 }

@@ -23,12 +23,12 @@ use App\Http\Controllers\Government\PopulationController;
 Route::get("/", function () {
     return redirect("login");
 });
-Route::get('/login', [LoginController::class, "index"]);
+Route::get('/login', [LoginController::class, "index"])->name("login.index");
 Route::get('/logout', [LoginController::class, "logout"]);
-Route::get('/dashboard', [LoginController::class, "dashboard"]);
 
 // government
 Route::middleware(["auth"])->group(function () {
+    Route::get('/dashboard', [LoginController::class, "dashboard"]);
     Route::get("/news", [NewsController::class, "index"]);
     Route::get("/advisory", [AdvisoryController::class, "index"]);
     Route::get("/executives", [ExecutivesController::class, "index"]);
@@ -38,4 +38,4 @@ Route::middleware(["auth"])->group(function () {
 });
 
 // POST method
-Route::post('/login', [LoginController::class, "login"]);
+Route::post('/login', [LoginController::class, "login"])->name("login");
