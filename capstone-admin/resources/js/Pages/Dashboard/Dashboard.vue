@@ -5,7 +5,11 @@
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit sit sapiente, veritatis commodi rerum
                 rem beatae explicabo id sequi quibusdam!</p>
         </div>
-        <Link href="logout">logout</Link>
+
+        <!-- test component -->
+        <Test propTitle="BELOW CONTENT, IS <p> TAG WITH LONG TEXTS" />
+        <br>
+        <Link href="logout" class="border bg-blue-400 p-2 text-white">logout</Link>
     </DashboardWrapper>
 </template>
 
@@ -13,6 +17,7 @@
 import DashboardWrapper from "../../Components/DashboardWrapper.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { onMounted } from "vue";
+import Test from "../Test.vue";
 
 onMounted(() => {
     document.title = "Better Pililla | Dashboard";
