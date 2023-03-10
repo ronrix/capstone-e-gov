@@ -1,12 +1,13 @@
 <template>
     <div  class="dark:bg-primary-dark light:bg-white h-screen w-screen">
-        <DarkMode />
+        <DarkMode :toggleDarkMode="toggleDarkMode" :darkMode="darkMode" />
         <slot></slot>
     </div>
 </template>
 
-<script>
-    export default {
-
-    }
+<script setup>
+defineProps({
+    toggleDarkMode: Function,
+    darkMode: Boolean,
+})
 </script>

@@ -1,11 +1,11 @@
 <template>
     <Head title="Login"></Head>
-        <Wrapper>
+        <Wrapper :toggleDarkMode="toggleDarkMode" :darkMode="darkMode">
             <Notifcation :status="$page.props.flash?.error_msg?.status" :msg="$page.props.flash?.error_msg?.msg" v-if="$page.props.flash?.error_msg?.msg" />
             <div class="container mx-auto dark:text-white light:text-primary-dark flex items-center justify-center h-full">
                 <form @submit.prevent="submitForm" :disabled="formData.processing" class="shadow-lg flex flex-col w-80 p-5 dark:bg-primary-gray rounded-md">
                     <!-- logo -->
-                    <img src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 mx-auto mb-5">
+                    <img :src="logoSrc" alt="Better Pililla Logo" class="w-32 mx-auto mb-5">
                     <!-- logo -->
                     <h1 class="text-2xl text-center">Welcome Back</h1>
                     <h3 class="text-sm text-secondary-gray text-center mb-5">Enter your credentials to login</h3>
@@ -27,12 +27,43 @@
 
 <script setup>
     import { Head, useForm } from "@inertiajs/inertia-vue3";
-    import { computed } from "vue";
+    import { computed, ref, onMounted } from "vue";
     import Notifcation from "../Components/Notifcation.vue";
 
     // validation
     import useVuelidate from "@vuelidate/core";
     import { required, helpers } from "@vuelidate/validators"
+
+    const darkMode = ref(true);
+    const logoSrc = ref("images/logo/white/better-pililla.png");
+
+    function toggleDarkMode() {
+        darkMode.value = !darkMode.value;
+        if(darkMode.value) {
+            document.body.classList.add("dark");
+            localStorage.setItem("theme", "dark"); // add dark to localStorage theme
+            logoSrc.value = "images/logo/white/better-pililla.png";
+            return;
+        }
+        document.body.classList.remove("dark")
+        localStorage.setItem("theme", "light"); // add light to localStorage theme
+        logoSrc.value = "images/logo/black/better-pililla.png";
+    }
+
+    onMounted(() => {
+        // dark mode is off
+        if(localStorage.getItem("theme") === "light") {
+            darkMode.value = false;
+            document.body.classList.remove("dark");
+            logoSrc.value = "images/logo/black/better-pililla.png";
+            return;
+        }
+
+        // dark mode is off
+        darkMode.value = true;
+        document.body.classList.add("dark");
+        logoSrc.value = "images/logo/white/better-pililla.png";
+    });
 
     // form state
     const formData = useForm({
