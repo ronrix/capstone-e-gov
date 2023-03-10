@@ -48,6 +48,6 @@ class LoginController extends Controller
     // show the dashboard page
     public function dashboard()
     {
-        return inertia("Dashboard/Dashboard");
+        return inertia("Main");
     }
 }
