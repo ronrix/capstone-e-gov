@@ -132,7 +132,7 @@
     <div class="flex-1 h-full relative p-2">
       <!-- header -->
       <div class="h-[30px] flex justify-between items-center">
-        <h3>{{ $page.url }}</h3>
+        <h3>{{ currentRoute }}</h3>
         <button @click="showAddModal" class="px-5 font-bold text-sm">Add new</button>
       </div>
       <slot></slot>
@@ -141,7 +141,17 @@
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
+import { watch, ref } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
+
+const route = useRoute();
+const currentRoute = ref(route.fullPath);
+
+// adding watcher to update the currentRoute state when the route change
+watch(route, (to, from) => {
+  // Update necessary data based on the new route
+  currentRoute.value = to.path;
+})
 
 // handle show sub navs
 function showSubNavs(e) {
