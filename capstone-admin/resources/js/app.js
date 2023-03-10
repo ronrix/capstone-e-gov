@@ -4,6 +4,7 @@ import { createInertiaApp } from '@inertiajs/inertia-vue3';
 import '../css/app.css';
 import Wrapper from "./Components/Wrapper.vue";
 import DarkMode from "./Components/DarkMode.vue";
+import { router } from './router';
 
 createInertiaApp({
     resolve: name => {
@@ -14,6 +15,7 @@ createInertiaApp({
         const app = createApp({ render: () => h(App, props) });
         app.component("Wrapper", Wrapper);
         app.component("DarkMode", DarkMode);
+        app.use(router);
         app.use(plugin);
         app.mount(el);
     },

@@ -9,6 +9,7 @@ use App\Http\Controllers\Government\ExecutivesController;
 use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,12 +30,14 @@ Route::get('/logout', [LoginController::class, "logout"]);
 // government
 Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
-    Route::get("/news", [NewsController::class, "index"]);
-    Route::get("/advisory", [AdvisoryController::class, "index"]);
-    Route::get("/executives", [ExecutivesController::class, "index"]);
-    Route::get("/hotlines", [HotlinesController::class, "index"]);
-    Route::get("/job-postings", [JobPostingController::class, "index"]);
-    Route::get("/population", [PopulationController::class, "index"]);
+    Route::get("/government/news", [NewsController::class, "index"]);
+    Route::get("/government/executives/current-officials", [ExecutivesController::class, "index"]);
+    Route::get("/government/executives/form-officials", [ExecutivesController::class, "index"]);
+    Route::get("/government/executives/baranggay-officials", [ExecutivesController::class, "index"]);
+    Route::get("/government/executives/department-heads", [ExecutivesController::class, "index"]);
+    Route::get("/government/hotlines", [HotlinesController::class, "index"]);
+    Route::get("/government/job-postings", [JobPostingController::class, "index"]);
+    Route::get("/government/population", [PopulationController::class, "index"]);
 });
 
 // POST method
