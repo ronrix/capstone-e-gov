@@ -23,7 +23,7 @@
           </a>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
             <RouterLink to="/government/news" class="hover:text-blue-400">News</RouterLink>
-            <a href="/government/programs-&-events">Programs & Events</a>
+            <RouterLink to="/government/programs-&-events">Programs & Events</RouterLink>
             <a @click="showSubNavs" class="cursor-pointer flex items-center">
               <!-- <img src="/images/icons/black/gov.png" alt="this is an icon of government" class="w-[18px] mr-3"> -->
               Executives
@@ -35,11 +35,11 @@
               <a href="">Municipal Department Heads</a>
            </div>
             <!-- <a href="">Executives</a> -->
-            <a href="government/job-postings">Job Postings</a>
-            <a href="">Office of the Mayor</a>
-            <a href="">Office of the Vice-Mayor</a>
-            <a href="">Full Disclosure Reports</a>
-            <a href="/government/hotlines">Emergency Hotlines</a>
+            <RouterLink to="government/job-postings">Job Postings</RouterLink>
+            <RouterLink to="">Office of the Mayor</RouterLink>
+            <RouterLink to="">Office of the Vice-Mayor</RouterLink>
+            <RouterLink to="">Full Disclosure Reports</RouterLink>
+            <RouterLink to="/government/hotlines">Emergency Hotlines</RouterLink>
             <a href="/government/population">Population of Pililla</a>
           </div>
         </section>

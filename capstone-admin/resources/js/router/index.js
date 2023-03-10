@@ -13,5 +13,20 @@ export const router = createRouter({
       name: "News",
       component: () => import("../Pages/Government/News/News.vue")
     },
+    {
+      path: "/government/job-postings",
+      name: "JobPostings",
+      component: () => import("../Pages/Government/JobPostings/JobPostings.vue")
+    },
+    {
+      path: "/government/programs-&-events",
+      name: "ProgramsEvents",
+      component: () => import("../Pages/Government/ProgramsEvents/ProgramsEvents.vue")
+    },
+    {
+      path: "/government/hotlines",
+      name: "Hotlines",
+      component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
+    },
   ]
 });
