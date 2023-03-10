@@ -131,7 +131,7 @@
       <!-- header -->
       <div class="h-[30px] flex justify-between items-center">
         <h3>government &hookrightarrow; news</h3>
-        <button @click="alertMe" class="px-5 font-bold text-sm">Add new</button>
+        <button @click="showAddModal" class="px-5 font-bold text-sm">Add new</button>
       </div>
       <slot></slot>
     </div>
@@ -139,15 +139,15 @@
 </template>
 
 <script setup>
-function alertMe() {
-  alert("Hello, world!");
-}
-
 // handle show sub navs
 function showSubNavs(e) {
   console.log(e);
   e.target.nextSibling.classList.toggle("hidden");
 }
+
+defineProps({
+  showAddModal: Function
+})
 </script>
 
 <style lang="scss" scoped></style>
