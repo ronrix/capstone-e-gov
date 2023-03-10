@@ -1,33 +1,23 @@
 <template>
-    <DashboardWrapper :showAddModal="showAddModal">
+    <div>
         <div class="m-5 border p-3 shadow-md rounded-lg">
             <h4 class="font-bold text-xl">Content Title</h4>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit sit sapiente, veritatis commodi rerum
                 rem beatae explicabo id sequi quibusdam!</p>
         </div>
 
-        <!-- add modal -->
-        <AddModal v-if="addModal" :showAddModal="showAddModal" />
 
         <!-- test component -->
         <Test propTitle="BELOW CONTENT, IS <p> TAG WITH LONG TEXTS" />
         <br>
         <Link href="logout" class="border bg-blue-400 p-2 text-white">logout</Link>
-    </DashboardWrapper>
+    </div>
 </template>
 
 <script setup>
-import DashboardWrapper from "../../Components/DashboardWrapper.vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import { onMounted, ref } from "vue";
 import Test from "../Test.vue";
-import AddModal from "../../Components/AddModal/AddModal.vue";
-
-const addModal = ref(false);
-
-function showAddModal() {
-    addModal.value = !addModal.value;
-}
 
 onMounted(() => {
     document.title = "Better Pililla | Dashboard";
