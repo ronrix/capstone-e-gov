@@ -66,9 +66,9 @@
             Businesses
           </div>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-            <RouterLink to="">Apartments</RouterLink>
-            <RouterLink to="">Business Permit Form</RouterLink>
-            <RouterLink to="">Ease of Doing business</RouterLink>
+            <RouterLink to="/businesses/apartments">Apartments</RouterLink>
+            <RouterLink to="/businesses/permit-form">Business Permit Form</RouterLink>
+            <RouterLink to="/businesses/ease-of-doing-business">Ease of Doing business</RouterLink>
           </div>
         </section>
 

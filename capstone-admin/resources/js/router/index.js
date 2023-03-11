@@ -28,5 +28,20 @@ export const router = createRouter({
       name: "Hotlines",
       component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
     },
+    {
+      path: "/businesses/apartments",
+      name: "Apartments",
+      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+    },
+    {
+      path: "/businesses/apartments",
+      name: "PermitForm",
+      component: () => import("../Pages/Businesses/PermitForm/PermitForm.vue")
+    },
+    {
+      path: "/businesses/apartments",
+      name: "Apartments",
+      component: () => import("../Pages/Businesses/EaseOfDoingBusiness/EaseOfDoingBusiness.vue")
+    },
   ]
 });
