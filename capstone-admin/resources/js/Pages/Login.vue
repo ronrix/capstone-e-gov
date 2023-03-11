@@ -3,9 +3,10 @@
         <Wrapper>
             <Notifcation :status="$page.props.flash?.error_msg?.status" :msg="$page.props.flash?.error_msg?.msg" v-if="$page.props.flash?.error_msg?.msg" />
             <div class="container mx-auto dark:text-white light:text-primary-dark flex items-center justify-center h-full">
-                <form @submit.prevent="submitForm" :disabled="formData.processing" class="shadow-lg flex flex-col w-80 p-5 dark:bg-primary-gray rounded-md">
+                <form @submit.prevent="submitForm" :disabled="formData.processing" class="shadow-lg flex flex-col w-80 p-5 dark:bg-primary-gray rounded-md" >
                     <!-- logo -->
-                    <img src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 mx-auto mb-5">
+                    <img  src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 mx-auto mb-5">
+                    <img  src="/images/logo/black/BetterPilillaLogo-black.png" alt="Better Pililla Logo" class="w-32 mx-auto mb-5">
                     <!-- logo -->
                     <h1 class="text-2xl text-center">Welcome Back</h1>
                     <h3 class="text-sm text-secondary-gray text-center mb-5">Enter your credentials to login</h3>
@@ -54,6 +55,8 @@
         if(!valid) return
 
         formData.post(route('login'));
-        formData.reset();
+        // niremove ko para di siya magrefresh pagclick ng login sa form para magwork yung prevent na code formData.reset();
     }
+
+    
 </script>
