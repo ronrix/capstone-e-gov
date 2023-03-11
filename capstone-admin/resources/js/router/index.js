@@ -33,22 +33,22 @@ export const router = createRouter({
     {
       path: "/tourism/tourism",
       name: "Tourism",
-      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+      component: () => import("../Pages/Tourism/Tourism.vue")
     },
     {
       path: "/tourism/tourist-spots",
       name: "TouristSpots",
-      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+      component: () => import("../Pages/Tourism/TouristSpot.vue")
     },
     {
       path: "/tourism/festivals",
       name: "Festivals",
-      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+      component: () => import("../Pages/Tourism/Festival.vue")
     },
     {
       path: "/tourism/guidelines",
-      name: "Guidlines",
-      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+      name: "Guidelines",
+      component: () => import("../Pages/Tourism/Guidelines.vue")
     },
     // businesses
     {
