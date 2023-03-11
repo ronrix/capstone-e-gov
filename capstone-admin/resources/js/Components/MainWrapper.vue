@@ -1,9 +1,5 @@
 <template>
-  <div class="flex items-center h-screen">
-    <!-- menu bar -->
-    <div class="block sm:hidden">
-      menu
-    </div>
+  <div class="flex items-start h-screen">
     <!-- sidebar -->
     <div class="pt-5 rounded-xl relative h-screen hidden sm:block duration-100 bg-white whitespace-nowrap"
       :class="isWholeSidebar ? 'w-[350px]' : 'w-[70px]'">
@@ -22,7 +18,7 @@
       <!-- navigations -->
       <Navs :showSubNavs="showSubNavs" :isWholeSidebar="isWholeSidebar" :page="page"  />
     </div>
-    <div class="flex-1 h-full relative px-8 py-4">
+    <div class="flex-1 h-full relative px-3 md:px-8 py-4">
       <!-- header -->
       <Topbar :currentRoute="currentRoute" />
       <slot></slot>
@@ -54,7 +50,7 @@ function showSubNavs(e) {
 
    // close all the subnavs before opening one
   const subNavs = document.querySelectorAll(".subnavs");
-  const activeNavText = e.target.parentElement.parentElement.previousElementSibling.lastElementChild;
+  const activeNavText = e.target.lastElementChild;
 
   for (let i = 0; i < subNavs.length; i++) {
     const subNav = subNavs[i];
