@@ -16,7 +16,8 @@ class NewsController extends Controller
     public function index()
     {
         //
-        return response()->json(News::all());
+        // return response()->json(News::all());
+        return inertia("Main");
     }
 
     /**

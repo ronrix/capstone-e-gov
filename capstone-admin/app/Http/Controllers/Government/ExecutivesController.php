@@ -16,7 +16,8 @@ class ExecutivesController extends Controller
     public function index()
     {
         //
-        return response()->json(Executives::all());
+        // return response()->json(Executives::all());
+        return inertia("Majn");
     }
 
     /**

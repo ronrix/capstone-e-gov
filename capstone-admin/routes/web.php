@@ -38,6 +38,51 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/government/hotlines", [HotlinesController::class, "index"]);
     Route::get("/government/job-postings", [JobPostingController::class, "index"]);
     Route::get("/government/population", [PopulationController::class, "index"]);
+
+    // tourism
+    Route::get("/tourism/tourism", function() {
+        return inertia("Main");
+    });
+    Route::get("/tourism/tourist-spots", function() {
+        return inertia("Main");
+    });
+    Route::get("/tourism/festivals", function() {
+        return inertia("Main");
+    });
+    Route::get("/tourism/guidelines", function() {
+        return inertia("Main");
+    });
+
+    // businesses
+    Route::get("/businesses/apartments", function() {
+        return inertia("Main");
+    });
+    Route::get("/businesses/permit-form", function() {
+        return inertia("Main");
+    });
+    Route::get("/businesses/ease-of-doing-business", function() {
+        return inertia("Main");
+    });
+
+    // services
+    Route::get("/services/example-query", function() {
+        return inertia("Main");
+    });
+
+    // about
+    Route::get("/about/mission-and-vision", function() {
+        return inertia("Main");
+    });
+    Route::get("/about/history", function() {
+        return inertia("Main");
+    });
+    Route::get("/about/official-seal", function() {
+        return inertia("Main");
+    });
+    Route::get("/about/contacts", function() {
+        return inertia("Main");
+    });
+
 });
 
 // POST method

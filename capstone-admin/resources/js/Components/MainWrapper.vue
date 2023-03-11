@@ -17,123 +17,141 @@
         </section>
         <!-- government -->
         <section>
-          <a @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
+          <div @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
             <img src="/images/icons/black/gov.png" alt="this is an icon of government" class="w-[18px] mr-3">
             Government
-          </a>
+          </div>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
             <RouterLink to="/government/news" class="hover:text-blue-400">News</RouterLink>
             <RouterLink to="/government/programs-&-events">Programs & Events</RouterLink>
-            <a @click="showSubNavs" class="cursor-pointer flex items-center">
+            <div @click="showSubNavs" class="cursor-pointer flex items-center">
               <!-- <img src="/images/icons/black/gov.png" alt="this is an icon of government" class="w-[18px] mr-3"> -->
               Executives
-           </a>
+            </div>
            <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-              <a href="">Current Officials of Pililla Rizal</a>
-              <a href="">Former Officials of Pililla Rizal</a>
-              <a href=""> Sanggunian Barangay Officials</a>
-              <a href="">Municipal Department Heads</a>
+              <RouterLink to="">Current Officials of Pililla Rizal</RouterLink>
+              <RouterLink to="">Former Officials of Pililla Rizal</RouterLink>
+              <RouterLink to=""> Sanggunian Barangay Officials</RouterLink>
+              <RouterLink to="">Municipal Department Heads</RouterLink>
            </div>
-            <!-- <a href="">Executives</a> -->
-            <RouterLink to="government/job-postings">Job Postings</RouterLink>
-            <RouterLink to="">Office of the Mayor</RouterLink>
-            <RouterLink to="">Office of the Vice-Mayor</RouterLink>
-            <RouterLink to="">Full Disclosure Reports</RouterLink>
+            <!-- <RouterLink to="">Executives</RouterLink> -->
+            <RouterLink to="/government/job-postings">Job Postings</RouterLink>
+            <RouterLink to="/governmetn/office-of-the-mayor">Office of the Mayor</RouterLink>
+            <RouterLink to="/governmetn/office-of-the-vice-mayor">Office of the Vice-Mayor</RouterLink>
+            <RouterLink to="/government/full-disclosure-reports">Full Disclosure Reports</RouterLink>
             <RouterLink to="/government/hotlines">Emergency Hotlines</RouterLink>
-            <a href="/government/population">Population of Pililla</a>
+            <RouterLink to="/government/population">Population of Pililla</RouterLink>
           </div>
         </section>
 
 
         <!-- tourism -->
         <section>
-          <a @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
+          <div @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
             <img src="/images/icons/black/tourism.png" alt="this is an icon of government" class="w-[18px] mr-3">
             Tourism
-          </a>
+          </div>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-            <a href="">Map Location</a>
-            <a href="">Tourism</a>
-            <a href="">Tourists Spot</a>
-            <a href="">Festival</a>
-            <a href="">Guidelines</a>
+            <RouterLink to="/tourism/tourism">Tourism</RouterLink>
+            <RouterLink to="/tourism/tourist-spots">Tourists Spot</RouterLink>
+            <RouterLink to="/tourism/festivals">Festival</RouterLink>
+            <RouterLink to="/tourism/guidelines">Guidelines</RouterLink>
           </div>
         </section>
 
         <!-- businesses -->
         <section>
-          <a @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
+          <div @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
             <img src="/images/icons/black/business.png" alt="this is an icon of government" class="w-[18px] mr-3">
             Businesses
-          </a>
+          </div>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-            <a href="">Apartment</a>
-            <a href="">Business Permit Form</a>
-            <a href="">Ease of Doing business</a>
+            <RouterLink to="/businesses/apartments">Apartments</RouterLink>
+            <RouterLink to="/businesses/permit-form">Business Permit Form</RouterLink>
+            <RouterLink to="/businesses/ease-of-doing-business">Ease of Doing business</RouterLink>
           </div>
         </section>
 
         <!-- services -->
         <section>
-          <a @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
+          <div @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
             <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
             Services
-          </a>
+          </div>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-            <a @click="showSubNavs" class="cursor-pointer flex items-center">
+            <div @click="showSubNavs" class="cursor-pointer flex items-center">
             <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
             Office of the Mayor
-          </a>
-            <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-              <a href="">Example services</a>
             </div>
-            <a @click="showSubNavs" class="cursor-pointer flex items-center">
+            <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+              <RouterLink to="">Example services</RouterLink>
+            </div>
+          <div @click="showSubNavs" class="cursor-pointer flex items-center">
             <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
             MSWD Department
-          </a>
-            <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-              <a href="">Example services</a>
-            </div>
-            <a @click="showSubNavs" class="cursor-pointer flex items-center">
+          </div>
+          <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <RouterLink to="">Example services</RouterLink>
+          </div>
+          <div @click="showSubNavs" class="cursor-pointer flex items-center">
             <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
             Agriculture Department
-          </a>
-            <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-              <a href="">Example services</a>
-            </div>
-            <a @click="showSubNavs" class="cursor-pointer flex items-center">
+          </div>
+          <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <RouterLink to="/services">Example services</RouterLink>
+          </div>
+          <div @click="showSubNavs" class="cursor-pointer flex items-center">
             <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
             HR Department
-          </a>
-            <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-              <a href="">Example services</a>
-            </div>
+          </div>
+          <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <RouterLink to="/services/">Example services</RouterLink>
+          </div>
           </div>
         </section>
 
         <!-- about -->
         <section>
-          <a @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
+          <div @click="showSubNavs" class="cursor-pointer flex items-center pl-4">
             <img src="/images/icons/black/about.png" alt="this is an icon of government" class="w-[18px] mr-3">
             About
-          </a>
+          </div>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-            <a href="">Mission & Vission</a>
-            <a href="">History</a>
-            <a href="">Location</a>
-            <a href="">Official Seal</a>
-            <a href="">Website Developers</a>
-            <a href="">Conatacts</a>
+            <RouterLink to="/about/mission-and-vision">Mission & Vission</RouterLink>
+            <RouterLink to="/about/history">History</RouterLink>
+            <RouterLink to="/about/official-seal">Official Seal</RouterLink>
+            <RouterLink to="/about/contacts">Conatacts</RouterLink>
           </div>
         </section>
 
       </nav>
     </div>
-    <div class="flex-1 h-full relative p-2">
+    <div class="flex-1 h-full relative p-5">
       <!-- header -->
       <div class="h-[30px] flex justify-between items-center">
-        <h3>{{ currentRoute }}</h3>
-        <button @click="showAddModal" class="px-5 font-bold text-sm">Add new</button>
+        <h3 class="font-bold text-sm"> you are in  <span class="text-blue-600">{{ currentRoute }}</span></h3>
+        <div class="flex items-center justify-center">
+          <div class="relative flex mr-5">
+            <i class="uil uil-bell text-xl text-gray-700 hover:text-slate-500"></i>
+            <div class="absolute -right-2 -top-3">
+              <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+              </span>
+            </div>
+          </div>
+          <div class="relative flex mr-5">
+            <i class="uil uil-comment-alt-message text-xl text-gray-700 hover:text-slate-500"></i>
+            <div class="absolute -right-2 -top-3">
+              <span class="relative flex h-3 w-3">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+              </span>
+            </div>
+          </div>
+          <img class="w-[30px] rounded-full" src="https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg" alt="">
+          <i class="uil uil-angle-down text-gray-700 text-2xl"></i>
+        </div>
       </div>
       <slot></slot>
     </div>

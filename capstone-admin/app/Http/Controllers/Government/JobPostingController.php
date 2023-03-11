@@ -16,7 +16,8 @@ class JobPostingController extends Controller
     public function index()
     {
         //
-        return response()->json(JobPosting::all());
+        // return response()->json(JobPosting::all());
+        return inertia("Main");
     }
 
     /**

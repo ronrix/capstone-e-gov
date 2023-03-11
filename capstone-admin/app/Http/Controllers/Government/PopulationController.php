@@ -16,7 +16,8 @@ class PopulationController extends Controller
     public function index()
     {
         //
-        return response()->json(Population::all());
+        // return response()->json(Population::all());
+        return inertia("Main");
     }
 
     /**
