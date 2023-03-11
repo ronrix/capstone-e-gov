@@ -16,7 +16,8 @@ class HotlinesController extends Controller
     public function index()
     {
         //
-        return response()->json(Hotlines::all());
+        // return response()->json(Hotlines::all());
+        return inertia("Main");
     }
 
     /**
