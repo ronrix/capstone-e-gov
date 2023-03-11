@@ -15,7 +15,7 @@
       <i class="uil uil-university mr-3 text-2xl pointer-events-none"></i>
       <SideNavName name="Government" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
-    <SubNavs :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">
+    <SubNavs v-show="isWholeSidebar">
       <NavLink name="news" to="/government/news" />
       <NavLink name="programs and events" to="/government/programs-and-events" />
       <div @click="showSubNavs"
@@ -43,7 +43,7 @@
       <i class="uil uil-map-pin-alt mr-3 text-2xl"></i>
       <SideNavName name="Tourism" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
-    <SubNavs :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">
+    <SubNavs v-show="isWholeSidebar">
       <NavLink to="/tourism/tourism" name="tourism" />
       <NavLink to="/tourism/tourist-spots" name="tourists spots" />
       <NavLink to="/tourism/festivals" name="festivals" />
@@ -55,7 +55,7 @@
       <i class="uil uil-tag-alt mr-3 text-2xl"></i>
       <SideNavName name="Businesses" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
-    <SubNavs :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">
+    <SubNavs v-show="isWholeSidebar">
       <NavLink to="/businesses/apartments" name="apartments" />
       <NavLink to="/businesses/permit-form" name="permit form" />
       <NavLink to="/businesses/ease-of-doing-business" name="ease of doing business" />
@@ -66,7 +66,7 @@
       <i class="uil uil-heartbeat mr-3 text-2xl"></i>
       <SideNavName name="Services" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
-    <SubNavs :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">
+    <SubNavs v-show="isWholeSidebar">
       <div @click="showSubNavs" class="cursor-pointer flex items-center">
         <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
         Office of the Mayor
@@ -106,7 +106,7 @@
       <i class="uil uil-exclamation-circle mr-3 text-2xl"></i>
       <SideNavName name="About" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
-    <SubNavs :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">
+    <SubNavs v-show="isWholeSidebar">
       <NavLink to="/about/mission-and-vision" name="mission and vision" />
       <NavLink to="/about/history" name="history" />
       <NavLink to="/about/official-seal" name="official seal" />
