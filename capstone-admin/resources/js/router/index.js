@@ -8,6 +8,7 @@ export const router = createRouter({
       name: "Dashboard",
       component: () => import("../Pages/Dashboard/Dashboard.vue")
     },
+    // government
     {
       path: "/government/news",
       name: "News",
@@ -28,6 +29,28 @@ export const router = createRouter({
       name: "Hotlines",
       component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
     },
+    // tourism
+    {
+      path: "/toursim/tourism",
+      name: "Apartments",
+      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+    },
+    {
+      path: "/toursim/tourist-spots",
+      name: "Apartments",
+      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+    },
+    {
+      path: "/toursim/festivals",
+      name: "Apartments",
+      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+    },
+    {
+      path: "/toursim/guidelines",
+      name: "Apartments",
+      component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
+    },
+    // businesses
     {
       path: "/businesses/apartments",
       name: "Apartments",

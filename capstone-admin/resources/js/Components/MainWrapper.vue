@@ -53,7 +53,7 @@
           </div>
           <div class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
             <RouterLink to="/tourism/tourism">Tourism</RouterLink>
-            <RouterLink to="/tourism/tourists-spots">Tourists Spot</RouterLink>
+            <RouterLink to="/tourism/tourist-spots">Tourists Spot</RouterLink>
             <RouterLink to="/tourism/festivals">Festival</RouterLink>
             <RouterLink to="/tourism/guidelines">Guidelines</RouterLink>
           </div>
