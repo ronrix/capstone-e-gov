@@ -57,14 +57,35 @@ export const router = createRouter({
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
     },
     {
-      path: "/businesses/apartments",
+      path: "/businesses/permit-form",
       name: "PermitForm",
       component: () => import("../Pages/Businesses/PermitForm/PermitForm.vue")
     },
     {
-      path: "/businesses/apartments",
-      name: "Apartments",
+      path: "/businesses/ease-of-doing-business",
+      name: "EaseOfDoingBusiness",
       component: () => import("../Pages/Businesses/EaseOfDoingBusiness/EaseOfDoingBusiness.vue")
+    },
+    // about
+    {
+      path: "/about/mission-and-vision",
+      name: "MissionVision",
+      component: () => import("../Pages/About/MissionVision/MissionVision.vue")
+    },
+    {
+      path: "/businesses/history",
+      name: "History",
+      component: () => import("../Pages/About/History/History.vue")
+    },
+    {
+      path: "/businesses/official-seal",
+      name: "OfficialSeal",
+      component: () => import("../Pages/About/OfficialSeal/OfficialSeal.vue")
+    },
+    {
+      path: "/businesses/contacts",
+      name: "Contacts",
+      component: () => import("../Pages/About/Contacts/Contacts.vue")
     },
   ]
 });
