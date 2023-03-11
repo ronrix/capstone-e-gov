@@ -51,8 +51,7 @@ watch(route, (to, from) => {
 // handle show sub navs
 function showSubNavs(e) {
   isWholeSidebar.value = true;
-  e.target.nextSibling.classList.toggle("hidden");
-  console.log("you clicked me!");
+  setTimeout(() => e.target.nextSibling.classList.toggle("hidden"), 100);
 }
 
 // toggle who navs
