@@ -1,5 +1,5 @@
 <template>
-    <MainWrapper :showAddModal="showAddModal">
+    <MainWrapper :showAddModal="showAddModal" class="bg-slate-100">
       <!-- show this modal when add new button was clicked -->
       <AddModal v-if="addModal" :showAddModal="showAddModal" />
 
