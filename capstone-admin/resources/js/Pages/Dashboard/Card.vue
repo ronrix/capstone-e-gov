@@ -1,5 +1,5 @@
 <template>
-  <div class="border rounded-lg shadow-md py-2 px-5">
+  <div class="border w-full md:w-auto rounded-lg shadow-md py-2 px-5">
     <!-- top -->
     <section class="flex items-start">
       <div class="border border-dotted px-2 rounded-lg mr-3" :class="borderColor === '#000' ? 'border-blue-600' : 'border-white'">
@@ -12,7 +12,7 @@
     <!-- mid -->
     <div class="flex items-start mt-5">
       <h5 class="font-bold text-2xl mr-5">{{ amount }}</h5>
-      <Line :data="data" :options="options" class="w-[200px]" />
+      <Line :data="data" :options="options" class="w-[50px] xs:w-[100px] md:w-[200px]" />
     </div>
   </div>
 </template>
