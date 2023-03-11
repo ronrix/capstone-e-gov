@@ -20,7 +20,7 @@ export const router = createRouter({
       component: () => import("../Pages/Government/JobPostings/JobPostings.vue")
     },
     {
-      path: "/government/programs-&-events",
+      path: "/government/programs-and-events",
       name: "ProgramsEvents",
       component: () => import("../Pages/Government/ProgramsEvents/ProgramsEvents.vue")
     },
@@ -31,23 +31,23 @@ export const router = createRouter({
     },
     // tourism
     {
-      path: "/toursim/tourism",
-      name: "Apartments",
+      path: "/tourism/tourism",
+      name: "Tourism",
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
     },
     {
-      path: "/toursim/tourist-spots",
-      name: "Apartments",
+      path: "/tourism/tourist-spots",
+      name: "TouristSpots",
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
     },
     {
-      path: "/toursim/festivals",
-      name: "Apartments",
+      path: "/tourism/festivals",
+      name: "Festivals",
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
     },
     {
-      path: "/toursim/guidelines",
-      name: "Apartments",
+      path: "/tourism/guidelines",
+      name: "Guidlines",
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
     },
     // businesses
@@ -73,17 +73,17 @@ export const router = createRouter({
       component: () => import("../Pages/About/MissionVision/MissionVision.vue")
     },
     {
-      path: "/businesses/history",
+      path: "/about/history",
       name: "History",
       component: () => import("../Pages/About/History/History.vue")
     },
     {
-      path: "/businesses/official-seal",
+      path: "/about/official-seal",
       name: "OfficialSeal",
       component: () => import("../Pages/About/OfficialSeal/OfficialSeal.vue")
     },
     {
-      path: "/businesses/contacts",
+      path: "/about/contacts",
       name: "Contacts",
       component: () => import("../Pages/About/Contacts/Contacts.vue")
     },
