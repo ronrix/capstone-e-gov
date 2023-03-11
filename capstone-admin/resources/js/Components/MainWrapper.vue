@@ -51,6 +51,20 @@ watch(route, (to, from) => {
 // handle show sub navs
 function showSubNavs(e) {
   isWholeSidebar.value = true;
+
+   // close all the subnavs before opening one
+  const subNavs = document.querySelectorAll(".subnavs");
+  const activeNavText = e.target.parentElement.parentElement.previousElementSibling.lastElementChild;
+
+  for (let i = 0; i < subNavs.length; i++) {
+    const subNav = subNavs[i];
+
+    if (subNav.previousElementSibling.lastElementChild === activeNavText) {
+      continue;
+    }
+
+    subNav.classList.add('hidden');
+  }
   setTimeout(() => e.target.nextSibling.classList.toggle("hidden"), 100);
 }
 
