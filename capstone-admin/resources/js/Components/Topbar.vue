@@ -35,9 +35,17 @@
       </div>
 
       <!-- avatar -->
-      <img class="w-[30px] rounded-full" src="https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg"
-        alt="">
-      <i class="uil uil-angle-down text-gray-700 text-2xl"></i>
+      <div @click="showAvatarDropDown" class="relative cursor-pointer flex items-center">
+        <img class="w-[30px] rounded-full" src="https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg"
+          alt="">
+        <i class="uil uil-angle-down text-gray-700 text-2xl"></i>
+        <!-- dropdown when avatar was clicked -->
+        <div v-show="isAvatarDropDown" class="absolute -bottom-[60px] -left-[120px] text-xs bg-white flex flex-col w-[150px] p-2 shadow-md after:absolute after:right-3 after:-top-[5px] after:w-3 after:h-3 after:rotate-45 after:border after:border-b-0 after:border-r-0 after:bg-white gap-1 z-30">
+          <p class="hover:text-blue-600">change password</p>
+          <Link href="/logout" class="hover:text-blue-600">log out</Link>
+        </div>
+      </div>
+
     </div>
   </div>
 </template>
@@ -45,8 +53,14 @@
 <script setup>
 import { ref, onUpdated } from 'vue';
 import Navs from './Sidebar/Navs.vue';
+import { Link } from "@inertiajs/inertia-vue3";
 
 const isMobileNavsVisible = ref(false);
+const isAvatarDropDown = ref(false);
+
+function showAvatarDropDown() {
+  isAvatarDropDown.value = !isAvatarDropDown.value;
+}
 
 function showMovileNavs() {
   isMobileNavsVisible.value = !isMobileNavsVisible.value;
