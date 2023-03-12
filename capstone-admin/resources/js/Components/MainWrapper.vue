@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-start h-screen">
     <!-- sidebar -->
-    <div class="pt-5 rounded-xl relative h-screen hidden sm:block duration-100 bg-white whitespace-nowrap"
+    <div class="sticky top-0 pt-5 rounded-xl h-screen hidden sm:block duration-100 bg-white whitespace-nowrap z-10"
       :class="isWholeSidebar ? 'w-[350px]' : 'w-[70px]'">
       <div class="flex px-6 items-start">
         <img src="images/logo/pililla-logo.png" alt="this is the pililla government logo" class="w-[50px]">
@@ -18,10 +18,12 @@
       <!-- navigations -->
       <Navs :showSubNavs="showSubNavs" :isWholeSidebar="isWholeSidebar" :page="page"  />
     </div>
-    <div class="flex-1 h-full relative px-3 md:px-8 py-4">
+    <div class="flex-1 h-full relative">
       <!-- header -->
-      <Topbar :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page" />
-      <slot></slot>
+      <Topbar :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page" class="sticky top-0 bg-white p-5 shadow-sm z-10" />
+      <div class="px-8 -z-10">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
