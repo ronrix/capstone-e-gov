@@ -1,12 +1,12 @@
 <template>
   <div class="h-[30px] flex justify-between items-center relative">
-    <Navs :showSubNavs="showSubNavs" v-show="isMobileNavsVisible" :isWholeSidebar="true" class="w-screen fixed top-10 left-0 right-0 bottom-0 z-20 h-screen bg-white text-black sm:hidden" />
-    <div class="flex flex-col items-start pt-7 sm:pt-0">
+    <Navs :showSubNavs="showSubNavs" v-show="isMobileNavsVisible" :isWholeSidebar="true" class="w-screen fixed top-5 left-0 right-0 bottom-0 z-20 h-screen bg-white text-black sm:hidden" />
+    <div class="flex flex-col items-start sm:pt-0">
       <div class="m-0 p-0 sm:hidden">
         <i :class="{'block': !isMobileNavsVisible, 'hidden': isMobileNavsVisible}" @click="showMovileNavs" class="uil uil-list-ui-alt text-gray-800 sm:hidden hover:text-blue-800 text-4xl"></i>
-        <i :class="{'!block': isMobileNavsVisible}" @click="showMovileNavs" class="hidden uil uil-times text-gray-800 sm:hidden hover:text-blue-800 text-4xl slef-start"></i>
+        <i :class="{'!block': isMobileNavsVisible}" @click="showMovileNavs" class="hidden uil uil-times text-gray-800 sm:hidden hover:text-blue-800 text-4xl"></i>
       </div>
-      <h3 class="font-bold text-sm"> you are in <span class="text-blue-600">{{ currentRoute }}</span></h3>
+      <h3 class="font-bold text-sm hidden sm:block"> you are in <span class="text-blue-600">{{ currentRoute }}</span></h3>
     </div>
 
     <div class="flex items-end md:items-center justify-center">
