@@ -40,7 +40,7 @@
 
     <!-- tourism -->
     <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'tourism' }">
-      <i class="uil uil-map-pin-alt mr-3 text-2xl"></i>
+      <i class="uil uil-map-pin-alt mr-3 text-2xl pointer-events-none"></i>
       <SideNavName name="Tourism" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
     <SubNavs v-show="isWholeSidebar">
@@ -52,7 +52,7 @@
 
     <!-- businesses -->
     <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'businesses' }">
-      <i class="uil uil-tag-alt mr-3 text-2xl"></i>
+      <i class="uil uil-tag-alt mr-3 text-2xl pointer-events-none"></i>
       <SideNavName name="Businesses" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
     <SubNavs v-show="isWholeSidebar">
@@ -63,7 +63,7 @@
 
     <!-- services -->
     <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'services' }">
-      <i class="uil uil-heartbeat mr-3 text-2xl"></i>
+      <i class="uil uil-heartbeat mr-3 text-2xl pointer-events-none"></i>
       <SideNavName name="Services" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
     <SubNavs v-show="isWholeSidebar">
@@ -103,7 +103,7 @@
 
     <!-- about -->
     <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'about' }">
-      <i class="uil uil-exclamation-circle mr-3 text-2xl"></i>
+      <i class="uil uil-exclamation-circle mr-3 text-2xl pointer-events-none"></i>
       <SideNavName name="About" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
     <SubNavs v-show="isWholeSidebar">
