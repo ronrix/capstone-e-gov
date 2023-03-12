@@ -20,7 +20,7 @@
     </div>
     <div class="flex-1 h-full relative px-3 md:px-8 py-4">
       <!-- header -->
-      <Topbar :currentRoute="currentRoute" />
+      <Topbar :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page" />
       <slot></slot>
     </div>
   </div>
