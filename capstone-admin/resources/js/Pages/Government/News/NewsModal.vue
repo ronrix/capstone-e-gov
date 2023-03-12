@@ -4,13 +4,28 @@
       <div @click="showNewsModal" class="m-0 p-0 cursor-pointer">
         <i class="uil uil-times text-gray-800 hover:text-blue-800 text-xl absolute top-0 right-2 p-2"></i>
       </div>
-      <h4 class="font-bold text-2xl">this is the news modal</h4>
+      <h4 class="font-bold text-2xl flex items-center">
+        <span class="cursor-pointer">{{ selectedData.title }}</span>
+        <i class="uil uil-edit-alt ml-3 text-base"></i>
+      </h4>
+      <h5 class="text-xs text-gray-500 font-bold">{{ new Date() }}</h5>
+      <p class="text-sm mt-5 cursor-pointer">
+        {{ selectedData.content }}
+        <i class="uil uil-edit-alt ml-3 text-base"></i>
+      </p>
+
+      <div class="flex items-end justify-end mt-10">
+        <button class="px-4 p-1 border border-blue-600">cancel</button>
+        <button class="px-4 p-1 bg-blue-600 ml-3 text-white">save</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 defineProps({
-  showNewsModal: Function
-})
+  showNewsModal: Function,
+  selectedData: {}
+});
+
 </script>
