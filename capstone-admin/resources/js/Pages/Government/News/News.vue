@@ -1,7 +1,15 @@
 <template>
   <div class="mt-5 p-3 flex flex-col gap-5">
-    <CardNews v-for="data in sample_data" :data="data" :showNewsModal="showNewsModal" />
-    <NewsModal :selectedData="selectedData" :showNewsModal="showNewsModal" v-show="isNewModal" />
+    <!-- filter -->
+    <div class="w-full flex items-center">
+      <label class="flex items-center rounded-lg p-2 text-sm bg-white">
+        <i class="uil uil-search-alt pr-3"></i>
+        <input type="search" v-model="search" placeholder="search news" class="bg-transparent outline-none" />
+      </label> 
+    </div>
+
+    <CardNews v-for="data in searchFilter()" :data="data" :showNewsModal="showNewsModal" />
+    <NewsModal :selectedData="selectedData" :showNewsModal="showNewsModal" v-if="isNewModal" />
 
     <!-- add new news btn -->
     <button @click="showAddNewModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
@@ -9,7 +17,7 @@
     </button>
 
     <!-- add modal -->
-    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-show="isAddNewModal" />
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
   </div>
 </template>
 
@@ -53,6 +61,14 @@ const sample_data = [
 function showNewsModal(data) {
   isNewModal.value = !isNewModal.value;
   selectedData.value = data;
+}
+
+// data filtering for search input 
+const search = ref("");
+function searchFilter() {
+  return sample_data.filter(news => {
+    return news.title.toLowerCase().includes(search.value);
+  })
 }
 
 // check if modal is open and prevent the document from scrolling
