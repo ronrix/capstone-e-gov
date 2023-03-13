@@ -87,5 +87,10 @@ export const router = createRouter({
       name: "Contacts",
       component: () => import("../Pages/About/Contacts/Contacts.vue")
     },
+    {
+      path: "/services/office-of-the-mayor/example", 
+      name: "CardServices",
+      component: () => import("../Pages/Services/CardServices.vue")
+    },
   ]
 });
