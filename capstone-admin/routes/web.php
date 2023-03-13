@@ -65,7 +65,7 @@ Route::middleware(["auth"])->group(function () {
     });
 
     // services
-    Route::get("/services/example-query", function() {
+    Route::get("/services/office-of-the-mayor/example", function() {
         return inertia("Main");
     });
 
