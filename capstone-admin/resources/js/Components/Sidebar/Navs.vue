@@ -18,12 +18,13 @@
     <SubNavs v-show="isWholeSidebar">
       <NavLink name="news" to="/government/news" />
       <NavLink name="programs and events" to="/government/programs-and-events" />
-      <div @click="showSubNavs"
+      <div @click="showChildSubNavs"
         class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
         Executives
       </div>
       <div
-        class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+        v-show="isChildSubNavs"
+        class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
         <NavLink name="Current Officials of Pililla Rizal" to="/government/current-officials" />
         <NavLink name="former officials" to="/government/former-officials" />
         <NavLink name="sanggunian barangay officials" to="/government/barangay-officials" />
@@ -67,37 +68,14 @@
       <SideNavName name="Services" :isWholeSidebar="isWholeSidebar" />
     </SideNav>
     <SubNavs v-show="isWholeSidebar">
-      <div @click="showSubNavs" class="cursor-pointer flex items-center">
-        <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
+      <div @click="showChildSubNavs"
+        class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
         Office of the Mayor
       </div>
       <div
-        class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-        <RouterLink to="">Example services</RouterLink>
-      </div>
-      <div @click="showSubNavs" class="cursor-pointer flex items-center">
-        <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
-        MSWD Department
-      </div>
-      <div
-        class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-        <RouterLink to="">Example services</RouterLink>
-      </div>
-      <div @click="showSubNavs" class="cursor-pointer flex items-center">
-        <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
-        Agriculture Department
-      </div>
-      <div
-        class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-        <RouterLink to="/services">Example services</RouterLink>
-      </div>
-      <div @click="showSubNavs" class="cursor-pointer flex items-center">
-        <img src="/images/icons/black/services.png" alt="this is an icon of government" class="w-[18px] mr-3">
-        HR Department
-      </div>
-      <div
-        class="hidden flex mt-2 pl-4 flex-col items-start justify-start gap-2 border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-        <RouterLink to="/services/">Example services</RouterLink>
+        v-show="isChildSubNavs"
+        class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
+        <NavLink name="Example" to="/services/office-of-the-mayor/exmaple" />
       </div>
     </SubNavs>
 
@@ -127,5 +105,7 @@ defineProps({
   showSubNavs: Function,
   isWholeSidebar: Boolean,
   page: String,
+  isChildSubNavs: Boolean,
+  showChildSubNavs: Function
 })
 </script>

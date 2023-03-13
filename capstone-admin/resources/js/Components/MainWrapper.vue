@@ -3,20 +3,22 @@
     <!-- sidebar -->
     <div class="sticky top-0 pt-5 rounded-xl h-screen hidden sm:block duration-100 bg-white whitespace-nowrap z-10"
       :class="isWholeSidebar ? 'w-[350px]' : 'w-[70px]'">
-      <div class="flex px-6 items-start">
-        <img src="images/logo/pililla-logo.png" alt="this is the pililla government logo" class="w-[50px]">
-        <h4 class="font-bold text-2xl ml-2 whitespace-pre-wrap text-gray-800"
-          :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">Better Pililla</h4>
-      </div>
+      <div class="overflow-y-scroll no-scrollbar h-full">
+        <div class="flex px-6 items-start">
+          <img src="images/logo/pililla-logo.png" alt="this is the pililla government logo" class="w-[50px]">
+          <h4 class="font-bold text-2xl ml-2 whitespace-pre-wrap text-gray-800"
+            :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">Better Pililla</h4>
+        </div>
 
-      <!-- arrow to show the whole navs -->
-      <div @click="showWholeSidebar"
-        class="z-10 cursor-pointer bg-blue-600 absolute -right-5 top-14 shadow-lg w-[40px] h-[40px] rounded-full border flex items-center justify-center">
-        <i class="uil uil-angle-right text-white font-bold text-4xl pointer-events-none"></i>
-      </div>
+        <!-- arrow to show the whole navs -->
+        <div @click="showWholeSidebar"
+          class="z-10 cursor-pointer bg-blue-600 absolute -right-5 top-14 shadow-lg w-[40px] h-[40px] rounded-full border flex items-center justify-center">
+          <i class="uil uil-angle-right text-white font-bold text-4xl pointer-events-none"></i>
+        </div>
 
-      <!-- navigations -->
-      <Navs :showSubNavs="showSubNavs" :isWholeSidebar="isWholeSidebar" :page="page"  />
+        <!-- navigations -->
+        <Navs :showChildSubNavs="showChildSubNavs" :isChildSubNavs="isChildSubNavs" :showSubNavs="showSubNavs" :isWholeSidebar="isWholeSidebar" :page="page"  />
+      </div>
     </div>
     <div class="flex-1 h-full relative">
       <!-- header -->
@@ -49,6 +51,7 @@ watch(route, (to, from) => {
 // handle show sub navs
 function showSubNavs(e) {
   isWholeSidebar.value = true;
+  isChildSubNavs.value = false;
 
    // close all the subnavs before opening one
   const subNavs = document.querySelectorAll(".subnavs");
@@ -72,6 +75,22 @@ function showWholeSidebar() {
   isWholeSidebar.value = !isWholeSidebar.value;
 }
 
+const isChildSubNavs = ref(false);
+function showChildSubNavs() {
+  isChildSubNavs.value = !isChildSubNavs.value;
+}
+
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+</style>
