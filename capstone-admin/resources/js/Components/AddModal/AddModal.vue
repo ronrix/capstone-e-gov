@@ -9,7 +9,7 @@
       <h2 class="font-bold text-2xl uppercase mb-0">Add modal</h2>
       <p class="mb-5">The order of this form will be the order when it gets displayed to the website</p>
 
-      <form method="POST" action="/create-news" @submit.capture="submitForm">
+      <form method="POST" action="/create-news" @submit.capture="submitForm" class="flex flex-col">
         <input name="title" type="text" placeholder="Add title here" class="border mb-5 p-2" value="title">
         <input name="subtitle" type="text" plapceholder="Add subtitle here" class="border p-2" value="subtitle">
 
