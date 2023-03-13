@@ -2,6 +2,14 @@
   <div class="mt-5 p-3 flex flex-col gap-5">
     <CardNews v-for="data in sample_data" :data="data" :showNewsModal="showNewsModal" />
     <NewsModal :selectedData="selectedData" :showNewsModal="showNewsModal" v-show="isNewModal" />
+
+    <!-- add new news btn -->
+    <button @click="showAddNewModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
+      <i class="uil uil-plus text-2xl text-white"></i>
+    </button>
+
+    <!-- add modal -->
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-show="isAddNewModal" />
   </div>
 </template>
 
@@ -9,9 +17,15 @@
 import CardNews from './CardNews.vue';
 import NewsModal from './NewsModal.vue';
 
-import { ref } from 'vue';
+import { ref, onUpdated } from 'vue';
+import AddModal from '../../../Components/AddModal/AddModal.vue';
 const isNewModal = ref(false);
 const selectedData = ref();
+
+const isAddNewModal = ref(false);
+function showAddNewModal() {
+  isAddNewModal.value = !isAddNewModal.value;
+}
 
 const sample_data = [
   {
@@ -40,6 +54,16 @@ function showNewsModal(data) {
   isNewModal.value = !isNewModal.value;
   selectedData.value = data;
 }
+
+// check if modal is open and prevent the document from scrolling
+onUpdated(() => {
+  if(isNewModal.value || isAddNewModal.value) {
+    document.body.classList.add('overflow-hidden');
+  }
+  else {
+    document.body.classList.remove('overflow-hidden');
+  }
+});
 
 </script>
 

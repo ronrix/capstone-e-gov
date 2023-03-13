@@ -1,15 +1,15 @@
 <template>
-  <div class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-20">
+  <div class="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-20">
     <div class="w-[500px] bg-white mx-auto p-10 flex flex-col relative overflow-hidden">
       <!-- close btn -->
-      <div @click="showAddModal" class="flex items-end justify-start absolute right-0 top-0 bg-red-500 text-white px-5">
+      <div @click="showAddModal" class="flex items-end justify-start absolute right-0 top-0 bg-red-500 text-white px-5 cursor-pointer">
         <i class="fa-solid fa-xmark mb-1 group-hover:hidden"></i>
       </div>
 
       <h2 class="font-bold text-2xl uppercase mb-0">Add modal</h2>
       <p class="mb-5">The order of this form will be the order when it gets displayed to the website</p>
 
-      <form method="POST" action="/create-news" @submit.capture="submitForm">
+      <form method="POST" action="/create-news" @submit.capture="submitForm" class="flex flex-col">
         <input name="title" type="text" placeholder="Add title here" class="border mb-5 p-2" value="title">
         <input name="subtitle" type="text" plapceholder="Add subtitle here" class="border p-2" value="subtitle">
 
