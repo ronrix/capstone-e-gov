@@ -9,7 +9,7 @@
       <p class="mt-5 text-ellipsis text-sm h-[100px] overflow-hidden">
         {{ data.content }}
       </p>
-      <button @click="showNewsModal(data)" class="bg-blue-400 px-3 py-2 text-white font-bold text-xs self-end mt-5 uppercase">view </button>
+      <button @click="showNewsModal(data)" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-5 uppercase">view </button>
     </div>
   </div>
 </template>
