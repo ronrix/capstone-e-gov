@@ -1,8 +1,8 @@
 <template>
-  <div class="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-20">
+  <div class="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-20">
     <div class="w-[500px] bg-white mx-auto p-10 flex flex-col relative overflow-hidden">
       <!-- close btn -->
-      <div @click="showAddModal" class="flex items-end justify-start absolute right-0 top-0 bg-red-500 text-white px-5">
+      <div @click="showAddModal" class="flex items-end justify-start absolute right-0 top-0 bg-red-500 text-white px-5 cursor-pointer">
         <i class="fa-solid fa-xmark mb-1 group-hover:hidden"></i>
       </div>
 
