@@ -1,12 +1,11 @@
 <template>
     <WrapperContent>
-        <div v-for="data in arr" class="card1">
-            <img class="pic1" :src="data.imgSrc">
+        <div v-for="data in arr" class="card-img">
+            <div class="img-ratio"><img class="pic1" :src="data.imgSrc"></div>
             <p class="place-name">{{ data.placeName }}</p>
             <div class="flex"> <i class="ml-1 uil uil-location-point text-cyan-400"></i><p class="address pt-1">{{ data.address }}</p></div>
-           
+           <button @click="showNewsModal(data)" style="float: right;" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-center mt-5 uppercase mb-2 mr-2">view </button>
         </div>
-        
         
         
         
@@ -63,13 +62,21 @@ const arr = [{
 
     }]
 
+    defineProps({
+  showNewsModal: Function,
+  data: Object
+});
 
 </script>
 <style scoped>
+    .img-ratio{
+        aspect-ratio: 1/1;
+    }
     .pic1 {
         margin-left: 6px;
         margin-top: 6px;
         width: 260px;
+ 
         
     }
   
@@ -83,11 +90,12 @@ const arr = [{
     .place-name {
         font-weight: bold;
         margin-left: 5px;
-        margin-bottom: 5px;
+        margin-top: 10px;
+        margin-bottom: 3px;
         width: 250px 
 
     }
-    .card1{
+    .card-img{
         
         width: 270px;
         display: inline-block;
@@ -98,7 +106,7 @@ const arr = [{
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         transition: .5s;
     }
-    .card1:hover{
+    .card-img:hover{
         transform: scale(1.1); 
 		
     }
