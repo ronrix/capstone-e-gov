@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5 p-3 flex flex-col gap-5">
+  <WrapperContent class="flex flex-col gap-5">
     <!-- filter -->
     <div class="w-full flex items-center">
       <label class="flex items-center rounded-lg p-2 text-sm bg-white">
@@ -18,7 +18,7 @@
 
     <!-- add modal -->
     <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
-  </div>
+  </WrapperContent>
 </template>
 
 <script setup>
