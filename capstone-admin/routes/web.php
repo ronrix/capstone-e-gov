@@ -30,14 +30,38 @@ Route::get('/logout', [LoginController::class, "logout"]);
 // government
 Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
+    // government
     Route::get("/government/news", [NewsController::class, "index"]);
-    Route::get("/government/executives/current-officials", [ExecutivesController::class, "index"]);
-    Route::get("/government/executives/form-officials", [ExecutivesController::class, "index"]);
-    Route::get("/government/executives/baranggay-officials", [ExecutivesController::class, "index"]);
-    Route::get("/government/executives/department-heads", [ExecutivesController::class, "index"]);
-    Route::get("/government/hotlines", [HotlinesController::class, "index"]);
-    Route::get("/government/job-postings", [JobPostingController::class, "index"]);
-    Route::get("/government/population", [PopulationController::class, "index"]);
+    Route::get("/government/programs-and-events", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/current-officials", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/former-officials", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/barangay-officials", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/department-heads", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/job-postings", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/office-of-the-mayor", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/full-disclosure-reports", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/hotlines", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/population", function() {
+        return inertia("Main");
+    });
 
     // tourism
     Route::get("/tourism/tourism", function() {
