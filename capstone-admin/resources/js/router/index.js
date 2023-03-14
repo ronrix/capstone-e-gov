@@ -88,9 +88,19 @@ export const router = createRouter({
       component: () => import("../Pages/About/Contacts/Contacts.vue")
     },
     {
-      path: "/services/office-of-the-mayor/example", 
+      path: "/services/office-of-the-mayor/scholarship-program", 
       name: "CardServices",
-      component: () => import("../Pages/Services/CardServices.vue")
+      component: () => import("../Pages/Services/Office of the Mayor/Scholarship Program/CardServices.vue")
+    },
+    {
+      path: "/services/office-of-the-mayor/civil-wedding-schedule", 
+      name: "Civil",
+      component: () => import("../Pages/Services/Office of the Mayor/Civil Wedding Schedule/Civil.vue")
+    },
+    {
+      path: "/services/office-of-the-mayor/mayors-clearance", 
+      name: "Mayor",
+      component: () => import("../Pages/Services/Office of the Mayor/Mayor's Clearance/Mayor.vue")
     },
   ]
 });
