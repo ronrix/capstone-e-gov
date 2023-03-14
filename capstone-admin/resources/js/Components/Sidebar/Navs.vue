@@ -75,7 +75,9 @@
         <div
           v-show="isChildSubNavs"
           class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
-          <NavLink name="Example" to="/services/office-of-the-mayor/example" />
+          <NavLink name="scholarship program" to="/services/office-of-the-mayor/scholarship-program" />
+          <NavLink name="Civil Wedding Schedule" to="/services/office-of-the-mayor/civil-wedding-schedule" />
+          <NavLink name="Mayor's Clearance" to="/services/office-of-the-mayor/mayors-clearance" />
         </div>
       </SubNavs>
   
