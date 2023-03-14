@@ -4,7 +4,7 @@
     <!-- delete button this will delete the programs and events -->
     <Delete />
 
-    <div>
+    <div class="flex-1">
       <p class="text-gray-500 text-sm">
         <span class="font-bold text-blue-600">
           <i class="uil uil-archive"></i>
@@ -17,10 +17,16 @@
       <p class="my-2 text-sm">
         {{ data.location }}
       </p>
-      <p class="text-sm text-gray-700">{{ data.content }}</p>
+      <p class="text-sm text-gray-700">
+        {{ data.content }}
+        {{ data.content }}
+        {{ data.content }}
+        {{ data.content }}
+        {{ data.content }}
+      </p>
     </div>
 
-    <div class="mt-5 w-full sm:mt-0 sm:w-3/4 h-[220px] overflow-hidden">
+    <div class="flex-1 mt-5 max-w-[500px] h-[320px] max-h-[500px] overflow-hidden rounded-md md:mx-5">
       <img :src="data.imgSrc" alt="this is the program image">
     </div>
   </div>
