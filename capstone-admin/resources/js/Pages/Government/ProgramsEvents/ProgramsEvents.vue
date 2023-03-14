@@ -9,7 +9,7 @@
     </div>
 
     <div class="flex flex-col gap-3 mt-5">
-      <ProgramsEventsCard v-for="data in searchFilter()" :data="data" />
+      <ProgramsEventsCard v-for="data in filteredData" :data="data" />
     </div>
 
     <!-- add modal -->
@@ -22,8 +22,9 @@
 import AddModal from '../../../Components/AddModal/AddModal.vue';
 import AddBtn from '../../../Components/AddModal/AddBtn.vue';
 import ProgramsEventsCard from './ProgramsEventsCard.vue';
+import { searchFilter } from '../../../utils/searchFilter';
 
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 const isAddNewModal = ref(false);
 
 function showAddModal() {
@@ -57,20 +58,7 @@ const sample_data = [
 
 // search filter
 const search = ref("");
-function searchFilter() {
-  const first_option = sample_data.filter(news => {
-    return news.title.toLowerCase().includes(search.value);
-  });
-
-  const second_option = sample_data.filter(news => {
-    return news.content.toLowerCase().includes(search.value);
-  });
-
-  if(first_option.length) {
-    return first_option;
-  }
-  return second_option;
-}
+const filteredData = computed(() => searchFilter(sample_data, search));
 
 </script>
 

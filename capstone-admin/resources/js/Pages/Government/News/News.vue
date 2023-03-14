@@ -8,7 +8,7 @@
       </label> 
     </div>
 
-    <CardNews v-for="data in searchFilter()" :data="data" :showNewsModal="showNewsModal" />
+    <CardNews v-for="data in filteredData" :data="data" :showNewsModal="showNewsModal" />
     <NewsModal :selectedData="selectedData" :showNewsModal="showNewsModal" v-if="isNewModal" />
 
     <!-- add new news btn -->
@@ -25,8 +25,9 @@
 import CardNews from './CardNews.vue';
 import NewsModal from './NewsModal.vue';
 
-import { ref, onUpdated } from 'vue';
+import { ref, onUpdated, computed } from 'vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue';
+import { searchFilter } from '../../../utils/searchFilter';
 const isNewModal = ref(false);
 const selectedData = ref();
 
@@ -65,11 +66,7 @@ function showNewsModal(data) {
 
 // data filtering for search input 
 const search = ref("");
-function searchFilter() {
-  return sample_data.filter(news => {
-    return news.title.toLowerCase().includes(search.value);
-  })
-}
+const filteredData = computed(() => searchFilter(sample_data, search));
 
 // check if modal is open and prevent the document from scrolling
 onUpdated(() => {
