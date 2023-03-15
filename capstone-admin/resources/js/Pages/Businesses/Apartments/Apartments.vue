@@ -1,15 +1,21 @@
 <template>
   <WrapperContent>
     <!--Remember to add filter for both type and title-->
+    <!-- search filter -->
+    <SearchInput class="mb-5" @searchFn="searchFn" />
 
-    <CardApartment v-for="data in searchFilter()" :data="data" :showApartmentModal="showApartmentModal" />
-    <ApartmentModal :selectedData="selectedData" :showApartmentModal="showApartmentModal" v-if="isNewModal" />
+    <div class="flex flex-col gap-2">
+      <CardApartment v-for="data in filteredData" :data="data" :showPreviewModal="showPreviewModal" />
+    </div>
+
+    <!-- preview the whole information of apartments using PreviewModal -->
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
     
-    <button @click="showApartmentModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
+    <button @click="showAddModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
       <i class="uil uil-plus text 2xl text-white"></i>
     </button>
 
-    <AddModal :showAddModal="showApartmentModal" :isAddModal="isAddNewModal" v-if="isAssNewModal" />
+    <AddModal :showAddModal="showAddModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
     </WrapperContent>
   <!--
     <div>
@@ -41,18 +47,26 @@
 
 <script setup>
 import CardApartment from './CardApartment.vue';
-import ApartmentModal from './ApartmentModal.vue';
-
 
 import { ref, onUpdated } from 'vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue'
-const isNewModal = ref(false)
+import SearchInput from '../../../Components/SearchInput.vue';
+import PreviewModal from '../../../Components/PreviewModal.vue';
+
+const isPreviewModal = ref(false);
 const selectedData = ref();
 
 const isAddNewModal = ref(false);
-function showAddNewModal() {
+function showPreviewModal(data){
+  isPreviewModal.value = !isPreviewModal.value;
+  selectedData.value = data;
+}
+
+// to show the add modal when add button was clicked
+function showAddModal() {
   isAddNewModal.value = !isAddNewModal.value;
 }
+
 const sample_data = [
   {
     title:"Aparment #1",
@@ -76,15 +90,30 @@ const sample_data = [
 },
 ];
 
-function showApartmentModal(data){
-  isNewModal.value = !isNewModal.value;
-  selectedData.value = data;
-}
 // Should Add data filtering search input
+const filteredData = ref(searchFilter(""));
+function searchFilter(value) {
+  const first_option = sample_data.filter(data => {
+    return data.title?.toLowerCase().includes(value?.toLowerCase());
+  });
+
+  const second_option = sample_data.filter(data => {
+    return data.content.toLowerCase().includes(value?.toLowerCase());
+  });
+
+  if(first_option.length) {
+    return first_option;
+  }
+  return second_option;
+}
+
+function searchFn(value) {
+  filteredData.value = searchFilter(value);
+}
 
 
 onUpdated(() => {
-  if(isNewModal.value || isNewModal.value) {
+  if(isApartmentModal.value || isApartmentModal.value) {
     document.body.classList.add('overflow-hidden');
   }
   else {
