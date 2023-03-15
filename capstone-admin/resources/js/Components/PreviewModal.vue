@@ -2,7 +2,7 @@
   <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-20">
     <div class="bg-white sm:w-[700px] p-5 rounded-lg relative flex flex-col md:flex-row items-start">
       <!-- close modal btn -->
-      <i @click="showNewsModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
+      <i @click="showPreviewModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
       <!-- image preview -->
       <ImgPreview v-if="isImgPreview" :imgSrc="selectedData?.img" :closeImgPreview="closeImgPreview" />
@@ -44,10 +44,10 @@
 
 <script setup>
 import { ref } from 'vue';
-import ImgPreview from '../../../Components/ImgPreview.vue';
+import ImgPreview from './ImgPreview.vue';
 
 const { selectedData } = defineProps({
-  showNewsModal: Function,
+  showPreviewModal: Function,
   selectedData: {}
 });
 
@@ -55,14 +55,12 @@ const content = selectedData?.content;
 const title = selectedData?.title;
 
 function startEditing(e) {
-  console.log(e.target, e.target.nextElementSibling);
   e.target.nextElementSibling.classList.remove("hidden");
   e.target.nextElementSibling.focus();
   e.target.classList.add("hidden");
 }
 function stopEditing(e) {
   e.target.classList.add("hidden");
-  console.log(e.target, e.target.previousElementSibling);
   e.target.previousElementSibling.classList.remove("hidden");
 }
 
