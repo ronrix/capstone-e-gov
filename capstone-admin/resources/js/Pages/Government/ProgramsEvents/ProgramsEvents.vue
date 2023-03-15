@@ -1,5 +1,8 @@
 <template>
   <WrapperContent>
+  <!-- preview of programs and events modal using PreviewModal -->
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
+
    <!-- filter -->
     <div class="w-full flex items-center">
       <label class="flex items-center rounded-lg p-2 text-sm bg-white">
@@ -13,7 +16,7 @@
         <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.month }}</span>
         <div class="flex-1 border"></div>
       </div>
-      <ProgramsEventsCard v-for="data in group.items" :data="data" />
+      <ProgramsEventsCard v-for="data in group.items" :data="data" :showPreviewModal="showPreviewModal" />
     </div>
 
     <!-- add modal -->
@@ -29,6 +32,7 @@ import ProgramsEventsCard from './ProgramsEventsCard.vue';
 import { searchFilter } from '../../../utils/searchFilter';
 
 import { computed, ref } from 'vue';
+import PreviewModal from '../../../Components/PreviewModal.vue';
 const isAddNewModal = ref(false);
 
 function showAddModal() {
@@ -41,24 +45,32 @@ const sample_data = [
     title: "Parks and Rec Committee",
     location: "City Hall 2041 Spring haven Trail, Indianpols, IN 07901",
     content: "first Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit at, possimus dignissimos dicta sequi nostrum officia? Harum asperiores ipsa officiis consectetur impedit quisquam, commodi blanditiis cumque, maiores, eaque dolorem nihil?",
-    imgSrc: "https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
+    img: "https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=869&q=80",
     date: "2022-01-01",
   },
   {
     title: "Great Yoga",
     location: "1651 Rolims Road. Beech Grove, IN 46203",
     content: "second Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit at, possimus dignissimos dicta sequi nostrum officia? Harum asperiores ipsa officiis consectetur impedit quisquam, commodi blanditiis cumque, maiores, eaque dolorem nihil?",
-    imgSrc: "https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+    img: "https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
     date: "2020-12-02",
   },
   {
     title: "WordCamp Pawnee",
     location: " Spring haven Trail, Indianpols, IN 07901",
     content: "third Lorem, ipsum dolor sit amet consectetur adipisicing elit. Odit at, possimus dignissimos dicta sequi nostrum officia? Harum asperiores ipsa officiis consectetur impedit quisquam, commodi blanditiis cumque, maiores, eaque dolorem nihil?",
-    imgSrc: "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
+    img: "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80",
     date: "2022-03-03",
   },
 ];
+
+// functions to show the preview modal
+const isPreviewModal = ref(false);
+const selectedData = ref();
+function showPreviewModal(data) {
+  isPreviewModal.value = !isPreviewModal.value;
+  selectedData.value = data;
+}
 
 // search filter
 const search = ref("");

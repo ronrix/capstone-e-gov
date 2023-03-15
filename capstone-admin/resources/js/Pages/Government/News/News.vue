@@ -14,9 +14,9 @@
         <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.month }}</span>
         <div class="flex-1 border"></div>
       </div>
-      <CardNews v-for="data in group.items" :data="data" :showNewsModal="showNewsModal" />
+      <CardNews v-for="data in group.items" :data="data" :showPreviewModal="showPreviewModal" />
     </div>
-    <NewsModal :selectedData="selectedData" :showNewsModal="showNewsModal" v-if="isNewModal" />
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
 
     <!-- add new news btn -->
     <button @click="showAddNewModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
@@ -30,12 +30,12 @@
 
 <script setup>
 import CardNews from './CardNews.vue';
-import NewsModal from './NewsModal.vue';
+import PreviewModal from '../../../Components/PreviewModal.vue';
 
 import { ref, onUpdated, computed } from 'vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue';
 import { searchFilter } from '../../../utils/searchFilter';
-const isNewModal = ref(false);
+const isPreviewModal = ref(false);
 const selectedData = ref();
 
 const isAddNewModal = ref(false);
@@ -70,8 +70,8 @@ const sample_data = [
   },
 ];
 
-function showNewsModal(data) {
-  isNewModal.value = !isNewModal.value;
+function showPreviewModal(data) {
+  isPreviewModal.value = !isPreviewModal.value;
   selectedData.value = data;
 }
 
@@ -114,7 +114,7 @@ const dataToLoop = computed(() => {
 
 // check if modal is open and prevent the document from scrolling
 onUpdated(() => {
-  if(isNewModal.value || isAddNewModal.value) {
+  if(isPreviewModal.value || isAddNewModal.value) {
     document.body.classList.add('overflow-hidden');
   }
   else {
