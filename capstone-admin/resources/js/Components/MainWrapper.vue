@@ -5,7 +5,7 @@
       :class="isWholeSidebar ? 'w-[350px]' : 'w-[70px]'">
       <div class="overflow-y-scroll no-scrollbar h-full">
         <div class="flex px-6 items-start">
-          <img src="images/logo/pililla-logo.png" alt="this is the pililla government logo" class="w-[50px]">
+          <img :src="imgPath" alt="this is the pililla government logo" class="w-[50px]">
           <h4 class="font-bold text-2xl ml-2 whitespace-pre-wrap text-gray-800"
             :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">Better Pililla</h4>
         </div>
@@ -35,7 +35,10 @@ import { watch, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import Navs from './Sidebar/Navs.vue';
 import Topbar from './Topbar.vue';
+import { usePage } from '@inertiajs/inertia-vue3'
 
+const { props } = usePage();
+const imgPath = props.value.assetUrl;
 const route = useRoute();
 const currentRoute = ref(route.fullPath);
 
