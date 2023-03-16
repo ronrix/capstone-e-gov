@@ -40,7 +40,8 @@ class HandleInertiaRequests extends Middleware
             // share the flash session to vue client
             "flash" => [
                 "error_msg" => session("error_msg")
-            ]
+            ],
+            "img_path" => asset('images/logo/pililla-logo.png')
         ]);
     }
 }

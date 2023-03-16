@@ -5,7 +5,7 @@
       :class="isWholeSidebar ? 'w-[350px]' : 'w-[70px]'">
       <div class="overflow-y-scroll no-scrollbar h-full">
         <div class="flex px-6 items-start">
-          <img :src="imgPath" alt="this is the pililla government logo" class="w-[50px]">
+          <img :src="$page.props.img_path" alt="this is the pililla government logo" class="w-[50px]">
           <h4 class="font-bold text-2xl ml-2 whitespace-pre-wrap text-gray-800"
             :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">Better Pililla</h4>
         </div>
@@ -23,7 +23,7 @@
     <div class="flex-1 h-full relative">
       <!-- header -->
       <Topbar :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page" class="sticky top-0 bg-white p-5 shadow-sm z-10" />
-      <div class="px-8 -z-10">
+      <div class="md:px-8 -z-10">
         <slot></slot>
       </div>
     </div>
@@ -35,10 +35,7 @@ import { watch, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import Navs from './Sidebar/Navs.vue';
 import Topbar from './Topbar.vue';
-import { usePage } from '@inertiajs/inertia-vue3'
 
-const { props } = usePage();
-const imgPath = props.value.assetUrl;
 const route = useRoute();
 const currentRoute = ref(route.fullPath);
 
