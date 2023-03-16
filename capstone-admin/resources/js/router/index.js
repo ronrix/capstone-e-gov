@@ -41,9 +41,9 @@ export const router = createRouter({
       component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
     },
     {
-      path: "/government/hotlines",
-      name: "Hotlines",
-      component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
+      path: "/government/full-disclosure-reports",
+      name: "FullDisclosureReports",
+      component: () => import("../Pages/Government/FullDisclosure/FullDisclosure.vue")
     },
     // tourism
     {
