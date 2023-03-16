@@ -48,6 +48,8 @@ class LoginController extends Controller
     // show the dashboard page
     public function dashboard()
     {
-        return inertia("Main");
+        // add logo image to response
+        $assetUrl = asset('images/logo/pililla-logo.png');
+        return inertia("Main", ["assetUrl" => $assetUrl]);
     }
 }

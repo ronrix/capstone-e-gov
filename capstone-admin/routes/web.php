@@ -47,7 +47,10 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/government/department-heads", function() {
         return inertia("Main");
     });
-    Route::get("/government/job-postings", function() {
+    Route::get("/government/job-postings/active", function() {
+        return inertia("Main");
+    });
+    Route::get("/government/job-postings/inactive", function() {
         return inertia("Main");
     });
     Route::get("/government/office-of-the-mayor", function() {
