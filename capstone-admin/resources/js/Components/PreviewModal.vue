@@ -45,6 +45,7 @@
 <script setup>
 import { ref } from 'vue';
 import ImgPreview from './ImgPreview.vue';
+import { startEditing, stopEditing } from '../utils/editFn';
 
 const { selectedData } = defineProps({
   showPreviewModal: Function,
@@ -53,16 +54,6 @@ const { selectedData } = defineProps({
 
 const content = selectedData?.content;
 const title = selectedData?.title;
-
-function startEditing(e) {
-  e.target.nextElementSibling.classList.remove("hidden");
-  e.target.nextElementSibling.focus();
-  e.target.classList.add("hidden");
-}
-function stopEditing(e) {
-  e.target.classList.add("hidden");
-  e.target.previousElementSibling.classList.remove("hidden");
-}
 
 // show image preview
 const isImgPreview = ref(false);
