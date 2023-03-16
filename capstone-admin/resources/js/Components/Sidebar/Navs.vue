@@ -33,7 +33,7 @@
         <NavLink to="/government/job-postings" name="job postings" />
         <NavLink to="/government/full-disclosure-reports" name="full disclosure reports" />
         <NavLink to="/government/hotlines" name="hotlines" />
-        <NavLink to="/government/populations" name="populations" />
+        <NavLink to="/government/demographic-profile" name="demographic profile" />
       </SubNavs>
   
   
@@ -113,8 +113,6 @@
         <SideNavName name="About" :isWholeSidebar="isWholeSidebar" />
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
-        <NavLink to="/about/mission-and-vision" name="mission and vision" />
-        <NavLink to="/about/history" name="history" />
         <NavLink to="/about/official-seal" name="official seal" />
         <NavLink to="/about/contacts" name="contacts" />
       </SubNavs>
