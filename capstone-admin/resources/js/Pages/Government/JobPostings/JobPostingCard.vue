@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-md p-3 flex flex-col shadow-sm">
+  <div class="bg-white rounded-md p-3 flex flex-col shadow-md">
      <!--top  -->
     <div>
       <p class="text-gray-600 uppercase font-bold text-sm">{{ data?.category }}</p>
@@ -20,7 +20,7 @@
     <div class="text-gray-600 flex items-center text-sm capitalize whitespace-pre-wrap">
       {{ data?.location }} 
       <i class="uil uil-angle-right"></i>
-      {{ workType }}
+      {{ data?.workType.join(" | ") }}
     </div>
 
     <button class="mt-3 outline-none font-bold text-sm text-gray-600 self-end hover:text-gray-500">
@@ -31,10 +31,7 @@
 </template>
 
 <script setup>
-
-const workType = data.workType.join(" | ")
-
-const { data } = defineProps({
+defineProps({
   data: Object,
 });
 </script>
