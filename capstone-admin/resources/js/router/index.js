@@ -36,16 +36,6 @@ export const router = createRouter({
       component: () => import("../Pages/Government/ProgramsEvents/ProgramsEvents.vue")
     },
     {
-      path: "/government/office-of-the-mayor",
-      name: "OfficeOfMayor",
-      component: () => import("../Pages/Government/OfficeOfMayor/OfficeOfMayor.vue")
-    },
-    {
-      path: "/government/office-of-the-vice-mayor",
-      name: "OfficeOfVifeMayor",
-      component: () => import("../Pages/Government/OfficeOfViceMayor/OfficeOfViceMayor.vue")
-    },
-    {
       path: "/government/hotlines",
       name: "Hotlines",
       component: () => import("../Pages/Government/Hotlines/Hotlines.vue")

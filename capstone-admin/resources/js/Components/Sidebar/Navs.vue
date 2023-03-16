@@ -31,8 +31,6 @@
           <NavLink name="municipal department heads" to="/government/department-heads" />
         </div>
         <NavLink to="/government/job-postings" name="job postings" />
-        <NavLink to="/government/office-of-the-mayor" name="office of the mayor" />
-        <NavLink to="/government/office-of-the-vice-mayor" name="office of the vice mayor" />
         <NavLink to="/government/full-disclosure-reports" name="full disclosure reports" />
         <NavLink to="/government/hotlines" name="hotlines" />
         <NavLink to="/government/populations" name="populations" />
