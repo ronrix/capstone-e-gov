@@ -7,13 +7,15 @@
         <div class="flex items-start gap-5 justify-start flex-wrap">
 
             <!-- card -->
-            <div v-for="data in filteredData" class="card1 flex flex-col h-[330px] w-full md:w-auto">
+            <div v-for="data in filteredData" class="card1 flex flex-col h-[350px] w-full md:w-auto">
                 <img class="text-center h-[150px]" :src="data.imgSrc">
                 <p class="place-name text-xl">{{ data.placeName }}</p>
                 <div class="flex items-start mt-3">
                     <i class="ml-1 uil uil-location-point text-cyan-400 mr-1"></i>
                     <p class="address text-sm">{{ data.address }}</p>
                 </div>
+                <div class="h-[100px]"></div>
+                <button @click="showAddNewModal(data)" class="mb-2 mr-2 bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end  uppercase">view </button>
             </div>
 
         </div>
@@ -30,7 +32,7 @@ const sample_data = [{
 
 },
 {
-    placeName: "Mt. Sebrano",
+    placeName: "Mt. Sembrano",
     address: "99R6+574, Malaya Trail, Pililla, Rizal",
     imgSrc: "http://tarakahitsaan.com/images/spots/mt-sembrano-rizal.jpg"
 
@@ -108,7 +110,7 @@ function searchFn(value) {
 }
 
 .card1 {
-    padding: 0.5em;
+    /* padding: 0.5em; */
     background-color: rgb(255, 255, 255);
     border-radius: 5px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
