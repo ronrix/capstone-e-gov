@@ -20,18 +20,14 @@
       <!-- right -->
       <div class="flex-1 p-3 w-full">
         <!-- title -->
-        <h4 @click="startEditing" class="font-bold text-xl flex items-center whitespace-pre-wrap">
-          <span class="cursor-pointer capitalize pointer-events-none">{{ title }}</span>
-          <i class="uil uil-edit-alt ml-3 text-base pointer-events-none"></i>
-        </h4>
-        <textarea @blur="stopEditing" v-model="title" class="hidden w-full overflow-scroll no-scrollbar mt-5 text-xl font-bold h-[40px] max-h-[40ppx]">{{ title }}</textarea>
+        <textarea v-model="title" class="capitalize w-full py-3 overflow-scroll no-scrollbar text-xl font-bold h-[40px] max-h-[40ppx]">{{ title }}</textarea>
         <!-- date -->
         <h5 class="text-xs text-gray-500 font-bold">{{ new Date() }}</h5>
         <!-- content -->
-        <p @click="startEditing" class="text-sm mt-5 cursor-pointer overflow-scroll no-scrollbar h-[200px]">
+        <!-- <p @click="startEditing" class="text-sm mt-5 cursor-pointer overflow-scroll no-scrollbar h-[200px]">
           {{ selectedData?.content }}
-        </p>
-        <textarea @blur="stopEditing" v-model="content" class="hidden w-full overflow-scroll h-[200px] max-h-[200px] no-scrollbar text-sm mt-5 ">{{ content }}</textarea>
+        </p> -->
+        <textarea v-model="content" class="capitalize py-3 w-full overflow-scroll h-[200px] max-h-[200px] no-scrollbar text-sm">{{ content }}</textarea>
 
         <div class="flex items-center justify-end">
           <button class="px-4 border border-blue-600 hover:bg-blue-600 hover:text-white">cancel</button>
@@ -45,7 +41,6 @@
 <script setup>
 import { ref } from 'vue';
 import ImgPreview from './ImgPreview.vue';
-import { startEditing, stopEditing } from '../utils/editFn';
 
 const { selectedData } = defineProps({
   showPreviewModal: Function,

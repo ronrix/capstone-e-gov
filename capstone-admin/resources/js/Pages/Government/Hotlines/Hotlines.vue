@@ -17,18 +17,10 @@
         <tbody>
           <tr v-for="a in filteredData" class="text-xs md:text-sm font-medium">
             <td class="bg-white">
-              <p @click="startEditing" class="m-0 p-0">
-                {{ a.department }}
-                <i class="uil uil-pen text-sm ml-3"></i>
-              </p>
-              <textarea @blur="stopEditing" v-model="a.department" class="hidden w-full overflow-scroll no-scrollbar m-0 text-sm font-bold h-[20px] max-h-[20ppx]">{{ a.department }}</textarea>
+              <textarea v-model="a.department" class="p-3 w-full overflow-scroll no-scrollbar m-0 text-sm font-bold h-[40px] max-h-[40ppx]">{{ a.department }}</textarea>
             </td>
             <td class="bg-white">
-              <p @click="startEditing" class="m-0 p-0">
-                {{ a.number }}
-                <i class="uil uil-pen text-sm ml-3"></i>
-              </p>
-              <textarea @blur="stopEditing" v-model="a.number" class="hidden w-auto overflow-scroll no-scrollbar m-0 text-sm font-bold h-[20px] max-h-[20ppx]">{{ a.number }}</textarea>
+              <textarea v-model="a.number" class="p-3 w-full overflow-scroll no-scrollbar m-0 text-sm font-bold h-[40px] max-h-[40ppx]">{{ a.number }}</textarea>
             </td>
             <td class="bg-white text-center"><button class="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm font-bold rounded-md">delete</button></td>
           </tr>
@@ -48,7 +40,6 @@
 </template>
 
 <script setup>
-import { startEditing, stopEditing } from '../../../utils/editFn';
 import HotlineModal from "./HotlineModal.vue";
 import { ref } from 'vue';
 
@@ -117,8 +108,6 @@ function sortFn() {
 
 <style scoped>
 td, th {
-  padding: 1em;
-  margin: 0.5em;
 }
 
 </style>
