@@ -5,7 +5,7 @@
     <SearchInput class="mb-5" @searchFn="searchFn" />
 
     <!-- top section -->
-    <section class="flex items-center">
+    <section class="flex items-center flex-col sm:flex-row">
       <h4 class="text-2xl font-bold">{{ sample_data.length }} Active Jobs</h4>
 
       <!-- sort by -->

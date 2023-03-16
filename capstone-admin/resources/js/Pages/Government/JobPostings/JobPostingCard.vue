@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white rounded-md p-3 flex flex-col shadow-md">
+  <div class="bg-white rounded-md p-3 flex flex-col shadow-md w-full sm:w-auto">
      <!--top  -->
     <div>
       <p class="text-gray-600 uppercase font-bold text-sm">{{ data?.category }}</p>
