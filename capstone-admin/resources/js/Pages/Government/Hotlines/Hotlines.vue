@@ -1,28 +1,38 @@
 <template>
   <WrapperContent>
-    <h3 class="font-bold text-xl mb-3">Municipal Hotlines</h3>
+    <h3 class="font-bold text-xl mb-3 text-gray-800">Municipal Hotlines</h3>
     <!-- hotlines table -->
     <div class="w-full flex flex-col">
-      <table class="text-left border-separate w-full">
+      <table class="text-left w-full">
         <thead>
-          <tr class="bg-gray-200 text-xs md:text-sm">
-            <th class="flex items-center justify-between">
-              Departments
+          <tr class="bg-neutral-200 text-xs md:text-sm">
+            <th class="px-2 text-center">
+              <i class="uil uil-list-ui-alt"></i>
+            </th>
+            <th class="flex items-center justify-between pl-2 text-neutral-600">
+              <div class="m-0">
+                <i class="uil uil-letter-english-a"></i>
+                Departments
+              </div>
               <i @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
             </th>
-            <th>Numbers</th>
-            <th>Actions</th>
+            <th class="pl-2 text-neutral-600">
+              <i class="uil uil-outgoing-call"></i>
+              Numbers
+            </th>
+            <th class="pl-2 text-neutral-600">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="a in filteredData" class="text-xs md:text-sm font-medium">
-            <td class="bg-white">
-              <textarea v-model="a.department" class="p-3 w-full overflow-scroll no-scrollbar m-0 text-sm font-bold h-[40px] max-h-[40ppx]">{{ a.department }}</textarea>
+          <tr v-for="(a, id) in filteredData" class="text-xs md:text-sm font-medium border">
+            <td class="bg-white text-center">{{ id + 1 }}</td>
+            <td class="bg-white border pl-2 border-l-0">
+              <textarea v-model="a.department" class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">{{ a.department }}</textarea>
             </td>
-            <td class="bg-white">
-              <textarea v-model="a.number" class="p-3 w-full overflow-scroll no-scrollbar m-0 text-sm font-bold h-[40px] max-h-[40ppx]">{{ a.number }}</textarea>
+            <td class="bg-white border pl-2">
+              <textarea v-model="a.number" class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">{{ a.number }}</textarea>
             </td>
-            <td class="bg-white text-center"><button class="border border-red-600 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm font-bold rounded-md">delete</button></td>
+            <td class="bg-white border pl-2"><button class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md">delete</button></td>
           </tr>
         </tbody>
       </table>
@@ -107,7 +117,4 @@ function sortFn() {
 </script>
 
 <style scoped>
-td, th {
-}
-
 </style>
