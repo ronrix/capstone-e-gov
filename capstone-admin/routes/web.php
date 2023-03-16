@@ -56,6 +56,9 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/government/office-of-the-mayor", function() {
         return inertia("Main");
     });
+    Route::get("/government/office-of-the-vice-mayor", function() {
+        return inertia("Main");
+    });
     Route::get("/government/full-disclosure-reports", function() {
         return inertia("Main");
     });
