@@ -13,23 +13,20 @@
                 <ListReq title="1pc 2 x 2 Photo" />
             </div>
         </WrapperReq>
-              
-            <Table>
-                <TableHeader v-for="(header, index) in thead" :header="header" />
-                <Rows v-for="(data, index) in table" :class="{ 'bg-gray-200': index % 2 }" :data="data"
+        <Table>
+            <TableHeader v-for="(header, index) in thead" :header="header" />
+            <Rows v-for="(data, index) in table" :class="{ 'bg-gray-200': index % 2 }" :data="data"
                 class="hover:bg-gray-300" />
-            </Table>
+        </Table>
     </WrapperContent>
-        
 </template>
 
 <script setup>
-import WrapperContent from '../../../../Components/WrapperContent.vue';
-import WrapperReq from '../../Services Components/WrapperReq.vue';
 import ListReq from '../../Services Components/ListReq.vue';
+import Rows from '../../Services Components/Rows.vue';
+import WrapperReq from '../../Services Components/WrapperReq.vue';
 import TableHeader from '../../Services Components/TableHeader.vue';
 import Table from '../../Services Components/Table.vue';
-import Rows from '../../Services Components/Rows.vue';
 
 const table = [
     {
@@ -68,6 +65,5 @@ const thead = [
 ]
 </script>
 
-<style lang="scss" scoped>
 
-</style>
+<style scoped></style>

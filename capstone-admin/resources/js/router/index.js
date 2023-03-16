@@ -100,8 +100,8 @@ export const router = createRouter({
     },
     {
       path: "/services/office-of-the-mayor/scholarship-program", 
-      name: "CardServices",
-      component: () => import("../Pages/Services/Office of the Mayor/Scholarship Program/CardServices.vue")
+      name: "Scholar",
+      component: () => import("../Pages/Services/Office of the Mayor/Scholarship Program/Scholar.vue")
     },
     {
       path: "/services/office-of-the-mayor/civil-wedding-schedule", 
@@ -112,6 +112,26 @@ export const router = createRouter({
       path: "/services/office-of-the-mayor/mayors-clearance", 
       name: "Mayor",
       component: () => import("../Pages/Services/Office of the Mayor/Mayor's Clearance/Mayor.vue")
+    },
+    {
+      path: "/services/mswd-department/government-id", 
+      name: "GovernmentID",
+      component: () => import("../Pages/Services/MSWD Department/Government ID/GovernmentId.vue")
+    },
+    {
+      path: "/services/mswd-department/replacement-of-senior-citizen", 
+      name: "Replacement of Senior Citizen",
+      component: () => import("../Pages/Services/MSWD Department/Replacement Of Senior Citizen/ReplacementOfSeniorCitizen.vue")
+    },
+    {
+      path: "/services/agriculture-department/example",
+      name: "Agriculture",
+      component: () => import("../Pages/Services/Agriculture Department/Agriculture.vue")
+    },
+    {
+      path: "/services/hr-department/example", 
+      name: "Hr",
+      component: () => import("../Pages/Services/HR Department/Hr.vue")
     },
   ]
 });

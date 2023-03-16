@@ -1,10 +1,13 @@
 <template>
+    <tbody class="text-left">
         <tr class="text-xs md:text-sm lg:text-md">
             <td>{{data?.client}}</td>
             <td>{{data?.agency}}</td>
             <td>{{data?.fees}}</td>
             <td>{{data?.time}}</td>
         </tr>
+    </tbody>
+       
 </template>
 
 <script setup>

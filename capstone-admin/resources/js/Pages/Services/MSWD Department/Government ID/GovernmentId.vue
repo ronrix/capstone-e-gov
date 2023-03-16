@@ -1,26 +1,33 @@
 <template>
-    <WrapperContent>
+   <WrapperContent>
         <WrapperReq>
             <div>
-                <ListReq title="Proof of Enrollment" />
-                <ListReq title="Copy of Grades of Last Semester" />
-                <ListReq title="Photocopy of School ID" />
-                <ListReq title="Barangay Clearance/ Indigency" />
+                <ListReq title="Passport" />
+                <ListReq title="Voter's ID" />
+                <ListReq title="TIN ID" />
+                <ListReq title="Philhealth ID" />
+                <ListReq title="SSS ID" />
+                <ListReq title="UMID ID" />
+                <ListReq title="Driver's License" />
+                <ListReq title="Other Government ID" />
             </div>
             <div>
-                <ListReq title="Letter of Request" />
-                <ListReq title="Accomplished Application Form" />
-                <ListReq title="1pc 2 x 2 Photo" />
+                <ListReq title="PRC ID" />
+                <ListReq title="GSIS E-card" />
+                <ListReq title="OFW ID" />
+                <ListReq title="OWWA ID" />
+                <ListReq title="Seamans Book" />
+                <ListReq title="Postal ID" />
             </div>
         </WrapperReq>
-              
+
             <Table>
                 <TableHeader v-for="(header, index) in thead" :header="header" />
                 <Rows v-for="(data, index) in table" :class="{ 'bg-gray-200': index % 2 }" :data="data"
-                class="hover:bg-gray-300" />
+                    class="hover:bg-gray-300" />
             </Table>
+      
     </WrapperContent>
-        
 </template>
 
 <script setup>
@@ -66,6 +73,7 @@ const thead = [
 
     }
 ]
+
 </script>
 
 <style lang="scss" scoped>

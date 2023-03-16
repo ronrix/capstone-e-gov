@@ -79,6 +79,34 @@
           <NavLink name="Civil Wedding Schedule" to="/services/office-of-the-mayor/civil-wedding-schedule" />
           <NavLink name="Mayor's Clearance" to="/services/office-of-the-mayor/mayors-clearance" />
         </div>
+        <div @click="showChildSubNavs"
+          class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
+          MSDWD Department
+        </div>
+        <div
+          v-show="isChildSubNavs"
+          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+          <NavLink name="Government ID" to="/services/mswd-department/government-id" />
+          <NavLink name="Replacement of Senior Citizen" to="/services/mswd-department/replacement-of-senior-citizen" />
+        </div>
+        <div @click="showChildSubNavs"
+          class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
+         Agriculture Department
+        </div>
+        <div
+          v-show="isChildSubNavs"
+          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+          <NavLink name="Example" to="/Services/agriculture-department/example" />
+        </div>
+        <div @click="showChildSubNavs"
+          class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
+          HR Department
+        </div>
+        <div
+          v-show="isChildSubNavs"
+          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+          <NavLink name="Example" to="/Services/hr-department/example" />
+        </div>
       </SubNavs>
   
       <!-- about -->
@@ -108,6 +136,6 @@
     isWholeSidebar: Boolean,
     page: String,
     isChildSubNavs: Boolean,
-    showChildSubNavs: Function
+    showChildSubNavs: Function,
   })
   </script>
