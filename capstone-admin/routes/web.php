@@ -35,16 +35,16 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/government/programs-and-events", function() {
         return inertia("Main");
     });
-    Route::get("/government/current-officials", function() {
+    Route::get("/government/executives/current-officials", function() {
         return inertia("Main");
     });
-    Route::get("/government/former-officials", function() {
+    Route::get("/government/executives/former-officials", function() {
         return inertia("Main");
     });
-    Route::get("/government/barangay-officials", function() {
+    Route::get("/government/executives/barangay-officials", function() {
         return inertia("Main");
     });
-    Route::get("/government/department-heads", function() {
+    Route::get("/government/executives/department-heads", function() {
         return inertia("Main");
     });
     Route::get("/government/job-postings/active", function() {

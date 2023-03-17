@@ -36,6 +36,26 @@ export const router = createRouter({
       component: () => import("../Pages/Government/ProgramsEvents/ProgramsEvents.vue")
     },
     {
+      path: "/government/executives/current-officials",
+      name: "CurrentOfficials",
+      component: () => import("../Pages/Government/Executives/CurrentOfficials/CurrentOfficials.vue")
+    },
+    {
+      path: "/government/executives/former-officials",
+      name: "FormerOfficials",
+      component: () => import("../Pages/Government/Executives/FormerOfficials/FormerOfficials.vue")
+    },
+    {
+      path: "/government/executives/barangay-officials",
+      name: "BarangayOfficials",
+      component: () => import("../Pages/Government/Executives/BarangayOfficials/BarangayOfficials.vue")
+    },
+    {
+      path: "/government/executives/department-heads",
+      name: "DepartmentHeads",
+      component: () => import("../Pages/Government/Executives/DepartmentHeads/DepartmentHeads.vue")
+    },
+    {
       path: "/government/hotlines",
       name: "Hotlines",
       component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
