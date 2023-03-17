@@ -4,7 +4,7 @@
         <!-- search filter -->
         <SearchInput class="mb-5" @searchFn="searchFn" />
 
-    <div v-for="data in sample_data" class="flex flex-col md:flex-row items-start shadow-lg bg-white rounded-lg">
+    <div v-for="data in filteredData" class="flex flex-col md:flex-row items-start shadow-lg bg-white rounded-lg">
      
     <!-- image -->
     <div class="flex-1 flex flex-col gap-3 items-start justify-between">
@@ -20,16 +20,28 @@
       <p class="mt-5 text-ellipsis text-sm h-[100px] overflow-hidden">
         {{ data.content }}
       </p>
+      <!-- PreviewButton -->
       <button @click="showAddNewModal(data)" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-20 uppercase">view </button>
     </div>
   </div>
- 
-  <!-- <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" /> -->
+  
+  <!-- PreviewModal -->
+  <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
+  
+  <!-- Add new tourist Button -->
+  <button @click="showAddNewModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
+      <i class="uil uil-plus text-2xl text-white"></i>
+    </button>
+    
+    <!-- Add Modal -->
+  <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
 </WrapperContent>
 </template>
 <script setup>
 import { ref } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
+
+
 
         const sample_data = [{
               placeName:"Pililla Wind Farm",
@@ -55,7 +67,7 @@ import SearchInput from '../../Components/SearchInput.vue';
               imgSrc: "https://boyplakwatsa.files.wordpress.com/2014/04/rizal-tour-march-15-2014-orig-011.jpg?w=650",
               address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal"
             }]
-            
+            // search Bar//
 const filteredData = ref(searchFilter(""));
 function searchFilter(value) {
   const first_option = sample_data.filter(data => {
@@ -79,5 +91,12 @@ function searchFn(value) {
   showTourismModal: Function,
   data: Object
 });
+function showPreviewModal(data) {
+  isPreviewModal.value = !isPreviewModal.value;
+  selectedData.value = data;
+}
+
+// check if modal is open and prevent the document from scrolling
+
 
 </script>
