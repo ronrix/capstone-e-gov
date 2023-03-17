@@ -17,8 +17,10 @@
                 <div class="h-[100px]"></div>
                 <button @click="showAddNewModal(data)" class="mb-2 mr-2 bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end  uppercase">view </button>
             </div>
-
         </div>
+        <button @click="showAddNewModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
+      <i class="uil uil-plus text-2xl text-white"></i>
+    </button>
     </WrapperContent>
 </template>
 <script setup>
