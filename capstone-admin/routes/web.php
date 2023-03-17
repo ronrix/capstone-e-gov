@@ -59,7 +59,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/government/hotlines", function() {
         return inertia("Main");
     });
-    Route::get("/government/population", function() {
+    Route::get("/government/demographic-profile", function() {
         return inertia("Main");
     });
 

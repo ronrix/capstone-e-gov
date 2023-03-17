@@ -41,9 +41,14 @@ export const router = createRouter({
       component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
     },
     {
-      path: "/government/hotlines",
-      name: "Hotlines",
-      component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
+      path: "/government/full-disclosure-reports",
+      name: "FullDisclosureReports",
+      component: () => import("../Pages/Government/FullDisclosure/FullDisclosure.vue")
+    },
+    {
+      path: "/government/demographic-profile",
+      name: "DemographicProfile",
+      component: () => import("../Pages/Government/DemographicProfile/DemographicProfile.vue")
     },
     // tourism
     {
@@ -83,16 +88,6 @@ export const router = createRouter({
       component: () => import("../Pages/Businesses/EaseOfDoingBusiness/EaseOfDoingBusiness.vue")
     },
     // about
-    {
-      path: "/about/mission-and-vision",
-      name: "MissionVision",
-      component: () => import("../Pages/About/MissionVision/MissionVision.vue")
-    },
-    {
-      path: "/about/history",
-      name: "History",
-      component: () => import("../Pages/About/History/History.vue")
-    },
     {
       path: "/about/official-seal",
       name: "OfficialSeal",

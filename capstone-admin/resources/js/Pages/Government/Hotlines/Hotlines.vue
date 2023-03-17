@@ -1,43 +1,57 @@
 <template>
   <WrapperContent>
-    <h3 class="font-bold text-xl mb-3">Municipal Hotlines</h3>
+    <h3 class="font-bold text-xl mb-3 text-gray-800">Municipal Hotlines</h3>
     <!-- hotlines table -->
-    <div class="w-full overflow-x-auto">
-      <table class="text-left border-separate w-full">
+    <div class="w-full flex flex-col">
+      <table class="text-left w-full">
         <thead>
-          <tr class="bg-gray-200 text-xs md:text-sm">
-            <th>Departments</th>
-            <th>Numbers</th>
-            <th>Actions</th>
+          <tr class="bg-neutral-200 text-xs md:text-sm">
+            <th class="px-2 text-center">
+              <i class="uil uil-list-ui-alt"></i>
+            </th>
+            <th class="flex items-center justify-between pl-2 text-neutral-600">
+              <div class="m-0">
+                <i class="uil uil-letter-english-a"></i>
+                Departments
+              </div>
+              <i @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
+            </th>
+            <th class="pl-2 text-neutral-600">
+              <i class="uil uil-outgoing-call"></i>
+              Numbers
+            </th>
+            <th class="pl-2 text-neutral-600">Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="a in hotlines" class="text-xs md:text-sm font-medium">
-            <td class="bg-white">
-              <p @click="startEditing" class="m-0 p-0">
-                {{ a.department }}
-                <i class="uil uil-pen text-sm ml-3"></i>
-              </p>
-              <textarea @blur="stopEditing" v-model="a.department" class="hidden w-full overflow-scroll no-scrollbar m-0 text-sm font-bold h-[20px] max-h-[20ppx]">{{ a.department }}</textarea>
+          <tr v-for="(a, id) in filteredData" class="text-xs md:text-sm font-medium border">
+            <td class="bg-white text-center">{{ id + 1 }}</td>
+            <td class="bg-white border pl-2 border-l-0">
+              <textarea v-model="a.department" class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">{{ a.department }}</textarea>
             </td>
-            <td class="bg-white">
-              <p @click="startEditing" class="m-0 p-0">
-                {{ a.number }}
-                <i class="uil uil-pen text-sm ml-3"></i>
-              </p>
-              <textarea @blur="stopEditing" v-model="a.number" class="hidden w-auto overflow-scroll no-scrollbar m-0 text-sm font-bold h-[20px] max-h-[20ppx]">{{ a.number }}</textarea>
+            <td class="bg-white border pl-2">
+              <textarea v-model="a.number" class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">{{ a.number }}</textarea>
             </td>
-            <td class="bg-white text-center"><button class="bg-red-600 text-white px-3 text-sm font-bold rounded-md">delete</button></td>
+            <td class="bg-white border pl-2"><button class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md">delete</button></td>
           </tr>
         </tbody>
       </table>
+      <!-- add btn -->
+      <button @click="showHotlineModal" class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold">
+        new
+        <i class="uil uil-plus-circle m-0 ml-2"></i>
+      </button>
     </div>
+
+    <!-- hotline modal -->
+    <HotlineModal v-if="isHotlineModal" :showHotlineModal="showHotlineModal" :sample_data="sample_data" />
 
   </WrapperContent>
 </template>
 
 <script setup>
-import { startEditing, stopEditing } from '../../../utils/editFn';
+import HotlineModal from "./HotlineModal.vue";
+import { ref } from 'vue';
 
 const hotlines = [
   {
@@ -57,13 +71,50 @@ const hotlines = [
     number: "091290848",
   },
 ]
+const isSortedIncrease = ref(true);
+const filteredData = ref(hotlines);
+
+const isHotlineModal = ref(false);
+function showHotlineModal() {
+  isHotlineModal.value = !isHotlineModal.value;
+}
+
+function sortFn() {
+  isSortedIncrease.value = !isSortedIncrease.value;
+
+  // incresing
+  if(isSortedIncrease.value) {
+    filteredData.value.sort((a, b) => {
+      let fa = a.department.toLowerCase(),
+      fb = b.department.toLowerCase();
+
+      if (fa < fb) {
+          return -1;
+      }
+      if (fa > fb) {
+          return 1;
+      }
+      return 0;
+    });
+
+    return;
+  }
+  // decreasing
+  filteredData.value.sort((a, b) => {
+    let fa = a.department.toLowerCase(),
+    fb = b.department.toLowerCase();
+
+    if (fa > fb) {
+        return -1;
+    }
+    if (fa < fb) {
+        return 1;
+    }
+    return 0;
+  });
+}
 
 </script>
 
 <style scoped>
-td, th {
-  padding: 1em;
-  margin: 0.5em;
-}
-
 </style>

@@ -1,5 +1,7 @@
 <template>
     <WrapperContent>
+
+        <h3 class="font-bold text-xl mb-3 text-gray-800">Checklist of Requiremnts</h3>
         <WrapperReq>
             <div>
                 <ListReq title="Proof of Enrollment" />
@@ -13,11 +15,20 @@
                 <ListReq title="1pc 2 x 2 Photo" />
             </div>
         </WrapperReq>
+
+        <h3 class="font-bold text-xl mt-3 mb-3 text-gray-800">What's the process?</h3>
         <Table>
             <TableHeader v-for="(header, index) in thead" :header="header" />
-            <Rows v-for="(data, index) in table" :class="{ 'bg-gray-200': index % 2 }" :data="data"
-                class="hover:bg-gray-300" />
+            
+            <Rows v-for="(data, index) in table" :data="data" />
         </Table>
+        <div class="flex flex-col">
+                <button @click="showHotlineModal" class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold">
+            new
+            <i class="uil uil-plus-circle m-0 ml-2"></i>
+                </button>
+        </div>
+        
     </WrapperContent>
 </template>
 

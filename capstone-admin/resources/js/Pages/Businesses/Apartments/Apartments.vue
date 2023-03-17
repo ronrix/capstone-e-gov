@@ -4,7 +4,7 @@
     <!-- search filter -->
     <SearchInput class="mb-5" @searchFn="searchFn" />
 
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-wrap gap-2">
       <CardApartment v-for="data in filteredData" :data="data" :showPreviewModal="showPreviewModal" />
     </div>
 
@@ -69,22 +69,26 @@ function showAddModal() {
 
 const sample_data = [
   {
-    title:"Aparment #1",
+    title:"Nux Hotel",
+    type:"Two-bedroom Apartment",
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
     img:"https://www.apartments.com/images/librariesprovider2/blank-images/parkline-apartment-in-miami-flba486679-f59b-475d-885a-ae52659d1e51.jpg?sfvrsn=264e5d72_1",
 },
 {
-    title:"Aparment #2",
+    title:"Apartment #1",
+    type:"Two-bedroom Apartment",
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
     img:"https://images.ctfassets.net/pdf29us7flmy/30jdDV7ig6aoq8JR1G8NSP/02ba1881d2bdfcef85e3dc7c10ced839/-IND-001-017-_How_To_Create_a_Successful_Brand_Positioning_Strategy_Final__1_.jpg"
 },
 {
-    title:"Aparment #3",
+    title:"Apartment #1",
+    type:"Two-bedroom Apartment",
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
     img:"https://www.apartments.com/images/librariesprovider2/blank-images/parkline-apartment-in-miami-flba486679-f59b-475d-885a-ae52659d1e51.jpg?sfvrsn=264e5d72_1",
 },
 {
-    title:"Aparment #4",
+    title:"Apartment #1",
+    type:"Two-bedroom Apartment",
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
     img:"https://images.ctfassets.net/pdf29us7flmy/30jdDV7ig6aoq8JR1G8NSP/02ba1881d2bdfcef85e3dc7c10ced839/-IND-001-017-_How_To_Create_a_Successful_Brand_Positioning_Strategy_Final__1_.jpg"
 },

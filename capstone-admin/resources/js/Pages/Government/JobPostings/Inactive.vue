@@ -2,7 +2,7 @@
 <div class="mt-5">
 
     <!-- search filter -->
-    <SearchInput class="mb-5" @searchFn="searchFn" />
+    <SearchInput class="mb-5" @searchFn="searchFn" placeholder="search inactive jobs" />
 
     <!-- top section -->
     <section class="flex items-center flex-col sm:flex-row">

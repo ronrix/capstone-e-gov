@@ -22,18 +22,19 @@
           class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
           Executives
         </div>
-        <div
-          v-show="isChildSubNavs"
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Current Officials of Pililla Rizal" to="/government/current-officials" />
-          <NavLink name="former officials" to="/government/former-officials" />
-          <NavLink name="sanggunian barangay officials" to="/government/barangay-officials" />
-          <NavLink name="municipal department heads" to="/government/department-heads" />
+        <div class="hidden child-sub-navs">
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Current Officials of Pililla Rizal" to="/government/current-officials" />
+            <NavLink name="former officials" to="/government/former-officials" />
+            <NavLink name="sanggunian barangay officials" to="/government/barangay-officials" />
+            <NavLink name="municipal department heads" to="/government/department-heads" />
+          </div>
         </div>
         <NavLink to="/government/job-postings" name="job postings" />
         <NavLink to="/government/full-disclosure-reports" name="full disclosure reports" />
         <NavLink to="/government/hotlines" name="hotlines" />
-        <NavLink to="/government/populations" name="populations" />
+        <NavLink to="/government/demographic-profile" name="demographic profile" />
       </SubNavs>
   
   
@@ -70,40 +71,44 @@
           class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
           Office of the Mayor
         </div>
-        <div
-          v-show="isChildSubNavs"
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
-          <NavLink name="scholarship program" to="/services/office-of-the-mayor/scholarship-program" />
-          <NavLink name="Civil Wedding Schedule" to="/services/office-of-the-mayor/civil-wedding-schedule" />
-          <NavLink name="Mayor's Clearance" to="/services/office-of-the-mayor/mayors-clearance" />
+        <div class="hidden child-sub-navs">
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
+            <NavLink name="scholarship program" to="/services/office-of-the-mayor/scholarship-program" />
+            <NavLink name="Civil Wedding Schedule" to="/services/office-of-the-mayor/civil-wedding-schedule" />
+            <NavLink name="Mayor's Clearance" to="/services/office-of-the-mayor/mayors-clearance" />
+          </div>
         </div>
         <div @click="showChildSubNavs"
           class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
           MSDWD Department
         </div>
-        <div
-          v-show="isChildSubNavs"
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Government ID" to="/services/mswd-department/government-id" />
-          <NavLink name="Replacement of Senior Citizen" to="/services/mswd-department/replacement-of-senior-citizen" />
+        <div class="hidden child-sub-navs">
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Government ID" to="/services/mswd-department/government-id" />
+            <NavLink name="Replacement of Senior Citizen" to="/services/mswd-department/replacement-of-senior-citizen" />
+          </div>
         </div>
         <div @click="showChildSubNavs"
           class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
          Agriculture Department
         </div>
-        <div
-          v-show="isChildSubNavs"
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Example" to="/Services/agriculture-department/example" />
+        <div class="hidden child-sub-navs">
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Example" to="/Services/agriculture-department/example" />
+          </div>
         </div>
         <div @click="showChildSubNavs"
           class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
           HR Department
         </div>
-        <div
-          v-show="isChildSubNavs"
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Example" to="/Services/hr-department/example" />
+        <div class="hidden child-sub-navs">
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Example" to="/Services/hr-department/example" />
+          </div>
         </div>
       </SubNavs>
   
@@ -113,8 +118,6 @@
         <SideNavName name="About" :isWholeSidebar="isWholeSidebar" />
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
-        <NavLink to="/about/mission-and-vision" name="mission and vision" />
-        <NavLink to="/about/history" name="history" />
         <NavLink to="/about/official-seal" name="official seal" />
         <NavLink to="/about/contacts" name="contacts" />
       </SubNavs>
@@ -133,7 +136,6 @@
     showSubNavs: Function,
     isWholeSidebar: Boolean,
     page: String,
-    isChildSubNavs: Boolean,
     showChildSubNavs: Function,
   })
   </script>
