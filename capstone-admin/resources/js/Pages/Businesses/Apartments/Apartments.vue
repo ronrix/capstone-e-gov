@@ -69,7 +69,8 @@ function showAddModal() {
 
 const sample_data = [
   {
-    title:"Aparment #1",
+    title:"Apartment #1",
+    type:"Two-bedroom Apartment",
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
     img:"https://www.apartments.com/images/librariesprovider2/blank-images/parkline-apartment-in-miami-flba486679-f59b-475d-885a-ae52659d1e51.jpg?sfvrsn=264e5d72_1",
 },
