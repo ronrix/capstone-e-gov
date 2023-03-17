@@ -1,5 +1,6 @@
 <template>
     <WrapperContent>
+        <h3 class="font-bold text-xl mt-3 mb-3 text-gray-800">Checklist of Requiremnts</h3>
          <WrapperReq>
              <div>
                  <ListReq title="Senior Citizen Fill-Up Form" />
@@ -9,6 +10,7 @@
              </div>
          </WrapperReq>
  
+         <h3 class="font-bold text-xl mb-3 text-gray-800">What's the process?</h3>
              <Table>
                  <TableHeader v-for="(header, index) in thead" :header="header" />
                  <Rows v-for="(data, index) in table" :class="{ 'bg-gray-200': index % 2 }" :data="data"
