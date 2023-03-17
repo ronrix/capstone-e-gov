@@ -1,5 +1,7 @@
 <template>
     <WrapperContent>
+
+        <h3 class="font-bold text-xl mb-3 text-gray-800">Checklist of Requiremnts</h3>
         <WrapperReq>
             <div>
                 <ListReq title="Proof of Enrollment" />
@@ -13,8 +15,11 @@
                 <ListReq title="1pc 2 x 2 Photo" />
             </div>
         </WrapperReq>
+
+        <h3 class="font-bold text-xl mt-3 mb-3 text-gray-800">What's the process?</h3>
         <Table>
             <TableHeader v-for="(header, index) in thead" :header="header" />
+            
             <Rows v-for="(data, index) in table" :data="data" />
         </Table>
         <div class="flex flex-col">
