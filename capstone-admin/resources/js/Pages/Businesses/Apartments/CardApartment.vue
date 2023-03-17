@@ -1,18 +1,16 @@
 <template>
     <div class="flex">
         <button @click="showPreviewModal(data)">
-    <div class="card1 flex flex-col h-[400px] w-full md:w-auto">
+    <div class="card1 flex flex-col h-[200px] w-full md:w-auto">
         <!---Image-->
         <div :style="{ backgroundImage: `url(${data.img})` }"
             class="rounded-md bg-no-repeat bg-cover bg-center h-[150px] relative">
         </div>
         <!--content-->
-        <div class="p-4 flex-1 flex flex-col items-start justify-between">
+        <div class="p-4 flex-1 flex flex-col justify-between">
             <h3 class="apartment-name font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
             <h5 class="text-xs text-gray-500 font-bold tracking-wide text-center">{{ data.type }}</h5>
-            <p class="APcontent mt-5 text-ellipsis text-sm text-justify tracking-wide h-[130px] overflow-hidden">
-                {{ data.content }}
-            </p>
+            
         </div>
     </div>
     </button>
