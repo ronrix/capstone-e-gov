@@ -2,6 +2,13 @@
   <WrapperContent>
     <h3 class="font-bold text-xl mb-5">Full Disclosure Reports</h3>
     
+    <!-- add new report btn and modal -->
+    <FullDisclosureModal :showModal="showModal" v-if="isShowModal" />
+    <div class="flex items-center justify-end mb-5">
+      <!-- add new btn -->
+      <button @click="showModal" class="bg-blue-600 py-2 px-3 rounded-lg text-white font-bold capitalize">add report</button>
+    </div>
+
     <!-- report files -->
     <div v-for="data in sample_data" class="mb-5 bg-white rounded-lg">
       <h4 class="font-bold capitalize mb-3 p-3">
@@ -18,7 +25,13 @@
 </template>
 
 <script setup>
-import SearchInput from '../../../Components/SearchInput.vue';
+import { ref } from 'vue';
+import FullDisclosureModal from './FullDisclosureModal.vue';
+
+const isShowModal = ref(false);
+function showModal() {
+  isShowModal.value = !isShowModal.value;
+}
 
 const sample_data = [
   {
