@@ -76,7 +76,7 @@ const sample_data = [
 },
 {
     title:"Apartment #1",
-    type:"Two-bedroom Apartment",
+    type:"One-bedroom Apartment",
     content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
     img:"https://images.ctfassets.net/pdf29us7flmy/30jdDV7ig6aoq8JR1G8NSP/02ba1881d2bdfcef85e3dc7c10ced839/-IND-001-017-_How_To_Create_a_Successful_Brand_Positioning_Strategy_Final__1_.jpg"
 },
@@ -104,9 +104,15 @@ function searchFilter(value) {
   const second_option = sample_data.filter(data => {
     return data.content.toLowerCase().includes(value?.toLowerCase());
   });
+  const third_option = sample_data.filter(data => {
+    return data.type.toLowerCase().includes(value?.toLowerCase());
+  });
 
   if(first_option.length) {
     return first_option;
+  }
+  else if(third_option.length){
+    return third_option;
   }
   return second_option;
 }
