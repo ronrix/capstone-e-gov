@@ -1,18 +1,29 @@
 <template>
   <WrapperContent>
-    <h4 class="font-bold text-xl">Demographic Profile</h4>
+    <h4 class="font-bold text-xl text-gray-800">Demographic Profile</h4>
+
+    <!-- demographic form modal -->
+    <DemographicProfileModal :showModal="showModal" v-if="isShowModal" />
 
     <!-- hotlines table -->
     <div class="w-full flex flex-col">
       <!-- filter -->
       <SearchInput placeholder="search" class="my-5" />
+
+      <!-- census year -->
+      <h5 class="font-bold text-xl text-gray-800 mt-5">
+        <i class="uil uil-chart-pie-alt"></i>
+        2019 Census
+      </h5>
+
+      <!-- filter options -->
       <div class="mb-5 flex items-center justify-between">
         <div>
           <span class="text-sm text-gray-700 font-bold mr-3">
             <i class="uil uil-filter"></i>
             Filter by
           </span>
-          <select class="bg-white px-3 font-bold rounded-md w-auto">
+          <select class="bg-white px-3 font-bold rounded-md w-auto text-gray-800 focus:outline-blue-600">
             <option value="">current</option>
             <option value="">2017</option>
             <option value="">2012</option>
@@ -22,7 +33,7 @@
         </div>
 
         <!-- add new btn -->
-        <button class="bg-blue-600 py-2 px-3 rounded-lg text-white font-bold capitalize">add census</button>
+        <button @click="showModal" class="bg-blue-600 py-2 px-3 rounded-lg text-white font-bold capitalize">add census</button>
       </div>
 
       <table class="text-left w-full">
@@ -67,6 +78,14 @@
 
 <script setup>
 import SearchInput from '../../../Components/SearchInput.vue';
+import { ref } from 'vue';
+import DemographicProfileModal from './DemographicProfileModal.vue';
+
+const isShowModal = ref(false);
+
+function showModal() {
+  isShowModal.value = !isShowModal.value;
+}
 
 const filteredData = [
   {
