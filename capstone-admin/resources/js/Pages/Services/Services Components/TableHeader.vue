@@ -1,10 +1,10 @@
 <template>
     <thead>
         <tr class="text-xs md:text-sm lg:text-md">
-            <th>{{header?.clientHead}}</th>
-            <th>{{header?.agencyHead}}</th>
-            <th>{{header?.feesHead}}</th>
-            <th>{{header?.processHead}}</th>
+            <th class="bg-gray-50">{{header?.clientHead}}</th>
+            <th class="bg-gray-50">{{header?.agencyHead}}</th>
+            <th class="bg-gray-50">{{header?.feesHead}}</th>
+            <th class="bg-gray-50">{{header?.processHead}}</th>
         </tr>
     </thead>
 </template>
@@ -14,9 +14,8 @@ defineProps({header:Object})
 </script>
 
 <style scoped>
-th,
-td {
-    border: 1px solid gray;
+th, td{
+    border: 1px solid rgb(170, 166, 166);
     padding: 1em;
 }
 
