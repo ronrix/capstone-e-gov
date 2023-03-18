@@ -1,10 +1,10 @@
 <template>
   <div class="flex items-start h-screen">
     <!-- sidebar -->
-    <div class="sticky top-0 pt-5 rounded-xl h-screen hidden sm:block duration-100 bg-white whitespace-nowrap z-10"
+    <div class="sticky top-0 pt-5 h-screen hidden sm:block duration-100 bg-white whitespace-nowrap z-10"
       :class="isWholeSidebar ? 'w-[350px]' : 'w-[70px]'">
       <div class="overflow-y-scroll no-scrollbar h-full">
-        <div class="flex px-6 items-start">
+        <div class="flex px-6 items-center">
           <img :src="$page.props.img_path" alt="this is the pililla government logo" class="w-[50px]">
           <h4 class="font-bold text-2xl ml-2 whitespace-pre-wrap text-gray-800"
             :class="!isWholeSidebar ? 'opacity-0' : 'opacity-100'">Better Pililla</h4>
@@ -77,6 +77,13 @@ function showWholeSidebar() {
 }
 
 function showChildSubNavs(e) {
+  hideElements(e);
+
+  // display the child navs of the nav that was clicked
+  e.target.nextElementSibling.classList.toggle("hidden");
+}
+
+function hideElements(e) {
   // hide all the child subnavs before showing the clicked one
   // to prevent all of the child subnavs from showing
   // looping through all of the elements of childSubNavs to target each of them, then add the hidden class
@@ -86,9 +93,6 @@ function showChildSubNavs(e) {
     if(el.previousElementSibling === e.target) return;
     el.classList.add("hidden")
   });
-
-  // display the child navs of the nav that was clicked
-  e.target.nextElementSibling.classList.toggle("hidden");
 }
 
 </script>
