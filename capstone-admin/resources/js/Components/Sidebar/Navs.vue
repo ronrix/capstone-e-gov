@@ -11,16 +11,20 @@
       </div>
   
       <!-- government -->
-      <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'government' }">
+      <SideNav @click="showSubNavs" class="flex" :class="{ 'bg-blue-600 text-white': page === 'government' }">
         <i class="uil uil-university mr-3 text-2xl pointer-events-none"></i>
-        <SideNavName name="Government" :isWholeSidebar="isWholeSidebar" />
+        <div class="flex items-center justify-between w-full pointer-events-none">
+          <SideNavName name="Government" :isWholeSidebar="isWholeSidebar" />
+          <i class="uil uil-angle-down"></i>
+        </div>
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
         <NavLink name="news" to="/government/news" />
         <NavLink name="programs and events" to="/government/programs-and-events" />
         <div @click="showChildSubNavs"
-          class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
-          Executives
+          class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2 justify-between">
+          <span>Executives</span>
+          <i class="uil uil-angle-down"></i>
         </div>
         <div class="hidden child-sub-navs">
           <div
@@ -39,21 +43,26 @@
   
   
       <!-- tourism -->
-      <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'tourism' }">
+      <SideNav @click="showSubNavs" class="flex" :class="{ 'bg-blue-600 text-white': page === 'tourism' }">
         <i class="uil uil-map-pin-alt mr-3 text-2xl pointer-events-none"></i>
-        <SideNavName name="Tourism" :isWholeSidebar="isWholeSidebar" />
+        <div class="flex items-center justify-between w-full pointer-events-none">
+          <SideNavName name="Tourism" :isWholeSidebar="isWholeSidebar" />
+          <i class="uil uil-angle-down"></i>
+        </div>
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
         <NavLink to="/tourism/tourism" name="tourism" />
         <NavLink to="/tourism/tourist-spots" name="tourists spots" />
         <NavLink to="/tourism/festivals" name="festivals" />
-        <NavLink to="/tourism/guidelines" name="guidelines" />
       </SubNavs>
   
       <!-- businesses -->
-      <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'businesses' }">
+      <SideNav @click="showSubNavs" class="flex" :class="{ 'bg-blue-600 text-white': page === 'businesses' }">
         <i class="uil uil-tag-alt mr-3 text-2xl pointer-events-none"></i>
-        <SideNavName name="Businesses" :isWholeSidebar="isWholeSidebar" />
+        <div class="flex items-center justify-between w-full pointer-events-none">
+          <SideNavName name="Businesses" :isWholeSidebar="isWholeSidebar" />
+          <i class="uil uil-angle-down"></i>
+        </div>
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
         <NavLink to="/businesses/apartments" name="apartments" />
@@ -62,9 +71,12 @@
       </SubNavs>
   
       <!-- services -->
-      <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'services' }">
+      <SideNav @click="showSubNavs" class="flex" :class="{ 'bg-blue-600 text-white': page === 'services' }">
         <i class="uil uil-heartbeat mr-3 text-2xl pointer-events-none"></i>
-        <SideNavName name="Services" :isWholeSidebar="isWholeSidebar" />
+        <div class="flex items-center justify-between w-full pointer-events-none">
+          <SideNavName name="Services" :isWholeSidebar="isWholeSidebar" />
+          <i class="uil uil-angle-down"></i>
+        </div>
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
         <div @click="showChildSubNavs"
@@ -113,9 +125,12 @@
       </SubNavs>
   
       <!-- about -->
-      <SideNav @click="showSubNavs" :class="{ 'bg-blue-600 text-white': page === 'about' }">
+      <SideNav @click="showSubNavs" class="flex" :class="{ 'bg-blue-600 text-white': page === 'about' }">
         <i class="uil uil-exclamation-circle mr-3 text-2xl pointer-events-none"></i>
-        <SideNavName name="About" :isWholeSidebar="isWholeSidebar" />
+        <div class="flex items-center justify-between w-full pointer-events-none">
+          <SideNavName name="About" :isWholeSidebar="isWholeSidebar" />
+          <i class="uil uil-angle-down"></i>
+        </div>
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
         <NavLink to="/about/official-seal" name="official seal" />

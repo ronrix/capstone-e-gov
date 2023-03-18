@@ -80,7 +80,12 @@ function showChildSubNavs(e) {
   // hide all the child subnavs before showing the clicked one
   // to prevent all of the child subnavs from showing
   // looping through all of the elements of childSubNavs to target each of them, then add the hidden class
-  document.querySelectorAll(".child-sub-navs").forEach(el => el.classList.add("hidden"));
+  document.querySelectorAll(".child-sub-navs").forEach(el => {
+    // this will prevent from adding the hidden class when the element is equal to the element was clicked
+    // so that toggling hidden class will still work
+    if(el.previousElementSibling === e.target) return;
+    el.classList.add("hidden")
+  });
 
   // display the child navs of the nav that was clicked
   e.target.nextElementSibling.classList.toggle("hidden");
