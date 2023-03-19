@@ -4,7 +4,7 @@ export function searchFilter(data, search) {
   });
 
   const second_option = data.filter(news => {
-    return news.content.toLowerCase().includes(search.value);
+    return news.description.toLowerCase().includes(search.value);
   });
 
   if(first_option.length) {

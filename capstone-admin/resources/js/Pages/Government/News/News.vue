@@ -32,16 +32,27 @@
 import CardNews from './CardNews.vue';
 import PreviewModal from '../../../Components/PreviewModal.vue';
 
-import { ref, onUpdated, computed } from 'vue';
+import { ref, onUpdated, computed, onMounted } from 'vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue';
 import { searchFilter } from '../../../utils/searchFilter';
+import { be_url } from "../../../config/config";
+
 const isPreviewModal = ref(false);
 const selectedData = ref();
+const dataNews = ref([]);
 
 const isAddNewModal = ref(false);
 function showAddNewModal() {
   isAddNewModal.value = !isAddNewModal.value;
 }
+
+// fetch the news data from backend
+onMounted(() => {
+  // requesting data from /news
+  fetch(be_url + "/news").then((res) => res.json()).then(data => {
+      dataNews.value = data; 
+  });
+});
 
 const sample_data = [
   {
@@ -80,8 +91,8 @@ const search = ref("");
 const groupData = computed(() => {
   let groups = {};
 
-  sample_data.forEach((item) => {
-    const month = new Date(item.date).toLocaleString('default', { month: 'short', year: "numeric" });
+  dataNews?.value?.news?.forEach((item) => {
+    const month = new Date(item.created_at).toLocaleString('default', { month: 'short', year: "numeric" });
     // group item by month
     if (!groups[month]) {
       groups[month] = { month, items: [] };
@@ -101,12 +112,12 @@ const groupData = computed(() => {
     acc[group.month] = group;
     return acc;
   }, {});
-});
+}, [dataNews]);
 
 const searchData = ref([{ month: "Search Results", items: []}]);
 const dataToLoop = computed(() => {
   if(search.value.length) {
-    searchData.value[0].items = searchFilter(sample_data, search);
+    searchData.value[0].items = searchFilter(dataNews.value?.news, search);
     return searchData;
   }
   return groupData;
