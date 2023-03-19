@@ -20,6 +20,13 @@ class NewsController extends Controller
         return inertia("Main");
     }
 
+    public function getNews()
+    {
+        //
+        // return response()->json(News::all());
+        return response()->json([ "news" => News::all()]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *

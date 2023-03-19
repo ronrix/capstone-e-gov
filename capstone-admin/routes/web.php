@@ -27,6 +27,10 @@ Route::get("/", function () {
 Route::get('/login', [LoginController::class, "index"])->name("login.index");
 Route::get('/logout', [LoginController::class, "logout"]);
 
+// public get methods
+// get news json response data
+Route::get("/news", [NewsController::class, "getNews"]);
+
 // government
 Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
