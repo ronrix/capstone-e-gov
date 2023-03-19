@@ -1,6 +1,6 @@
 <template>
   <div @click="showDeleteOption" class="w-full h-full flex items-center justify-center bg-red-500 top-0 left-0 absolute text-white rounded-bl-lg -translate-y-[95%] md:-translate-y-[90%] translate-x-[95%] md:translate-x-[97%] duration-500 cursor-pointer ease-in-out" :class="new_class">
-    <div class="text-center delay-300 flex flex-col">
+    <div class="text-center delay-300 flex flex-col mx-3">
       <i class="uil uil-trash text-3xl"></i>
       <h5 class="text-lg font-bold">Are you sure you want to delete this?</h5>
       <button @click="cancel" class="w-full border py-2 px-5 mt-3 bg-gray-500 hover:bg-gray-400 font-bold text-sm">No, I don't want to delete this</button>

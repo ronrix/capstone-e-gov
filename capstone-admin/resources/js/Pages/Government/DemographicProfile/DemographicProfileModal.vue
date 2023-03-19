@@ -7,7 +7,7 @@
 
       <h4 class="capitalize font-bold text-gray-800 text-xl">Add new census</h4>
       <p class="text-gray-500 text-sm mb-3">add the current census gathered for each barangays</p>
-      <form @submit.prevent="" class="flex flex-col gap-5">
+      <form @submit.prevent="" class="flex flex-col gap-5 max-h-[500px] overflow-scroll">
         <label class="w-full flex flex-col text-gray-800">
           <span class="font-bold text-sm uppercase">
             cencus year
