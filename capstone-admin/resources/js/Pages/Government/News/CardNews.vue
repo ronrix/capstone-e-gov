@@ -1,5 +1,5 @@
 <template>
-  <div class="relative overflow-hidden flex flex-col md:flex-row items-start shadow-lg bg-white border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 ">
+  <div class="relative overflow-hidden flex flex-col md:flex-row shadow-lg bg-white border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 ">
  
     <!-- delete button this will delete the programs and events --> 
     <div class="z-10"> <!-- adding z-10 to put this delete component at the top/front -->
@@ -11,7 +11,7 @@
     <!-- content -->
     <div class="flex-1 p-5 flex flex-col items-start justify-between">
       <h3 class="font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
-      <h5 class="text-xs text-gray-500 font-bold">{{ new Date() }}</h5>
+      <h5 class="text-xs text-gray-500 font-bold">{{ date }}</h5>
       <p class="mt-5 text-ellipsis text-sm h-[100px] overflow-hidden">
         {{ data.description }}
       </p>
@@ -22,8 +22,11 @@
 
 <script setup>
 import Delete from '../../../Components/Delete.vue';
+import { dateFormat } from '../../../utils/dateFormat';
 
-defineProps({
+const date = dateFormat(data.created_at);
+
+const { data } = defineProps({
   showPreviewModal: Function,
   data: Object
 });

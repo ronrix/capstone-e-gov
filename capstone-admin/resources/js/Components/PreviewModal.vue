@@ -39,7 +39,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
+import { dateFormat } from '../utils/dateFormat';
 import ImgPreview from './ImgPreview.vue';
 
 const { selectedData } = defineProps({
@@ -49,7 +50,7 @@ const { selectedData } = defineProps({
 
 const content = selectedData?.description;
 const title = selectedData?.title;
-const date = new Date(selectedData?.created_at).toLocaleDateString("en-PH", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+const date = dateFormat(selectedData?.created_at);
 
 // show image preview
 const isImgPreview = ref(false);
@@ -59,6 +60,16 @@ function showImgPreview() {
 function closeImgPreview() {
   isImgPreview.value = false;
 }
+
+// add scroll hidden on mount
+onMounted(() => {
+  document.body.classList.add("overflow-hidden");
+});
+
+// remove scroll hidden on unmount
+onUnmounted(() => {
+  document.body.classList.remove("overflow-hidden");
+});
 
 </script>
 
