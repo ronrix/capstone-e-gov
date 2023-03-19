@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Contacts"></HeadTitle>
   <WrapperContent>
     <h1 class="text-3xl text-center font-bold text-gray-700">Contact Us</h1>
     <p class="text-sm text-gray-500 text-center mb-2">here's our contact info</p>

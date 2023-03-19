@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Festval"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
 
         <!-- search filter -->

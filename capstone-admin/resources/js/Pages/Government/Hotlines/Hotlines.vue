@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Hotlines"></HeadTitle>
   <WrapperContent>
     <h3 class="font-bold text-xl mb-3 text-gray-800">Municipal Hotlines</h3>
     <!-- hotlines table -->

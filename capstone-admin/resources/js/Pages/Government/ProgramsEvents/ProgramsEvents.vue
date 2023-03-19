@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Programs & Events"></HeadTitle>
   <WrapperContent>
   <!-- preview of programs and events modal using PreviewModal -->
     <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />

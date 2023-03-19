@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Job Postings"></HeadTitle>
   <WrapperContent>
     <!-- nav for active and inactive jobs postings -->
     <nav class="border border-x-0 border-t-0 border-b-gray-300 font-bold text-sm py-5">

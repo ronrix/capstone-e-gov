@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Ease of Doing Business"></HeadTitle>
   <WrapperContent>
     <h1 class="text-2xl font-bold text-gray-700 mb-5">Ease of Doing Business</h1>
 

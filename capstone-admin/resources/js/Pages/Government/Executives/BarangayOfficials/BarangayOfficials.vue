@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Barangay Officials"></HeadTitle>
   <WrapperContent>
     <h1 class="text-xl font-bold capitalize">Barangay officials of pililla rizal</h1>
 

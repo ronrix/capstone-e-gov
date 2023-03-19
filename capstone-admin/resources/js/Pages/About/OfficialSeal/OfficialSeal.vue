@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Official Seals"></HeadTitle>
   <WrapperContent>
 
     <h1 class="font-bold text-xl text-center mb-3 text-gray-800 uppercase">PHOTOGRAPHS AND SYMBOLISMS OF<span

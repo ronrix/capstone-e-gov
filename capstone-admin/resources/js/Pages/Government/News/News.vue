@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="News"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
     <!-- filter -->
     <div class="w-full flex items-center">

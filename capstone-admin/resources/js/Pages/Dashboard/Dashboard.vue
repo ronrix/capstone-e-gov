@@ -1,4 +1,5 @@
 <template>
+    <HeadTitle title="Dashboard"></HeadTitle>
     <div class="mt-10 p-3">
         <h3 class="font-bold text-xl">Tracking website viewers</h3>
         <div class="flex gap-3 mt-3 flex-wrap">

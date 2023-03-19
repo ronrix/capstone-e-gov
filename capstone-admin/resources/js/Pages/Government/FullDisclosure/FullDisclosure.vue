@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Full Disclosure"></HeadTitle>
   <WrapperContent>
     <h3 class="font-bold text-xl mb-5">Full Disclosure Reports</h3>
     

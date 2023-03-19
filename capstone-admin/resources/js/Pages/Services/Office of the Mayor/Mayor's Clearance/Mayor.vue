@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Mayor's Clearance"></HeadTitle>
     <WrapperContent>
         <h3 class="font-bold text-xl mb-3 text-gray-800">Checklist of Requiremnts</h3>
         <WrapperReq>

@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Apartments"></HeadTitle>
   <WrapperContent>
     <!--Remember to add filter for both type and title-->
     <!-- search filter -->

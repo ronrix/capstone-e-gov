@@ -7,6 +7,9 @@ import DarkMode from "./Components/DarkMode.vue";
 import WrapperContent from "./Components/WrapperContent.vue";
 import { router } from './router';
 
+// inertia components
+import { Head } from "@inertiajs/inertia-vue3";
+
 createInertiaApp({
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
@@ -17,6 +20,7 @@ createInertiaApp({
         app.component("Wrapper", Wrapper);
         app.component("DarkMode", DarkMode);
         app.component("WrapperContent", WrapperContent);
+        app.component("HeadTitle", Head);
         app.use(router);
         app.use(plugin);
         app.mount(el);

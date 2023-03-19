@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Department Heads"></HeadTitle>
   <WrapperContent>
     <h1 class="text-xl font-bold capitalize">Department Heads of pililla rizal</h1>
 

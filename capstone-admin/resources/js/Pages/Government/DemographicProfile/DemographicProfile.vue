@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Demographic Profile"></HeadTitle>
   <WrapperContent>
     <h4 class="font-bold text-xl text-gray-800">Demographic Profile</h4>
 
