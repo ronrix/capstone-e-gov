@@ -1,7 +1,6 @@
 <template>
-    <Head title="Login"></Head>
-    <Notifcation :status="$page.props.flash?.error_msg?.status" :msg="$page.props.flash?.error_msg?.msg"
-        v-if="$page.props.flash" />
+    <HeadTitle title="Login"></HeadTitle>
+    <Notifcation :errorMsg="errorMsg" :isMounted="isMounted" />
 
     <div class="dark:text-white light:text-primary-dark flex items-center justify-center h-screen overflow-hidden">
         <!-- left -->
@@ -31,17 +30,17 @@
                 <label class="text-gray-800 mb-2 rounded-md">
                     <span class="font-bold text-sm mb-1">E-mail or username</span>
                     <input v-model="formData.email" name="email" type="text" placeholder="Type your email or username"
-                        class="outline-none w-full p-2 bg-white rounded-md text-lg" />
+                        class="outline-none w-full p-2 bg-white rounded-md text-sm" />
                     <p v-if="v$.email.$error" class="text-xs text-red-400 mb-2"> {{ v$.email.$errors[0].$message }} </p>
                 </label>
                 <label class="mb-2 rounded-md text-gray-800">
                     <span class="font-bold text-sm mb-1">Password</span>
-                    <input v-model="formData.password" name="password" type="password" placeholder="type your password"
-                        class="outline-none w-full p-2 bg-white rounded-md text-lg" />
+                    <input v-model="formData.password" name="password" type="password" placeholder="Type your password"
+                        class="outline-none w-full p-2 bg-white rounded-md text-sm" />
                     <p v-if="v$.password.$error" class="text-xs text-red-400 mb-2"> {{ v$.password.$errors[0].$message }} </p>
                 </label>
                 <input type="submit" value="Login"
-                    class="p-2 my-2 cursor-pointer text-white rounded-md w-full bg-blue-600" />
+                    class="p-2 my-2 cursor-pointer text-white rounded-md w-full bg-blue-600 text-sm font-bold" />
                 <p class="text-xs text-secondary-gray text-center">Login with administration access</p>
             </form>
         </div>
@@ -49,9 +48,11 @@
 </template>
 
 <script setup>
-import { Head, useForm } from "@inertiajs/inertia-vue3";
-import { computed } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import { computed, ref } from "vue";
 import Notifcation from "../Components/Notifcation.vue";
+import axios from "axios";
+import { useRouter } from "vue-router";
 
 // validation
 import useVuelidate from "@vuelidate/core";
@@ -70,13 +71,42 @@ const rules = computed(() => ({
 const v$ = useVuelidate(rules, formData);
 
 // function to call when form submits
+const isMounted = ref(false);
+const errorMsg = ref();
+
 async function submitForm() {
     // invoke validation
     // return when not inputs are not valid
     const valid = await v$.value.$validate();
     if (!valid) return
 
-    formData.post(route('login'));
+    // send login request
+    try {
+        const response = await axios.post('http://localhost:8000/login', formData);
+
+        // success
+        // redirect to '/dashboard'
+        if(response.data.status === 200) {
+            window.location.href = "/dashboard"; // redirect to dashboard 
+           return;
+        }
+
+        // error 
+        if(response.data.status === 400) {
+            errorMsg.value = response.data; // set the error msg to display in notif component 
+            isMounted.value = true; // show the notif component
+            formData.password = ""; // reset the password input
+
+            // 3s before the notif component go display out
+            const interval = setTimeout(() => {
+                isMounted.value = false;
+                clearTimeout(interval);
+            }, 3000);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+
     // niremove ko para di siya magrefresh pagclick ng login sa form para magwork yung prevent na code formData.reset();
 }
 

@@ -30,11 +30,13 @@ class LoginController extends Controller
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials, $remember = true)) {
             // Authentication passed...
-            return redirect()->intended('dashboard');
+            // return redirect()->intended('dashboard');
+            return response()->json([ "msg" => "success", "status" => 200 ]);
         }
 
         // return error message in objects
-        return redirect()->route('login.index')->with('error_msg', ["msg" => 'Invalid username or password', "status" => 400]);
+        // return redirect()->route('login.index')->with('error_msg', ["msg" => 'Invalid username or password', "status" => 400]);
+        return response()->json(["msg" => 'Invalid username or password', "status" => 400]);
     }
 
     // logout
