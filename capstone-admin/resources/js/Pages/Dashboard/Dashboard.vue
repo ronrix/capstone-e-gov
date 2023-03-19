@@ -16,11 +16,11 @@
         </div>
         <div class=" mt-5">
             <h3 class="font-bold text-xl">News</h3>
-            <HorizontalCard commentsCount="23" title="Coffee na masaarap sa Oval, di daw masarap" imgSrc="https://images.unsplash.com/photo-1525480038216-45653b3aac92?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
+            <HorizontalCard commentsCount="23" title="Coffee shop businesses" imgSrc="https://images.unsplash.com/photo-1525480038216-45653b3aac92?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" />
         </div>
         <div class=" mt-5">
             <h3 class="font-bold text-xl">Job Postings</h3>
-            <HorizontalCard commentsCount="23" title="Looking for viva max artists" imgSrc="https://images.unsplash.com/photo-1500628550463-c8881a54d4d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" />
+            <HorizontalCard commentsCount="23" title="Looking for artists" imgSrc="https://images.unsplash.com/photo-1500628550463-c8881a54d4d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80" />
         </div>
     </div>
 </template>
