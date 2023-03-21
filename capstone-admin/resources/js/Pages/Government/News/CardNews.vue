@@ -3,7 +3,7 @@
  
     <!-- delete button this will delete the programs and events --> 
     <div class="z-10"> <!-- adding z-10 to put this delete component at the top/front -->
-      <Delete />
+      <Delete :handleDelete="handleDelete" :id="data.id" />
     </div>
 
     <!-- image -->
@@ -29,6 +29,7 @@ const date = dateFormat(data.created_at);
 
 const { data } = defineProps({
   showPreviewModal: Function,
-  data: Object
+  data: Object,
+  handleDelete: Function,
 });
 </script>

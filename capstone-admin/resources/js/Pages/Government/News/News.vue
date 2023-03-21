@@ -28,7 +28,7 @@
         <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.month }}</span>
         <div class="flex-1 border"></div>
       </div>
-      <CardNews v-for="data in group.items" :data="data" :showPreviewModal="showPreviewModal" />
+      <CardNews :handleDelete="handleDelete" v-for="data in group.items" :data="data" :showPreviewModal="showPreviewModal" />
       <!-- no result  -->
       <div v-if="!group.items.length" class="font-bold text-gray-800">No results found!</div>
     </div>
@@ -54,7 +54,20 @@ import AddModal from '../../../Components/AddModal/AddModal.vue';
 import { searchFilter } from '../../../utils/searchFilter';
 import { be_url } from "../../../config/config";
 import { dateFormat } from '../../../utils/dateFormat';
+import axios from 'axios';
 
+// delete a news data based on the passed id
+function handleDelete(id, deleteRef) {
+  axios.post(be_url + "/delete-news/" + id, { id }).then(({data}) => {
+    // this will remove the displaying of the delete modal
+    deleteRef.classList.remove("!translate-y-0");
+    deleteRef.classList.remove("!translate-x-0");
+
+    // this will update the state variable of the news
+    originalDataNews.value = data.news;
+    dataNews.value = data.news;
+  });
+}
 
 // sort/filter function for select and input year
 const filterMonth = ref("All");
@@ -113,7 +126,7 @@ function showAddNewModal() {
 // fetch the news data from backend
 onMounted(() => {
   // requesting data from /news
-  fetch(be_url + "/news").then((res) => res.json()).then(data => {
+  axios.get(be_url + "/news").then(({data}) => {
       dataNews.value = data.news; 
       originalDataNews.value = data.news; 
   });
@@ -172,7 +185,7 @@ const dataToLoop = computed(() => {
     return searchData;
   }
   return groupData;
-}, [search, filterMonth, filterYear]);
+}, [search, filterMonth, filterYear, dataNews, originalDataNews]);
 
 
 </script>
