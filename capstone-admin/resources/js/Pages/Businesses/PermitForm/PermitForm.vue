@@ -30,8 +30,7 @@
 <script setup>
 import PListReq from './PermitFormComponents/PListReq.vue';
 import WrapperContent from '../../../Components/WrapperContent.vue';
-import PwrapperReq from 
-
+import PwrapperReq from "./PermitFormComponents/PwrapperReq.vue"
 
 
 </script>
