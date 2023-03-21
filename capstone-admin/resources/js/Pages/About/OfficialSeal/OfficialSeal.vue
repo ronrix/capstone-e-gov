@@ -2,28 +2,29 @@
   <HeadTitle title="Official Seals"></HeadTitle>
   <WrapperContent>
 
-    <h1 class="font-bold text-xl text-center mb-3 text-gray-800 uppercase">PHOTOGRAPHS AND SYMBOLISMS OF<span
+    <h1 class="font-bold text-xl text-center mb-5 lg:mb-3 text-gray-800 uppercase">PHOTOGRAPHS AND SYMBOLISMS OF<span
         class="block">COMPONENT OF PILILLA LOGO</span></h1>
 
-    <div class="w-full flex items-center justify-center">
-      <div class="bg-white rounded-lg pt-0 self-center relative">
-        <img class="w-[500px]" src="https://pilillarizal.gov.ph/wp-content/uploads/2022/12/logo-symbolism-0_1_orig.jpg"
+    <div class="flex flex-col">
+      <div class="w-[460px] md:w-[480px] lg:w-[500px] bg-white rounded-lg pt-0 self-center">
+        <img class="w-[460px] md:w-[480px] lg:w-[500px]" src="https://pilillarizal.gov.ph/wp-content/uploads/2022/12/logo-symbolism-0_1_orig.jpg"
           alt="">
-        <button
-          class="w-full justify-center mb-2 mt-10 bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs uppercase">Edit</button>
+            <button
+            class="w-full md:w-full lg:w-[70px] mb-1 mt-10 bg-blue-600 hover:bg-blue-500 px-3 py-2  text-white font-bold text-xs uppercase ">Edit</button>
       </div>
     </div>
 
 
+
     <!-- color representation table  -->
 
-    <div class="w-full flex flex-col md:flex-row  gap-5  justify-center mt-20">
+    <div class="w-full flex flex-col md:flex-col lg:flex-row gap-5 justify-center mt-20">
 
       <div class="mb-10">
-        <h2 class="text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Color Representation</h2>
+        <h2 class="text-sm md:text-md lg:text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Color Representation</h2>
         <table class="w-full">
           <thead>
-            <tr>
+            <tr class="text-sm md:text-md lg:text-xl text-gray-700">
               <th>Color</th>
               <th>Description</th>
             </tr>
@@ -38,10 +39,10 @@
       <!-- symbol presentation table -->
 
       <div class="mb-10">
-        <h2 class="text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Symbol Presentation</h2>
+        <h2 class="text-sm lg:text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Symbol Presentation</h2>
         <table class="table-auto w-full">
           <thead>
-            <tr>
+            <tr class="text-sm md:text-md lg:text-xl text-gray-700">
               <th>Symbol</th>
               <th>Description</th>
             </tr>
@@ -125,12 +126,12 @@ const symbol_representation = [
 
 const seals = [
   {
-    title:"BETTER PILILLA",
+    title: "BETTER PILILLA",
     subText: "“BETTER PILILLA” the home of 54 MW Windfarm – our tagline which anchors our governance that leads to the fulfillment of all its Strategic Goals – massive tax campaign, health, special and educational services, human development through skills and development training, increased economic opportunities through business-friendly policies, and infrastructure development which result in attaining the DILG-Seal of Good Local Governance (SGLG) in one year of its first term of public service. (source: LGPMS Profile",
     imgSrc: "https://pilillarizal.gov.ph/wp-content/uploads/2022/09/BetterPilillaLogo-1016x400-1-768x302.png"
   },
   {
-    title:"ARAW NG PILILLA",
+    title: "ARAW NG PILILLA",
     subText: "Ang hugis ng logo na animo araw ay sumisimbulo sa panahon ng tag-init o panahon ng pag-aani kung kailan din ipinagdiriwang ang Araw ng Pililla. Ito ay ginawang makulay na sumasagisag sa ating pagiging likas na masayahin. Ito ay napapalibutan ng siyam na hugis ng tao na nag mistulang sinag na kumakatawan sa siyam na nagkakaisang Barangay at mga mamamayan nito. Ang logo ay makikitaan din ng mga simbulong sumasagisag sa mga lugar at produktong tanyag sa Bayan ng Pililla.",
     imgSrc: "https://pilillarizal.gov.ph/wp-content/uploads/2022/12/araw-ng-pililla-logo-png.png"
   }
@@ -154,4 +155,5 @@ td {
 
 th {
   padding: 0.2em;
-}</style>
+}
+</style>
