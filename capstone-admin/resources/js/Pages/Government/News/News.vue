@@ -1,6 +1,9 @@
 <template>
   <HeadTitle title="News"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
+    <!-- response message -->
+    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-60" />
+
     <!-- filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
       <label class="flex items-center rounded-lg p-2 text-sm bg-white">
@@ -45,6 +48,7 @@
 </template>
 
 <script setup>
+import Notifcation from "../../../Components/Notifcation.vue";
 import SelectTag from '../../../Components/SelectTag.vue';
 import CardNews from './CardNews.vue';
 import PreviewModal from '../../../Components/PreviewModal.vue';
@@ -56,12 +60,21 @@ import { be_url } from "../../../config/config";
 import { dateFormat } from '../../../utils/dateFormat';
 import axios from 'axios';
 
+const resMsg = ref();
 // delete a news data based on the passed id
 function handleDelete(id, deleteRef) {
   axios.post(be_url + "/delete-news/" + id, { id }).then(({data}) => {
     // this will remove the displaying of the delete modal
     deleteRef.classList.remove("!translate-y-0");
     deleteRef.classList.remove("!translate-x-0");
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
 
     // this will update the state variable of the news
     originalDataNews.value = data.news;

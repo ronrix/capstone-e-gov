@@ -33,10 +33,10 @@ class NewsController extends Controller
 
         try {
             News::where('id', $id)->delete();
-            return response()->json([ "news" => News::all(), "id" => $id ]);
+            return response()->json([ "news" => News::all(), "res" => [ "msg" => "Successfully deleted a news", "status" => 200 ]]);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json([ "error" => $th ]);
+            return response()->json([ "res" => ["msg" => $th, "status" => 400 ]]);
         }
     }
 

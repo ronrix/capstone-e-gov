@@ -1,6 +1,6 @@
 <template>
     <HeadTitle title="Login"></HeadTitle>
-    <Notifcation :errorMsg="errorMsg" :isMounted="isMounted" />
+    <Notifcation :msg="errorMsg" :isMounted="isMounted" />
 
     <div class="dark:text-white light:text-primary-dark flex items-center justify-center h-screen overflow-hidden">
         <!-- left -->
@@ -52,7 +52,6 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import { computed, ref } from "vue";
 import Notifcation from "../Components/Notifcation.vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
 
 // validation
 import useVuelidate from "@vuelidate/core";
