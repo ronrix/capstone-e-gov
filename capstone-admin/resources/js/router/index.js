@@ -98,9 +98,9 @@ export const router = createRouter({
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
     },
     {
-      path: "/businesses/permit-form",
-      name: "PermitForm",
-      component: () => import("../Pages/Businesses/PermitForm/PermitForm.vue")
+      path: "/businesses/BPLO",
+      name: "BPLO",
+      component: () => import("../Pages/Businesses/BPLO.vue")
     },
     {
       path: "/businesses/ease-of-doing-business",
