@@ -16,7 +16,7 @@
         {{ data.description }}
         <span v-if="data.description.length > 100">...</span>
       </p>
-      <button @click="showPreviewModal(data)" class="bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-5 uppercase">view </button>
+      <button @click="showPreviewModal(data)" class="rounded-md bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-5 uppercase">view </button>
     </div>
   </div>
 </template>
