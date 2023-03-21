@@ -27,6 +27,19 @@ class NewsController extends Controller
         return response()->json([ "news" => News::all()]);
     }
 
+    public function deleteOneNews(Request $request) {
+        // get the passed parameter id
+        $id = $request->only("id")["id"];
+
+        try {
+            News::where('id', $id)->delete();
+            return response()->json([ "news" => News::all(), "id" => $id ]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([ "error" => $th ]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

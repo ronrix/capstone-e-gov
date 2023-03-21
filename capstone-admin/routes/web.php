@@ -67,6 +67,9 @@ Route::middleware(["auth"])->group(function () {
         return inertia("Main");
     });
 
+    // government post requests
+    Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
+
     // tourism
     Route::get("/tourism/tourism", function() {
         return inertia("Main");

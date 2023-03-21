@@ -1,5 +1,8 @@
 <template>
-  <div class="h-[30px] flex justify-between items-center relative">
+  <div class="h-[30px] flex justify-between items-center relative" :class="!isBlur ? 'bg-white' : ''">
+    <!-- for blurry effect on scroll down -->
+    <div v-if="isBlur" class="bg-blur"></div>
+
     <Navs :showChildSubNavs="showChildSubNavs" :isChildSubNavs="isChildSubNavs" :showSubNavs="showSubNavs" v-show="isMobileNavsVisible" :isWholeSidebar="true" class="w-screen fixed top-0 left-0 right-0 bottom-0 z-80 h-screen bg-white text-black sm:hidden" />
     <div class="flex flex-col items-start sm:pt-0">
       <div class="m-0 p-0 sm:hidden">
@@ -51,10 +54,11 @@
 </template>
 
 <script setup>
-import { ref, onUpdated } from 'vue';
+import { ref, onUpdated, onMounted, onUnmounted } from 'vue';
 import Navs from './Sidebar/Navs.vue';
 import { Link } from "@inertiajs/inertia-vue3";
 
+const isBlur = ref(false);
 const isMobileNavsVisible = ref(false);
 const isAvatarDropDown = ref(false);
 
@@ -65,6 +69,20 @@ function showAvatarDropDown() {
 function showMovileNavs() {
   isMobileNavsVisible.value = !isMobileNavsVisible.value;
 }
+
+onMounted(() => {
+  window.addEventListener("scroll", function(e) {
+    if(this.scrollY === 0) {
+      isBlur.value = false;
+      return;
+    }
+    isBlur.value = true;
+  });
+});
+
+onUnmounted(() => {
+ document.removeEventListener("scroll");
+})
 
 onUpdated(() => {
   // prevent the document from scrolling if the mobile nav is visible
@@ -83,3 +101,15 @@ defineProps({
   showChildSubNavs: Function,
 })
 </script>
+
+<style scoped>
+  .bg-blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    backdrop-filter: blur(20px); /* adjust the blur radius as needed */
+  }
+</style>
