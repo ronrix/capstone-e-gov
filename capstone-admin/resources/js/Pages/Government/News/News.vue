@@ -2,7 +2,7 @@
   <HeadTitle title="News"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
     <!-- filter -->
-    <div class="w-full flex items-center">
+    <div class="w-full flex flex-col md:flex-row md:items-center">
       <label class="flex items-center rounded-lg p-2 text-sm bg-white">
         <i class="uil uil-search-alt pr-3"></i>
         <input type="search" v-model.lazy="search" placeholder="search news" class="bg-transparent outline-none" />
@@ -13,14 +13,13 @@
       <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
         month:
       </span>
-      <select id="month" @change="filterBy" :value="filterMonth" class="bg-white px-3 font-bold rounded-md text-gray-600 text-sm">
-        <option v-for="month in filterMonths" :value="month">{{ month }}</option>
-      </select>
+      <SelectTag type="month" :filterFn="filterBy" :value="filterMonth" :filterArray="filterMonths" />
       <!-- year -->
       <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
         year:
       </span>
-      <input id="year" @change="filterBy" :value="filterYear" type="number" min="2000" :max="new Date().getFullYear()" class="text-sm text-gray-600 font-bold px-2">
+      <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears" />
+
     </div>
 
     <!-- news card -->
@@ -36,7 +35,7 @@
     <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
 
     <!-- add new news btn -->
-    <button @click="showAddNewModal" class="z-20 rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
+    <button @click="showAddNewModal" class="animate-bounce z-20 rounded-full shadow-2xl p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
       <i class="uil uil-plus text-2xl text-white"></i>
     </button>
 
@@ -46,6 +45,7 @@
 </template>
 
 <script setup>
+import SelectTag from '../../../Components/SelectTag.vue';
 import CardNews from './CardNews.vue';
 import PreviewModal from '../../../Components/PreviewModal.vue';
 
@@ -60,19 +60,20 @@ import { dateFormat } from '../../../utils/dateFormat';
 const filterMonth = ref("All");
 const filterYear= ref(new Date().getFullYear());
 const filterMonths = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const filterYears = [ 2023, 2022, 2021, 2020, 2019, 2018, 2017, ];
 
-function filterBy(e) {
-  if(e.target.id === "month") {
-    filterMonth.value = e.target.value;
+function filterBy(type, value) {
+  if(type === "month") {
+    filterMonth.value = value;
 
     // if value is "all" select all the data
-    if(e.target.value === "All") {
+    if(value === "All") {
       dataNews.value = originalDataNews.value;
       return;
     }
 
     // update the value of filterMonth with the selected one
-    filterMonth.value = e.target.value;
+    filterMonth.value = value;
 
     // filter by month
     // and set the new value to dataNews to re-render the filtered news
@@ -85,7 +86,7 @@ function filterBy(e) {
   }
   else {
     // update the value of filterYear selected one
-    filterYear.value = e.target.value;
+    filterYear.value = value;
 
     // filter by year
     // and set the new value to dataNews to re-render the filtered news
