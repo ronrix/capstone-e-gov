@@ -38,9 +38,7 @@
     <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
 
     <!-- add new news btn -->
-    <button @click="showAddNewModal" class="animate-bounce z-20 rounded-full shadow-2xl p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
-      <i class="uil uil-plus text-2xl text-white"></i>
-    </button>
+    <AddBtn :showAddModal="showAddNewModal" />
 
     <!-- add modal -->
     <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
@@ -59,6 +57,7 @@ import { searchFilter } from '../../../utils/searchFilter';
 import { be_url } from "../../../config/config";
 import { dateFormat } from '../../../utils/dateFormat';
 import axios from 'axios';
+import AddBtn from "../../../Components/AddModal/AddBtn.vue";
 
 const resMsg = ref();
 // delete a news data based on the passed id
