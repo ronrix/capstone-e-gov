@@ -1,5 +1,5 @@
 <template>
-    <div class= "w-full flex flex-col md:flex-col lg:flex-row  bg-white rounded-lg p-10 mb-5  items-center">
+    <div class= "w-full flex flex-col md:flex-col lg:flex-row gap-1 bg-white rounded-lg p-10 mb-5  items-center">
         <div class="flex-1 text-center md:text-left" :class=" {'order-last': index === 1 ? 'md:order-last': index === 0}">
             <h4 class="text-xl md:text-2xl text-blue-500 font-semibold uppercase">Logo</h4>
             <textarea class="text-2xl md:text-4xl text-center md:text-left font-extrabold text-red-800 mb-0 lg:mb-4 h-[40px] focus:outline-blue-500 overflow-scroll no-scrollbar bg-white">{{ seal?.title }}</textarea>

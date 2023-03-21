@@ -5,6 +5,7 @@
             <th class="bg-gray-50">{{header?.agencyHead}}</th>
             <th class="bg-gray-50">{{header?.feesHead}}</th>
             <th class="bg-gray-50">{{header?.processHead}}</th>
+            <th class="bg-gray-50">{{header?.action}}</th>
         </tr>
     </thead>
 </template>

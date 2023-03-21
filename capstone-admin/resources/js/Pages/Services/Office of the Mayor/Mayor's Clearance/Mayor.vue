@@ -16,11 +16,21 @@
             </div>
         </WrapperReq>
         <h3 class="font-bold text-xl mt-3 mb-3 text-gray-800">What's the process?</h3>
+        <div class="w-full flex flex-col bg-white rounded-lg mt-5 p-4">
             <Table>
                 <TableHeader v-for="(header, index) in thead" :header="header" />
-                <Rows v-for="(data, index) in table" :class="{ 'bg-gray-200': index % 2 }" :data="data"
-                    class="hover:bg-gray-300" />
+
+                <Rows v-for="(data, index) in table" :data="data" />
             </Table>
+             <!-- add new btn -->
+             <button @click="showServiceModal"
+                class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold">
+                new
+                <i class="uil uil-plus-circle m-0 ml-2"></i>
+            </button>
+             <!-- Services Modal -->
+    <ServicesModal v-if="isServiceModal" :showServiceModal="showServiceModal"/>
+        </div>
       
     </WrapperContent>
 </template>
@@ -32,6 +42,8 @@ import ListReq from '../../Services Components/ListReq.vue';
 import TableHeader from '../../Services Components/TableHeader.vue';
 import Table from '../../Services Components/Table.vue';
 import Rows from '../../Services Components/Rows.vue';
+import ServicesModal from '../../Services Components/ServicesModal.vue';
+import { ref } from 'vue';
 
 const table = [
     {
@@ -64,11 +76,16 @@ const thead = [
         clientHead: "Client Steps",
         agencyHead: "Agency Steps",
         feesHead: "Fees to Paid",
-        processHead: "Processing Time"
+        processHead: "Processing Time",
+        action: "Action"
 
     }
 ]
 
+const isServiceModal = ref(false);
+function showServiceModal() {
+  isServiceModal.value = ! isServiceModal.value;
+}
 </script>
 
 <style lang="scss" scoped></style>
