@@ -22,7 +22,7 @@
     </div>
     <div class="flex-1 h-full relative">
       <!-- header -->
-      <Topbar :showChildSubNavs="showChildSubNavs" :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page" class="sticky top-0 bg-white p-5 shadow-sm z-20" />
+      <Topbar :showChildSubNavs="showChildSubNavs" :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page" class="sticky top-0 p-5 z-20" />
       <div class="md:px-8 -z-10">
         <slot></slot>
       </div>
