@@ -9,3 +9,16 @@
     font-family: 'Montserrat', sans-serif;
     /* outline: 1px dotted pink; */
 }
+
+/* style scrollbar */
+.scrollbar::-webkit-scrollbar {
+    width: 5px;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background: #4f83f3;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #2563EB; 
+}
