@@ -6,11 +6,14 @@
         class="block">COMPONENT OF PILILLA LOGO</span></h1>
 
     <div class="flex flex-col">
-      <div class="w-[460px] md:w-[480px] lg:w-[500px] bg-white rounded-lg pt-0 self-center">
-        <img class="w-[460px] md:w-[480px] lg:w-[500px]" src="https://pilillarizal.gov.ph/wp-content/uploads/2022/12/logo-symbolism-0_1_orig.jpg"
-          alt="">
-            <button
-            class="w-full md:w-full lg:w-[70px] mb-1 mt-10 bg-blue-600 hover:bg-blue-500 px-3 py-2  text-white font-bold text-xs uppercase ">Edit</button>
+      <div class="w-[460px] md:w-[480px] lg:w-[500px] flex flex-col bg-white rounded-lg pt-0 self-center">
+        <img class="w-[460px] md:w-[480px] lg:w-[500px]"
+          src="https://pilillarizal.gov.ph/wp-content/uploads/2022/12/logo-symbolism-0_1_orig.jpg" alt="">
+
+          <button @click="showInputFileSelection"
+            class="px-3 py-2 mt-10 mb-0 md:mb-2 md:mr-2 font-bold text-xs border border-blue-500  text-white bg-blue-600 w-full md:w-[118px] rounded-lg  hover:bg-blue-500 self-end items-center">Change
+            Image</button>
+          <input ref="inputFile" @change="handleSelectFile" type="file" class="hidden" />
       </div>
     </div>
 
@@ -21,7 +24,8 @@
     <div class="w-full flex flex-col md:flex-col lg:flex-row gap-5 justify-center mt-20">
 
       <div class="mb-10">
-        <h2 class="text-sm md:text-md lg:text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Color Representation</h2>
+        <h2 class="text-sm md:text-md lg:text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Color
+          Representation</h2>
         <table class="w-full">
           <thead>
             <tr class="text-sm md:text-md lg:text-xl text-gray-700">
@@ -65,6 +69,14 @@
 import WrapperContent from '../../../Components/WrapperContent.vue';
 import Row from './Row.vue'
 import CardSeal from './CardSeal.vue';
+import { ref } from 'vue'
+
+const inputFile = ref(null);
+
+function showInputFileSelection() {
+  // will click the hidden input file to show the file selection
+  inputFile.value.click();
+}
 
 const color_representation = [
   {
