@@ -100,7 +100,7 @@ export const router = createRouter({
     {
       path: "/businesses/BPLO",
       name: "BPLO",
-      component: () => import("../Pages/Businesses/BPLO.vue")
+      component: () => import("../Pages/Businesses/BPLO/BPLO.vue")
     },
     {
       path: "/businesses/ease-of-doing-business",
