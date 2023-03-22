@@ -2,7 +2,7 @@
   <HeadTitle title="News"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
     <!-- response message -->
-    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-60" />
+    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
     <!-- filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
@@ -35,7 +35,7 @@
       <!-- no result  -->
       <div v-if="!group.items.length" class="font-bold text-gray-800">No results found!</div>
     </div>
-    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" :handleSubmit="handleSubmit" />
 
     <!-- add new news btn -->
     <AddBtn :showAddModal="showAddNewModal" />
@@ -80,6 +80,31 @@ function handleDelete(id, deleteRef) {
     dataNews.value = data.news;
   });
 }
+
+// handle the submit function to update the new news
+function handleSubmit(id, formData) {
+  // const form = new FormData();
+  // form.append('id', selectedData.id);
+  // form.append('title', formData.title);
+  // form.append('description', formData.description);
+  // form.append('imgFile', formData?.imgFile);
+
+  axios.post(be_url + "/news/edit", { id, title: formData.title, description: formData.description, imgFile: formData.imgFile }, { headers: { "Content-Type": "multipart/form-data" }})
+  .then(response => {
+    originalDataNews.value = response.data.news;
+    dataNews.value = response.data.news;
+
+    // set the response msg
+    resMsg.value = response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+  })
+  .catch(err => console.log(err));
+}
+
+
 
 // sort/filter function for select and input year
 const filterMonth = ref("All");
