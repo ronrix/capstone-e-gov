@@ -108,29 +108,27 @@ function handleSubmit(id, formData) {
 
 // sort/filter function for select and input year
 const filterMonth = ref("All");
-const filterYear= ref(new Date().getFullYear());
+const filterYear= ref("All");
 const filterMonths = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const filterYears = [ 2023, 2022, 2021, 2020, 2019, 2018, 2017, ];
+const filterYears = [ "All", 2023, 2022, 2021, 2020, 2019, 2018, 2017, ];
 
 function filterBy(type, value) {
   if(type === "month") {
+    // update the value of filterMonth with the selected one
     filterMonth.value = value;
 
     // if value is "all" select all the data
-    if(value === "All") {
+    if(value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
       dataNews.value = originalDataNews.value;
       return;
     }
-
-    // update the value of filterMonth with the selected one
-    filterMonth.value = value;
 
     // filter by month
     // and set the new value to dataNews to re-render the filtered news
     const groups = originalDataNews.value.filter(group => {
       const date = dateFormat(group.created_at);
       // return the group if month exists 
-      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
+      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) || date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
     }); 
     dataNews.value = groups;
   }
@@ -138,12 +136,18 @@ function filterBy(type, value) {
     // update the value of filterYear selected one
     filterYear.value = value;
 
+    // if value is "all" select all the data
+    if(value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
+      dataNews.value = originalDataNews.value;
+      return;
+    }
+
     // filter by year
     // and set the new value to dataNews to re-render the filtered news
     const groups = originalDataNews.value.filter(group => {
       const date = dateFormat(group.created_at);
       // return the group if month exists 
-      return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) || date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
     }); 
     dataNews.value = groups;
   }
