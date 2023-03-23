@@ -41,7 +41,7 @@
     <AddBtn :showAddModal="showAddNewModal" />
 
     <!-- add modal -->
-    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" />
   </WrapperContent>
 </template>
 
@@ -104,7 +104,22 @@ function handleSubmit(id, formData) {
   .catch(err => console.log(err));
 }
 
+// submit form
+function handleCreateSubmit(formData) {
+  axios.post(be_url + "/news/create", { title: formData.title, description: formData.content, imgFile: [...formData.imgFile] }, { headers: { "Content-Type": "multipart/form-data" }})
+  .then(response => {
+    originalDataNews.value = response.data.news;
+    dataNews.value = response.data.news;
 
+    // set the response msg
+    resMsg.value = response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+  })
+  .catch(err => console.log(err));
+}
 
 // sort/filter function for select and input year
 const filterMonth = ref("All");

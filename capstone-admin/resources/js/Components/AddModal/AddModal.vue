@@ -1,98 +1,133 @@
 <template>
-  <div class="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-20 z-20">
-    <div class="w-[500px] bg-white mx-auto p-10 flex flex-col relative overflow-hidden">
+  <div class="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
+    <div class="backdrop-blur-xl bg-white/70 sm:w-[700px] mx-auto p-5 flex flex-col relative overflow-hidden rounded-lg">
       <!-- close btn -->
-      <div @click="showAddModal" class="flex items-end justify-start absolute right-0 top-0 bg-red-500 text-white px-5 cursor-pointer">
-        <i class="fa-solid fa-xmark mb-1 group-hover:hidden"></i>
-      </div>
+      <i @click="showAddModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
-      <h2 class="font-bold text-2xl uppercase mb-0">Add modal</h2>
-      <p class="mb-5">The order of this form will be the order when it gets displayed to the website</p>
+      <h2 class="font-bold text-2xl capitalize mb-0 text-gray-900">Create new headline</h2>
+      <p class="text-sm text-gray-600 whitespace-pre-wrap"> 
+        To format for your content appropriately, you should understand how markdown works
+      </p>
+      <!-- link to go the markdown document -->
+      <a target="_blank" href="https://www.markdownguide.org/basic-syntax/" class="m-0 text-sm mb-5 text-blue-600 underline font-[500] self-start">
+        <i class="uil uil-info-circle"></i>
+        click here to learn how to format your contents
+      </a>
 
-      <form method="POST" action="/create-news" @submit.capture="submitForm" class="flex flex-col">
-        <input name="title" type="text" placeholder="Add title here" class="border mb-5 p-2" value="title">
-        <input name="subtitle" type="text" plapceholder="Add subtitle here" class="border p-2" value="subtitle">
+      <form method="POST" action="/create-news" @submit.prevent="handleCreateSubmit(formData)" class="flex flex-col">
+        <label class="flex flex-col">
+          <span class="text-sm font-bold capitalize mb-2">title:</span>
+          <input v-model="formData.title" name="title" type="text" placeholder="Type the title here..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
+        </label>
+        <label class="flex flex-col">
+          <span class="text-sm font-bold capitalize mb-2">content:</span>
+          <textarea v-model="formData.content" name="description" placeholder="Type the content here..." class="rounded-md p-2 max-h-[200px] h-[300px] focus:outline-blue-600 scrollbar touch-auto"></textarea>
+        </label>
 
         <!-- imput options -->
         <!-- when this clicked it will show choices of elements, when one is clicked it will add new element to the form -->
-        <div class="flex items-center mt-5">
-          <div id="textarea" @click="addNewElement" class="hover:bg-gray-300 text-center border p-2 cursor-pointer">
-            <i class="fa-solid fa-font text-2xl pointer-events-none"></i>
-            <p class="pointer-events-none">paragraph</p>
+        <div class="flex items-start mt-5 flex-col gap-2">
+          <!-- text instructions -->
+          <div>
+            <h5 class="text-gray-800 text-sm font-[500] capitalize">Image Assets</h5>
+            <p class="text-gray-500 text-xs font-[500]">Click one of the image to select the default thumbnail</p>
           </div>
-          <div id="img" @click="addNewElement" class="hover:bg-gray-300 text-center ml-5 border p-2 cursor-pointer">
-            <i class="fa-solid fa-image text-2xl pointer-events-none"></i>
-            <p class="pointer-events-none">image</p>
+
+          <div class="flex items-center w-1ull gap-2">
+            <!-- TODO: add images here -->
+            <div ref="assetDiv" class="flex items-start flex-wrap gap-2">
+              <div v-for="img, idx in toUploadImgs" class="border border-gray-500 p-2 rounded-md w-[100px] h-[100px] relative cursor-pointer">
+                <!-- remove btn -->
+                <div :id="idx" @click="handleRemoveImg" class="absolute -top-2 -right-2 cursor-pointer bg-red-600 flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-500">
+                  <i class="uil uil-times text-white pointer-events-none"></i>
+                </div>
+                <img @click="handleSelectDefaultThumbnail" :id="idx" :src="img" alt="this is an image of something" class="w-full h-full prev-img">
+              </div>
+            </div>
+
+
+            <!-- upload btn -->
+            <div @click="addNewImg" class="text-center flex items-center justify-center rounded-md px-2 border-blue-600 cursor-pointer border-2 ml-2 w-[100px] h-[100px]">
+              <i class="uil uil-image-plus text-5xl pointer-events-none"></i>
+            </div>
           </div>
         </div>
 
-        <button type="submit" class="mt-5 bg-blue-400 px-5 py-2 text-white">save</button>
+        <button type="submit" class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase">save</button>
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
-import TurndownService from "turndown";
+import { ref, onMounted, onUnmounted } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import axios from "axios";
+import { be_url } from "../../config/config";
+
+const assetDiv = ref(null);
+const formData = useForm({
+  title: "",
+  content: "",
+  imgFile: [],
+});
+const toUploadImgs = ref([]);
+
+// when img is selected to be the default thumbnail, it will the first element on the formData.imgFile
+// user should expect one selected img
+function handleSelectDefaultThumbnail(e) {
+  // remove first, the styles from other imgs
+  // it will remove the border set to the selected imgs, if user clicks on another img
+  document.querySelectorAll(".prev-img").forEach(el => {
+    el.parentElement.classList.remove("!border-blue-600");
+    el.parentElement.classList.remove("!border-2");
+  });
+
+  // select the img
+  e.target.parentElement.classList.toggle("!border-blue-600");
+  e.target.parentElement.classList.toggle("!border-2");
+  // TODO: put the selected img on the first index of formData.imgFile
+  // splice or delete the selected img first and store it to a variable
+  const selectedImg = formData.imgFile[e.target.id]; // get the selected img before deleting it
+  delete formData.imgFile[e.target.id]; // delete the selected img
+  formData.imgFile.splice(0, 0, selectedImg); // this put the selected img on the first index
+}
+
+function handleRemoveImg(e) {
+  formData.imgFile.splice(e.target.id, 1);
+  toUploadImgs.value.splice(e.target.id, 1);
+}
+
+// handle change event for input file
+function handleChangeEvent(e) {
+  const file = e.target.files[0];
+  formData.imgFile.push(file);
+  toUploadImgs.value = formData.imgFile.map(img => URL.createObjectURL(img)); // this state will copy the formData.imgFile but in createObjectURL to display to the DOM
+}
 
 // adding new element to the form
-function addNewElement(e) {
-  let whatElement = e.target;
-  let el = document.createElement(whatElement.id);
-
-  // if img elmeent
-  if(whatElement.id === "img") {
-    el = document.createElement("input");
-    el.type = "file";
-    el.name = "img";
-    // el.src = "https://images.unsplash.com/photo-1677484227914-e06f939da0a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80";
-  } 
-  else { // if textarea
-    el.name = "content";
-    el.placeholder = "Add new content";
-    el.className = "my-2";
-  }
-
-  // append new element
-  whatElement.parentNode.parentNode.insertBefore(el, whatElement.parentNode);
+function addNewImg() {
+  const el = document.createElement("input");
+  el.type = "file";
+  el.name = "img";
+  el.classList.add('hidden');
+  el.onchange = (e) => handleChangeEvent(e);
+  el.click();
 }
 
-// convert input, textarea, img to supported elements of turndown
-function convertHtmlToSupportedFormats(el) {
-  const nodeName = el.nodeName.toLowerCase();
-  if(nodeName === "input" && el.name === "title") {
-    return "<h1>" +  el.value + "</h1>";
-  }
-  if(nodeName === "input" && el.name === "subtitle") {
-    return "<h2>" +  el.value + "</h2>";
-  }
-  if(nodeName === "input" && el.type === "file") {
-    return `<img src="${el.value}" alt="this is the image something" />`; 
-  }
-  if(nodeName === "textarea") {
-    return "<p>" + el.value + "</p>";
-  }
-}
+// add scroll hidden on mount
+onMounted(() => {
+  document.body.classList.add("overflow-hidden");
+});
 
-// submit form
-function submitForm(e) {
-  const el = e.target;
-  let htmlString = "";
+// remove scroll hidden on unmount
+onUnmounted(() => {
+  document.body.classList.remove("overflow-hidden");
+});
 
-  // loop through the elements and convert them one by one
-  for(let i=0; i<el.length - 1; i++) {
-    htmlString += convertHtmlToSupportedFormats(el[i]);
-  }
-
-  // const clean = DOMPurify.sanitize(el.innerHTML);
-  const turnDownService = new TurndownService();
-  const markedDownString = turnDownService.turndown(htmlString);
-  console.log(markedDownString);
-
-  e.preventDefault();
-}
 
 defineProps({
-  showAddModal: Function
+  showAddModal: Function,
+  handleCreateSubmit: Function
 })
 </script>
