@@ -95,9 +95,48 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // validate
+        $request->validate([
+            "title" => "required", 
+            "description" => "required", 
+            "imgFile" => "required|array", # 5mb is the max 
+            "imgFile.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
+        ]);
+
+        // get the passed parameter id
+        $id = $request->input("id");
+
+        try {
+            if($request->file("imgFile")) {
+                // save all the images
+                $imgPaths = [];
+                foreach ($request->file('imgFile') as $file) {
+                    $filename = uniqid() . "." . $file->getClientOriginalExtension();
+                    $path = "uploads/" .$filename;
+                    Image::make($file)->save(public_path($path)); // save the file image
+                    array_push($imgPaths, $path);
+                }
+                
+                $news = new News;
+                $news->title = $request->input("title");
+                $news->description = $request->input("description");
+                $news->img_link = json_encode(implode(",", $imgPaths));
+                $news->save();
+            }     
+
+            return response()->json([
+                "news" => News::all(),
+                "res" => [
+                    "msg" => "Successfully created news",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+        }
     }
 
     /**

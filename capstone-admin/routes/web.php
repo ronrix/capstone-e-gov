@@ -70,6 +70,7 @@ Route::middleware(["auth"])->group(function () {
     // government post requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
+    Route::post("/news/create/", [NewsController::class, "create"]);
 
     // tourism
     Route::get("/tourism/tourism", function() {
