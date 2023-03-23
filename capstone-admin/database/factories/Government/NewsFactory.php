@@ -16,14 +16,16 @@ class NewsFactory extends Factory
      */
     public function definition()
     {
-        return [
-            "title" => fake()->sentence(),
-            "description" => fake()->paragraph(5),
-            "img_link" => fake()->randomElement([
+        $img_links = [
                 "https://images.unsplash.com/photo-1526470608268-f674ce90ebd4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80", 
                 "https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80",
                 "https://images.unsplash.com/photo-1504711434969-e33886168f5c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80"
-            ]),
+        ];
+
+        return [
+            "title" => fake()->sentence(),
+            "description" => fake()->paragraph(5),
+            "img_link" => json_encode(implode(",", $img_links)),
             "comments" => json_encode([
                 [
                     "author" => fake()->name(),

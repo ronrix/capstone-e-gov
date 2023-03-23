@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("title");
             $table->longText("description");
-            $table->text("img_link");
+            $table->json("img_link");
             $table->json("comments")->nullable();
             $table->timestamps();
         });
