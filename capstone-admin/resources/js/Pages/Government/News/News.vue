@@ -142,8 +142,14 @@ function filterBy(type, value) {
     // and set the new value to dataNews to re-render the filtered news
     const groups = originalDataNews.value.filter(group => {
       const date = dateFormat(group.created_at);
+      if(filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
+      }
+      if(filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      }
       // return the group if month exists 
-      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) || date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
     }); 
     dataNews.value = groups;
   }
@@ -161,8 +167,14 @@ function filterBy(type, value) {
     // and set the new value to dataNews to re-render the filtered news
     const groups = originalDataNews.value.filter(group => {
       const date = dateFormat(group.created_at);
+      if(filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      }
+      if(filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
+      }
       // return the group if month exists 
-      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) || date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
     }); 
     dataNews.value = groups;
   }
