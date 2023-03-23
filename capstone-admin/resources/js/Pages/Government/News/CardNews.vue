@@ -11,10 +11,12 @@
     <ImgSkeleton v-if="firstLoad" class="h-[400px]" />
     <!-- content -->
     <div class="flex-1 px-5 pt-5 flex flex-col justify-between">
-      <h3 v-if="!firstLoad" class="font-bold capitalize text-xl tracking-wide">{{ data.title }}</h3>
-      <TitleSkeleton v-if="firstLoad" />
-      <h5 v-if="!firstLoad" class="text-xs text-gray-500 font-bold">{{ date }}</h5>
-      <DateSkeleton v-if="firstLoad" />
+      <div>
+        <h3 v-if="!firstLoad" class="font-bold capitalize text-xl tracking-wide">{{ data.title }}</h3>
+        <TitleSkeleton v-if="firstLoad" />
+        <h5 v-if="!firstLoad" class="text-xs text-gray-500 font-bold">{{ date }}</h5>
+        <DateSkeleton v-if="firstLoad" />
+      </div>
       <p v-if="!firstLoad" class="mt-5 text-sm h-[100px] overflow-hidden">
         {{ data.description }}
         <span v-if="data.description.length > 100">...</span>
@@ -40,7 +42,7 @@ const firstLoad = ref(true);
 onMounted(() => {
   setTimeout(() => {
     firstLoad.value = false;
-  }, 1500);
+  }, 1000);
 });
 
 const imgSrc = validURL(data.img_link) ? data.img_link : be_url + "/" + data.img_link; // : "https://www.nbmchealth.com/wp-content/uploads/2018/04/default-placeholder.png";
