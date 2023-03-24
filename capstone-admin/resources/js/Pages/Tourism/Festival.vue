@@ -2,9 +2,12 @@
   <HeadTitle title="Festval"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
 
-        <!-- search filter -->
-        <SearchInput class="mb-5" @searchFn="searchFn" />
-
+   <!-- search filter -->
+   <div class="w-full flex flex-col md:flex-row md:items-center">
+        <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn"/>
+      <SelectTag type="category" value="All" :filterArray="filterTourism" />
+    </div>
+    
     <div v-for="data in filteredData" class="flex flex-col md:flex-row items-start shadow-lg bg-white rounded-lg">
       
     <!-- image -->
@@ -42,7 +45,8 @@
 import { ref, onUpdated } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';
-import TouristSpotPreviewModal from '../../Components/TouristSpotPreviewModal.vue'
+import TouristSpotPreviewModal from '../../Components/TouristSpotPreviewModal.vue';
+import SelectTag from '../../Components/SelectTag.vue';
 const isTouristSpotPreviewModal = ref(false);
 const isAddNewModal = ref(false);
 const selectedData = ref();
@@ -67,7 +71,10 @@ const selectedData = ref();
               img: "https://cdn.dribbble.com/users/2089694/screenshots/15254872/media/72cb5ad92a61d36de040a5a7433a2e07.png?compress=1&resize=700x525&vertical=top",
               address: "99R6+574, Malaya Trail, Pililla, Riza"
             }]
-                    const filteredData = ref(searchFilter(""));
+
+const filterTourism = ['All', 'Kalbaw', 'Magsolangtan']
+
+        const filteredData = ref(searchFilter(""));
         function searchFilter(value) {
           const first_option = sample_data.filter(data => {
             return data.placeName.toLowerCase().includes(value.toLowerCase());
