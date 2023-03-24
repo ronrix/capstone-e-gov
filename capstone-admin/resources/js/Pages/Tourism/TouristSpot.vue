@@ -4,20 +4,21 @@
     <!-- search filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
         <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn"/>
-      <SelectTag type="category" value="All" :filterArray="filterTourism" />
+      <SelectTag type="category" value="All" :filterFn="filterBy" :filterArray="filterTourism" />
     </div>
-    <!-- <div v-for="group in sorteditems" :key="group.groupName" class="flex flex-col gap-3 mt-5">
+    <!-- <div v-for="group in sorteditems" :key="group.category" class="flex flex-col gap-3 mt-5">
       <div class="flex items-center">
         <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.category }}</span>
         <div class="flex-1 border"></div>
       </div>
     </div> -->
 
-    <div v-for="data in filteredData" class="flex flex-col md:flex-row items-start shadow-lg bg-white rounded-lg">
+    <div v-for="data in filteredData" class="relative bg-white p-5 flex flex-col md:flex-row border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 overflow-hidden shadow-md">
+      <Delete :handleDelete="handleDelete" :id="data.id"  />
       <!-- image -->
-      <div class="flex-1 flex flex-col gap-3 items-start justify-between">
+      <div class="flex-1 flex flex-col gap-3 items-start justify-between ">
         <div :style="{ backgroundImage: `url(${data.img})` }"
-          class="bg-no-repeat  bg-center h-[250px] mt-2 ml-2 md:w-[300px] lg:w-[500px] relative after:h-[50px] after:bottom-0 after:w-full after:bg-gradient-to-t after:from-black/30 after:to-white/10 after:absolute after:blur-sm">
+          class="bg-no-repeat overflow-hidden bg-center h-[250px] mt-2 ml-2 md:w-[300px] lg:w-[500px] relative after:h-[50px] after:bottom-0 after:w-full after:bg-gradient-to-t after:from-black/30 after:to-white/10 after:absolute after:blur-sm">
         </div>
         <div class="flex">
           <i style="margin-top: 2px;" class="ml-2 uil uil-location-point text-cyan-400"></i>
@@ -56,6 +57,7 @@ import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';
 import TouristSpotPreviewModal from '../../Components/TouristSpotPreviewModal.vue'
 import SelectTag from '../../Components/SelectTag.vue';
+import Delete from '../../Components/Delete.vue';
 const isTouristSpotPreviewModal = ref(false);
 const isAddNewModal = ref(false);
 const selectedData = ref();
@@ -159,17 +161,16 @@ onUpdated(() => {
   }
 });
 
-
 // const sorteditems = sample_data.reduce((groups, item) => {
-//   const groupName = item.category;
-//   if (!groups[groupName]) {
-//     groups[groupName] = [];
+//   const category = item.category;
+//   if (!groups[category]) {
+//     groups[category] = [];
 //   }
-//   groups[groupName].push(item);
+//   groups[category].push(item);
 //   return groups;
 // }, {});
 
-// Object.keys(sorteditems).sort().forEach((key) => {
+// Object.keys(sorteditems).sort().forEach((item) => {
 //   sorteditems[key] = sorteditems[key].sort((a, b) => a.category.localeCompare(b.category));
 // });
 
