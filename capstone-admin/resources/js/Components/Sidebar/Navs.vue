@@ -51,7 +51,6 @@
         </div>
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
-        <NavLink to="/tourism/tourism" name="tourism" />
         <NavLink to="/tourism/tourist-spots" name="tourists spots" />
         <NavLink to="/tourism/festivals" name="festivals" />
       </SubNavs>
