@@ -33,10 +33,10 @@
             <p class="text-gray-500 text-xs font-[500]">Click one of the image to select the default thumbnail</p>
           </div>
 
-          <div class="flex items-center w-1ull gap-2">
+          <div class="flex items-center w-full gap-2">
             <!-- TODO: add images here -->
-            <div ref="assetDiv" class="flex items-start flex-wrap gap-2 sm:h-[150px] overflow-y-scroll py-2 el-main">
-              <div v-for="img, idx in toUploadImgs" class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer el-img">
+            <div ref="assetDiv" class="flex items-start flex-wrap gap-2 sm:h-[150px] overflow-y-scroll py-2 scrollbar w-full el-main">
+              <div v-for="img, idx in toUploadImgs" class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer">
                 <!-- remove btn -->
                 <div :id="idx" @click="handleRemoveImg" class="absolute -top-2 -right-2 cursor-pointer bg-red-600 flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-500">
                   <i class="uil uil-times text-white pointer-events-none"></i>
@@ -59,7 +59,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, watch } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import axios from "axios";
 import { be_url } from "../../config/config";
@@ -126,11 +126,11 @@ onMounted(() => {
   if (vh <= 630) {
     // Update the style of the elements
     const elMain = document.querySelector(".el-main");
-    const elBtn = document.querySelector(".el-btn");
     elMain.style.height = "80px";
-    elBtn.style.width = '50px';
-    elBtn.style.height = '50px';
-    elBtn?.firstElementChild.classList.add("!text-2xl");
+    elMain.classList.add("small");
+
+    const elBtn = document.querySelector(".el-btn");
+    elBtn.firstElementChild.classList.add("!text-2xl");
   }
 });
 
@@ -147,7 +147,7 @@ defineProps({
 </script>
 
 <style scoped>
-div.el-img {
+div.el-main.small > * {
   height: 50px;
   width: 50px;
 }
