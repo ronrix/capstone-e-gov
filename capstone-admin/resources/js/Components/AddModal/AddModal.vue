@@ -21,7 +21,7 @@
         </label>
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">content:</span>
-          <textarea v-model="formData.content" name="description" placeholder="Type the content here..." class="rounded-md p-2 max-h-[200px] h-[300px] focus:outline-blue-600 scrollbar touch-auto"></textarea>
+          <textarea v-model="formData.content" name="description" placeholder="Type the content here..." class="rounded-md p-2 h-[80px] sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto"></textarea>
         </label>
 
         <!-- imput options -->
@@ -35,22 +35,21 @@
 
           <div class="flex items-center w-1ull gap-2">
             <!-- TODO: add images here -->
-            <div ref="assetDiv" class="flex items-start flex-wrap gap-2">
-              <div v-for="img, idx in toUploadImgs" class="border border-gray-500 p-2 rounded-md w-[100px] h-[100px] relative cursor-pointer">
+            <div ref="assetDiv" class="flex items-start flex-wrap gap-2 sm:h-[150px] overflow-y-scroll py-2 el-main">
+              <div v-for="img, idx in toUploadImgs" class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer el-img">
                 <!-- remove btn -->
                 <div :id="idx" @click="handleRemoveImg" class="absolute -top-2 -right-2 cursor-pointer bg-red-600 flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-500">
                   <i class="uil uil-times text-white pointer-events-none"></i>
                 </div>
                 <img @click="handleSelectDefaultThumbnail" :id="idx" :src="img" alt="this is an image of something" class="w-full h-full prev-img">
               </div>
+              <!-- upload btn -->
+              <div @click="addNewImg" class="text-center flex items-center justify-center rounded-md px-2 border-blue-600 cursor-pointer border-2 ml-2 w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] el-btn">
+                  <i class="uil uil-image-plus text-2xl sm:text-5xl pointer-events-none"></i>
+                </div>
+              </div>
             </div>
 
-
-            <!-- upload btn -->
-            <div @click="addNewImg" class="text-center flex items-center justify-center rounded-md px-2 border-blue-600 cursor-pointer border-2 ml-2 w-[100px] h-[100px]">
-              <i class="uil uil-image-plus text-5xl pointer-events-none"></i>
-            </div>
-          </div>
         </div>
 
         <button type="submit" class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase">save</button>
@@ -115,9 +114,24 @@ function addNewImg() {
   el.click();
 }
 
-// add scroll hidden on mount
+// add scroll hidden on mount and fix the style when vh is <= 630px so the "AddModal"
+// is not going to overflow on the screen
 onMounted(() => {
   document.body.classList.add("overflow-hidden");
+
+  // Get the viewport height
+  const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+
+  // Check if the viewport height is below 600px
+  if (vh <= 630) {
+    // Update the style of the elements
+    const elMain = document.querySelector(".el-main");
+    const elBtn = document.querySelector(".el-btn");
+    elMain.style.height = "80px";
+    elBtn.style.width = '50px';
+    elBtn.style.height = '50px';
+    elBtn?.firstElementChild.classList.add("!text-2xl");
+  }
 });
 
 // remove scroll hidden on unmount
@@ -131,3 +145,10 @@ defineProps({
   handleCreateSubmit: Function
 })
 </script>
+
+<style scoped>
+div.el-img {
+  height: 50px;
+  width: 50px;
+}
+</style>

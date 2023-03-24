@@ -24,9 +24,13 @@
         <textarea v-model="formData.title" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent capitalize w-full text-xl font-bold max-h-[71px]">{{ formData.title }}</textarea>
         <!-- date -->
         <h5 class="text-xs text-gray-500 font-bold">{{ date }}</h5>
+        <!-- location, if exists -->
+        <span v-if="selectedData.location" class="font-[500] text-xs capitalize mt-2">address</span>
+        <textarea v-if="selectedData.location" v-model="selectedData.location" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent capitalize w-full text-sm max-h-[71px]">{{ selectedData.location }}</textarea>
         <!-- content -->
-        <div ref="descEl" v-bind:innerHTML="description" class="text-sm mt-5 h-[200px] hover:overflow-y-scroll overflow-y-scroll scrollbar"></div>
-        <div @click="startEditing" class="text-blue-600 cursor-pointer hover:text-blue-500 font-[500] self-start">edit</div>
+        <span class="font-[500] text-xs capitalize mt-3">content</span>
+        <div ref="descEl" v-bind:innerHTML="description" class="text-sm h-[200px] hover:overflow-y-scroll overflow-y-scroll scrollbar"></div>
+        <div @click="startEditing" class="text-blue-600 cursor-pointer hover:text-blue-500 self-start">edit</div>
 
         <textarea ref="descText" @blur="stopEditing" v-model="formData.description" class="hidden overflow-y-scroll scrollbar focus:outline-blue-600 bg-transparent capitalize py-3 w-full h-[200px] max-h-[200px] text-sm">{{ formData.description }}</textarea>
 
@@ -52,6 +56,12 @@ import { validURL } from '../utils/validUrl';
 import { marked } from "marked";
 import DOMPurify from 'dompurify';
 
+const { selectedData, handleSubmit } = defineProps({
+  showPreviewModal: Function,
+  selectedData: {},
+  handleSubmit: Function,
+});
+
 const descEl = ref(null);
 const descText = ref(null);
 const isLoading = ref(false);
@@ -63,6 +73,7 @@ const imgSrc = validURL(selectedData.img_link.split(",")[0].replace('"', "")) ? 
 const formData = useForm({
     imgFile: null,
     title: selectedData?.title,
+    location: selectedData.location,
     description: selectedData.description,
 });
 
@@ -82,12 +93,6 @@ function stopEditing(e) {
   descEl.value.classList.remove("hidden"); // show the desc
   e.target.classList.add("hidden"); // hide the textarea
 }
-
-const { selectedData, handleSubmit } = defineProps({
-  showPreviewModal: Function,
-  selectedData: {},
-  handleSubmit: Function
-});
 
 const date = dateFormat(selectedData?.created_at);
 
