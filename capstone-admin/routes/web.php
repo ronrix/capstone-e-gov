@@ -8,7 +8,7 @@ use App\Http\Controllers\Government\HotlinesController;
 use App\Http\Controllers\Government\ExecutivesController;
 use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
-
+use App\Http\Controllers\Government\ProgramsEventsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +71,8 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
+    Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
+    Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
 
     // tourism
     Route::get("/tourism/tourism", function() {

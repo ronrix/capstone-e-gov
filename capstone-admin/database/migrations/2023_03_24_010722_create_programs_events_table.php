@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('advisories', function (Blueprint $table) {
+        Schema::create('programs_events', function (Blueprint $table) {
             $table->id();
             $table->string("title");
             $table->longText("description");
-            $table->string("img_link");
+            $table->text("location");
+            $table->json("img_link");
             $table->json("comments")->nullable();
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('advisories');
+        Schema::dropIfExists('programs_events');
     }
 };

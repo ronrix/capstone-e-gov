@@ -7,12 +7,12 @@ namespace Database\Seeders;
 use App\Models\About\About;
 use App\Models\Business\Business;
 use App\Models\Business\Invest;
-use App\Models\Government\Advisory;
 use App\Models\Government\Executives;
 use App\Models\Government\Hotlines;
 use App\Models\Government\News;
 use App\Models\Government\Population;
 use App\Models\Government\JobPosting;
+use App\Models\Government\ProgramsEvents;
 use App\Models\Services\Service;
 use App\Models\Tourism\Festival;
 use App\Models\Tourism\Tourism;
@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         News::factory(10)->create();
-        Advisory::factory(10)->create();
+        ProgramsEvents::factory(10)->create();
         Executives::factory(10)->create();
         Hotlines::factory(10)->create();
         Population::factory(10)->create();

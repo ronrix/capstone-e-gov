@@ -72,11 +72,6 @@ export const router = createRouter({
     },
     // tourism
     {
-      path: "/tourism/tourism",
-      name: "Tourism",
-      component: () => import("../Pages/Tourism/Tourism.vue")
-    },
-    {
       path: "/tourism/tourist-spots",
       name: "TouristSpots",
       component: () => import("../Pages/Tourism/TouristSpot.vue")
