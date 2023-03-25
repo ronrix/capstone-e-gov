@@ -11,7 +11,7 @@
             <SelectTag type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness" />
         </div>
         <!-- card businesses -->
-        <CardBusiness v-for="(data, index) in business" :data="data"/>
+        <CardBusiness  v-for="(data, index) in business" :data="data" />
 
     </WrapperContent>
 </template>
@@ -43,6 +43,7 @@ const business = [
         imgSrc: "https://fab.ph/wp-content/uploads/2019/03/8cSDwpg0d9YbVTRxUqrM1.png"
     }
 ]
+
 
 
 </script>

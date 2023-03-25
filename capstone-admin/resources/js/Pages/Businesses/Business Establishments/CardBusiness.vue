@@ -16,8 +16,10 @@
 </template>
 
 <script setup>
-defineProps({ data : Object, index : Number });
+defineProps({ data : Object});
 </script>
+
+
 
 <style scoped>
 
