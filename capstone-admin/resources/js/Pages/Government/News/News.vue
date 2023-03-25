@@ -38,10 +38,10 @@
     <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" :handleSubmit="handleSubmit" />
 
     <!-- add new news btn -->
-    <AddBtn :showAddModal="showAddNewModal" />
+    <AddBtn :showAddModal="showAddNewModal" class="z-20" />
 
     <!-- add modal -->
-    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" />
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" title="Headline" />
   </WrapperContent>
 </template>
 
