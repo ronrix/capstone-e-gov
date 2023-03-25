@@ -92,7 +92,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/businesses/apartments", function() {
         return inertia("Main");
     });
-    Route::get("/businesses/permit-form", function() {
+    Route::get("/businesses/BPLO", function() {
         return inertia("Main");
     });
     Route::get("/businesses/ease-of-doing-business", function() {
