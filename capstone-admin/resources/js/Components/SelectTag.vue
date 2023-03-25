@@ -1,7 +1,7 @@
 <template>
   <div class="text-gray-600 text-sm relative font-[500]">
     <!-- button to toggle the dropdown -->
-    <div ref="selectDiv" @click="toggleDropdown" class="flex items-center justify-between bg-white px-3 rounded-md cursor-pointer hover:bg-blue-600 hover:text-white">
+    <div ref="selectDiv" @click="toggleDropdown" class="flex items-center justify-between bg-white px-3 rounded-md cursor-pointer hover:bg-blue-600 hover:text-white capitalize">
       <select :value="value" :id="type" class="hidden">
         <option v-for="filter in filterArray" :value="filter">{{ filter }}</option>
       </select>
