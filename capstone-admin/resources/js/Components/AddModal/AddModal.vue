@@ -4,7 +4,7 @@
       <!-- close btn -->
       <i @click="showAddModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
-      <h2 class="font-bold text-2xl capitalize mb-0 text-gray-900">Create new headline</h2>
+      <h2 class="font-bold text-2xl capitalize mb-0 text-gray-900">Create new {{ title }}</h2>
       <p class="text-sm text-gray-600 whitespace-pre-wrap"> 
         To format for your content appropriately, you should understand how markdown works
       </p>
@@ -14,10 +14,14 @@
         click here to learn how to format your contents
       </a>
 
-      <form method="POST" action="/create-news" @submit.prevent="handleCreateSubmit(formData)" class="flex flex-col">
+      <form method="POST" action="/create-news" @submit.prevent="onSubmit" class="flex flex-col">
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">title:</span>
           <input v-model="formData.title" name="title" type="text" placeholder="Type the title here..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
+        </label>
+        <label v-if="location" class="flex flex-col">
+          <span class="text-sm font-bold capitalize mb-2">location:</span>
+          <input v-model="formData.location" name="title" type="text" placeholder="Type the title here..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
         </label>
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">content:</span>
@@ -52,21 +56,25 @@
 
         </div>
 
-        <button type="submit" class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase">save</button>
+        <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }" class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center">
+          <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
+          save
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
-import axios from "axios";
-import { be_url } from "../../config/config";
+import Loading from "../Loading.vue";
 
+const isSubmitting = ref(false);
 const assetDiv = ref(null);
 const formData = useForm({
   title: "",
+  location: "",
   content: "",
   imgFile: [],
 });
@@ -139,10 +147,23 @@ onUnmounted(() => {
   document.body.classList.remove("overflow-hidden");
 });
 
+function onSubmit() {
+  isSubmitting.value = true;
+  handleCreateSubmit(formData);
 
-defineProps({
+  // reset the formData data for 1s after submitting it to the server
+  setTimeout(() => {
+    formData.reset();
+    toUploadImgs.value = [];
+    isSubmitting.value = false;
+  }, 1000);
+}
+
+const { handleCreateSubmit } = defineProps({
   showAddModal: Function,
-  handleCreateSubmit: Function
+  handleCreateSubmit: Function,
+  title: String,
+  location: Boolean,
 })
 </script>
 

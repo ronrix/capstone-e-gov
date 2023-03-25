@@ -5,7 +5,7 @@
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
     <!-- preview of programs and events modal using PreviewModal -->
-    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" :handleSubmit="handleSubmitUpdate" />
 
    <!-- filter -->
     <div class="w-full flex items-center">
@@ -24,7 +24,7 @@
     </div>
 
     <!-- add modal -->
-    <AddModal :showAddModal="showAddModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
+    <AddModal :showAddModal="showAddModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" title="Programs|Events" :handleCreateSubmit="handleCreateSubmit" :location="true" />
     <AddBtn :showAddModal="showAddModal" />
   </WrapperContent>
 </template>
@@ -123,6 +123,46 @@ const dataToLoop = computed(() => {
   }
   return groupData;
 }, [search, dataProgramsEvents]);
+
+// submit function to handle update the programs and events
+function handleSubmitUpdate(id, formData) {
+  axios.post(be_url + "/programs-and-events/edit", { 
+    id, 
+    title: formData.title, 
+    description: formData.description, 
+    location: formData.location,
+    newImgs: formData.newImgs,
+    deletedImgs: formData.deletedImgIds,
+    defaultThumbnailId: formData.defaultThumbnailId
+  }, { headers: { "Content-Type": "multipart/form-data" }})
+  .then(({ data }) => {
+    dataProgramsEvents.value = data.programsEvents;
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+  })
+  .catch(err => console.log(err));
+}
+
+// handle the submit function to update the new news
+function handleCreateSubmit(formData) {
+  axios.post(be_url + "/programs-and-events/add", { title: formData.title, location: formData.location, description: formData.content, imgFile: formData.imgFile }, { headers: { "Content-Type": "multipart/form-data" }})
+  .then(({ data }) => {
+    dataProgramsEvents.value = data.programsEvents;
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+  })
+  .catch(err => console.log(err));
+}
 
 </script>
 
