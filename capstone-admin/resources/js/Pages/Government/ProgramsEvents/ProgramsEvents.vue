@@ -13,6 +13,18 @@
         <i class="uil uil-search-alt pr-3"></i>
         <input type="search" v-model.lazy="search" placeholder="search programs or events" class="bg-transparent outline-none" />
       </label> 
+
+      <!-- filter by date -->
+      <!-- month -->
+      <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
+        month:
+      </span>
+      <SelectTag type="month" :filterFn="filterBy" :value="filterMonth" :filterArray="filterMonths" />
+      <!-- year -->
+      <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
+        year:
+      </span>
+      <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears" />
     </div>
 
     <div v-for="group in dataToLoop.value" :key="group.month" class="flex flex-col gap-3 mt-5">
@@ -40,6 +52,8 @@ import { computed, ref, onMounted } from 'vue';
 import PreviewModal from '../../../Components/PreviewModal.vue';
 import { be_url } from '../../../config/config';
 import Notifcation from '../../../Components/Notifcation.vue';
+import SelectTag from '../../../Components/SelectTag.vue';
+import { dateFormat } from '../../../utils/dateFormat';
 
 const isAddNewModal = ref(false);
 const resMsg = ref();
@@ -48,12 +62,14 @@ function showAddModal() {
   isAddNewModal.value = !isAddNewModal.value;
 }
 
+const originalDataProgramsEvents = ref([]); // this is the state where to store the data that was received from the server
 const dataProgramsEvents = ref([]); // this is the state where to store the data that was received from the server
 
 // fetch the news data from backend
 onMounted(() => {
   // requesting data from /news
   axios.get(be_url + "/programs-and-events").then(({data}) => {
+    originalDataProgramsEvents.value = data.programsEvents;
     dataProgramsEvents.value = data.programsEvents; 
   }).catch(err => console.log(err));
 });
@@ -89,6 +105,67 @@ function showPreviewModal(data) {
 // search filter
 const search = ref("");
 
+// sort/filter function for select and input year
+const filterMonth = ref("All");
+const filterYear= ref("All");
+const filterMonths = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const filterYears = [ "All", 2023, 2022, 2021, 2020, 2019, 2018, 2017, ];
+
+// filter function
+function filterBy(type, value) {
+  if(type === "month") {
+    // update the value of filterMonth with the selected one
+    filterMonth.value = value;
+
+    // if value is "all" select all the data
+    if(value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
+      dataProgramsEvents.value = originalDataProgramsEvents.value;
+      return;
+    }
+
+    // filter by month
+    // and set the new value to dataProgramsEvents to re-render the filtered news
+    const groups = originalDataProgramsEvents.value.filter(group => {
+      const date = dateFormat(group.created_at);
+      if(filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
+      }
+      if(filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      }
+      // return the group if month exists 
+      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+    }); 
+    dataProgramsEvents.value = groups;
+  }
+  else {
+    // update the value of filterYear selected one
+    filterYear.value = value;
+
+    // if value is "all" select all the data
+    if(value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
+      dataProgramsEvents.value = originalDataProgramsEvents.value;
+      return;
+    }
+
+    // filter by year
+    // and set the new value to dataProgramsEvents to re-render the filtered news
+    const groups = originalDataProgramsEvents.value.filter(group => {
+      const date = dateFormat(group.created_at);
+      if(filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      }
+      if(filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
+        return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
+      }
+      // return the group if month exists 
+      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+    }); 
+    dataProgramsEvents.value = groups;
+  }
+ 
+}
+
 const groupData = computed(() => {
   let groups = {};
 
@@ -122,7 +199,7 @@ const dataToLoop = computed(() => {
     return searchData;
   }
   return groupData;
-}, [search, dataProgramsEvents]);
+}, [search, dataProgramsEvents, originalDataProgramsEvents]);
 
 // submit function to handle update the programs and events
 function handleSubmitUpdate(id, formData) {
