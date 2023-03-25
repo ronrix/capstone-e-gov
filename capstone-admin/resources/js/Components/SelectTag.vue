@@ -9,8 +9,8 @@
       <i class="uil uil-angle-down pointer-events-none"></i>
     </div>
     <!-- dropdown -->
-    <div id="dd-select" class="backdrop-blur-lg flex flex-col gap-2 rounded-md absolute top-full bg-white/30 z-50 mt-1 shadow-lg scale-0 duration-75 overflow-hidden origin-top w-full md:w-auto">
-      <span @click="handleSelect" v-for="filter in filterArray" :id="filter" class="cursor-pointer hover:bg-blue-600 hover:text-white px-3">{{ filter }}</span>
+    <div :class="addedClass" id="dd-select" class="backdrop-blur-lg flex flex-col gap-2 rounded-md absolute top-full bg-white/30 z-50 mt-1 shadow-lg scale-0 duration-75 overflow-hidden origin-top w-full md:w-auto">
+      <span @click="handleSelect" v-for="filter in filterArray" :id="filter" class="cursor-pointer hover:bg-blue-600 hover:text-white px-3 capitalize">{{ filter }}</span>
     </div>
   </div>
 </template>
@@ -47,5 +47,6 @@ const { type, filterFn } = defineProps({
   filterFn: Function,
   value: String,
   filterArray: Array,
+  addedClass: String,
 });
 </script>
