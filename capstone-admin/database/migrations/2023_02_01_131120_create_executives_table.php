@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string("executive_name");
             $table->string("position");
             $table->string("img_link")->nullable();
-            $table->boolean("member");
             $table->timestamp("start_term");
             $table->timestamp("end_term");
             $table->timestamps();
