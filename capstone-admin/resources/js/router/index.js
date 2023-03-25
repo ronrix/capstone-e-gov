@@ -88,6 +88,11 @@ export const router = createRouter({
     },
     // businesses
     {
+      path: "/businesses/business-establishments",
+      name: "Business Estabishsments",
+      component: () => import("../Pages/Businesses/Business Establishments/BusinessEstablishments.vue")
+    },
+    {
       path: "/businesses/apartments",
       name: "Apartments",
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")

@@ -64,6 +64,7 @@
         </div>
       </SideNav>
       <SubNavs v-show="isWholeSidebar">
+        <NavLink to="/businesses/business-establishments" name="business establishments" />
         <NavLink to="/businesses/apartments" name="apartments" />
         <NavLink to="/businesses/BPLO" name="BPLO" />
         <NavLink to="/businesses/ease-of-doing-business" name="ease of doing business" />
