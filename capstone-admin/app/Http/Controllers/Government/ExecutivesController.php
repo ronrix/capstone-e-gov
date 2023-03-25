@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Government;
 
 use App\Models\Government\Executives;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ExecutivesController extends Controller
@@ -16,8 +17,44 @@ class ExecutivesController extends Controller
     public function index()
     {
         //
-        // return response()->json(Executives::all());
-        return inertia("Majn");
+        $date_now = Carbon::now();
+        
+        $mayors = Executives::whereIn('position', ['Mayor', 'Vice Mayor', 'Barangay Officials'])
+                       ->whereDate('start_term', '<=', $date_now)
+                       ->whereDate('end_term', '>=', $date_now)
+                       ->get();
+        
+        return response()->json(['currentOfficials' => $mayors]);
+    }
+
+    public function getFormerOfficials()
+    {
+        //
+        $date_now = Carbon::now();
+        
+        $mayors = Executives::whereIn('position', ['Mayor', 'Vice Mayor', 'Barangay Official'])
+                       ->whereDate('end_term', '<=', $date_now)
+                       ->get();
+        
+        return response()->json(['formerOfficials' => $mayors]);
+    }
+
+    public function getBarangayOfficials()
+    {
+        //
+        $date_now = Carbon::now();
+        
+        $mayors = Executives::where('position', 'Barangay Official')->get();
+        return response()->json(['barangayOfficials' => $mayors]);
+    }
+
+    public function getDepartmentHeads()
+    {
+        //
+        $date_now = Carbon::now();
+        
+        $mayors = Executives::whereIn('position', ['Agriculture', 'Treasurer', 'HR'])->get();
+        return response()->json(['departmentHeads' => $mayors]);
     }
 
     /**
