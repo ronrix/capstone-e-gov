@@ -2,7 +2,9 @@
   <div class="relative bg-white flex flex-col md:flex-row border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 overflow-hidden shadow-md">
     
     <!-- delete button this will delete the programs and events -->
-    <Delete :handleDelete="handleDelete" :id="data.id"  />
+    <div class="z-10">
+      <Delete :handleDelete="handleDelete" :id="data.id"  />
+    </div>
 
     <!-- <div class="flex-1 md:max-w-[500px] h-[320px] max-h-[500px] overflow-hidden rounded-md md:mx-5 border">
       <img :src="imgSrc" alt="this is the program image" class="w-full h-full">
