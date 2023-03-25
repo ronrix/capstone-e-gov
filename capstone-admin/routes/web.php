@@ -67,12 +67,15 @@ Route::middleware(["auth"])->group(function () {
         return inertia("Main");
     });
 
-    // government post requests
+    // government get and post requests
+    Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
+
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
-    Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
     Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
+    Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
+    Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
 
     // tourism
     Route::get("/tourism/tourism", function() {

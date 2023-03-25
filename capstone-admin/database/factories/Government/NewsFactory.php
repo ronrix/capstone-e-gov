@@ -25,7 +25,7 @@ class NewsFactory extends Factory
         return [
             "title" => fake()->sentence(),
             "description" => fake()->paragraph(5),
-            "img_link" => json_encode(implode(",", $img_links)),
+            "img_link" => implode(",", $img_links),
             "comments" => json_encode([
                 [
                     "author" => fake()->name(),

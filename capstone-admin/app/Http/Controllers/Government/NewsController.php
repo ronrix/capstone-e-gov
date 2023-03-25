@@ -105,9 +105,6 @@ class NewsController extends Controller
             "imgFile.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
 
-        // get the passed parameter id
-        $id = $request->input("id");
-
         try {
             if($request->file("imgFile")) {
                 // save all the images
@@ -122,7 +119,7 @@ class NewsController extends Controller
                 $news = new News;
                 $news->title = $request->input("title");
                 $news->description = $request->input("description");
-                $news->img_link = json_encode(implode(",", $imgPaths));
+                $news->img_link = implode(",", $imgPaths);
                 $news->save();
             }     
 
