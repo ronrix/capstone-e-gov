@@ -37,7 +37,7 @@
 
     <!-- add modal -->
     <AddModal :showAddModal="showAddModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" title="Programs|Events" :handleCreateSubmit="handleCreateSubmit" :location="true" />
-    <AddBtn :showAddModal="showAddModal" />
+    <AddBtn :showAddModal="showAddModal" class="z-20" />
   </WrapperContent>
 </template>
 

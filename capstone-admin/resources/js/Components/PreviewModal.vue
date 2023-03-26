@@ -1,12 +1,12 @@
 <template>
   <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-20">
-    <form class="backdrop-blur-md bg-white/50 sm:w-[1000px] p-5 rounded-lg flex flex-col md:flex-row border" enctype="multipart/form-data">
+    <form class="backdrop-blur-xl bg-white/70 sm:w-[1000px] p-5 rounded-lg flex flex-col md:flex-row border" enctype="multipart/form-data">
       <!-- close modal btn -->
       <i @click="showPreviewModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
       <!-- left -->
       <!-- news thumbnail -->
-      <div class="overflow-hidden mt-5 group relative md:h-auto w-full md:w-1/2 flex flex-col items-start justify-start">
+      <div class="overflow-hidden group relative md:h-auto w-full md:w-1/2 flex flex-col items-start justify-start">
         <div class="overflow-hidden h-[300px] max-h-[300px] flex items-center justify-center w-full border-2 border-blue-600 rounded-md">
           <Loading class="w-8 h-8" v-if="isLoading" />
           <img v-if="!isLoading" :src="imgSrc" alt="this is the thumbnail of news" class="align-middel shadow-lg w-full h-full">

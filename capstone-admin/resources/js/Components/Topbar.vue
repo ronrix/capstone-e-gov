@@ -70,18 +70,21 @@ function showMovileNavs() {
   isMobileNavsVisible.value = !isMobileNavsVisible.value;
 }
 
-onMounted(() => {
-  window.addEventListener("scroll", function(e) {
+// function to add the blur to the topbar on scroll
+function scrollFn(e) {
     if(this.scrollY === 0) {
       isBlur.value = false;
       return;
     }
     isBlur.value = true;
-  });
+}
+
+onMounted(() => {
+  window.addEventListener("scroll", scrollFn);
 });
 
 onUnmounted(() => {
- document.removeEventListener("scroll");
+ document.removeEventListener("scroll", scrollFn);
 })
 
 onUpdated(() => {

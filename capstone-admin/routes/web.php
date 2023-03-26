@@ -76,6 +76,10 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
     Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
     Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
+    Route::get("/current-officials", [ExecutivesController::class, "index"]);
+    Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
+    Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
+    Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
 
     // tourism
     Route::get("/tourism/tourism", function() {
