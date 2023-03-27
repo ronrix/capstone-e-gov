@@ -105,8 +105,8 @@ function handleSubmit(id, formData) {
 }
 
 // submit form
-function handleCreateSubmit(formData) {
-  axios.post(be_url + "/news/create", { title: formData.title, description: formData.content, imgFile: [...formData.imgFile] }, { headers: { "Content-Type": "multipart/form-data" }})
+async function handleCreateSubmit(formData) {
+  return await axios.post(be_url + "/news/create", { title: formData.title, description: formData.content, imgFile: [...formData.imgFile] }, { headers: { "Content-Type": "multipart/form-data" }})
   .then(response => {
     originalDataNews.value = response.data.news;
     dataNews.value = response.data.news;
@@ -117,6 +117,8 @@ function handleCreateSubmit(formData) {
     setTimeout(() => {
       resMsg.value = null;
     }, 3000);
+
+    return response;
   })
   .catch(err => console.log(err));
 }

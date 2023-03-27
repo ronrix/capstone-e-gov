@@ -18,14 +18,17 @@
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">title:</span>
           <input v-model="formData.title" name="title" type="text" placeholder="Type the title here..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
+          <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message }} </p>
         </label>
         <label v-if="location" class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">location:</span>
           <input v-model="formData.location" name="title" type="text" placeholder="Type the title here..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
+          <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message }} </p>
         </label>
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">content:</span>
           <textarea v-model="formData.content" name="description" placeholder="Type the content here..." class="rounded-md p-2 h-[80px] sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto"></textarea>
+          <p v-if="v$.content.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.content.$errors[0].$message }} </p>
         </label>
 
         <!-- imput options -->
@@ -35,6 +38,7 @@
           <div>
             <h5 class="text-gray-800 text-sm font-[500] capitalize">Image Assets</h5>
             <p class="text-gray-500 text-xs font-[500]">Click one of the image to select the default thumbnail</p>
+            <p v-if="v$.imgFile.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.imgFile.$errors[0].$message }} </p>
           </div>
 
           <div class="flex items-center w-full gap-2">
@@ -66,9 +70,24 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onMounted, onUnmounted, computed } from "vue";
 import { useForm } from "@inertiajs/inertia-vue3";
 import Loading from "../Loading.vue";
+
+// validation
+import useVuelidate from "@vuelidate/core";
+import { required, helpers } from "@vuelidate/validators"
+
+// adding rules for validation of the form
+const rules = computed(() => ({
+    title: { required: helpers.withMessage("The field title is required", required) },
+    location: { required: helpers.withMessage("The field location is required", required) },
+    content: { required: helpers.withMessage("The field content is required", required) },
+    imgFile: { 
+      required: helpers.withMessage("The image is required", required), 
+      array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0), 
+    },
+}));
 
 const isSubmitting = ref(false);
 const assetDiv = ref(null);
@@ -79,6 +98,8 @@ const formData = useForm({
   imgFile: [],
 });
 const toUploadImgs = ref([]);
+const isError = ref(false);
+const v$ = useVuelidate(rules, formData);
 
 // when img is selected to be the default thumbnail, it will the first element on the formData.imgFile
 // user should expect one selected img
@@ -147,16 +168,28 @@ onUnmounted(() => {
   document.body.classList.remove("overflow-hidden");
 });
 
-function onSubmit() {
-  isSubmitting.value = true;
-  handleCreateSubmit(formData);
+async function onSubmit() {
+ // invoke validation
+  // return when not inputs are not valid
+  const valid = await v$.value.$validate();
+  if (!valid) {
+    isError.value = true;
+    return;
+  }
 
-  // reset the formData data for 1s after submitting it to the server
-  setTimeout(() => {
+  return;
+  isSubmitting.value = true;
+  if(isError.value) isError.value = false; // remove the error message from displaying when validation passed
+  handleCreateSubmit(formData).then(data => {
+    if(data.res.status >= 400) {
+      formData.imgFile = null;
+      selectedImg.value = "";
+      return;
+    }
+    isSubmitting.value = false;
     formData.reset();
     toUploadImgs.value = [];
-    isSubmitting.value = false;
-  }, 1000);
+  });
 }
 
 const { handleCreateSubmit } = defineProps({
