@@ -19,6 +19,7 @@ return new class extends Migration
             $table->longText("description");
             $table->longText("img_link");
             $table->json("comments")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

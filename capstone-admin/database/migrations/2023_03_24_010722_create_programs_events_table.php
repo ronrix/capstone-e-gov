@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text("location");
             $table->longText("img_link");
             $table->json("comments")->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
