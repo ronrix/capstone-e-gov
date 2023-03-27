@@ -67,19 +67,30 @@ Route::middleware(["auth"])->group(function () {
         return inertia("Main");
     });
 
-    // government get and post requests
+    // government get requests
     Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
+    Route::get("/current-officials", [ExecutivesController::class, "index"]);
+    Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
+    Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
+    Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
 
+    // government post requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
     Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
     Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
     Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
-    Route::get("/current-officials", [ExecutivesController::class, "index"]);
-    Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
-    Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
-    Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
+
+    Route::post("/current-official/add", [ExecutivesController::class, "createCurrentOfficial"]);
+    Route::post("/former-official/add", [ExecutivesController::class, "createFormerOfficial"]);
+    Route::post("/barangay-official/add", [ExecutivesController::class, "createBarangayOfficial"]);
+    Route::post("/department-head/add", [ExecutivesController::class, "createDepHead"]);
+
+    Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
+    Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);
+    Route::post("/delete-barangay-official/", [ExecutivesController::class, "deleteOneBarangay"]);
+    Route::post("/delete-deparment-head/", [ExecutivesController::class, "deleteOneDepHead"]);
 
     // tourism
     Route::get("/tourism/tourism", function() {

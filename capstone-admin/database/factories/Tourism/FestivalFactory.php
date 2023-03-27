@@ -20,7 +20,7 @@ class FestivalFactory extends Factory
             "festival_name" => fake()->firstName(),
             "festival_description" => fake()->paragraph(5),
             "festival_date" => fake()->date(),
-            "festival_img_links" => ["link", "link"],
+            "festival_img_links" => json_encode(["link", "link"]),
         ];
     }
 }
