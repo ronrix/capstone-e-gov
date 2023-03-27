@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Government;
 use App\Http\Controllers\Controller;
 use App\Models\Government\ProgramsEvents;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Image, File;
 
 class ProgramsEventsController extends Controller
@@ -26,7 +27,7 @@ class ProgramsEventsController extends Controller
         $id = $request->input("id");
 
         try {
-            ProgramsEvents::where('id', $id)->delete();
+            ProgramsEvents::findOrFail($id)->delete();
             return response()->json([ "programsEvents" => ProgramsEvents::all(), "res" => [ "msg" => "Successfully deleted a programsEvents", "status" => 200 ]]);
         } catch (\Throwable $th) {
             //throw $th;
@@ -42,7 +43,7 @@ class ProgramsEventsController extends Controller
     public function create(Request $request)
     {
          // validate
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             "title" => "required", 
             "description" => "required", 
             "location" => "required", 
@@ -50,8 +51,18 @@ class ProgramsEventsController extends Controller
             "imgFile.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
 
-        // get the passed parameter id
-        $id = $request->input("id");
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
 
         try {
             if($request->file("imgFile")) {
@@ -127,8 +138,8 @@ class ProgramsEventsController extends Controller
      */
     public function update(Request $request)
     {
-        // validate
-        $request->validate([
+         // validate
+        $validator = Validator::make($request->all(), [
             "id" => "required", 
             "title" => "required", 
             "description" => "required", 
@@ -138,6 +149,18 @@ class ProgramsEventsController extends Controller
             "newImgs" => "nullable|array", # 5mb is the max 
             "newImgs.*" => "nullable|image|mimes:jpg,png,jpeg,gif,svg" # 5mb is the max 
         ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
 
         // get the passed parameter id
         $id = $request->input("id");

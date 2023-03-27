@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Government;
 use App\Models\Government\News;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 use Image, File;
 
 class NewsController extends Controller
@@ -35,7 +35,7 @@ class NewsController extends Controller
         $id = $request->input("id");
 
         try {
-            News::where('id', $id)->delete();
+            News::findOrFail($id)->delete();
             return response()->json([ "news" => News::all(), "res" => [ "msg" => "Successfully deleted a news", "status" => 200 ]]);
         } catch (\Throwable $th) {
             //throw $th;
@@ -45,12 +45,25 @@ class NewsController extends Controller
 
     public function editNews(Request $request) {
         // validate
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             "id" => "required", 
             "title" => "required", 
             "description" => "required", 
             "imgFile" => "nullable|image|mimes:jpg,png,jpeg,gif,svg" # 5mb is the max 
-        ]);
+        ]); 
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
 
         // get the passed parameter id
         $id = $request->input("id");
@@ -98,12 +111,27 @@ class NewsController extends Controller
     public function create(Request $request)
     {
         // validate
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             "title" => "required", 
             "description" => "required", 
             "imgFile" => "required|array", # 5mb is the max 
             "imgFile.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+
 
         try {
             if($request->file("imgFile")) {
