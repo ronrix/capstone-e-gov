@@ -25,6 +25,13 @@
 
     </div>
 
+    <!-- empty: this will display when there is no data to display -->
+    <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
+      <i class="uil uil-folder-times text-5xl"></i>
+      Empty Collection
+    </h5>  
+    <Loading class="w-14 h-14 mx-auto" v-if="isLoading" />
+
     <!-- news card -->
     <div v-for="group in dataToLoop.value" :key="group.month" class="flex flex-col gap-3 mt-5">
       <div class="flex items-center">
@@ -58,6 +65,7 @@ import { be_url } from "../../../config/config";
 import { dateFormat } from '../../../utils/dateFormat';
 import axios from 'axios';
 import AddBtn from "../../../Components/AddModal/AddBtn.vue";
+import Loading from "../../../Components/Loading.vue";
 
 const resMsg = ref();
 // delete a news data based on the passed id
@@ -187,6 +195,8 @@ const isPreviewModal = ref(false); // this state is for toggling/showing preview
 const selectedData = ref(); // this state for vieing the data in the preview modal
 const dataNews = ref([]); // this state is going to be used for modifying like filter or search function
 const originalDataNews = ref([]); // this state will act as the original data that don't change
+const isEmpty = ref(false);
+const isLoading = ref(true);
 
 const isAddNewModal = ref(false);
 function showAddNewModal() {
@@ -199,6 +209,8 @@ onMounted(() => {
   axios.get(be_url + "/news").then(({data}) => {
       dataNews.value = data.news; 
       originalDataNews.value = data.news; 
+      if(!dataNews.value.length) isEmpty.value = true;
+      isLoading.value = false;
   });
 });
 

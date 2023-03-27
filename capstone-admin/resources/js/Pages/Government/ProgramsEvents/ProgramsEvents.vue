@@ -27,6 +27,13 @@
       <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears" />
     </div>
 
+    <!-- empty: this will display when there is no data to display -->
+    <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
+      <i class="uil uil-folder-times text-5xl"></i>
+      Empty Collection
+    </h5>  
+    <Loading class="w-14 h-14 mx-auto" v-if="isLoading" />
+
     <div v-for="group in dataToLoop.value" :key="group.month" class="flex flex-col gap-3 mt-5">
       <div class="flex items-center">
         <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.month }}</span>
@@ -54,9 +61,12 @@ import { be_url } from '../../../config/config';
 import Notifcation from '../../../Components/Notifcation.vue';
 import SelectTag from '../../../Components/SelectTag.vue';
 import { dateFormat } from '../../../utils/dateFormat';
+import Loading from '../../../Components/Loading.vue';
 
 const isAddNewModal = ref(false);
 const resMsg = ref();
+const isEmpty = ref(false);
+const isLoading = ref(true);
 
 function showAddModal() {
   isAddNewModal.value = !isAddNewModal.value;
@@ -71,6 +81,8 @@ onMounted(() => {
   axios.get(be_url + "/programs-and-events").then(({data}) => {
     originalDataProgramsEvents.value = data.programsEvents;
     dataProgramsEvents.value = data.programsEvents; 
+    if(!dataProgramsEvents.value.length) isEmpty.value = true;
+    isLoading.value = false;
   }).catch(err => console.log(err));
 });
 

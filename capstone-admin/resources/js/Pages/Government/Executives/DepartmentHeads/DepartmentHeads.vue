@@ -2,7 +2,14 @@
   <HeadTitle title="Former Officials"></HeadTitle>
   <WrapperContent>
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
-    <h1 class="text-xl font-bold capitalize">Department heads in pililla rizal</h1>
+    <h1 class="text-xl font-bold capitalize">Department heads in pililla rizal</h1> 
+
+    <!-- empty: this will display when there is no data to display -->
+    <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
+      <i class="uil uil-folder-times text-5xl"></i>
+      Empty Collection
+    </h5>  
+    <Loading class="w-14 h-14 mx-auto" v-if="isLoading" />
 
     <!-- cards -->
     <div class="flex items-center flex-wrap gap-3 mt-5">
@@ -21,6 +28,7 @@
 import axios from 'axios';
 import { ref, onMounted } from 'vue';
 import AddBtn from '../../../../Components/AddModal/AddBtn.vue';
+import Loading from '../../../../Components/Loading.vue';
 import Notifcation from '../../../../Components/Notifcation.vue';
 
 import { be_url } from '../../../../config/config';
@@ -29,6 +37,8 @@ import OfficialModal from '../OfficialModal.vue';
 
 const dataDepartmentHeads = ref([]);
 const resMsg = ref();
+const isEmpty = ref(false);
+const isLoading = ref(true);
 
 const isModalShow = ref(false);
 function toggleShowModal() {
@@ -91,6 +101,8 @@ onMounted(() => {
   axios.get(be_url + "/department-heads")
   .then(({data}) => {
     dataDepartmentHeads.value = data.departmentHeads;
+    if(!dataDepartmentHeads.value.length) isEmpty.value = true;
+    isLoading.value = false;
   })
   .catch(err => console.log(err));
 });
