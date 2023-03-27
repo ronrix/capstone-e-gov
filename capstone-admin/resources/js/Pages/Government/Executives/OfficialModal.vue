@@ -9,29 +9,25 @@
       <label class="flex flex-col">
         <span class="text-sm font-bold capitalize mb-2">Full name</span>
         <input v-model="formData.fullName" name="title" type="text" placeholder="Type the full name here..." class="rounded-md p-2 focus:outline-blue-600">
-        <p v-if="v$.fullName.$error" class="text-xs text-red-400 mb-2"> {{ v$.fullName.$errors[0].$message }} </p>
+        <p v-if="v$.fullName.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.fullName.$errors[0].$message }} </p>
       </label>
 
       <!-- position select tag -->
       <span class="text-sm font-bold capitalize mb-2">Position</span>
       <SelectTag type="position" :value="position" :filterArray="positions" class="text-base" addedClass="!w-full" :filterFn="selectFn" />
       <!-- if barangay officials then show this input to add position for barangay official -->
-      <label v-if="isBarangayOfficials" class="flex flex-col mt-4">
-        <span class="text-xs font-bold capitalize mb-2">Barangay official position</span>
-        <input v-model="formData.barangayOfficialPos" name="title" type="text" placeholder="Type the barangay position..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
+      <label v-if="isOptional" class="flex flex-col mt-4">
+        <span class="text-xs font-bold capitalize mb-2">optional</span>
+        <input v-model="formData.optionalPosition" name="title" type="text" placeholder="Type optional position..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
       </label>
 
       <!-- term inputs -->
-      <div class="mt-3">
-        <div>
-          <span class="text-sm font-bold mb-2">Start term <span class="text-blue-400 font-normal">(year)</span></span>
-          <SelectTag type="startTerm" :value="startTerm" :filterArray="years" class="text-base" addedClass="!w-full overflow-y-scroll max-h-[150px] scrollbar" :filterFn="selectFn" />
-        </div>
-        <div class="mt-3">
-          <span class="text-sm font-bold mb-2">End term <span class="text-blue-400 font-normal">(year)</span></span>
-          <SelectTag type="endTerm" :value="endTerm" :filterArray="years" class="text-base" addedClass="!w-full overflow-y-scroll max-h-[150px] scrollbar" :filterFn="selectFn" />
-        </div>
-      </div>
+      <span class="text-sm font-bold mb-2 mt-3">Start term <span class="text-blue-400 font-normal">(year)</span></span>
+      <DatePicker v-model:value="formData.startTerm" class="w-full"></DatePicker>
+      <p v-if="v$.startTerm.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.startTerm.$errors[0].$message }} </p>
+      <span class="text-sm font-bold mt-3 mb-2">End term <span class="text-blue-400 font-normal">(year)</span></span>
+      <DatePicker v-model:value="formData.endTerm" class="w-full"></DatePicker>
+      <p v-if="v$.endTerm.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.endTerm.$errors[0].$message }} </p>
 
       <!-- img file input -->
       <input type="file" class="hidden" ref="imgRef" @change="handleSelectImgToUpload" >
@@ -39,7 +35,7 @@
         Upload an image
         <i @click="showImgSelection" class="uil uil-plus-circle text-lg hover:text-blue-600 cursor-pointer"></i>
       </div>
-      <p v-if="v$.imgFile.$error" class="text-xs text-red-400 mb-2"> {{ v$.imgFile.$errors[0].$message }} </p>
+      <p v-if="v$.imgFile.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.imgFile.$errors[0].$message }} </p>
       <div class="text-sm text-gray-600 mt-2 flex items-center justify-start">
         <span v-if="!selectedImg">no image selected</span>
         <span v-if="selectedImg" class="text-blue-600">{{ selectedImg }}</span>
@@ -49,7 +45,7 @@
         </span>
       </div>
 
-      <button type="submit" class="active:-translate-y-1 self-end mt-3 bg-blue-600 text-white font-bold uppercase px-3 rounded-md">
+      <button type="submit" class="active:-translate-y-1 self-end mt-3 bg-blue-600 text-white font-bold uppercase px-3 rounded-md flex items-center">
         <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
         save
       </button>
@@ -64,6 +60,10 @@ import { useForm } from '@inertiajs/inertia-vue3';
 import SelectTag from '../../../Components/SelectTag.vue';
 import Loading from '../../../Components/Loading.vue';
 
+// datepicker
+ import DatePicker from 'vue-datepicker-next';
+import 'vue-datepicker-next/index.css';
+
 // validation
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators"
@@ -71,17 +71,17 @@ import { required, helpers } from "@vuelidate/validators"
 // adding rules for validation of the form
 const rules = computed(() => ({
     fullName: { required: helpers.withMessage("The field full name is required", required) },
+    startTerm: { required: helpers.withMessage("The field start term is required", required) },
+    endTerm: { required: helpers.withMessage("The field end term is required", required) },
     imgFile: { required: helpers.withMessage("The image is required", required) },
 }));
 
-const positions = ["Mayor", "Vice mayor", "barangay officials", "department heads"];
-const years = [2023, 2022, 2021, 2020, 2019, 2018];
+const positions = ["mayor", "vice mayor", "barangay official", "department head"];
 const position = ref("Mayor");
-const startTerm = ref("2023");
-const endTerm = ref("2023");
 const isSubmitting = ref(false);
+const isError = ref(false);
 
-const isBarangayOfficials = ref(false);
+const isOptional = ref(false);
 
 const imgRef = ref(null);
 const selectedImg = ref("");
@@ -89,9 +89,9 @@ const selectedImg = ref("");
 const  formData = useForm({
   fullName: "",
   position: position.value,
-  startTerm: startTerm.value,
-  endTerm: endTerm.value,
-  barangayOfficialPos: "",
+  startTerm: "",
+  endTerm: "",
+  optionalPosition: "",
   imgFile: null
 });
 const v$ = useVuelidate(rules, formData);
@@ -99,13 +99,8 @@ const v$ = useVuelidate(rules, formData);
 function selectFn(type, value) {
   if(type === "position") {
     position.value = value;
-    isBarangayOfficials.value = position.value.toLowerCase() === 'barangay officials';
-  }
-  if(type === "startTerm") {
-    startTerm.value = value;
-  }
-  if(type === "endTerm") {
-    endTerm.value = value;
+    formData.position = value;
+    isOptional.value = position.value.toLowerCase() === 'barangay official' || position.value.toLowerCase() === 'department head';
   }
 }
 
@@ -127,11 +122,23 @@ async function onSubmit() {
   // invoke validation
   // return when not inputs are not valid
   const valid = await v$.value.$validate();
-  if (!valid) return
+  if (!valid) {
+    isError.value = true;
+    return;
+  }
 
-  formData.reset();
-  selectedImg.value = "";
-  handleSubmit(formData);
+  isSubmitting.value = true;
+  if(isError.value) isError.value = false; // remove the error message from displaying when validation passed
+  handleSubmit(formData).then((data) => {
+    if(data.res.status >= 400) {
+      formData.imgFile = null;
+      selectedImg.value = "";
+      return;
+    }
+    isSubmitting.value = false;
+    isOptional.value = false;
+    formData.reset();
+  });
 }
 
 const { handleSubmit } = defineProps({
