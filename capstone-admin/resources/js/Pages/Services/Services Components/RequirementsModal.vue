@@ -13,17 +13,11 @@
                          <p class="text-xs text-gray-500">add the new requirements</p>
                          <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
                      </label>
-                     <label class="flex flex-col w-full">
-                         <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                     </label>
-                     <label class="flex flex-col w-full">
-                         <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                     </label>
-                     <label class="flex flex-col w-full">
-                         <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                     </label>
+                     <input type="submit" value="Add more"
+                         class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer">
                      <input type="submit" value="Save"
                          class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer">
+                        
                  </form>
              </div>
          </div>
