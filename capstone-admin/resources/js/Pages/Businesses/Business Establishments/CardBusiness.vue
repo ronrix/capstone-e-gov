@@ -1,5 +1,9 @@
 <template>
- <div class="flex flex-col lg:flex-row justify-between mt-10  gap-1 lg:gap-5 w-full p-0 bg-white border-y-0 border-l-[6px] border-l-blue-600"> 
+ <div class="relative overflow-hidden flex flex-col lg:flex-row justify-between mt-10 w-full p-0 bg-white border-y-0 border-l-[6px] border-l-blue-600"> 
+  <!-- delete button this will delete the programs and events --> 
+  <div class="z-10"> <!-- adding z-10 to put this delete component at the top/front -->
+      <Delete :handleDelete="handleDelete" :id="data.id" />
+    </div>
         <!-- image -->
     <img class="h-[300px] max-h-[400px] w-full lg:w-[400px]" :src="data?.imgSrc" alt="this is bulawan resort">
         <!-- content -->
@@ -16,7 +20,12 @@
 </template>
 
 <script setup>
-defineProps({ data : Object});
+import Delete from '../../../Components/Delete.vue';
+
+const { data } = defineProps({
+  showPreviewModal: Function,
+  data: Object,
+});
 </script>
 
 
