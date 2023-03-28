@@ -1,31 +1,33 @@
 <template>
-  <div class="mt-5">
+  <WrapperContent>
+    <div class="mt-5">
 
-    <!-- search filter -->
-    <SearchInput class="mb-5" @searchFn="searchFn" placeholder="search active jobs" />
+      <!-- search filter -->
+      <SearchInput class="mb-5" @searchFn="searchFn" placeholder="search active jobs" />
 
-    <!-- top section -->
-    <h4 class="text-xl font-bold mb-3">Recommended jobs <span class="text-gray-400 ml-5">{{ originalData.length }}</span></h4>
+      <!-- top section -->
+      <h4 class="text-xl font-bold mb-3">Recommended jobs <span class="text-gray-400 ml-5">{{ originalData.length }}</span></h4>
 
-    <!-- filter by -->
-    <p class="text-gray-600 text-sm font-[500] capitalize mb-3">schedule</p>
-    <div class="flex items-center gap-3 mb-8 sticky top-10 py-2">
-      <div class="bg-blur"></div>
-      <label v-for="(item, idx) in filterItems" :key="idx" class="font-[500] text-sm flex items-center gap-2 capitalize">
-        <input type="checkbox" :name="'filter-' + idx" :value="item.trim()" v-model="checkedItems" class="h-5 w-5 text-blue-600 rounded">
-        {{ item }}
-      </label>
+      <!-- filter by -->
+      <p class="text-gray-600 text-sm font-[500] capitalize mb-3">schedule</p>
+      <div class="flex items-center flex-wrap gap-3 mb-8 sticky top-10 py-2">
+        <div class="bg-blur"></div>
+        <label v-for="(item, idx) in filterItems" :key="idx" class="font-[500] text-sm flex items-center gap-2 capitalize">
+          <input type="checkbox" :name="'filter-' + idx" :value="item.trim()" v-model="checkedItems" class="h-5 w-5 text-blue-600 rounded">
+          {{ item }}
+        </label>
+      </div>
+
+      <!-- show more details - modal -->
+      <JobPostingModal v-if="isShowModal" :selectedData="selectedData" :colors="colors" :closeModal="showModal" />
+
+      <!-- cards section -->
+      <section class="flex items-start gap-2 flex-wrap mt-8">
+        <JobPostingCard v-for="(job, idx) in data" :data="job" :key="idx" :showModal="showModal" :colors="colors" />
+      </section>
+
     </div>
-
-    <!-- show more details - modal -->
-    <JobPostingModal v-if="isShowModal" :selectedData="selectedData" :colors="colors" :closeModal="showModal" />
-
-    <!-- cards section -->
-    <section class="flex items-start gap-2 flex-wrap mt-8">
-      <JobPostingCard v-for="(job, idx) in data" :data="job" :key="idx" :showModal="showModal" :colors="colors" />
-    </section>
-
-  </div>
+  </WrapperContent>
 </template>
 
 <script setup>
