@@ -6,13 +6,14 @@
         <h4 class=" text-xl lg:text-2xl font-bold text-gray-800 my-5">Businesses</h4>
         <!-- filter -->
 
-        <div class="w-full flex flex-col md:flex-row md:items-center">
-            <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
-            <SelectTag type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness" />
+        <div class="w-full flex flex-col md:flex-row md:self-center">
+            <SearchInput  placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
+            <SelectTag class="mt-3" type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness" />
         </div>
         <!-- card businesses -->
         <CardBusiness  v-for="(data, index) in business" :data="data" />
-
+       
+        
     </WrapperContent>
 </template>
   
@@ -21,6 +22,8 @@ import WrapperContent from '../../../Components/WrapperContent.vue';
 import CardBusiness from './CardBusiness.vue';
 import SelectTag from '../../../Components/SelectTag.vue';
 import SearchInput from '../../../Components/SearchInput.vue';
+// import Delete from '../../../Components/Delete.vue';
+
 
 
 
@@ -43,6 +46,20 @@ const business = [
         imgSrc: "https://fab.ph/wp-content/uploads/2019/03/8cSDwpg0d9YbVTRxUqrM1.png"
     }
 ]
+
+// const isPreviewModal = ref(false); // this state is for toggling/showing preview modal
+// const selectedData = ref(); // this state for vieing the data in the preview modal
+
+// const isAddNewModal = ref(false);
+// function showAddNewModal() {
+//   isAddNewModal.value = !isAddNewModal.value;
+// }
+
+// function showPreviewModal(data) {
+//   isPreviewModal.value = !isPreviewModal.value;
+//   selectedData.value = data;
+// }
+
 
 
 

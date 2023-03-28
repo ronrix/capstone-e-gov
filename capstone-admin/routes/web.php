@@ -116,11 +116,27 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/businesses/ease-of-doing-business", function() {
         return inertia("Main");
     });
-
-    // services
-    Route::get("/services/office-of-the-mayor/example", function() {
+    Route::get("/businesses/business-establishments", function() {
         return inertia("Main");
     });
+
+    // services
+    Route::get("/services/office-of-the-mayor/scholarship-program", function() {
+        return inertia("Main");
+    });
+    Route::get("/services/office-of-the-mayor/civil-wedding-schedule", function() {
+        return inertia("Main");
+    });
+    Route::get("/services/office-of-the-mayor/mayors-clearance", function() {
+        return inertia("Main");
+    });
+    Route::get("/services/mswd-department/government-id", function() {
+        return inertia("Main");
+    });
+    Route::get("/services/mswd-department/replacement-of-senior-citizen", function() {
+        return inertia("Main");
+    });
+
 
     // about
     Route::get("/about/mission-and-vision", function() {
@@ -135,6 +151,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/about/contacts", function() {
         return inertia("Main");
     });
+    
 
 });
 
