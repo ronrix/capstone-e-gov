@@ -1,29 +1,35 @@
 <template>
-  <div class="bg-white rounded-md p-3 flex flex-col shadow-md w-full sm:w-auto">
+  <div class="bg-slate-200/30 rounded-md p-5 flex flex-col w-full sm:w-[300px] h-[450px] overflow-hidden">
      <!--top  -->
-    <div>
-      <p class="text-gray-600 uppercase font-bold text-sm">{{ data?.category }}</p>
-      <h5 class="text-xl font-bold mt-2">{{ data?.titlePosition }}</h5>
-    </div>
+     <div class="flex items-center justify-between mb-5">
+      <!-- circle -->
+      <div :style="{backgroundColor: `${bgColor.bgColor}` }" class="w-14 h-14 rounded-full"></div>
+      <span class="font-bold text-gray-400 text-xs">{{ new Date(data.created_at).toLocaleDateString("en-PH", { month: "long", day: "numeric" }) }}</span>
+     </div>
 
-    <!-- middle -->
-    <div class="my-8">
-      <h6 class="text-gray-600 font-bold text-sm">Candidate:</h6>
-
-      <!-- total needed employees -->
-      <div class="rounded-lg bg-gray-200 text-center text-xl font-bold uppercase p-2 mt-2">
-        total {{data?.totalCandidates }}
+    <!-- job type -->
+    <div class="flex-1">
+      <h5 class="text-xl font-bold text-gray-800">{{ data?.job_title }}</h5>
+      <h6 class="text-sm font-bold text-gray-500">{{ data?.job_type }}</h6>
+      <div class="flex items-center gap-2 mt-3 flex-wrap">
+        <div v-for="jt in workTypes" class="px-2 py-1 text-[10px] rounded-full capitalize font-[500]" 
+          :style="{ 
+              backgroundColor: (colors.find(col => col.type === jt.trim()))?.bgColor,
+              color: (colors.find(col => col.type === jt.trim()))?.textColor,
+            }"
+        >
+        {{ jt }}
+      </div>
       </div>
     </div>
 
-    <!-- bottom -->
-    <div class="text-gray-600 flex items-center text-sm capitalize whitespace-pre-wrap">
-      {{ data?.location }} 
-      <i class="uil uil-angle-right"></i>
-      {{ data?.workType.join(" | ") }}
+    <!-- middle -->
+    <div class="mt-8 overflow-hidden flex-1">
+      <h6 class="text-gray-600 font-bold text-sm">{{ data.job_location }}</h6>
+      <p class="text-xs text-gray-400 whitespace-pre-wrap w-full h-[50px] text-ellipsis truncate">{{ data.job_description }}</p>
     </div>
 
-    <button class="mt-3 outline-none font-bold text-sm text-gray-600 self-end hover:text-gray-500">
+    <button type="button" @click="showModal(data)" class="active:-translate-y-1 rounded-md bg-blue-600 text-white  mt-3 outline-none font-bold text-sm self-end p-3">
       See Details
       <i class="uil uil-angle-right"></i>
     </button>
@@ -31,7 +37,21 @@
 </template>
 
 <script setup>
-defineProps({
+import { onMounted, ref } from 'vue';
+
+const workTypes = data.job_schedule.split(",");
+const bgColor = ref("");
+onMounted(() => {
+  const randomIdx = Math.floor(Math.random() * workTypes.length);
+  bgColor.value = colors.find(col => {
+    const type = workTypes[randomIdx].trim()
+    return col.type === type;
+  });
+});
+
+const { data, colors } = defineProps({
   data: Object,
+  showModal: Function,
+  colors: Array
 });
 </script>
