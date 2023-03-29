@@ -2,14 +2,16 @@
   <div class="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
     <div class="backdrop-blur-xl bg-white/70 sm:w-[700px] mx-auto p-5 flex flex-col relative overflow-hidden rounded-lg">
       <!-- close btn -->
-      <i @click="showAddModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
+      <i @click="showAddModal"
+        class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
       <h2 class="font-bold text-2xl capitalize mb-0 text-gray-900">Create new {{ title }}</h2>
-      <p class="text-sm text-gray-600 whitespace-pre-wrap"> 
+      <p class="text-sm text-gray-600 whitespace-pre-wrap">
         To format for your content appropriately, you should understand how markdown works
       </p>
       <!-- link to go the markdown document -->
-      <a target="_blank" href="https://www.markdownguide.org/basic-syntax/" class="m-0 text-sm mb-5 text-blue-600 underline font-[500] self-start">
+      <a target="_blank" href="https://www.markdownguide.org/basic-syntax/"
+        class="m-0 text-sm mb-5 text-blue-600 underline font-[500] self-start">
         <i class="uil uil-info-circle"></i>
         click here to learn how to format your contents
       </a>
@@ -17,18 +19,23 @@
       <form method="POST" action="/create-news" @submit.prevent="onSubmit" class="flex flex-col">
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">title:</span>
-          <input v-model="formData.title" name="title" type="text" placeholder="Type the title here..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
+          <input v-model="formData.title" name="title" type="text" placeholder="Type the title here..."
+            class="rounded-md mb-5 p-2 focus:outline-blue-600">
           <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message }} </p>
         </label>
         <label v-if="location" class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">location:</span>
-          <input v-model="formData.location" name="title" type="text" placeholder="Type the title here..." class="rounded-md mb-5 p-2 focus:outline-blue-600">
-          <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message }} </p>
+          <input v-model="formData.location" name="title" type="text" placeholder="Type the title here..."
+            class="rounded-md mb-5 p-2 focus:outline-blue-600">
+          <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message }}
+          </p>
         </label>
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">content:</span>
-          <textarea v-model="formData.content" name="description" placeholder="Type the content here..." class="rounded-md p-2 h-[80px] sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto"></textarea>
-          <p v-if="v$.content.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.content.$errors[0].$message }} </p>
+          <textarea v-model="formData.content" name="description" placeholder="Type the content here..."
+            class="rounded-md p-2 h-[80px] sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto"></textarea>
+          <p v-if="v$.content.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.content.$errors[0].$message }}
+          </p>
         </label>
 
         <!-- imput options -->
@@ -38,29 +45,36 @@
           <div>
             <h5 class="text-gray-800 text-sm font-[500] capitalize">Image Assets</h5>
             <p class="text-gray-500 text-xs font-[500]">Click one of the image to select the default thumbnail</p>
-            <p v-if="v$.imgFile.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.imgFile.$errors[0].$message }} </p>
+            <p v-if="v$.imgFile.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.imgFile.$errors[0].$message }}
+            </p>
           </div>
 
           <div class="flex items-center w-full gap-2">
             <!-- TODO: add images here -->
-            <div ref="assetDiv" class="flex items-start flex-wrap gap-2 sm:h-[150px] overflow-y-scroll py-2 scrollbar w-full el-main">
-              <div v-for="img, idx in toUploadImgs" class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer">
+            <div ref="assetDiv"
+              class="flex items-start flex-wrap gap-2 sm:h-[150px] overflow-y-scroll py-2 scrollbar w-full el-main">
+              <div v-for="img, idx in toUploadImgs"
+                class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer">
                 <!-- remove btn -->
-                <div :id="idx" @click="handleRemoveImg" class="absolute -top-2 -right-2 cursor-pointer bg-red-600 flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-500">
+                <div :id="idx" @click="handleRemoveImg"
+                  class="absolute -top-2 -right-2 cursor-pointer bg-red-600 flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-500">
                   <i class="uil uil-times text-white pointer-events-none"></i>
                 </div>
-                <img @click="handleSelectDefaultThumbnail" :id="idx" :src="img" alt="this is an image of something" class="w-full h-full prev-img">
+                <img @click="handleSelectDefaultThumbnail" :id="idx" :src="img" alt="this is an image of something"
+                  class="w-full h-full prev-img">
               </div>
               <!-- upload btn -->
-              <div @click="addNewImg" class="text-center flex items-center justify-center rounded-md px-2 border-blue-600 cursor-pointer border-2 ml-2 w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] el-btn">
-                  <i class="uil uil-image-plus text-2xl sm:text-5xl pointer-events-none"></i>
-                </div>
+              <div @click="addNewImg"
+                class="text-center flex items-center justify-center rounded-md px-2 border-blue-600 cursor-pointer border-2 ml-2 w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] el-btn">
+                <i class="uil uil-image-plus text-2xl sm:text-5xl pointer-events-none"></i>
               </div>
             </div>
+          </div>
 
         </div>
 
-        <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }" class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center">
+        <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }"
+          class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center">
           <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
           save
         </button>
@@ -80,13 +94,13 @@ import { required, helpers } from "@vuelidate/validators"
 
 // adding rules for validation of the form
 const rules = computed(() => ({
-    title: { required: helpers.withMessage("The field title is required", required) },
-    location: { required: helpers.withMessage("The field location is required", required) },
-    content: { required: helpers.withMessage("The field content is required", required) },
-    imgFile: { 
-      required: helpers.withMessage("The image is required", required), 
-      array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0), 
-    },
+  title: { required: helpers.withMessage("The field title is required", required) },
+  location: { required: helpers.withMessage("The field location is required", required) },
+  content: { required: helpers.withMessage("The field content is required", required) },
+  imgFile: {
+    required: helpers.withMessage("The image is required", required),
+    array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0),
+  },
 }));
 
 const isSubmitting = ref(false);
@@ -169,7 +183,7 @@ onUnmounted(() => {
 });
 
 async function onSubmit() {
- // invoke validation
+  // invoke validation
   // return when not inputs are not valid
   const valid = await v$.value.$validate();
   if (!valid) {
@@ -179,9 +193,9 @@ async function onSubmit() {
 
   return;
   isSubmitting.value = true;
-  if(isError.value) isError.value = false; // remove the error message from displaying when validation passed
+  if (isError.value) isError.value = false; // remove the error message from displaying when validation passed
   handleCreateSubmit(formData).then(data => {
-    if(data.res.status >= 400) {
+    if (data.res.status >= 400) {
       formData.imgFile = null;
       selectedImg.value = "";
       return;
@@ -200,9 +214,7 @@ const { handleCreateSubmit } = defineProps({
 })
 </script>
 
-<style scoped>
-div.el-main.small > * {
+<style scoped>div.el-main.small>* {
   height: 50px;
   width: 50px;
-}
-</style>
+}</style>

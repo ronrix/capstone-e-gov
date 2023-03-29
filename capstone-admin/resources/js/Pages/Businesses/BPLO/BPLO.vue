@@ -1,36 +1,35 @@
 <template>
-  <HeadTitle title="BPLO"></HeadTitle>
-  <div>
-   <WrapperContent>
-    <h3 class="font-bold text-xl mb-3 text-gray-800">Checklist of Requirements</h3>
-        <PwrapperReq>
-            <div class="flex-wrap">
-                <PListReq title="1. Application Form (3 copies)" />
-                <PListReq title="1.1 Location Sketch" />
-                <PListReq title="1.2 2x2 formal picture of logo of business" />
-                <PListReq title="1.3 3R size picture of front and exterior of the establishment" />
-                <PListReq title="2. Barangay Clearance" />
-                <PListReq title="3. SEC Certificate (Article and Bi-laws) or CDA registration" />
-                <PListReq title="4. Lesson permit and copy of Lease agreement/Lease of Contact or Affidavit of concent from the Lessor if leasing" />
-                <PListReq title="5. Insurance Policy or Official receipt of Comprehensive General Liability (CGL)" />
-                <PListReq title="6. Zoning Clearance & Location Clearance" />
-                <PListReq title="7. Fire Safety Inspection Certificate" />
-                <PListReq title="9. Latest RPT Payment Receipt" />
-            </div>
+    <HeadTitle title="BPLO"></HeadTitle>
 
-         </PwrapperReq>
-        </WrapperContent>
-  </div>
+
+    <div>
+        <!--For File-->
+        <div class="flex flex-cols items-center">
+            <span class="font-bold text-2xl text-gray-500 mr-5">Application Form</span>
+            <div class="flex-1 border"></div>
+        </div>
+        <button
+            class="w-[100px] bg-blue-600 rounded-md mb-2 ml-2 md:ml-2 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end uppercase mt-5 lg:mt-10"
+            @click="AddPDF">
+            Add Form
+        </button>
+
+        <!--For Permit-->
+        <div class="flex flex-cols items-center">
+            <span class="font-bold text-2xl text-gray-500 mr-5">Permits</span>
+            <div class="flex-1 border"></div>
+        </div>
+        <button
+            class="w-[120px] bg-blue-600 rounded-md mb-2 ml-2 md:ml-2 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end uppercase mt-5 lg:mt-10"
+            @click="AddPermit">
+            Add Permit
+        </button>
+    </div>
 </template>
 
 <script setup>
-import PListReq from './PermitFormComponents/PListReq.vue';
-import WrapperContent from '../../../Components/WrapperContent.vue';
-import PwrapperReq from "./PermitFormComponents/PwrapperReq.vue"
-
-
+import AddPDF from './BPLOFormComponents/AddPDF.vue';
+import AddPermit from './BPLOFormComponents/AddPermit.vue';
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
