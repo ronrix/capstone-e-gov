@@ -17,7 +17,7 @@ class JobPostingController extends Controller
     {
         //
         // return response()->json(JobPosting::all());
-        return inertia("Main");
+        return response()->json(["jobs" => JobPosting::all()]);
     }
 
     /**

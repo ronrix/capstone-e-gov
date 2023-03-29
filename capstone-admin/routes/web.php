@@ -9,6 +9,7 @@ use App\Http\Controllers\Government\ExecutivesController;
 use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
+use App\Models\Government\JobPosting;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,10 +52,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/government/executives/department-heads", function() {
         return inertia("Main");
     });
-    Route::get("/government/job-postings/active", function() {
-        return inertia("Main");
-    });
-    Route::get("/government/job-postings/inactive", function() {
+    Route::get("/government/job-postings", function() {
         return inertia("Main");
     });
     Route::get("/government/full-disclosure-reports", function() {
@@ -73,6 +71,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
     Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
     Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
+    Route::get("/job-postings", [JobPostingController::class, "index"]);
 
     // government post requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);

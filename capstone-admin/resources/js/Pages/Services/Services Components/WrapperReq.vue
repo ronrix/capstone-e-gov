@@ -7,7 +7,7 @@
           <!-- add new btn -->
           <div class="flex flex-col ">
                 <button @click="showRequirementModal"
-                class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold">
+                class="w-full md:w-[95px] border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold">
                 new
                 <i class="uil uil-plus-circle m-0 ml-2"></i>
             </button>

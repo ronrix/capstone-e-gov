@@ -5,43 +5,45 @@
     <div class="dark:text-white light:text-primary-dark flex items-center justify-center h-screen overflow-hidden">
         <!-- left -->
         <div class="hidden md:flex flex-1 bg-blue-600 h-full w-full items-center justify-center p-5 relative">
-            <div class="flex-col mt-10 px-10 text-left">
-                <img src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 mb-5">
-                <h1 class="text-5xl font-bold">Municipality of Pililla Rizal.</h1>
-                <p class="text-lg text-slate-300 mt-5">Easily modify the information of the official website of the municipality.</p>
-            </div>
+            <div class="max-w-[1000px]">
+                <div class="flex-col mt-10 px-10 text-left">
+                    <img src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 lg:w-44 mb-5">
+                    <h1 class="text-5xl lg:text-7xl font-bold">Municipality of Pililla Rizal.</h1>
+                    <p class="text-lg lg:text-3xl text-slate-300 mt-5">Easily modify the information of the official website of the municipality.</p>
+                </div>
 
-            <!-- circles -->
-            <div class="bg-green-300 w-[200px] h-[200px] rounded-full absolute -bottom-14 right-10"></div>
-            <div class="bg-pink-400 w-[200px] h-[200px] rounded-full absolute -top-24 -left-10"></div>
+                <!-- circles -->
+                <div class="bg-green-300 w-[200px] h-[200px] rounded-full absolute -bottom-14 right-10"></div>
+                <div class="bg-pink-400 w-[200px] h-[200px] rounded-full absolute -top-24 -left-10"></div>
+            </div>
         </div>
 
         <!-- right -->
         <div class="flex-1 bg-slate-100 h-full flex items-center justify-center">
             <form @submit.prevent="submitForm" :disabled="formData.processing"
-                class="w-full px-14 flex flex-col gap-3">
+                class="w-full px-14 flex flex-col gap-3 max-w-[1000px]">
                 <img class="w-20" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Emoji_u1f44b.svg/1024px-Emoji_u1f44b.svg.png" alt="hand wave icon">
 
                 <div>
-                    <h2 class="text-2xl font-bold text-gray-800">Welcome Back</h2>
-                    <h3 class="text-sm text-secondary-gray">Enter your credentials to login</h3>
+                    <h2 class="text-xl sm:text-3xl font-bold text-gray-800">Welcome Back</h2>
+                    <h3 class="text-sm sm:text-base text-secondary-gray">Enter your credentials to login</h3>
                 </div>
 
                 <label class="text-gray-800 mb-2 rounded-md">
-                    <span class="font-bold text-sm mb-1">E-mail or username</span>
+                    <span class="font-bold text-sm sm:text-base mb-1">E-mail or username</span>
                     <input v-model="formData.email" name="email" type="text" placeholder="Type your email or username"
-                        class="outline-none w-full p-2 bg-white rounded-md text-sm" />
-                    <p v-if="v$.email.$error" class="text-xs text-red-400 mb-2"> {{ v$.email.$errors[0].$message }} </p>
+                        class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600"  :class="{'outline-red-400' : v$.email.$error}" />
+                    <p v-if="v$.email.$error" class="text-xs text-red-400 my-2"> {{ v$.email.$errors[0].$message }} </p>
                 </label>
                 <label class="mb-2 rounded-md text-gray-800">
-                    <span class="font-bold text-sm mb-1">Password</span>
+                    <span class="font-bold text-base mb-1">Password</span>
                     <input v-model="formData.password" name="password" type="password" placeholder="Type your password"
-                        class="outline-none w-full p-2 bg-white rounded-md text-sm" />
-                    <p v-if="v$.password.$error" class="text-xs text-red-400 mb-2"> {{ v$.password.$errors[0].$message }} </p>
+                        class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600" :class="{'outline-red-400' : v$.password.$error}" />
+                    <p v-if="v$.password.$error" class="text-xs text-red-400 my-2"> {{ v$.password.$errors[0].$message }} </p>
                 </label>
                 <input type="submit" value="Login"
-                    class="p-2 my-2 cursor-pointer text-white rounded-md w-full bg-blue-600 text-sm font-bold" />
-                <p class="text-xs text-secondary-gray text-center">Login with administration access</p>
+                    class="active:-translate-y-1 p-2 my-2 cursor-pointer text-white rounded-md w-full bg-blue-600 text-sm sm:text-base font-bold" />
+                <p class="text-xs sm:text-sm text-secondary-gray text-center">Login with administration access</p>
             </form>
         </div>
     </div>

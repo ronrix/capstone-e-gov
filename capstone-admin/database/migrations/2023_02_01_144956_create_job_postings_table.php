@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string("job_place");
             $table->longText("job_description");
             $table->string("job_type");
+            $table->string("job_schedule");
             $table->longText("job_qualifications");
             $table->string("job_salary");
             $table->timestamps();

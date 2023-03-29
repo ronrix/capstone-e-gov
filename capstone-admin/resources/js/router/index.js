@@ -18,17 +18,6 @@ export const router = createRouter({
       path: "/government/job-postings",
       name: "JobPostings",
       component: () => import("../Pages/Government/JobPostings/JobPostings.vue"),
-      redirect: "/government/job-postings/active",
-      children: [
-        {
-          path: "/government/job-postings/active",
-          component: () => import("../Pages/Government/JobPostings/Active.vue")
-        },
-        {
-          path: "/government/job-postings/inactive",
-          component: () => import("../Pages/Government/JobPostings/Inactive.vue")
-        },
-      ]
     },
     {
       path: "/government/programs-and-events",
