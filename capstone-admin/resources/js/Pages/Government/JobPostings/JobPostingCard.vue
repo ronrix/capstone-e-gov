@@ -42,7 +42,7 @@
     </div>
 
     <button type="button" @click="showModal(data)"
-      class="active:-translate-y-1 rounded-md bg-blue-600 text-white  mt-3 outline-none font-bold text-sm self-end p-3">
+      class="active:-translate-y-1 rounded-md border border-blue-600 hover:bg-blue-600 hover:text-white mt-3 outline-none font-bold text-sm self-end p-3">
       See Details
       <i class="uil uil-angle-right"></i>
     </button>

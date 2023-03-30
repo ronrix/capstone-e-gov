@@ -7,11 +7,20 @@
       <!-- search filter -->
       <SearchInput class="mb-5" @searchFn="searchFn" placeholder="search active jobs" />
 
+      <!-- add new job modal -->
+      <NewJobModal v-if="isShowAddModal" :closeModal="showAddModal" :handleCreate="handleCreate" />
+
       <!-- top section -->
-      <h4 class="text-xl font-bold mb-3">Recommended jobs <span class="text-gray-400 ml-5">{{ originalData.length }}</span></h4>
+      <div class="flex items-center justify-between">
+        <h4 class="text-xl font-bold mb-3">Recommended jobs <span class="text-gray-400 ml-5">{{ originalData.length }}</span></h4>
+        <button type="button" @click="showAddModal"
+          class="active:-translate-y-1 rounded-md bg-blue-600 text-white  mt-3 outline-none font-bold text-sm self-end p-3">
+          Add new job
+        </button>
+      </div>
 
       <!-- filter by -->
-      <p class="text-gray-600 text-sm font-[500] capitalize mb-3">schedule</p>
+      <p class="text-gray-600 text-sm font-[500] capitalize">schedule</p>
       <div class="flex items-center flex-wrap gap-3 mb-8 sticky top-10 py-2 z-20">
         <div class="bg-blur"></div>
         <label v-for="(item, idx) in filterItems" :key="idx" class="font-[500] text-sm flex items-center gap-2 capitalize">
@@ -37,9 +46,11 @@ import JobPostingCard from './JobPostingCard.vue';
 import { ref, onMounted, watch } from "vue";
 import SearchInput from '../../../Components/SearchInput.vue';
 import axios from 'axios';
+
 import { be_url } from '../../../config/config';
 import JobPostingModal from './JobPostingModal.vue';
 import Notifcation from '../../../Components/Notifcation.vue';
+import NewJobModal from "./NewJobModal.vue";
 
 const colors = [
   {
@@ -84,6 +95,7 @@ const originalData = ref([]);
 const isShowModal = ref(false);
 const selectedData = ref();
 const resMsg = ref();
+const isShowAddModal = ref(false);
 
 onMounted(() => {
   axios.get(be_url + "/job-postings")
@@ -98,6 +110,11 @@ onMounted(() => {
 function showModal(data) {
   isShowModal.value = !isShowModal.value;
   selectedData.value = data;
+}
+
+// function to show the add new job modal
+function showAddModal() {
+  isShowAddModal.value = !isShowAddModal.value;
 }
 
 // filter states 
@@ -185,5 +202,30 @@ async function handleDelete(id) {
     .catch(err => console.log(err));
 }
 
+// function to create the job posting data
+async function handleCreate(formData) {
+  return await axios.post(be_url + "/job-posting/add", 
+  { 
+    job_title: formData.job_title, 
+    job_type: formData.job_type,
+    job_description: formData.job_description, 
+    job_salary: formData.job_salary,
+    job_location: formData.job_location,
+    job_schedule: formData.job_schedule
+  })
+  .then((response) => {
+
+   // set the response msg
+    resMsg.value = response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+    data.value = response.data.jobs;
+    return response.data;
+  })
+  .catch(err => console.log(err));
+}
 
 </script>

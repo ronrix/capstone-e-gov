@@ -93,9 +93,16 @@ import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators"
 
 // adding rules for validation of the form
-const rules = computed(() => ({
+const rules = computed(() => (location ? {
   title: { required: helpers.withMessage("The field title is required", required) },
   location: { required: helpers.withMessage("The field location is required", required) },
+  content: { required: helpers.withMessage("The field content is required", required) },
+  imgFile: {
+    required: helpers.withMessage("The image is required", required),
+    array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0),
+  },
+} : {
+  title: { required: helpers.withMessage("The field title is required", required) },
   content: { required: helpers.withMessage("The field content is required", required) },
   imgFile: {
     required: helpers.withMessage("The image is required", required),
@@ -191,22 +198,21 @@ async function onSubmit() {
     return;
   }
 
-  return;
   isSubmitting.value = true;
   if (isError.value) isError.value = false; // remove the error message from displaying when validation passed
   handleCreateSubmit(formData).then(data => {
+    isSubmitting.value = false;
+    toUploadImgs.value = [];
     if (data.res.status >= 400) {
       formData.imgFile = null;
       selectedImg.value = "";
       return;
     }
-    isSubmitting.value = false;
     formData.reset();
-    toUploadImgs.value = [];
   });
 }
 
-const { handleCreateSubmit } = defineProps({
+const { handleCreateSubmit, location } = defineProps({
   showAddModal: Function,
   handleCreateSubmit: Function,
   title: String,

@@ -238,8 +238,8 @@ function handleSubmitUpdate(id, formData) {
 }
 
 // handle the submit function to update the new news
-function handleCreateSubmit(formData) {
-  axios.post(be_url + "/programs-and-events/add", { title: formData.title, location: formData.location, description: formData.content, imgFile: formData.imgFile }, { headers: { "Content-Type": "multipart/form-data" }})
+async function handleCreateSubmit(formData) {
+  return await axios.post(be_url + "/programs-and-events/add", { title: formData.title, location: formData.location, description: formData.content, imgFile: formData.imgFile }, { headers: { "Content-Type": "multipart/form-data" }})
   .then(({ data }) => {
     dataProgramsEvents.value = data.programsEvents;
 
@@ -249,6 +249,8 @@ function handleCreateSubmit(formData) {
     setTimeout(() => {
       resMsg.value = null;
     }, 3000);
+
+    return data;
   })
   .catch(err => console.log(err));
 }
