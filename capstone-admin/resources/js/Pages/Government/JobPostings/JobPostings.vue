@@ -1,6 +1,8 @@
 <template>
   <WrapperContent>
     <div class="mt-5">
+      <!-- response message -->
+      <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
       <!-- search filter -->
       <SearchInput class="mb-5" @searchFn="searchFn" placeholder="search active jobs" />
@@ -10,7 +12,7 @@
 
       <!-- filter by -->
       <p class="text-gray-600 text-sm font-[500] capitalize mb-3">schedule</p>
-      <div class="flex items-center flex-wrap gap-3 mb-8 sticky top-10 py-2">
+      <div class="flex items-center flex-wrap gap-3 mb-8 sticky top-10 py-2 z-20">
         <div class="bg-blur"></div>
         <label v-for="(item, idx) in filterItems" :key="idx" class="font-[500] text-sm flex items-center gap-2 capitalize">
           <input type="checkbox" :name="'filter-' + idx" :value="item.trim()" v-model="checkedItems" class="h-5 w-5 text-blue-600 rounded">
@@ -19,11 +21,11 @@
       </div>
 
       <!-- show more details - modal -->
-      <JobPostingModal v-if="isShowModal" :selectedData="selectedData" :colors="colors" :closeModal="showModal" />
+      <JobPostingModal v-if="isShowModal" :selectedData="selectedData" :colors="colors" :closeModal="showModal" :handleUpdate="handleUpdate" />
 
       <!-- cards section -->
       <section class="flex items-start gap-2 flex-wrap mt-8">
-        <JobPostingCard v-for="(job, idx) in data" :data="job" :key="idx" :showModal="showModal" :colors="colors" />
+        <JobPostingCard v-for="(job, idx) in data" :data="job" :key="idx" :showModal="showModal" :colors="colors" :handleDelete="handleDelete" />
       </section>
 
     </div>
@@ -37,6 +39,7 @@ import SearchInput from '../../../Components/SearchInput.vue';
 import axios from 'axios';
 import { be_url } from '../../../config/config';
 import JobPostingModal from './JobPostingModal.vue';
+import Notifcation from '../../../Components/Notifcation.vue';
 
 const colors = [
   {
@@ -80,6 +83,7 @@ const data = ref([]);
 const originalData = ref([]);
 const isShowModal = ref(false);
 const selectedData = ref();
+const resMsg = ref();
 
 onMounted(() => {
   axios.get(be_url + "/job-postings")
@@ -136,5 +140,50 @@ watch(checkedItems, () => {
     return checkedItems.value.find(item => d.job_schedule.includes(item));
   });
 });
+
+// function to update the job posting data
+async function handleUpdate(formData) {
+  return await axios.post(be_url + "/job-posting/edit", 
+  { 
+    id: formData.id,
+    job_title: formData.title, 
+    job_type: formData.type,
+    job_description: formData.description, 
+    job_salary: formData.salary,
+    job_location: formData.location,
+    job_schedule: formData.schedule
+  })
+  .then((response) => {
+
+   // set the response msg
+    resMsg.value = response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+    data.value = response.data.jobs;
+    return data;
+  })
+  .catch(err => console.log(err));
+}
+
+// function to delete a job posting
+async function handleDelete(id) {
+  return await axios.post(be_url + "/delete-job-posting", { id })
+    .then((response) => {
+      // set the response msg
+      resMsg.value = response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      data.value = response.data.jobs;
+      return data;
+    })
+    .catch(err => console.log(err));
+}
+
 
 </script>

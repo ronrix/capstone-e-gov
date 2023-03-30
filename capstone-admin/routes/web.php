@@ -77,10 +77,11 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
-    Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
-    Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
-    Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
 
+    Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
+    Route::post("/job-posting/edit", [JobPostingController::class, "update"]);
+
+    Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
     Route::post("/current-official/add", [ExecutivesController::class, "createCurrentOfficial"]);
     Route::post("/former-official/add", [ExecutivesController::class, "createFormerOfficial"]);
     Route::post("/barangay-official/add", [ExecutivesController::class, "createBarangayOfficial"]);
@@ -90,6 +91,8 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);
     Route::post("/delete-barangay-official/", [ExecutivesController::class, "deleteOneBarangay"]);
     Route::post("/delete-deparment-head/", [ExecutivesController::class, "deleteOneDepHead"]);
+    Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
+    Route::post("/delete-job-posting", [JobPostingController::class, "deleteOne"]);
 
     // tourism
     Route::get("/tourism/tourism", function() {
