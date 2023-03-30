@@ -49,7 +49,7 @@ const sample_data = [{
   placeName: "Pililla Wind Farm",
   content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
   address: "Pililla Windmills - 54 MW Pililla Windfarm - Sitio Bugarin, Pililla Rizal",
-  category: "Tourist Atraction"
+  category: "Tourist Attraction"
 },
 {
   id: 2,
