@@ -48,7 +48,7 @@
     <AddBtn :showAddModal="showAddNewModal" class="z-20" />
 
     <!-- add modal -->
-    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" title="Headline" />
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" title="Headline" :location="false" />
   </WrapperContent>
 </template>
 
@@ -126,7 +126,7 @@ async function handleCreateSubmit(formData) {
       resMsg.value = null;
     }, 3000);
 
-    return response;
+    return response.data;
   })
   .catch(err => console.log(err));
 }
