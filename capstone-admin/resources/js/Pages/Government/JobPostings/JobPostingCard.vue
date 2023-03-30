@@ -51,7 +51,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import DeleteVerificationModal from './DeleteVerificationModal.vue';
+import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
 
 const workTypes = data.job_schedule.split(",");
 const bgColor = ref("");
