@@ -86,6 +86,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/former-official/add", [ExecutivesController::class, "createFormerOfficial"]);
     Route::post("/barangay-official/add", [ExecutivesController::class, "createBarangayOfficial"]);
     Route::post("/department-head/add", [ExecutivesController::class, "createDepHead"]);
+    Route::post("/job-posting/add", [JobPostingController::class, "create"]);
 
     Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
     Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);
