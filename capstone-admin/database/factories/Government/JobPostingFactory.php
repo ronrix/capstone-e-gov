@@ -23,15 +23,15 @@ class JobPostingFactory extends Factory
             "helper",
             "welder",
         ];
+        $job_schedules = [ "remote", "temporary", "contractual", "fixed term", "full time", "part time", "internship" ];
 
         return [
             "job_title" => fake()->jobTitle(),
-            "job_place" => fake()->streetAddress(),
+            "job_location" => fake()->streetAddress(),
             "job_description" => fake()->paragraph(5),
             "job_type" => fake()->randomElement($job_types),
-            "job_schedule" => "remote, temporary, contractual, fixed term, full time, part time, internship",
-            "job_qualifications" => fake()->paragraph(5),
-            "job_salary" => fake()->randomDigit(),
+            "job_schedule" => implode(", ", [fake()->randomElement($job_schedules), fake()->randomElement($job_schedules), fake()->randomElement($job_schedules)]),
+            "job_salary" => fake()->numberBetween(20000, 50000),
         ];
     }
 }

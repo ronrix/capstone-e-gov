@@ -17,66 +17,51 @@
       </div>
     </div>
 
+  <!-- card -->
+    <CardSeal v-for="(data, index) in seals" :data="data" :index="index"  :showPreviewModal="showPreviewModal"/>
 
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
+        
+        <!-- add new news btn -->
+    <AddBtn :showAddModal="showAddNewModal" class="z-20" />
 
-    <!-- color representation table  -->
+<!-- add modal -->
+<AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" title="Headline" />
 
-    <div class="w-full flex flex-col md:flex-col lg:flex-row gap-5 justify-center mt-20">
-
-      <div class="mb-10">
-        <h2 class="text-sm md:text-md lg:text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Color
-          Representation</h2>
-        <table class="w-full">
-          <thead>
-            <tr class="text-sm md:text-md lg:text-xl text-gray-700">
-              <th>Color</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <Row v-for="color in color_representation" :data="color" />
-          </tbody>
-        </table>
-      </div>
-
-      <!-- symbol presentation table -->
-
-      <div class="mb-10">
-        <h2 class="text-sm lg:text-xl text-center font-bold p-2 text-white bg-red-600 col-span-2">Symbol Presentation</h2>
-        <table class="table-auto w-full">
-          <thead>
-            <tr class="text-sm md:text-md lg:text-xl text-gray-700">
-              <th>Symbol</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <Row v-for="symbol in symbol_representation" :data="symbol" />
-          </tbody>
-        </table>
-      </div>
-
-    </div>
-
-    <!-- logo contennt -->
-    <CardSeal v-for="(seal, index) in seals" :seal="seal" :index="index" />
   </WrapperContent>
 </template>
 
 <script setup>
 import WrapperContent from '../../../Components/WrapperContent.vue';
-import Row from './Row.vue'
 import CardSeal from './CardSeal.vue';
+import AddModal from '../../../Components/AddModal/AddModal.vue';
+import AddBtn from '../../../Components/AddModal/AddBtn.vue';
+import PreviewModal from '../../../Components/PreviewModal.vue';
 import { ref } from 'vue'
 
+// select file
 const inputFile = ref(null);
 
 function showInputFileSelection() {
   // will click the hidden input file to show the file selection
   inputFile.value.click();
 }
+
+// preview modal
+const isPreviewModal = ref(false)
+const selectedData = ref()
+function showPreviewModal(data) {
+  isPreviewModal.value = !isPreviewModal.value;
+  selectedData.value = data;
+}
+
+// AddModal
+
+const isAddNewModal = ref(false);
+function showAddNewModal() {
+  isAddNewModal.value = !isAddNewModal.value;
+}
+
 
 const color_representation = [
   {
@@ -139,13 +124,13 @@ const symbol_representation = [
 const seals = [
   {
     title: "BETTER PILILLA",
-    subText: "“BETTER PILILLA” the home of 54 MW Windfarm – our tagline which anchors our governance that leads to the fulfillment of all its Strategic Goals – massive tax campaign, health, special and educational services, human development through skills and development training, increased economic opportunities through business-friendly policies, and infrastructure development which result in attaining the DILG-Seal of Good Local Governance (SGLG) in one year of its first term of public service. (source: LGPMS Profile",
-    imgSrc: "https://pilillarizal.gov.ph/wp-content/uploads/2022/09/BetterPilillaLogo-1016x400-1-768x302.png"
+    description: "“BETTER PILILLA” the home of 54 MW Windfarm – our tagline which anchors our governance that leads to the fulfillment of all its Strategic Goals – massive tax campaign, health, special and educational services, human development through skills and development training, increased economic opportunities through business-friendly policies, and infrastructure development which result in attaining the DILG-Seal of Good Local Governance (SGLG) in one year of its first term of public service. (source: LGPMS Profile",
+    img_link: "https://pilillarizal.gov.ph/wp-content/uploads/2022/09/BetterPilillaLogo-1016x400-1-768x302.png"
   },
   {
     title: "ARAW NG PILILLA",
-    subText: "Ang hugis ng logo na animo araw ay sumisimbulo sa panahon ng tag-init o panahon ng pag-aani kung kailan din ipinagdiriwang ang Araw ng Pililla. Ito ay ginawang makulay na sumasagisag sa ating pagiging likas na masayahin. Ito ay napapalibutan ng siyam na hugis ng tao na nag mistulang sinag na kumakatawan sa siyam na nagkakaisang Barangay at mga mamamayan nito. Ang logo ay makikitaan din ng mga simbulong sumasagisag sa mga lugar at produktong tanyag sa Bayan ng Pililla.",
-    imgSrc: "https://pilillarizal.gov.ph/wp-content/uploads/2022/12/araw-ng-pililla-logo-png.png"
+    description: "Ang hugis ng logo na animo araw ay sumisimbulo sa panahon ng tag-init o panahon ng pag-aani kung kailan din ipinagdiriwang ang Araw ng Pililla. Ito ay ginawang makulay na sumasagisag sa ating pagiging likas na masayahin. Ito ay napapalibutan ng siyam na hugis ng tao na nag mistulang sinag na kumakatawan sa siyam na nagkakaisang Barangay at mga mamamayan nito. Ang logo ay makikitaan din ng mga simbulong sumasagisag sa mga lugar at produktong tanyag sa Bayan ng Pililla.",
+    img_link: "https://pilillarizal.gov.ph/wp-content/uploads/2022/12/araw-ng-pililla-logo-png.png"
   }
 ]
 </script>

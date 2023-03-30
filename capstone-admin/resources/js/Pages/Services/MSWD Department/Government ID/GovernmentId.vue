@@ -28,14 +28,6 @@
 
                 <Rows v-for="(data, index) in table" :data="data" />
             </Table>
-             <!-- add new btn -->
-             <button @click="showServiceModal"
-                class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold">
-                new
-                <i class="uil uil-plus-circle m-0 ml-2"></i>
-            </button>
-             <!-- Services Modal -->
-    <ServicesModal v-if="isServiceModal" :showServiceModal="showServiceModal"/>
         </div>
       
     </WrapperContent>
@@ -48,8 +40,6 @@ import ListReq from '../../Services Components/ListReq.vue';
 import TableHeader from '../../Services Components/TableHeader.vue';
 import Table from '../../Services Components/Table.vue';
 import Rows from '../../Services Components/Rows.vue';
-import ServicesModal from '../../Services Components/ServicesModal.vue';
-import { ref } from 'vue';
 
 const table = [
     {
@@ -88,10 +78,7 @@ const thead = [
     }
 ]
 
-const isServiceModal = ref(false);
-function showServiceModal() {
-  isServiceModal.value = ! isServiceModal.value;
-}
+
 </script>
 
 <style lang="scss" scoped>
