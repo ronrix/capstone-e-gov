@@ -17,8 +17,13 @@
       <Delete :handleDelete="handleDelete" :id="data.id"  />
       <!-- image -->
       <div class="flex-1 flex flex-col gap-3 items-start justify-between ">
-          <div class="img-hover-zoom h-[300px] w-full">
-          <img class="h-[300px] max-h-[400px] w-full lg:w-[max]" :src="data?.img"></div>
+       <Carousel>
+        <Slide>
+          <div class="img-hover-zoom-slide h-[300px] w-full">
+          <img class="h-[300px] max-h-[400px] w-full lg:w-[max]" :src="data?.img">
+        </div>
+        </Slide>
+      </Carousel>
         <div class="flex">
           <i style="margin-top: 2px;" class="ml-2 uil uil-location-point text-cyan-400"></i>
           <p class="text-ellipsis overflow-hidden pt-1" style="font-size: 12px;">{{ data.address }}</p>
@@ -50,21 +55,26 @@
     <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
   </WrapperContent>
 </template>
-<script setup>
+<script >
 import { computed, ref, onUpdated } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';
 import TouristSpotPreviewModal from '../../Components/TouristSpotPreviewModal.vue'
 import SelectTag from '../../Components/SelectTag.vue';
 import Delete from '../../Components/Delete.vue';
+// import Carousel from '../../Components/Slides/Carousel.vue'
+// import Slide from '../../Components/Slides/Slide.vue'
 const isTouristSpotPreviewModal = ref(false);
 const isAddNewModal = ref(false);
 const selectedData = ref();
+const Carousel = ref();
+const Slide = ref();
+
 
 const sample_data = [{
+  img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1000&h=-1&s=1",
   placeName: "Pililla Wind Farm",
   content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1000&h=-1&s=1",
   address: "Pililla Windmills - 54 MW Pililla Windfarm - Sitio Bugarin, Pililla Rizal",
   category: "Tourist Atraction"
 },
@@ -138,6 +148,7 @@ const filteredData = ref(searchFilter(""));
 function searchFilter(value) {
   const first_option = sample_data.filter(data => {
     return data.placeName.toLowerCase().includes(value.toLowerCase());
+    
   });
 
   const second_option = sample_data.filter(data => {
