@@ -80,6 +80,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/job-posting/edit", [JobPostingController::class, "update"]);
     Route::post("/hotlines/edit", [HotlinesController::class, "update"]);
 
+    Route::post("/hotlines/create", [HotlinesController::class, "create"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
     Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
     Route::post("/current-official/add", [ExecutivesController::class, "createCurrentOfficial"]);

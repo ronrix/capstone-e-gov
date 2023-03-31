@@ -17,7 +17,7 @@ class HotlinesController extends Controller
     public function index()
     {
         //
-        return response()->json([ "hotlines" => Hotlines::all()]);
+        return response()->json([ "hotlines" => Hotlines::orderBy("id", "desc")->get()]);
     }
 
     /**
@@ -25,9 +25,54 @@ class HotlinesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // validate
+        $validator = Validator::make($request->all(), [
+            "department" => "required", 
+            "smart" => "required", 
+            "globe" => "required", 
+            "landline" => "required", 
+        ]); 
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        try {
+            //code...
+            $hotline = new Hotlines;
+            $hotline->department = $request->input("department");
+            $hotline->smart = $request->input("smart");
+            $hotline->globe = $request->input("globe");
+            $hotline->landline = $request->input("landline");
+            $hotline->save();
+
+            return response()->json([
+                "hotlines" => Hotlines::orderBy("id", "desc")->get(),
+                "res" => [
+                    "msg" => "Successfully added new hotline",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json([
+                "res" => [
+                    "msg" => $err->getMessage(),
+                    "status" => 400
+                ]
+            ]);
+        }
     }
 
     /**
@@ -113,7 +158,7 @@ class HotlinesController extends Controller
 
             return response()->json([
                 "res" => [
-                    "msg" => "Successfully updated job postings",
+                    "msg" => "Successfully updated hotline number",
                     "status" => 200
                 ]
             ]);

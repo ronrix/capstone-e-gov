@@ -6,32 +6,68 @@
       <h4 class="font-bold text-xl text-gray-900">Create new hotline</h4>
       <p class="text-sm text-gray-500">Create new hotline number to help citizens contact departments when emergency comes.</p>
 
-      <form @submit="submitFn" class="w-full mt-3 flex flex-col gap-3">
+      <form @submit.prevent="onSubmit" class="w-full mt-3 flex flex-col gap-3">
         <label class="flex flex-col w-full">
           <span class="font-bold text-gray-500">Department</span>
           <p class="text-xs text-gray-500">add the department name below</p>
-          <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+          <input v-model="formData.department" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
         </label>
         <label class="flex flex-col w-full">
-          <span class="font-bold text-gray-500">Number</span>
+          <span class="font-bold text-gray-500">Smart Number</span>
           <p class="text-xs text-gray-500">add the contact number below</p>
-          <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+          <input 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="11"
+            v-model="formData.smart" type="number" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+        </label>
+        <label class="flex flex-col w-full">
+          <span class="font-bold text-gray-500">Globe Number</span>
+          <p class="text-xs text-gray-500">add the contact number below</p>
+          <input 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="11"
+            v-model="formData.globe" type="number" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+        </label>
+        <label class="flex flex-col w-full">
+          <span class="font-bold text-gray-500">Landline Number</span>
+          <p class="text-xs text-gray-500">add the contact number below</p>
+          <input 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="8"
+            v-model="formData.landline" type="number" class="border w-full p-2 rounded-lg focus:outline-blue-600">
         </label>
       
-        <input type="submit" value="Save" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer">
+        <button class="active:-translate-y-1 px-3 upperase font-bold text-white bg-blue-600 self-end rounded-md mt-5 flex items-center justify-center">
+          <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
+          <span>save</span>
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Loading from "../../../Components/Loading.vue";
 
-function submitFn(e) {
-  console.log("you submit me");
-  e.preventDefault();
+const isSubmitting = ref(false);
+const formData = useForm({
+  department: "",
+  smart: "",
+  globe: "",
+  landline: "",
+});
+
+function onSubmit() {
+  isSubmitting.value = true;
+  handleSubmit(formData).then(() => {
+    isSubmitting.value = false;
+  });
 }
 
-defineProps({
+const { handleSubmit } = defineProps({
   showHotlineModal: Function,
+  handleSubmit: Function
 })
 </script>
