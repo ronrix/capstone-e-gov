@@ -51,7 +51,7 @@ class HotlinesController extends Controller
         try {
             //code...
             $hotline = new Hotlines;
-            $hotline->department = $request->input("department");
+            $hotline->department = strtolower($request->input("department"));
             $hotline->smart = $request->input("smart");
             $hotline->globe = $request->input("globe");
             $hotline->landline = $request->input("landline");

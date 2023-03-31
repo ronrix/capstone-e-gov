@@ -20,7 +20,7 @@
     <div class="w-full flex flex-col gap-3">
       <div v-for="a in hotlines" class="bg-white p-3 rounded-md relative shadow-sm">
         <textarea v-model="a.department"
-          class="focus:outline-blue-500 py-3 w-full font-bold overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">{{ a.department }}</textarea>
+          class="focus:outline-blue-500 py-3 w-full font-bold overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx] capitalize">{{ a.department }}</textarea>
         <div class="flex items-center gap-2">
           <img src="https://d9t5qjot8jvsq.cloudfront.net/client-assets/bayadcenter/biller-assets/1550740294NKRm.png"
             class="w-10" />
