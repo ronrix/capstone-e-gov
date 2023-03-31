@@ -72,15 +72,16 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
     Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
     Route::get("/job-postings", [JobPostingController::class, "index"]);
+    Route::get("/hotlines", [HotlinesController::class, "index"]);
 
     // government post requests
-    Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
-    Route::post("/news/create/", [NewsController::class, "create"]);
-
     Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
     Route::post("/job-posting/edit", [JobPostingController::class, "update"]);
+    Route::post("/hotlines/edit", [HotlinesController::class, "update"]);
 
+    Route::post("/hotlines/create", [HotlinesController::class, "create"]);
+    Route::post("/news/create/", [NewsController::class, "create"]);
     Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
     Route::post("/current-official/add", [ExecutivesController::class, "createCurrentOfficial"]);
     Route::post("/former-official/add", [ExecutivesController::class, "createFormerOfficial"]);
@@ -88,6 +89,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/department-head/add", [ExecutivesController::class, "createDepHead"]);
     Route::post("/job-posting/add", [JobPostingController::class, "create"]);
 
+    Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
     Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);
     Route::post("/delete-barangay-official/", [ExecutivesController::class, "deleteOneBarangay"]);

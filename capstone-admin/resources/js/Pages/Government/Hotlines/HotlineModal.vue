@@ -6,32 +6,93 @@
       <h4 class="font-bold text-xl text-gray-900">Create new hotline</h4>
       <p class="text-sm text-gray-500">Create new hotline number to help citizens contact departments when emergency comes.</p>
 
-      <form @submit="submitFn" class="w-full mt-3 flex flex-col gap-3">
+      <form @submit.prevent="onSubmit" class="w-full mt-3 flex flex-col gap-3">
         <label class="flex flex-col w-full">
           <span class="font-bold text-gray-500">Department</span>
           <p class="text-xs text-gray-500">add the department name below</p>
-          <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+          <input v-model="formData.department" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+          <p v-if="v$.department.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.department.$errors[0].$message }}</p>
         </label>
         <label class="flex flex-col w-full">
-          <span class="font-bold text-gray-500">Number</span>
+          <span class="font-bold text-gray-500">Smart Number</span>
           <p class="text-xs text-gray-500">add the contact number below</p>
-          <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+          <input 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="11"
+            v-model="formData.smart" type="number" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+            <p v-if="v$.smart.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.smart.$errors[0].$message }}</p>
+        </label>
+        <label class="flex flex-col w-full">
+          <span class="font-bold text-gray-500">Globe Number</span>
+          <p class="text-xs text-gray-500">add the contact number below</p>
+          <input 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="11"
+            v-model="formData.globe" type="number" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+            <p v-if="v$.globe.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.globe.$errors[0].$message }}</p>
+        </label>
+        <label class="flex flex-col w-full">
+          <span class="font-bold text-gray-500">Landline Number</span>
+          <p class="text-xs text-gray-500">add the contact number below</p>
+          <input 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="8"
+            v-model="formData.landline" type="number" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+            <p v-if="v$.landline.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.landline.$errors[0].$message }}</p>
         </label>
       
-        <input type="submit" value="Save" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer">
+        <button class="active:-translate-y-1 px-3 upperase font-bold text-white bg-blue-600 self-end rounded-md mt-5 flex items-center justify-center">
+          <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
+          <span>save</span>
+        </button>
       </form>
     </div>
   </div>
 </template>
 
 <script setup>
+import { ref, computed } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
+import Loading from "../../../Components/Loading.vue";
+// validation
+import useVuelidate from "@vuelidate/core";
+import { required, helpers } from "@vuelidate/validators"
 
-function submitFn(e) {
-  console.log("you submit me");
-  e.preventDefault();
+const isSubmitting = ref(false);
+const isError = ref(false);
+
+// adding rules for validation of the form
+const rules = computed(() => ({
+  department: { required: helpers.withMessage("The field department is required", required) },
+  smart: { required: helpers.withMessage("The field smart is required", required) },
+  globe: { required: helpers.withMessage("The field globe is required", required) },
+  landline: { required: helpers.withMessage("The field landline is required", required) },
+}));
+const formData = useForm({
+  department: "",
+  smart: "",
+  globe: "",
+  landline: "",
+});
+const v$ = useVuelidate(rules, formData);
+
+async function onSubmit() {
+   // invoke validation
+  // return when not inputs are not valid
+  const valid = await v$.value.$validate();
+  if (!valid) {
+    isError.value = true;
+    return;
+  }
+
+  isSubmitting.value = true;
+  handleSubmit(formData).then(() => {
+    isSubmitting.value = false;
+  });
 }
 
-defineProps({
+const { handleSubmit } = defineProps({
   showHotlineModal: Function,
+  handleSubmit: Function
 })
 </script>

@@ -25,9 +25,7 @@
     <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
   </WrapperContent>
 </template>
-
 <script setup>
-import WrapperContent from '../../Components/WrapperContent.vue';
 import { computed, ref, onUpdated } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';

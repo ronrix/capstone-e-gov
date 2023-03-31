@@ -18,8 +18,9 @@ class HotlinesFactory extends Factory
     {
         return [
             "department" => fake()->company(),
-            "first_number" => fake()->phoneNumber(),
-            "second_number" => fake()->phoneNumber(),
+            "smart" => fake()->phoneNumber(),
+            "globe" => fake()->phoneNumber(),
+            "landline" => fake()->phoneNumber(),
         ];
     }
 }

@@ -1,122 +1,119 @@
 <template>
   <HeadTitle title="Hotlines"></HeadTitle>
   <WrapperContent>
-    <h3 class="font-bold text-xl mb-3 text-gray-800">Municipal Hotlines</h3>
+    <!-- response message -->
+    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
+    
+    <!-- delete modal -->
+    <DeleteVerificationModal :closeModal="showDelete" v-if="isShowDelete" :id="deleteId" />
+
+    <h3 class="font-bold text-xl mb-3 text-gray-800 here" ref="h1">Municipal Hotlines</h3>
+
+    <!-- add btn -->
+    <button @click="showHotlineModal"
+      class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold mr-0 ml-auto mb-3">
+      new
+      <i class="uil uil-plus-circle m-0 ml-2"></i>
+    </button>
+
     <!-- hotlines table -->
-    <div class="w-full flex flex-col">
-      <table class="text-left w-full">
-        <thead>
-          <tr class="bg-neutral-200 text-xs md:text-sm">
-            <th class="px-2 text-center">
-              <i class="uil uil-list-ui-alt"></i>
-            </th>
-            <th class="flex items-center justify-between pl-2 text-neutral-600">
-              <div class="m-0">
-                <i class="uil uil-letter-english-a"></i>
-                Departments
-              </div>
-              <i @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
-            </th>
-            <th class="pl-2 text-neutral-600">
-              <i class="uil uil-outgoing-call"></i>
-              Numbers
-            </th>
-            <th class="pl-2 text-neutral-600">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(a, id) in filteredData" class="text-xs md:text-sm font-medium border">
-            <td class="bg-white text-center">{{ id + 1 }}</td>
-            <td class="bg-white border pl-2 border-l-0">
-              <textarea v-model="a.department" class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">{{ a.department }}</textarea>
-            </td>
-            <td class="bg-white border pl-2">
-              <textarea v-model="a.number" class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">{{ a.number }}</textarea>
-            </td>
-            <td class="bg-white border pl-2"><button class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md">delete</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- add btn -->
-      <button @click="showHotlineModal" class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end mt-5 flex items-center justify-center rounded-lg px-5 uppercase text-md font-bold">
-        new
-        <i class="uil uil-plus-circle m-0 ml-2"></i>
-      </button>
+    <div class="w-full flex flex-col gap-3">
+      <div v-for="a in hotlines" class="bg-white p-3 rounded-md relative shadow-sm">
+        <textarea v-model="a.department"
+          class="focus:outline-blue-500 py-3 w-full font-bold overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx] capitalize">{{ a.department }}</textarea>
+        <div class="flex items-center gap-2">
+          <img src="https://d9t5qjot8jvsq.cloudfront.net/client-assets/bayadcenter/biller-assets/1550740294NKRm.png"
+            class="w-10" />
+          <input @change.capture="(e) => handleEdit(e, a.id, 'smart')" v-model="a.smart"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="11"
+            class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
+        </div>
+        <div class="flex items-center gap-2">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Globe-logo.png" class="w-10" />
+          <input @change.capture="(e) => handleEdit(e, a.id, 'globe')" v-model="a.globe" 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="11"
+            class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
+        </div>
+        <div class="flex items-center gap-2">
+          <span class="w-10 flex items-center justify-center px-3">
+            <i class="uil uil-phone-volume text-xl"></i>
+          </span>
+          <input @change.capture="(e) => handleEdit(e, a.id, 'landline')" v-model="a.landline"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            maxlength="8"
+            class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
+        </div>
+
+        <button type="button"
+          @click="showDelete(a.id)"
+          class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-2 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
+          delete</button>
+      </div>
     </div>
 
     <!-- hotline modal -->
-    <HotlineModal v-if="isHotlineModal" :showHotlineModal="showHotlineModal" :sample_data="sample_data" />
+    <HotlineModal v-if="isHotlineModal" :showHotlineModal="showHotlineModal" :sample_data="sample_data" :handleSubmit="handleSubmit" />
 
   </WrapperContent>
 </template>
 
-<script setup>
+<script setup defer>
 import HotlineModal from "./HotlineModal.vue";
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
-const hotlines = [
-  {
-    department: "Bureau of Fire Protection",
-    number: "091283109",
-  },
-  {
-    department: "Department of Health",
-    number: "09981298",
-  },
-  {
-    department: "Department oF Agriculture",
-    number: "09292992",
-  },
-  {
-    department: "Department of Sky",
-    number: "091290848",
-  },
-]
+import DeleteVerificationModal from "../../../Components/DeleteVerificationModal.vue";
+import axios from "axios";
+import { be_url } from "../../../config/config";
+import Notifcation from "../../../Components/Notifcation.vue";
 
-const isSortedIncrease = ref(true);
-const filteredData = ref(hotlines);
+const hotlines = ref([]);
+const isShowDelete = ref(false);
+const deleteId = ref();
+const resMsg = ref();
 
 const isHotlineModal = ref(false);
 function showHotlineModal() {
   isHotlineModal.value = !isHotlineModal.value;
 }
 
-function sortFn() {
-  isSortedIncrease.value = !isSortedIncrease.value;
-
-  // incresing
-  if(isSortedIncrease.value) {
-    filteredData.value.sort((a, b) => {
-      let fa = a.department.toLowerCase(),
-      fb = b.department.toLowerCase();
-
-      if (fa < fb) {
-          return -1;
-      }
-      if (fa > fb) {
-          return 1;
-      }
-      return 0;
-    });
-
-    return;
-  }
-  // decreasing
-  filteredData.value.sort((a, b) => {
-    let fa = a.department.toLowerCase(),
-    fb = b.department.toLowerCase();
-
-    if (fa > fb) {
-        return -1;
-    }
-    if (fa < fb) {
-        return 1;
-    }
-    return 0;
-  });
+function showDelete(id) {
+  isShowDelete.value = !isShowDelete.value;
+  deleteId.value = id;
 }
+
+// update the data when input change
+function handleEdit(e, id, prov) {
+  axios.post(be_url + "/hotlines/edit", { id, number: e.target.value, provider: prov })
+  .then(({data}) => console.log(data))
+  .catch(err => console.log(err));
+}
+
+// handle add new hotline numbers
+async function handleSubmit(formData) {
+  return await axios.post(be_url + "/hotlines/create", { department: formData.department, smart: formData.smart, globe: formData.globe, landline: formData.landline })
+      .then(({data}) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+          resMsg.value = null;
+        }, 3000);
+
+        hotlines.value = data.hotlines;
+        return data;
+      })
+      .catch(err => console.log(err));
+}
+
+// get all hotlines from the server
+onMounted(() => {
+  axios.get(be_url + "/hotlines")
+  .then(({data}) => hotlines.value = data.hotlines)
+  .catch(err => console.log(err));
+});
 
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
