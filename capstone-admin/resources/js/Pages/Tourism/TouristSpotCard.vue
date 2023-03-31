@@ -1,9 +1,9 @@
 <template>
     <div
         class="relative bg-white p-5 flex flex-col md:flex-row border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 overflow-hidden shadow-md">
-        <!-- <div class="z-10">
+        <div class="z-10">
             <Delete :handleDelete="handleDelete" :id="data.id" />
-        </div> -->
+        </div>
 
         <!-- image -->
         <div class="flex-1 flex flex-col gap-3 items-start justify-between ">
