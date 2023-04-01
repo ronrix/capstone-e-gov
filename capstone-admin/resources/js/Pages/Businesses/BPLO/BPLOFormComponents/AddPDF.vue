@@ -7,10 +7,19 @@
             <!--Close Button--><!--remeber to add back (uil uil-times)-->
             <i @click="showAddModal"
                 class=" text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
-            <h2 class="font-bold text-2xl capitalize mb-0 text-gray-900">Create new {{ title }}</h2>
-            <p class="text-sm text-gray-600 whitespace-pre-wrap">
-                To format for your content appropriately, you should understand how markdown works
-            </p>
+            <h2 class="font-bold text-2xl capitalize mb-0 text-gray-900">Add new form</h2>
+
+            <!--Remember the (Action attribute) needed to be add??-->
+            <form method="POST" @submit.prevent="onSubmit" class="flex flex-col">
+                <label class="flex flex-col">
+                    <span class="text-sm font-bold capitalize mb-2">title</span>
+                    <input v-model="formData.title" name="title" type="text" placeholder="type the title here."
+                        class="rounded-md mb-5 p-2 focus:outline-blue-600">
+                    <p v-if="v$.title.$error && isError" class="text-xs text-red-400- mb-2">{{ v$.title.$errors[0].$message
+                    }}</p>
+                    
+                </label>
+            </form>
         </div>
     </section>
 </template>
