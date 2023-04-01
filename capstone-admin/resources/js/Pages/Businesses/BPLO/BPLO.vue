@@ -9,15 +9,15 @@
             <div class="flex-1 border"></div>
         </div>
         <div class="flex flex-col">
-            <a class=" inline-block mt-3 text-blue-600 mr-2 font-bold p-1">
-                Form
+            <a class=" inline-block mt-3 text-blue-600 mr-2 font-semibold p-1">
+                application_form.pdf
             </a>
             <div class="flex flex-row self-end">
-                <!-- <button
+                <button
                 class="w-[100px] bg-blue-600 rounded-md mb-2 ml-2 md:ml-2 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end uppercase mt-5"
-                @click="AddPDF">
+                @click="showAddPDF">
                 Add Form
-            </button> -->
+            </button>
            
              <button
             class="w-[120px] bg-blue-600 rounded-md mb-2 ml-2 md:ml-2 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end uppercase"
@@ -33,6 +33,7 @@
         <!-- to get "title" and "requirements", you have to use defineProps inside the component file BPermit -->
         <BPermit v-for="permit in requirements" :title="permit.title" :requirements="permit.requirements" class="mb-3"/>
         <AddPermit v-if="isPermitModal" :showPermitModal="showPermitModal"/>
+        <AddPDF v-if="isAddPDF" :closeAddPDF="showAddPDF"/>
 
     </WrapperContent>
 </template>
@@ -44,8 +45,13 @@ import BPermit from './BPLOFormComponents/BPermit.vue';
 import { ref } from 'vue';
 
 const isPermitModal = ref(false);
+const isAddPDF = ref(false);
 function showPermitModal() {
     isPermitModal.value = ! isPermitModal.value;
+}
+
+function showAddPDF() {
+    isAddPDF.value = !isAddPDF.value;
 }
 
 
