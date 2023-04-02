@@ -19,6 +19,7 @@ return new class extends Migration
             $table->year("census_year");
             $table->string("total_population");
             $table->json("religion");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
