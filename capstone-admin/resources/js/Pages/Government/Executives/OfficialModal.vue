@@ -46,8 +46,8 @@
       </div>
 
       <button type="submit" class="active:-translate-y-1 self-end mt-3 bg-blue-600 text-white font-bold uppercase px-3 rounded-md flex items-center">
-        <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
-        save
+        <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" color="#fff" />
+        <span v-if="!isSubmitting">save</span>
       </button>
 
       </form>

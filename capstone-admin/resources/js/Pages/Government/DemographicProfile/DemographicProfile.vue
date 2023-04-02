@@ -171,7 +171,7 @@ async function handleCreateNewCensus(formData) {
     originalData.value = data.populations;
 
     // set the response msg
-    resMsg.value = response.data.res;
+    resMsg.value = data.res;
     // hide the notification message in 3s
     setTimeout(() => {
       resMsg.value = null;
