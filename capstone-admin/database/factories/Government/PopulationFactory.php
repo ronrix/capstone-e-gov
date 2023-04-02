@@ -18,56 +18,63 @@ class PopulationFactory extends Factory
     {
 
         $religions = [
-            [ 
+            [
                 ["religion" => "roman catholic", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
             ],
-            [ 
+            [
                 ["religion" => "roman catholic", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
             ],
-            [ 
+            [
                 ["religion" => "roman catholic", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
             ],
-            [ 
-                ["religion" =>"roman catholic", "count" => fake()->numberBetween(10000, 11000)],
-                ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
-                ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
-                ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
-                ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
-            ],
-            [ 
+            [
                 ["religion" => "roman catholic", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
             ],
-            [ 
+            [
                 ["religion" => "roman catholic", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
             ],
-            [ 
+            [
                 ["religion" => "roman catholic", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
             ],
-            [ 
+            [
+                ["religion" => "roman catholic", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
+            ],
+            [
+                ["roman catholic", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "islam", "count" => fake()->numberBetween(10000, 11000)],
+                ["religion" => "others", "count" => fake()->numberBetween(10000, 11000)],
+            ],
+            [
                 ["roman catholic", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "aglipay", "count" => fake()->numberBetween(10000, 11000)],
                 ["religion" => "iglesia ni cristo", "count" => fake()->numberBetween(10000, 11000)],

@@ -74,19 +74,19 @@
             <td class="bg-white border pl-2 border-l-0">
               <textarea v-model="a.barangay"
                 @change.capture="(e) => updateAmount(e, a.barangay + '|barangay', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx] capitalize"></textarea>
+                class="focus:outline-blue-500 py-3 w-full m-0 text-sm h-[40px] max-h-[40px] capitalize scrollbar"></textarea>
             </td>
             <td class="bg-white border pl-2 border-l-0">
               <input v-model="a.male"
                 type="number"
                 @change.capture="(e) => updateAmount(e, a.barangay + '|male', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                class="focus:outline-blue-500 py-3 w-full overflow-scroll m-0 text-sm h-[40px] max-h-[40ppx]">
             </td>
             <td class="bg-white border pl-2 border-l-0">
               <input v-model="a.female"
                 type="number"
                 @change.capture="(e) => updateAmount(e, a.barangay + '|female', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                class="focus:outline-blue-500 py-3 w-full overflow-scroll m-0 text-sm h-[40px] max-h-[40ppx]">
             </td>
             <td class="bg-white border pl-2 border-l-0">
               <div class="h-[100px] overflow-y-scroll scrollbar">
@@ -100,7 +100,7 @@
               <input v-model="a.household"
                 type="number"
                 @change.capture="(e) => updateAmount(e, a.barangay + '|household', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                class="focus:outline-blue-500 py-3 w-full overflow-scroll m-0 text-sm h-[40px] max-h-[40ppx]">
             </td>
           </tr>
         </tbody>
