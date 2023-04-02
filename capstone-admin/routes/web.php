@@ -99,6 +99,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-deparment-head/", [ExecutivesController::class, "deleteOneDepHead"]);
     Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
     Route::post("/delete-job-posting", [JobPostingController::class, "deleteOne"]);
+    Route::post("/delete-population", [PopulationController::class, "deleteOne"]);
 
     // tourism
     Route::get("/tourism/tourism", function() {

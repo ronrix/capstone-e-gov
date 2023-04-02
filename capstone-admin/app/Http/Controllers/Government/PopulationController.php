@@ -20,6 +20,35 @@ class PopulationController extends Controller
         return response()->json(["populations" => Population::orderBy("census_year", "desc")->get()]);
     }
 
+    public function deleteOne(Request $request) {
+         // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required", 
+        ]); 
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages(),
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        $id = $request->input("id");
+        try {
+            Population::findOrFail($id)->delete();
+            return response()->json([ "populations" => Population::orderBy("census_year", "desc")->get(), "res" => [ "msg" => "Successfully deleted a news", "status" => 200 ]]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([ "res" => ["msg" => $th, "status" => 400 ]]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

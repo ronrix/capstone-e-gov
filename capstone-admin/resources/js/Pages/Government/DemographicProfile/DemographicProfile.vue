@@ -9,6 +9,9 @@
     <!-- demographic form modal -->
     <DemographicProfileModal :showModal="showModal" v-if="isShowModal" :handleCreate="handleCreateNewCensus" />
 
+    <!-- delete verfication modal -->
+    <DeleteVerificationModal v-if="isVerificationModal" :closeModal="showDeleteVerificiationModal" :id="filteredData.id" :handleDelete="handleDeleteCensus" />
+
     <!-- hotlines table -->
     <div class="w-full flex flex-col">
       <!-- census year -->
@@ -33,6 +36,12 @@
         <!-- add new btn -->
         <button @click="showModal" class="bg-blue-600 py-2 px-3 rounded-lg text-white font-bold capitalize">add census</button>
       </div>
+      <button
+        @click="showDeleteVerificiationModal"
+        class="self-end px-3 bg-red-300 rounded-md text-red-600 mb-2 hover:bg-red-400 hover:text-red-200">
+        <i class="uil uil-times-circle"></i>
+        delete this census
+      </button>
 
       <table class="text-left w-full">
         <thead>
@@ -107,6 +116,7 @@ import Notifcation from "../../../Components/Notifcation.vue"
 import SelectTag from '../../../Components/SelectTag.vue';
 import axios from 'axios';
 import { be_url } from '../../../config/config';
+import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
 
 const isShowModal = ref(false);
 const selectedYear = ref();
@@ -114,6 +124,7 @@ const years = ref([]) // ["current", "2015", "2010", "2000", "1995", "1990"];
 const filteredData = ref([]);
 const originalData = ref([]);
 const resMsg = ref();
+const isVerificationModal = ref(false);
 
 // function to show the add modal
 function showModal() {
@@ -123,12 +134,6 @@ function showModal() {
 // function to filter out the census years
 function filterBy(type, value) {
   selectedYear.value = value;
-  
-  if(value === "current") {
-    filteredData.value = originalData.value.filter(orig => parseInt(orig.census_year) === 2020)[0];
-    return;
-  }
-
   filteredData.value = originalData.value.filter(orig => parseInt(orig.census_year) === parseInt(value))[0];
 }
 
@@ -178,6 +183,36 @@ async function handleCreateNewCensus(formData) {
     }, 3000);
 
     return data;
+  })
+  .catch(err => console.log(err));
+}
+
+// function to show the delete modal
+function showDeleteVerificiationModal() {
+  isVerificationModal.value = !isVerificationModal.value;
+}
+
+// delete by id, this function is used for delete request
+function handleDeleteCensus(id) {
+  axios.post(be_url + "/delete-population", { 
+    id
+  })
+  .then(({data}) => {
+    filteredData.value = data.populations[0];
+    originalData.value = data.populations;
+ 
+    years.value = data.populations.map(a => a.census_year);
+    selectedYear.value = years.value[0];
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+    // close the verification delete modal
+    isVerificationModal.value = false;
   })
   .catch(err => console.log(err));
 }
