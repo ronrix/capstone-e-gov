@@ -73,12 +73,14 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
     Route::get("/job-postings", [JobPostingController::class, "index"]);
     Route::get("/hotlines", [HotlinesController::class, "index"]);
+    Route::get("/populations", [PopulationController::class, "index"]);
 
     // government post requests
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
     Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
     Route::post("/job-posting/edit", [JobPostingController::class, "update"]);
     Route::post("/hotlines/edit", [HotlinesController::class, "update"]);
+    Route::post("/populations/edit", [PopulationController::class, "update"]);
 
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
@@ -88,6 +90,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/barangay-official/add", [ExecutivesController::class, "createBarangayOfficial"]);
     Route::post("/department-head/add", [ExecutivesController::class, "createDepHead"]);
     Route::post("/job-posting/add", [JobPostingController::class, "create"]);
+    Route::post("/population/add", [PopulationController::class, "create"]);
 
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
