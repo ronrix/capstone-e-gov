@@ -3,6 +3,7 @@ import { createInertiaApp } from '@inertiajs/inertia-vue3';
 
 import '../css/app.css';
 import { router } from './router';
+import Wrapper from "./Components/Wrapper.vue";
 
 createInertiaApp({
     resolve: name => {
@@ -11,6 +12,7 @@ createInertiaApp({
     },
     setup({ el, App, props, plugin }) {
         const app = createApp({ render: () => h(App, props) });
+        app.component("Wrapper", Wrapper);
         app.use(router);
         app.use(plugin);
         app.mount(el);
