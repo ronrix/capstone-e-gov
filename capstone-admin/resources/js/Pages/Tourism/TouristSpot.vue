@@ -4,8 +4,8 @@
     <!-- search filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
 
-        <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn"/>
-      <SelectTag type="category" value="All" :filter="filterArray" :filterArray="filterTourism" :filterFn="filterBy" />
+      <SearchInput placeholder="search" class="mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn"/>
+      <SelectTag type="category" :value="filterValue" :filterArray="filterTourism" :filterFn="filterBy" />
     </div>
 
     <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col gap-3 mt-5">
@@ -125,14 +125,7 @@ const sample_data = [{
 ]
 
 const filterTourism = ['All', 'Tourist Attraction', 'Church', 'Restaurant']
-
-
-const filterArray = computed(() => {
-  const all = sample_data.map(item => item.category);
-  return ['All', ...new Set(all)];
-});
-
-
+const filterValue = ref("All");
 const toFilter = ref(sample_data);
 
 const groupedItems = computed(() => {
@@ -147,35 +140,19 @@ const groupedItems = computed(() => {
 
 },[toFilter]);
 
-function searchFilter(value) {
-  
-  const first_option = toFilter.value.filter(data => {
-    return data.placeName.toLowerCase().includes(value.toLowerCase());
-    
-  });
+function filterBy(type, value){
+  filterValue.value = value;
 
-  const second_option = toFilter.value.filter(data => {
-    return data.address.toLowerCase().includes(value.toLowerCase());
-  });
-
-  const third_option = toFilter.value.filter(data => {
-    return data.category.toLowerCase().includes(value.toLowerCase());
-  });
-
-  if(first_option.length) {
-    return first_option;
+  if(value === "All") {
+    toFilter.value = sample_data;
   }
-  else if(third_option.length){
-    return third_option;
+  else {
+    toFilter.value = sample_data.filter(el => {
+      if(el.category.toLocaleLowerCase() === value.toLowerCase()) {
+        return el;
+      }
+    });
   }
-  return second_option;
-}
-function searchFn(value) {
-  toFilter.value = searchFilter(value);
- 
-}
-function filterBy(value){
-  toFilter.value = filterTourism(value)
 }
 
 function showAddNewModal() {
