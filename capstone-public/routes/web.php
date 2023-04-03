@@ -14,5 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return inertia('Home');
+    $tz = new DateTime("now", new DateTimeZone("Asia/Manila"));
+    return inertia('Main', ["time" => $tz->format("l, d F Y h:i:sA ")]);
 });
