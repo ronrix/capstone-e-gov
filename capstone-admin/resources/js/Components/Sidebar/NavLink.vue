@@ -5,15 +5,25 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const link = ref(null);
 
 function handleClick(e) {
+  // first: remove any active class style to "chil-sub-navs"
+  const childSubNavs = document.querySelectorAll(".child-sub-navs");
+  Array.from(childSubNavs).forEach(el => {
+    if(el.previousElementSibling.classList.contains("bg-blue-600") && el.previousElementSibling.classList.contains("text-white")) {
+      el.previousElementSibling.classList.remove('bg-blue-600');
+      el.previousElementSibling.classList.remove('text-white');
+    }
+  });
+
+  // check the parent element of the navLink has "child-sub-navs" class
+  // hen add the blue active style if it has
   if (Array.from(link.value.$el.parentElement.parentElement.classList).includes("child-sub-navs")) {
     link.value.$el.parentElement.parentElement.previousElementSibling.classList.add('bg-blue-600');
     link.value.$el.parentElement.parentElement.previousElementSibling.classList.add('text-white');
-    return;
   } 
 
   // if has no child sub navs then removed any active classes to it.

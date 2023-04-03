@@ -75,8 +75,8 @@
 
         <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }"
           class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center">
-          <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
-          save
+          <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
+          <span v-if="!isSubmitting">save</span>
         </button>
       </form>
     </div>

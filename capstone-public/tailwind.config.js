@@ -6,7 +6,16 @@ module.exports = {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'display': ['Playfair Display SC', 'sans-serif']
+      },
+      colors: {
+        primary: "#B92B27",
+        darkgray: "#434343",
+        secondary: "#6E6E73",
+      }
+    },
   },
   plugins: [],
 }

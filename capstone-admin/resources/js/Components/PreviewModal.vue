@@ -51,8 +51,8 @@
 
         <div class="self-end flex items-center mb-0 mt-auto">
           <button @click="setSubmitting" :disabled="isSubmitting" type="submit" :class="{'cursor-not-allowed' : isSubmitting}" class="px-4 bg-blue-600 ml-3 text-white rounded-md font-bold flex items-center">
-            <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
-            save
+            <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
+            <span v-if="!isSubmitting">save</span>
           </button>
         </div>
       </div>
