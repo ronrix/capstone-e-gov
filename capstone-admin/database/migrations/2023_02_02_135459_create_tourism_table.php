@@ -13,13 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tourism', function (Blueprint $table) {
+        Schema::create('tourisms', function (Blueprint $table) {
             $table->id();
-            $table->text("tourist_name");
-            $table->text("tourist_type");
-            $table->longText("tourist_description");
-            $table->json("tourist_img_links");
+            $table->text("name");
+            $table->text("category");
+            $table->longText("description");
+            $table->longText("img_link");
             $table->text("location");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tourism');
+        Schema::dropIfExists('tourisms');
     }
 };
