@@ -3,8 +3,8 @@
 
     <!-- search filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
-        <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn"/>
-      <SelectTag type="category" value="All" :filter="filterArray" :filterArray="filterTourism" />
+      <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn"/>
+      <SelectTag type="category" :filterFn="filterFn" value="All" :filter="filterArray" :filterArray="filterTourism" />
     </div>
 
     <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col gap-3 mt-5">
@@ -155,32 +155,64 @@ const filterArray = computed(() => {
 });
 
 const searchQuery = ref();
+const toFilter = ref(sample_data);
 
 const groupedItems = computed(() => {
   const groups = {};
-  for (const item of sample_data) {
+  for (const item of toFilter.value) {
     if (!groups[item.category]) {
       groups[item.category] = [];
     }
     groups[item.category].push(item);
   }
   return groups;
-});
+}, [toFilter]);
 
-const Items = computed(() => {
-  let result = sample_data;
-  if (selectedCategory !== 'All' && selectedCategory !== 'All') {
-    result = result.filter(item => item.category === selectedCategory);
-  }
-  if (searchQuery !== 'All') {
-    result = result.filter(item => {
-      return item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.content.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-  }
-  return result;
-});
+// const Items = computed(() => {
+//   let result = sample_data;
+//   if (selectedCategory !== 'All' && selectedCategory !== 'All') {
+//     result = result.filter(item => item.category === selectedCategory);
+//   }
+//   if (searchQuery !== 'All') {
+//     result = result.filter(item => {
+//       return item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+//         item.content.toLowerCase().includes(searchQuery.toLowerCase());
+//     });
+//   }
+//   return result;
+// });
 
+
+// search filtering
+function searchFilter(value) {
+  // first option: will check the titlePosition match value
+  const first_option = sample_data.filter(d => {
+    return d.placeName.toLowerCase().includes(value.toLowerCase());
+  });
+
+  // first option: will check the description match value
+  const second_option = sample_data.filter(d => {
+    return d.address.toLowerCase().includes(value.toLowerCase());
+  });
+  
+  // first option: will check the description match value
+  const third_option = sample_data.filter(d => {
+    return d.category.toLowerCase().includes(value.toLowerCase());
+  });
+
+  // returning the data sorted by date
+  if(first_option.length) {
+    return first_option;
+  }
+  if(third_option.length) {
+    return third_option;
+  }
+  return second_option;
+}
+
+function searchFn(value) {
+  toFilter.value = searchFilter(value);
+}
 
 defineProps({
   showTouristSpotPreviewModal: Function,
@@ -202,9 +234,10 @@ onUpdated(() => {
 });
 
 // fetch the news data from backend
+function filterFn(value){
+  groupedItems.value = filterTourism(value)
 
-
-
+}
 
 </script>
 <style scoped>
