@@ -26,31 +26,36 @@ class NewsController extends Controller
     {
         //
         // return response()->json(News::all());
-        return response()->json([ "news" => News::all()]);
+        return response()->json(["news" => News::all()]);
     }
 
-    public function deleteOneNews(Request $request) {
+    public function deleteOneNews(Request $request)
+    {
         // get the passed parameter id
         $request->validate(["id" => ["required"]]);
         $id = $request->input("id");
 
         try {
             News::findOrFail($id)->delete();
-            return response()->json([ "news" => News::all(), "res" => [ "msg" => "Successfully deleted a news", "status" => 200 ]]);
+            return response()->json(["news" => News::all(), "res" => ["msg" => "Successfully deleted a news", "status" => 200]]);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $th, "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $th, "status" => 400]]);
         }
     }
 
-    public function editNews(Request $request) {
+    public function editNews(Request $request)
+    {
         // validate
         $validator = Validator::make($request->all(), [
-            "id" => "required", 
-            "title" => "required", 
-            "description" => "required", 
-            "imgFile" => "nullable|image|mimes:jpg,png,jpeg,gif,svg" # 5mb is the max 
-        ]); 
+            "id" => "required",
+            "title" => "required",
+            "description" => "required",
+            "deletedImgs" => "nullable|array",
+            "defaultThumbnailId" => "required",
+            "newImgs" => "nullable|array", # 5mb is the max 
+            "newImgs.*" => "nullable|image|mimes:jpg,png,jpeg,gif,svg" # 5mb is the max 
+        ]);
 
         /*
         * customizing the validation response
@@ -69,25 +74,61 @@ class NewsController extends Controller
         $id = $request->input("id");
 
         try {
-            if($request->file("imgFile")) {
-                $file = $request->file("imgFile");
+            $news = News::findOrFail($id);
+            $news->title = $request->input("title");
+            $news->description = $request->input("description");
 
-                $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" .$filename;
-                Image::make($file)->save(public_path($path)); // save the file image
-               
-                $news = News::findOrFail($id);
-                $news->title = $request->input("title");
-                $news->description = $request->input("description");
-                $news->img_link = $path;
+            if ($request->file("newImgs")) {
+
+                // save all the images
+                $imgPaths = [];
+                $imgs = explode(",", $news->img_link);
+                foreach ($request->file('newImgs') as $file) {
+                    $filename = uniqid() . "." . $file->getClientOriginalExtension();
+                    $path = "uploads/" . $filename;
+                    Image::make($file)->save(public_path($path)); // save the file image
+                    array_push($imgPaths, $path);
+                }
+
+                # merge the $imgs and the newly uploaded img paths
+                $imgs = array_merge($imgs, $imgPaths);
+
+                # check if there is imgs to delete
+                # delete the img and set the default thumbnail using the provided defaultThumbnailId
+                if ($request->input("deletedImgs") && count($request->input("deletedImgs"))) {
+                    // format the img_links
+                    // delete the img_link with the provided deleted ids, and put the selected id to the first index
+                    foreach ($request->input("deletedImgs") as $toDel) {
+                        unset($imgs[$toDel]);
+                    }
+                }
+
+                # remove the selected img and store to var before unshifting it to the first index
+                $toBeAddedToFirstIdx = array_splice($imgs, $request->input("defaultThumbnailId"), 1);
+                array_unshift($imgs, $toBeAddedToFirstIdx[0]); # add the selected img to the first index
+
+                $news->img_link = implode(",", $imgs);
                 $news->save();
             } else { # if the image is null then only update the title and description
-                $news = News::findOrFail($id);
-                $news->title = $request->input("title");
-                $news->description = $request->input("description");
+
+                $imgs = explode(",", $news->img_link);
+                # check if there is imgs to delete
+                # delete the img and set the default thumbnail using the provided defaultThumbnailId
+                if ($request->input("deletedImgs") && count($request->input("deletedImgs"))) {
+                    // format the img_links
+                    // delete the img_link with the provided deleted ids, and put the selected id to the first index
+                    foreach ($request->input("deletedImgs") as $toDel) {
+                        unset($imgs[$toDel]);
+                    }
+                }
+                # remove the selected img and store to var before unshifting it to the first index
+                $toBeAddedToFirstIdx = array_splice($imgs, $request->input("defaultThumbnailId"), 1);
+                array_unshift($imgs, $toBeAddedToFirstIdx[0]); # add the selected img to the first index
+
+                $news->img_link = implode(",", $imgs);
                 $news->save();
             }
-    
+
             return response()->json([
                 "news" => News::all(),
                 "res" => [
@@ -97,7 +138,7 @@ class NewsController extends Controller
             ]);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
         }
     }
 
@@ -112,8 +153,8 @@ class NewsController extends Controller
     {
         // validate
         $validator = Validator::make($request->all(), [
-            "title" => "required", 
-            "description" => "required", 
+            "title" => "required",
+            "description" => "required",
             "imgFile" => "required|array", # 5mb is the max 
             "imgFile.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
@@ -134,22 +175,22 @@ class NewsController extends Controller
 
 
         try {
-            if($request->file("imgFile")) {
+            if ($request->file("imgFile")) {
                 // save all the images
                 $imgPaths = [];
                 foreach ($request->file('imgFile') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" .$filename;
+                    $path = "uploads/" . $filename;
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
-                
+
                 $news = new News;
                 $news->title = $request->input("title");
                 $news->description = $request->input("description");
                 $news->img_link = implode(",", $imgPaths);
                 $news->save();
-            }     
+            }
 
             return response()->json([
                 "news" => News::all(),
@@ -160,7 +201,7 @@ class NewsController extends Controller
             ]);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
         }
     }
 

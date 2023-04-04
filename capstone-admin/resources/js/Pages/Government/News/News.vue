@@ -42,7 +42,7 @@
       <!-- no result  -->
       <div v-if="!group.items.length" class="font-bold text-gray-800">No results found!</div>
     </div>
-    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" :handleSubmit="handleSubmit" />
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" :handleSubmit="handleUpdateSubmit" />
 
     <!-- add new news btn -->
     <AddBtn :showAddModal="showAddNewModal" class="z-20" />
@@ -90,14 +90,17 @@ function handleDelete(id, deleteRef) {
 }
 
 // handle the submit function to update the new news
-function handleSubmit(id, formData) {
-  // const form = new FormData();
-  // form.append('id', selectedData.id);
-  // form.append('title', formData.title);
-  // form.append('description', formData.description);
-  // form.append('imgFile', formData?.imgFile);
-
-  axios.post(be_url + "/news/edit", { id, title: formData.title, description: formData.description, imgFile: formData.imgFile }, { headers: { "Content-Type": "multipart/form-data" }})
+function handleUpdateSubmit(id, formData) {
+  axios.post(be_url + "/news/edit", { 
+    id, 
+    title: formData.title, 
+    description: formData.description, 
+    imgFile: formData.imgFile,
+    newImgs: formData.newImgs,
+    deletedImgs: formData.deletedImgIds,
+    defaultThumbnailId: formData.defaultThumbnailId
+  }, 
+  { headers: { "Content-Type": "multipart/form-data" }})
   .then(response => {
     originalDataNews.value = response.data.news;
     dataNews.value = response.data.news;
