@@ -36,7 +36,7 @@
         <div class="flex items-center justify-end">
           <button type="submit" :disabled="isSubmitting" :class="{'cursor-not-allowed' : isSubmitting}" class="active:-translate-y-1 px-4 bg-blue-600 ml-3 text-white rounded-md flex items-center justify-center">
             <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
-            save
+            <span v-if="!isSubmitting">save</span>
           </button>
         </div>
       </div>
@@ -51,7 +51,7 @@ import { dateFormat } from "../utils/dateFormat";
 import Loading from './Loading.vue';
 import { formatImgs } from '../utils/formatImgs';
 
-const imgSrc = formatImgs(selectedData.img_link.split(","));
+const imgSrc = formatImgs(selectedData.img_link.split(","))[0];
 const formData = useForm({
   img: selectedData.img_link.length ? imgSrc : "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png",
   newImg: null,

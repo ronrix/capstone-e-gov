@@ -53,9 +53,62 @@ class TourismController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // validate
+        $validator = Validator::make($request->all(), [
+            "title" => "required",
+            "description" => "required",
+            "location" => "required",
+            "category" => "required",
+            "imgFile" => "required|array", # 5mb is the max 
+            "imgFile.*" => "image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
+        ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        try {
+            if ($request->file("imgFile")) {
+                // save all the images
+                $imgPaths = [];
+                foreach ($request->file('imgFile') as $file) {
+                    $filename = uniqid() . "." . $file->getClientOriginalExtension();
+                    $path = "uploads/" . $filename;
+                    Image::make($file)->save(public_path($path)); // save the file image
+                    array_push($imgPaths, $path);
+                }
+
+                $news = new Tourism;
+                $news->title = $request->input("title");
+                $news->description = $request->input("description");
+                $news->location = $request->input("location");
+                $news->category = $request->input("category");
+                $news->img_link = implode(",", $imgPaths);
+                $news->save();
+            }
+
+            return response()->json([
+                "tourism" => Tourism::orderBy('created_at', 'desc')->get(),
+                "res" => [
+                    "msg" => "Successfully created a tourist attraction",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
     }
 
     /**
@@ -103,10 +156,13 @@ class TourismController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "id" => "required",
-            "name" => "required",
+            "title" => "required",
             "description" => "required",
             "location" => "required",
-            "img" => "nullable|image|mimes:jpg,png,jpeg,gif,svg" # 5mb is the max 
+            "deletedImgs" => "nullable|array",
+            "defaultThumbnailId" => "required",
+            "newImgs" => "nullable|array", # 5mb is the max 
+            "newImgs.*" => "nullable|image|mimes:jpg,png,jpeg,gif,svg" # 5mb is the max 
         ]);
         /*
         * customizing the validation response
@@ -127,20 +183,61 @@ class TourismController extends Controller
         try {
 
             $tourism = Tourism::findOrFail($id);
-            $tourism->name = $request->input("name");
+            $tourism->title = $request->input("title");
             $tourism->description = $request->input("description");
             $tourism->location = $request->input("location");
 
-            if ($request->file("img")) { # if there is image uploaded, then save it in public/uploads folder
+            if ($request->file("newImgs")) {
 
-                $file = $request->file("img");
-                $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" . $filename;
-                Image::make($file)->save(public_path($path)); // save the file image
+                // save all the images
+                $imgPaths = [];
+                $imgs = explode(",", $tourism->img_link);
+                foreach ($request->file('newImgs') as $file) {
+                    $filename = uniqid() . "." . $file->getClientOriginalExtension();
+                    $path = "uploads/" . $filename;
+                    Image::make($file)->save(public_path($path)); // save the file image
+                    array_push($imgPaths, $path);
+                }
 
-                $tourism->img_link = $path;
+                # merge the $imgs and the newly uploaded img paths
+                $imgs = array_merge($imgs, $imgPaths);
+
+                # check if there is imgs to delete
+                # delete the img and set the default thumbnail using the provided defaultThumbnailId
+                if ($request->input("deletedImgs") && count($request->input("deletedImgs"))) {
+                    // format the img_links
+                    // delete the img_link with the provided deleted ids, and put the selected id to the first index
+                    foreach ($request->input("deletedImgs") as $toDel) {
+                        unset($imgs[$toDel]);
+                    }
+                }
+
+                # remove the selected img and store to var before unshifting it to the first index
+                $toBeAddedToFirstIdx = array_splice($imgs, $request->input("defaultThumbnailId"), 1);
+                array_unshift($imgs, $toBeAddedToFirstIdx[0]); # add the selected img to the first index
+
+                $tourism->img_link = implode(",", $imgs);
+                $tourism->save();
+            } else { # if the image is null then only update the title and description
+
+                $imgs = explode(",", $tourism->img_link);
+                # check if there is imgs to delete
+                # delete the img and set the default thumbnail using the provided defaultThumbnailId
+                if ($request->input("deletedImgs") && count($request->input("deletedImgs"))) {
+                    // format the img_links
+                    // delete the img_link with the provided deleted ids, and put the selected id to the first index
+                    foreach ($request->input("deletedImgs") as $toDel) {
+                        unset($imgs[$toDel]);
+                    }
+                }
+                # remove the selected img and store to var before unshifting it to the first index
+                $toBeAddedToFirstIdx = array_splice($imgs, $request->input("defaultThumbnailId"), 1);
+                array_unshift($imgs, $toBeAddedToFirstIdx[0]); # add the selected img to the first index
+
+                $tourism->img_link = implode(",", $imgs);
+                $tourism->save();
             }
-            $tourism->save(); # then save the updated table row
+
 
             return response()->json([
                 "tourism" => Tourism::orderBy('created_at', 'desc')->get(),

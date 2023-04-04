@@ -96,6 +96,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/department-head/add", [ExecutivesController::class, "createDepHead"]);
     Route::post("/job-posting/add", [JobPostingController::class, "create"]);
     Route::post("/population/add", [PopulationController::class, "create"]);
+    Route::post("/tourist-attraction/add", [TourismController::class, "create"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);

@@ -12,7 +12,7 @@
 
     <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col gap-3 mt-5">
       <div class="flex items-center">
-        <span class="font-bold text-2xl text-gray-500 mr-5"><h3>{{ category }}</h3></span>
+        <span class="font-bold text-2xl text-gray-500 mr-5 capitalize"><h3>{{ category }}</h3></span>
         <div class="flex-1 border"></div>
       </div>
 
@@ -20,24 +20,23 @@
     <TouristSpotCard  v-for="data in group" :data="data" :key="data.id" :showTouristSpotPreviewModal="showTouristSpotPreviewModal" :handleDelete="handleDeleteTouristAttraction" />
     </div>
     <!-- PreviewModal -->
-    <TouristSpotPreviewModal :selectedData="selectedData" :showTouristSpotPreviewModal="showTouristSpotPreviewModal"
-      :handleUpdate="handleUpdateTouristAttraction"
-      v-if="isTouristSpotPreviewModal" />
+    <PreviewModal v-if="isTouristSpotPreviewModal" :selectedData="selectedData" :showPreviewModal="showTouristSpotPreviewModal" :handleSubmit="handleUpdateTouristAttraction" />
+
     <!-- add new -->
     <AddBtn :showAddModal="showAddNewModal" class="z-20" />
     <!-- Add Modal -->
-    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateTourismAttraction" :location="true" :category="true" title="tourist attraction" />
   </WrapperContent>
 </template>
 <script setup>
 import { computed, ref, onMounted } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';
-import TouristSpotPreviewModal from '../../Components/TouristSpotPreviewModal.vue'
 import SelectTag from '../../Components/SelectTag.vue';
 import TouristSpotCard from './TouristSpotCard.vue';
 import AddBtn from '../../Components/AddModal/AddBtn.vue';
 import Notifcation from "../../Components/Notifcation.vue";
+import PreviewModal from '../../Components/PreviewModal.vue';
 
 import axios from 'axios';
 import { be_url } from "../../config/config";
@@ -132,13 +131,16 @@ function showTouristSpotPreviewModal(data) {
 }
 
 // this function is for updating one tourist attraction
-async function handleUpdateTouristAttraction(formData, id) {
+async function handleUpdateTouristAttraction(id, formData) {
   return await axios.post(be_url + '/tourist-attraction/edit', {
     id,
-    name: formData.name,
+    title: formData.title,
     description: formData.description,
     location: formData.location,
-    img: formData.newImg,
+    category: formData.category,
+    newImgs: formData.newImgs,
+    deletedImgs: formData.deletedImgIds,
+    defaultThumbnailId: formData.defaultThumbnailId
   }, { headers: { "Content-Type": "multipart/form-data" }})
   .then(({data}) => {
 
@@ -182,6 +184,40 @@ async function handleDeleteTouristAttraction(id, deleteRef) {
     return data;
   })
   .catch(err => { 
+    // set the response msg
+    resMsg.value = err.response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+  });
+}
+
+// function to handle create request
+async function handleCreateTourismAttraction(formData) {
+  return await axios.post(be_url + "/tourist-attraction/add", { 
+    title: formData.title,
+    description: formData.content,
+    location: formData.location,
+    category: formData.category,
+    imgFile: formData.imgFile,
+  }, 
+  { headers: { "Content-Type": "multipart/form-data" }})
+  .then(({data}) => {
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+    originalDataTourism.value = data.tourism;
+    dataTourism.value = data.tourism;
+    return data;
+  })
+  .catch(err => {
     // set the response msg
     resMsg.value = err.response.data.res;
     // hide the notification message in 3s
