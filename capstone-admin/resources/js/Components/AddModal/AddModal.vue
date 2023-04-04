@@ -23,13 +23,23 @@
             class="rounded-md mb-5 p-2 focus:outline-blue-600">
           <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message }} </p>
         </label>
-        <label v-if="location" class="flex flex-col">
-          <span class="text-sm font-bold capitalize mb-2">location:</span>
-          <input v-model="formData.location" name="title" type="text" placeholder="Type the title here..."
-            class="rounded-md mb-5 p-2 focus:outline-blue-600">
-          <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message }}
-          </p>
-        </label>
+        <!-- optional -->
+        <div class="flex items-center gap-5">
+          <label v-if="location" class="flex flex-col flex-1">
+            <span class="text-sm font-bold capitalize mb-2">location:</span>
+            <input v-model="formData.location" name="title" type="text" placeholder="Type the location here..."
+              class="rounded-md mb-5 p-2 focus:outline-blue-600">
+            <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message }}
+            </p>
+          </label>
+          <label v-if="category" class="flex flex-col flex-1">
+            <span class="text-sm font-bold capitalize mb-2">category:</span>
+            <input v-model="formData.category" name="title" type="text" placeholder="Type the category here..."
+              class="rounded-md mb-5 p-2 focus:outline-blue-600">
+            <p v-if="v$.category.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.category.$errors[0].$message }}
+            </p>
+          </label>
+        </div>
         <label class="flex flex-col">
           <span class="text-sm font-bold capitalize mb-2">content:</span>
           <textarea v-model="formData.content" name="description" placeholder="Type the content here..."
@@ -93,14 +103,23 @@ import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators"
 
 // adding rules for validation of the form
-const rules = computed(() => (location ? {
+const rules = computed(() => (location && category ? {
+  title: { required: helpers.withMessage("The field title is required", required) },
+  location: { required: helpers.withMessage("The field location is required", required) },
+  category: { required: helpers.withMessage("The field category is required", required) },
+  content: { required: helpers.withMessage("The field content is required", required) },
+  imgFile: {
+    required: helpers.withMessage("The image is required", required),
+    array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0),
+  },
+} : location ? {
   title: { required: helpers.withMessage("The field title is required", required) },
   location: { required: helpers.withMessage("The field location is required", required) },
   content: { required: helpers.withMessage("The field content is required", required) },
   imgFile: {
     required: helpers.withMessage("The image is required", required),
     array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0),
-  },
+  }
 } : {
   title: { required: helpers.withMessage("The field title is required", required) },
   content: { required: helpers.withMessage("The field content is required", required) },
@@ -108,13 +127,14 @@ const rules = computed(() => (location ? {
     required: helpers.withMessage("The image is required", required),
     array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0),
   },
-}));
+} ));
 
 const isSubmitting = ref(false);
 const assetDiv = ref(null);
 const formData = useForm({
   title: "",
   location: "",
+  category: "",
   content: "",
   imgFile: [],
 });
@@ -212,15 +232,17 @@ async function onSubmit() {
   });
 }
 
-const { handleCreateSubmit, location } = defineProps({
+const { handleCreateSubmit, location, category } = defineProps({
   showAddModal: Function,
   handleCreateSubmit: Function,
   title: String,
   location: Boolean,
+  category: Boolean,
 })
 </script>
 
-<style scoped>div.el-main.small>* {
+<style scoped>
+div.el-main.small > * {
   height: 50px;
   width: 50px;
 }</style>

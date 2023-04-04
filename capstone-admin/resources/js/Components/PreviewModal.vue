@@ -37,16 +37,20 @@
         <!-- location, if exists -->
         <div>
           <span v-if="selectedData.location" class="font-[500] text-xs capitalize mt-2">address</span>
-          <textarea v-if="selectedData.location" v-model="formData.location" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent w-full text-sm max-h-[71px]">{{ formData.location }}</textarea>
+          <input v-if="selectedData.location" v-model="formData.location" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent w-full text-sm">
+
+          <!-- category -->
+          <span v-if="selectedData.category" class="font-[500] text-xs capitalize mt-2">category</span>
+          <input v-if="selectedData.category" v-model="formData.category" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent w-full text-sm">
         </div>
         <!-- content -->
         <div class="h-full">
           <span class="font-[500] text-xs capitalize mt-3">content</span>
           <div class="hover:overflow-y-scroll overflow-y-scroll scrollbar h-[300px]">
             <div ref="descEl" v-bind:innerHTML="description" class="text-sm"></div>
-            <div @click="startEditing" class="text-blue-600 cursor-pointer hover:text-blue-500 self-start mt-2 text-sm">edit</div>
             <textarea ref="descText" @blur="stopEditing" v-model="formData.description" class="hidden overflow-y-scroll scrollbar bg-transparent py-3 w-full h-full text-sm outline-none">{{ formData.description }}</textarea>
           </div>
+          <div @click="startEditing" class="text-blue-600 cursor-pointer hover:text-blue-500 self-start text-sm">edit</div>
         </div>
 
         <div class="self-end flex items-center mb-0 mt-auto">
@@ -136,6 +140,7 @@ const formData = useForm({
     deletedImgIds: deleteImgIds.value,
     title: selectedData?.title,
     location: selectedData.location,
+    category: selectedData.category,
     description: selectedData.description,
 });
 
