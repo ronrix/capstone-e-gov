@@ -50,8 +50,8 @@
       </div>
 
       <button class="active:-translate-y-1 px-3 upperase font-bold text-white bg-blue-600 self-end rounded-md mt-5 flex items-center justify-center">
-        <loading class="w-5 h-5 mr-2" v-if="isSubmitting" />
-        <span>save</span>
+        <loading class="w-5 h-5 mr-2" v-if="isSubmitting" color="#fff" />
+        <span v-if="!isSubmitting">save</span>
       </button>
 
     </form>

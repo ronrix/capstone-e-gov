@@ -11,6 +11,11 @@
 }
 
 /* style scrollbar */
+.scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #4f83f3 #fff;
+    scrollbar-gutter: stable both-edges;
+}
 .scrollbar::-webkit-scrollbar {
     width: 5px;
     height: 5px;

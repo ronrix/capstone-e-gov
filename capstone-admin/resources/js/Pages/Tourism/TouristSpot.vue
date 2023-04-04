@@ -3,8 +3,9 @@
 
     <!-- search filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
-      <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn"/>
-      <SelectTag type="category" :filterFn="filterFn" value="All" :filter="filterArray" :filterArray="filterTourism" />
+
+        <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn"/>
+      <SelectTag type="category" value="All" :filter="filterArray" :filterArray="filterTourism" :filterFn="filterBy" />
     </div>
 
     <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col gap-3 mt-5">
@@ -126,35 +127,12 @@ const sample_data = [{
 const filterTourism = ['All', 'Tourist Attraction', 'Church', 'Restaurant']
 
 
-// search Bar//
-// const filteredData = ref(searchFilter(""));
-// function searchFilter(value) {
-//   const first_option = sample_data.filter(data => {
-//     return data.placeName.toLowerCase().includes(value.toLowerCase());
-    
-//   });
-
-//   const second_option = sample_data.filter(data => {
-//     return data.address.toLowerCase().includes(value.toLowerCase());
-//   });
-
-//   if (first_option.length) {
-//     return first_option;
-//   }
-//   return second_option;
-// }
-// function showAddNewModal() {
-//   isAddNewModal.value = !isAddNewModal.value;
-// }
-// function searchFn(value) {
-//   filteredData.value = searchFilter(value);
-// }
 const filterArray = computed(() => {
   const all = sample_data.map(item => item.category);
   return ['All', ...new Set(all)];
 });
 
-const searchQuery = ref();
+
 const toFilter = ref(sample_data);
 
 const groupedItems = computed(() => {
@@ -166,7 +144,43 @@ const groupedItems = computed(() => {
     groups[item.category].push(item);
   }
   return groups;
-}, [toFilter]);
+
+},[toFilter]);
+
+function searchFilter(value) {
+  
+  const first_option = toFilter.value.filter(data => {
+    return data.placeName.toLowerCase().includes(value.toLowerCase());
+    
+  });
+
+  const second_option = toFilter.value.filter(data => {
+    return data.address.toLowerCase().includes(value.toLowerCase());
+  });
+
+  const third_option = toFilter.value.filter(data => {
+    return data.category.toLowerCase().includes(value.toLowerCase());
+  });
+
+  if(first_option.length) {
+    return first_option;
+  }
+  else if(third_option.length){
+    return third_option;
+  }
+  return second_option;
+}
+function searchFn(value) {
+  toFilter.value = searchFilter(value);
+ 
+}
+function filterBy(value){
+  toFilter.value = filterTourism(value)
+}
+
+function showAddNewModal() {
+  isAddNewModal.value = !isAddNewModal.value;
+}
 
 // const Items = computed(() => {
 //   let result = sample_data;
