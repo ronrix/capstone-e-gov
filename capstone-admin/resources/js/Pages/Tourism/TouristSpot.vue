@@ -17,7 +17,7 @@
       </div>
 
     <!-- TouristSpotCard -->
-    <TouristSpotCard  v-for="data in group" :data="data" :key="data.id" :showTouristSpotPreviewModal="showTouristSpotPreviewModal" />
+    <TouristSpotCard  v-for="data in group" :data="data" :key="data.id" :showTouristSpotPreviewModal="showTouristSpotPreviewModal" :handleDelete="handleDeleteTouristAttraction" />
     </div>
     <!-- PreviewModal -->
     <TouristSpotPreviewModal :selectedData="selectedData" :showTouristSpotPreviewModal="showTouristSpotPreviewModal"
@@ -133,7 +133,6 @@ function showTouristSpotPreviewModal(data) {
 
 // this function is for updating one tourist attraction
 async function handleUpdateTouristAttraction(formData, id) {
-  console.log(formData.newImg);
   return await axios.post(be_url + '/tourist-attraction/edit', {
     id,
     name: formData.name,
@@ -142,6 +141,35 @@ async function handleUpdateTouristAttraction(formData, id) {
     img: formData.newImg,
   }, { headers: { "Content-Type": "multipart/form-data" }})
   .then(({data}) => {
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+    dataTourism.value = data.tourism;
+    return data;
+  })
+  .catch(err => { 
+    // set the response msg
+    resMsg.value = err.response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+  });
+}
+
+// function to handle the delete request
+async function handleDeleteTouristAttraction(id, deleteRef) {
+  return await axios.post(be_url + '/delete-tourist-spot', { id }) 
+  .then(({data}) => {
+    // this will remove the displaying of the delete modal
+    deleteRef.classList.remove("!translate-y-0");
+    deleteRef.classList.remove("!translate-x-0");
 
     // set the response msg
     resMsg.value = data.res;

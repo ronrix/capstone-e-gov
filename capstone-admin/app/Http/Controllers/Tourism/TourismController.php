@@ -21,6 +21,33 @@ class TourismController extends Controller
         return response()->json(['tourism' => Tourism::orderBy('created_at', 'desc')->get()]);
     }
 
+    public function delete(Request $request)
+    {
+        // get the passed parameter id
+        $validator = Validator::make($request->all(), ["id" => "required"]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+        $id = $request->input("id");
+
+        try {
+            Tourism::findOrFail($id)->delete();
+            return response()->json(["tourism" => Tourism::orderBy('created_at', 'desc')->get(), "res" => ["msg" => "Successfully deleted a tourism", "status" => 200]]);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $th, "status" => 400]]);
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

@@ -78,6 +78,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/tourist-attractions", [TourismController::class, "index"]);
 
     // government post requests
+    // edit requests
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
     Route::post("/programs-and-events/edit", [ProgramsEventsController::class, "update"]);
     Route::post("/job-posting/edit", [JobPostingController::class, "update"]);
@@ -85,6 +86,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/populations/edit", [PopulationController::class, "update"]);
     Route::post("/tourist-attraction/edit", [TourismController::class, "update"]);
 
+    // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
     Route::post("/programs-and-events/add", [ProgramsEventsController::class, "create"]);
@@ -95,6 +97,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/job-posting/add", [JobPostingController::class, "create"]);
     Route::post("/population/add", [PopulationController::class, "create"]);
 
+    // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
     Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
     Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);
@@ -103,6 +106,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
     Route::post("/delete-job-posting", [JobPostingController::class, "deleteOne"]);
     Route::post("/delete-population", [PopulationController::class, "deleteOne"]);
+    Route::post("/delete-tourist-spot", [TourismController::class, "delete"]);
 
     // tourism
     Route::get("/tourism/tourism", function () {
