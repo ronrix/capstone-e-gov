@@ -1,80 +1,99 @@
 <template>
-    <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-20">
-      <div class="bg-white sm:w-[700px] p-5 rounded-lg relative flex flex-col md:flex-row items-start">
-        <!-- close modal btn -->
-        <i @click="showTouristSpotPreviewModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
-  
-        <!-- image preview -->
-        <ImgPreview v-if="isImgPreview" :imgSrc="selectedData?.img" :closeImgPreview="closeImgPreview" />
-  
-        <!-- left -->
-        <!-- news thumbnail -->
-        <div class="overflow-hidden mt-5 group relative h-[50px] md:h-auto w-full md:w-1/2">
-          <!-- hover design -->
-          <div class="absolute top-0 bottom-0 right-0 left-0 flex items-center justify-center bg-black/10 text-white font-bold opacity-0 group-hover:opacity-100 duration-100">
-            <span @click="showImgPreview" class="uppercase border p-2 bg-black/30 cursor-pointer text-xs md:text-base hover:bg-white/30">view</span>
-          </div>
-            <img :src="selectedData?.img">
-            <div class="flex">
+  <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-20">
+    <form @submit.prevent="onSubmit" class="backdrop-blur-xl bg-white/70 sm:w-[700px] p-5 rounded-lg relative flex flex-col md:flex-row items-start">
+      <!-- close modal btn -->
+      <i @click="showTouristSpotPreviewModal"
+        class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
+
+      <!-- left -->
+      <!-- news thumbnail -->
+      <div class="overflow-hidden mt-5 group relative h-[50px] md:h-auto w-full md:w-1/2">
+        <img :src="selectedImgFile || formData.img">
+        <div class="flex">
           <i style="margin-top: 2px;" class="ml-2 uil uil-location-point text-cyan-400"></i>
-            <p class="text-ellipsis overflow-hidden pt-1" style="font-size: 12px;">{{ address }}</p>
-          </div>
+          <textarea v-model="formData.location" class="bg-transparent outline-blue-600 w-full max-h-[40px] text-ellipsis overflow-hidden pt-1" style="font-size: 12px;"></textarea>
         </div>
-  
-        <!-- right -->
-        <div class="flex-1 p-3 w-full">
-          <!-- title -->
-          <textarea v-model="placeName" class="capitalize w-full py-3 overflow-scroll no-scrollbar text-xl font-bold h-[40px] max-h-[40ppx]">{{ placeName }}</textarea>
-          <!-- date -->
-          <h5 class="text-xs text-gray-500 font-bold">{{ new Date() }}</h5>
-          <!-- content -->
-          <!-- <p @click="startEditing" class="text-sm mt-5 cursor-pointer overflow-scroll no-scrollbar h-[200px]">
-            {{ selectedData?.content }}
-          </p> -->
-          <textarea v-model="content" class="capitalize py-3 w-full overflow-scroll h-[200px] max-h-[200px] no-scrollbar text-sm">{{ content }}</textarea>
-  
-          <div class="flex items-center justify-end">
-            <button class="px-4 border border-blue-600 hover:bg-blue-600 hover:text-white">cancel</button>
-            <button class="px-4 bg-blue-600 ml-3 text-white">save</button>
-          </div>
+        <!-- input file to select new thumbnail -->
+        <input @change="selectImgFn" type="file" ref="fileRef" class="hidden">
+
+        <button @click="selectNewThumbnail" type="button" class="px-3 border border-blue-600 text-blue-600 text-xs font-bold rounded-md mt-5">
+          <i class="uil uil-plus-circle"></i> 
+          Upload new thumbnail
+        </button>
+      </div>
+
+      <!-- right -->
+      <div class="flex-1 p-3 w-full">
+        <!-- title -->
+        <textarea v-model="formData.name"
+          class="bg-transparent capitalize w-full py-3 overflow-scroll no-scrollbar text-xl font-bold h-[40px] max-h-[40ppx]"></textarea>
+        <!-- date -->
+        <h5 class="text-xs text-gray-500 font-bold">{{ date }}</h5>
+        <!-- content -->
+        <textarea v-model="formData.description"
+          class="bg-transparent outline-blue-600 capitalize py-3 w-full overflow-scroll h-[200px] max-h-[200px] no-scrollbar text-sm"></textarea>
+
+        <div class="flex items-center justify-end">
+          <button type="submit" :disabled="isSubmitting" :class="{'cursor-not-allowed' : isSubmitting}" class="active:-translate-y-1 px-4 bg-blue-600 ml-3 text-white rounded-md flex items-center justify-center">
+            <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
+            save
+          </button>
         </div>
       </div>
-    </div>
-  </template>
+    </form>
+  </div>
+</template>
   
-  <script setup>
-  import { ref } from 'vue';
-  import ImgPreview from './ImgPreview.vue';
-  
-  const { selectedData } = defineProps({
-    showTouristSpotPreviewModal: Function,
-    selectedData: {}
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3';
+import { dateFormat } from "../utils/dateFormat";
+import Loading from './Loading.vue';
+import { formatImgs } from '../utils/formatImgs';
+
+const imgSrc = formatImgs(selectedData.img_link.split(","));
+const formData = useForm({
+  img: selectedData.img_link.length ? imgSrc : "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-image-512.png",
+  newImg: null,
+  name: selectedData.name,
+  location: selectedData.location,
+  description: selectedData.description
+});
+const { selectedData, handleUpdate } = defineProps({
+  showTouristSpotPreviewModal: Function,
+  selectedData: {},
+  handleUpdate: Function
+});
+const date = dateFormat(selectedData.created_at);
+const fileRef = ref(null);
+const isSubmitting = ref(false);
+
+function selectNewThumbnail() {
+  fileRef.value.click();
+}
+
+// this function is change event handler, will set the new/selected image file and store in the state "selectedImgFile"
+function selectImgFn(e) {
+  formData.img = URL.createObjectURL(e.target.files[0]); 
+  formData.newImg = e.target.files[0];
+}
+
+// add scroll hidden on mount
+onMounted(() => {
+  document.body.classList.add("overflow-hidden");
+});
+
+// remove scroll hidden on unmount
+onUnmounted(() => {
+  document.body.classList.remove("overflow-hidden");
+});
+
+function onSubmit() {
+  isSubmitting.value = true;
+
+  handleUpdate(formData, selectedData.id).then(() => {
+    isSubmitting.value = false;
   });
-  
-  const content = selectedData?.content;
-  const placeName = selectedData?.placeName;
-  const address = selectedData?.address;
-  
-  // show image preview
-  const isImgPreview = ref(false);
-  function showImgPreview() {
-    isImgPreview.value = true;
-  }
-  function closeImgPreview() {
-    isImgPreview.value = false;
-  }
-  
-  </script>
-  
-  <style scroped>
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .no-scrollbar::-webkit-scrollbar {
-      display: none;
-  }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-  }
-  </style>
+}
+
+</script>

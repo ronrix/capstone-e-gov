@@ -9,6 +9,7 @@ use App\Http\Controllers\Government\ExecutivesController;
 use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
+use App\Http\Controllers\Tourism\TourismController;
 use App\Models\Government\JobPosting;
 
 /*
@@ -37,31 +38,31 @@ Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
     // government
     Route::get("/government/news", [NewsController::class, "index"]);
-    Route::get("/government/programs-and-events", function() {
+    Route::get("/government/programs-and-events", function () {
         return inertia("Main");
     });
-    Route::get("/government/executives/current-officials", function() {
+    Route::get("/government/executives/current-officials", function () {
         return inertia("Main");
     });
-    Route::get("/government/executives/former-officials", function() {
+    Route::get("/government/executives/former-officials", function () {
         return inertia("Main");
     });
-    Route::get("/government/executives/barangay-officials", function() {
+    Route::get("/government/executives/barangay-officials", function () {
         return inertia("Main");
     });
-    Route::get("/government/executives/department-heads", function() {
+    Route::get("/government/executives/department-heads", function () {
         return inertia("Main");
     });
-    Route::get("/government/job-postings", function() {
+    Route::get("/government/job-postings", function () {
         return inertia("Main");
     });
-    Route::get("/government/full-disclosure-reports", function() {
+    Route::get("/government/full-disclosure-reports", function () {
         return inertia("Main");
     });
-    Route::get("/government/hotlines", function() {
+    Route::get("/government/hotlines", function () {
         return inertia("Main");
     });
-    Route::get("/government/demographic-profile", function() {
+    Route::get("/government/demographic-profile", function () {
         return inertia("Main");
     });
 
@@ -74,6 +75,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/job-postings", [JobPostingController::class, "index"]);
     Route::get("/hotlines", [HotlinesController::class, "index"]);
     Route::get("/populations", [PopulationController::class, "index"]);
+    Route::get("/tourist-attractions", [TourismController::class, "index"]);
 
     // government post requests
     Route::post("/news/edit/", [NewsController::class, "editNews"]);
@@ -81,6 +83,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/job-posting/edit", [JobPostingController::class, "update"]);
     Route::post("/hotlines/edit", [HotlinesController::class, "update"]);
     Route::post("/populations/edit", [PopulationController::class, "update"]);
+    Route::post("/tourist-attraction/edit", [TourismController::class, "update"]);
 
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
     Route::post("/news/create/", [NewsController::class, "create"]);
@@ -102,66 +105,64 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-population", [PopulationController::class, "deleteOne"]);
 
     // tourism
-    Route::get("/tourism/tourism", function() {
+    Route::get("/tourism/tourism", function () {
         return inertia("Main");
     });
-    Route::get("/tourism/tourist-spots", function() {
+    Route::get("/tourism/tourist-spots", function () {
         return inertia("Main");
     });
-    Route::get("/tourism/festivals", function() {
+    Route::get("/tourism/festivals", function () {
         return inertia("Main");
     });
-    Route::get("/tourism/guidelines", function() {
+    Route::get("/tourism/guidelines", function () {
         return inertia("Main");
     });
 
     // businesses
-    Route::get("/businesses/apartments", function() {
+    Route::get("/businesses/apartments", function () {
         return inertia("Main");
     });
-    Route::get("/businesses/BPLO", function() {
+    Route::get("/businesses/BPLO", function () {
         return inertia("Main");
     });
-    Route::get("/businesses/ease-of-doing-business", function() {
+    Route::get("/businesses/ease-of-doing-business", function () {
         return inertia("Main");
     });
-    Route::get("/businesses/business-establishments", function() {
+    Route::get("/businesses/business-establishments", function () {
         return inertia("Main");
     });
 
     // services
-    Route::get("/services/office-of-the-mayor/scholarship-program", function() {
+    Route::get("/services/office-of-the-mayor/scholarship-program", function () {
         return inertia("Main");
     });
-    Route::get("/services/office-of-the-mayor/civil-wedding-schedule", function() {
+    Route::get("/services/office-of-the-mayor/civil-wedding-schedule", function () {
         return inertia("Main");
     });
-    Route::get("/services/office-of-the-mayor/mayors-clearance", function() {
+    Route::get("/services/office-of-the-mayor/mayors-clearance", function () {
         return inertia("Main");
     });
-    Route::get("/services/mswd-department/government-id", function() {
+    Route::get("/services/mswd-department/government-id", function () {
         return inertia("Main");
     });
-    Route::get("/services/mswd-department/replacement-of-senior-citizen", function() {
+    Route::get("/services/mswd-department/replacement-of-senior-citizen", function () {
         return inertia("Main");
     });
 
 
     // about
-    Route::get("/about/mission-and-vision", function() {
+    Route::get("/about/mission-and-vision", function () {
         return inertia("Main");
     });
-    Route::get("/about/history", function() {
+    Route::get("/about/history", function () {
         return inertia("Main");
     });
-    Route::get("/about/official-seal", function() {
+    Route::get("/about/official-seal", function () {
         return inertia("Main");
     });
-    Route::get("/about/contacts", function() {
+    Route::get("/about/contacts", function () {
         return inertia("Main");
     });
-    
-
 });
 
 // POST method

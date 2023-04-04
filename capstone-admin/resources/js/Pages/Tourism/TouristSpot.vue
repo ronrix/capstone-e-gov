@@ -1,5 +1,7 @@
 <template>
   <WrapperContent class="flex flex-col gap-5">
+    <!-- response message -->
+    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
     <!-- search filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
@@ -19,6 +21,7 @@
     </div>
     <!-- PreviewModal -->
     <TouristSpotPreviewModal :selectedData="selectedData" :showTouristSpotPreviewModal="showTouristSpotPreviewModal"
+      :handleUpdate="handleUpdateTouristAttraction"
       v-if="isTouristSpotPreviewModal" />
     <!-- add new -->
     <AddBtn :showAddModal="showAddNewModal" class="z-20" />
@@ -27,106 +30,35 @@
   </WrapperContent>
 </template>
 <script setup>
-import { computed, ref, onUpdated } from 'vue';
+import { computed, ref, onMounted } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';
 import TouristSpotPreviewModal from '../../Components/TouristSpotPreviewModal.vue'
 import SelectTag from '../../Components/SelectTag.vue';
 import TouristSpotCard from './TouristSpotCard.vue';
 import AddBtn from '../../Components/AddModal/AddBtn.vue';
-// import Delete from '../../Components/Delete.vue';
-// import Carousel from '../../Components/Slides/Carousel.vue'
-// import Slide from '../../Components/Slides/Slide.vue'
+import Notifcation from "../../Components/Notifcation.vue";
+
+import axios from 'axios';
+import { be_url } from "../../config/config";
+
+// props
+defineProps({
+  showTouristSpotPreviewModal: Function,
+  data: Object
+});
+
+// init variables
 const isTouristSpotPreviewModal = ref(false);
 const isAddNewModal = ref(false);
 const selectedData = ref();
+const dataTourism = ref([]);
+const originalDataTourism = ref([]);
 
-
-const sample_data = [{
-  id: 1,
-  img: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1000&h=-1&s=1",
-  placeName: "Pililla Wind Farm",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  address: "Pililla Windmills - 54 MW Pililla Windfarm - Sitio Bugarin, Pililla Rizal",
-  category: "Tourist Attraction"
-},
-{
-  id: 2,
-  placeName: "Lyger Animal Sanctuary - ZOO",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://scontent.fmnl9-4.fna.fbcdn.net/v/t39.30808-6/274579439_2419634788171057_6700194066240640258_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_ohc=NAJUjJ_CHgMAX8f-Pic&_nc_ht=scontent.fmnl9-4.fna&oh=00_AfCW92uReO1yw3-pumvUz3Wt0aPHd-e8JKnXvcS-UjsO1Q&oe=64254620",
-  address: "Matagbak Rd. 1910 Pililla, Philippines",
-  category: "Tourist Attraction"
-},
-{
-  id: 3,
-  placeName: "Mt. Sembrano",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "http://tarakahitsaan.com/images/spots/mt-sembrano-rizal.jpg",
-  address: "99R6+574, Malaya Trail, Pililla, Riza",
-  category: "Tourist Attraction"
-},
-{
-  id: 4,
-  placeName: "St. Mary Magdalene Church",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://boyplakwatsa.files.wordpress.com/2014/04/rizal-tour-march-15-2014-orig-011.jpg?w=650",
-  address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal",
-  category: "Church"
-},
-{
-  id: 5,
-  placeName: "Bahay na Bato",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://boyplakwatsa.files.wordpress.com/2014/04/rizal-tour-march-15-2014-orig-016.jpg",
-  address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal",
-  category: "Tourist Spot"
-},
-{
-  id: 6,
-  placeName: "Bulawan Floating Restaurant",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/9060Bulawan_Floating_Restaurant_46.jpg/800px-9060Bulawan_Floating_Restaurant_46.jpg?20190506074310",
-  address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal",
-  category: "Restaurant"
-},
-{
-  id: 7,
-  placeName: "BALANGA RESTAURANT",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://img.restaurantguru.com/r40e-BALANGA-RESTAURANT-PILILLA-RIZAL-exterior.jpg",
-  address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal",
-  category: "Restaurant"
-},
-{
-  id: 8,
-  placeName: "Al Fresko Grill and Resto Bar",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://scontent.fmnl9-3.fna.fbcdn.net/v/t39.30808-6/278602678_885094395670809_7410699348354667593_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=Tj3NESKNnR0AX8colhq&_nc_ht=scontent.fmnl9-3.fna&oh=00_AfBlosFVr7dW9w4lorNC95NSX2wHNLyXAATCPXNEzpqOaQ&oe=6425D954",
-  address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal",
-  category: "Restaurant"
-},
-{
-  id: 9,
-  placeName: "Villa Lorenza Resort",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://scontent.fmnl9-1.fna.fbcdn.net/v/t39.30808-6/334953929_231838572541594_3452519380656648569_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeFmvU50yMUx-Q9UbNgvY0kvnwFC5kvFV9-fAULmS8VX33JTAL2B0Af4SOVnc3WgRE6wGjamVu--LKLY87hZ-NR1&_nc_ohc=YGcCVs22oK0AX-TqprU&_nc_ht=scontent.fmnl9-1.fna&oh=00_AfCefBSG6EEepD3JCADalg5_T5PwarEzH80qlg9iPkAnTA&oe=6424F32E",
-  address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal",
-  category: "Resorts"
-},
-{
-  id: 10,
-  placeName: "Stagira Farms & Resort",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://scontent.fmnl9-1.fna.fbcdn.net/v/t39.30808-6/274794166_494175622105227_7071963731837566068_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeH9WWSMXnJ745HxZ2u5rny02OCruIoSoJvY4Ku4ihKgmyLMsX59dIdMqtoC-Dp2mWz0Ehz5oaeUF6724izrvosM&_nc_ohc=RxCzGtjR16gAX-s0y-Y&_nc_ht=scontent.fmnl9-1.fna&oh=00_AfAnyNiNzKZxgKBc61GqcuyaoEacjLVSOel42FdHOINXTQ&oe=642597C1",
-  address: "Diocesan Shrine and Parish of St. Mary Magdalene - Imatong, Pililla, Rizal",
-  category: "Resorts"
-},
-]
-
-const filterTourism = ['All', 'Tourist Attraction', 'Church', 'Restaurant']
+const filterTourism = ['All', 'Tourist Attraction', 'Church', 'Restaurant'];
 const filterValue = ref("All");
-const toFilter = ref(sample_data);
+const toFilter = ref(dataTourism);
+const resMsg = ref();
 
 const groupedItems = computed(() => {
   const groups = {};
@@ -144,10 +76,10 @@ function filterBy(type, value){
   filterValue.value = value;
 
   if(value === "All") {
-    toFilter.value = sample_data;
+    toFilter.value = originalDataTourism.value;
   }
   else {
-    toFilter.value = sample_data.filter(el => {
+    toFilter.value = dataTourism.value.filter(el => {
       if(el.category.toLocaleLowerCase() === value.toLowerCase()) {
         return el;
       }
@@ -159,35 +91,20 @@ function showAddNewModal() {
   isAddNewModal.value = !isAddNewModal.value;
 }
 
-// const Items = computed(() => {
-//   let result = sample_data;
-//   if (selectedCategory !== 'All' && selectedCategory !== 'All') {
-//     result = result.filter(item => item.category === selectedCategory);
-//   }
-//   if (searchQuery !== 'All') {
-//     result = result.filter(item => {
-//       return item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-//         item.content.toLowerCase().includes(searchQuery.toLowerCase());
-//     });
-//   }
-//   return result;
-// });
-
-
 // search filtering
 function searchFilter(value) {
   // first option: will check the titlePosition match value
-  const first_option = sample_data.filter(d => {
-    return d.placeName.toLowerCase().includes(value.toLowerCase());
+  const first_option = dataTourism.value.filter(d => {
+    return d.name.toLowerCase().includes(value.toLowerCase());
   });
 
   // first option: will check the description match value
-  const second_option = sample_data.filter(d => {
-    return d.address.toLowerCase().includes(value.toLowerCase());
+  const second_option = dataTourism.value.filter(d => {
+    return d.location.toLowerCase().includes(value.toLowerCase());
   });
   
   // first option: will check the description match value
-  const third_option = sample_data.filter(d => {
+  const third_option = dataTourism.value.filter(d => {
     return d.category.toLowerCase().includes(value.toLowerCase());
   });
 
@@ -202,46 +119,60 @@ function searchFilter(value) {
 }
 
 function searchFn(value) {
-  toFilter.value = searchFilter(value);
+  if(value.length) {
+    toFilter.value = searchFilter(value);
+    return;
+  }
+  toFilter.value = originalDataTourism.value;
 }
-
-defineProps({
-  showTouristSpotPreviewModal: Function,
-  data: Object
-});
 
 function showTouristSpotPreviewModal(data) {
   isTouristSpotPreviewModal.value = !isTouristSpotPreviewModal.value;
   selectedData.value = data;
-
 }
-onUpdated(() => {
-  if (isTouristSpotPreviewModal.value || isTouristSpotPreviewModal.value) {
-    document.body.classList.add('overflow-hidden');
-  }
-  else {
-    document.body.classList.remove('overflow-hidden');
-  }
+
+// this function is for updating one tourist attraction
+async function handleUpdateTouristAttraction(formData, id) {
+  console.log(formData.newImg);
+  return await axios.post(be_url + '/tourist-attraction/edit', {
+    id,
+    name: formData.name,
+    description: formData.description,
+    location: formData.location,
+    img: formData.newImg,
+  }, { headers: { "Content-Type": "multipart/form-data" }})
+  .then(({data}) => {
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+    dataTourism.value = data.tourism;
+    return data;
+  })
+  .catch(err => { 
+    // set the response msg
+    resMsg.value = err.response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+  });
+}
+
+// get the data from the server
+onMounted(() => {
+  axios.get(be_url + '/tourist-attractions')
+  .then(({data}) => {
+    dataTourism.value = data.tourism;
+    originalDataTourism.value = data.tourism;
+  })
+  .catch(err => console.log(err));
+
 });
 
-// fetch the news data from backend
-function filterFn(value){
-  groupedItems.value = filterTourism(value)
-
-}
-
 </script>
-<style scoped>
-.img-hover-zoom {
-  overflow: hidden; 
-}
-
-.img-hover-zoom img {
-  transition: transform .5s ease;
-}
-.img-hover-zoom:hover img {
-  transform: scale(1.5);
-
-}
-
-</style>
