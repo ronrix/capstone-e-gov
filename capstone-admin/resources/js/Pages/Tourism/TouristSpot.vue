@@ -7,7 +7,8 @@
     <div class="w-full flex flex-col md:flex-row md:items-center">
 
       <SearchInput placeholder="search" class="mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn"/>
-      <SelectTag type="category" :value="filterValue" :filterArray="filterTourism" :filterFn="filterBy" />
+      <span class="text-xs text-gray-600 ml-3 mr-1">filter by:</span>
+      <SelectTag type="category" :value="filterValue" :filterArray="filterTourism" :filterFn="filterBy" addedClass="max-h-[300px] overflow-y-scroll scrollbar" />
     </div>
 
     <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col gap-3 mt-5">
@@ -54,14 +55,19 @@ const selectedData = ref();
 const dataTourism = ref([]);
 const originalDataTourism = ref([]);
 
-const filterTourism = ['All', 'Tourist Attraction', 'Church', 'Restaurant'];
 const filterValue = ref("All");
-const toFilter = ref(dataTourism);
 const resMsg = ref();
+
+// get all the categories
+const filterTourism  = computed(() => {
+  const categories = originalDataTourism.value.map(og => og.category);
+  categories.unshift("All");
+  return categories;
+});
 
 const groupedItems = computed(() => {
   const groups = {};
-  for (const item of toFilter.value) {
+  for (const item of dataTourism.value) {
     if (!groups[item.category]) {
       groups[item.category] = [];
     }
@@ -69,16 +75,16 @@ const groupedItems = computed(() => {
   }
   return groups;
 
-},[toFilter]);
+},[dataTourism]);
 
 function filterBy(type, value){
   filterValue.value = value;
 
   if(value === "All") {
-    toFilter.value = originalDataTourism.value;
+    dataTourism.value = originalDataTourism.value;
   }
   else {
-    toFilter.value = dataTourism.value.filter(el => {
+    dataTourism.value = originalDataTourism.value.filter(el => {
       if(el.category.toLocaleLowerCase() === value.toLowerCase()) {
         return el;
       }
@@ -119,10 +125,10 @@ function searchFilter(value) {
 
 function searchFn(value) {
   if(value.length) {
-    toFilter.value = searchFilter(value);
+    dataTourism.value = searchFilter(value);
     return;
   }
-  toFilter.value = originalDataTourism.value;
+  dataTourism.value = originalDataTourism.value;
 }
 
 function showTouristSpotPreviewModal(data) {
