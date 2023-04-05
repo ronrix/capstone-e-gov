@@ -89,13 +89,13 @@ class TourismController extends Controller
                     array_push($imgPaths, $path);
                 }
 
-                $news = new Tourism;
-                $news->title = $request->input("title");
-                $news->description = $request->input("description");
-                $news->location = $request->input("location");
-                $news->category = $request->input("category");
-                $news->img_link = implode(",", $imgPaths);
-                $news->save();
+                $tourism = new Tourism;
+                $tourism->title = $request->input("title");
+                $tourism->description = $request->input("description");
+                $tourism->location = $request->input("location");
+                $tourism->category = $request->input("category");
+                $tourism->img_link = implode(",", $imgPaths);
+                $tourism->save();
             }
 
             return response()->json([
