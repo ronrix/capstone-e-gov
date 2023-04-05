@@ -1,61 +1,93 @@
 <template>
   <HeadTitle title="Contacts"></HeadTitle>
   <WrapperContent>
-    <h1 class="text-3xl text-center font-bold text-gray-700">Contact Us</h1>
-    <p class="text-sm text-gray-500 text-center mb-2">here's our contact info</p>
-    
-    <div class="w-full flex flex-col lg:flex-row justify-center lg:justify-between  rounded-lg bg-white p-10">
-     
-      <!-- first col -->
-      <div class="first-col mb-3">
-        <h3 class="text-lg font-semibold text-gray-800 mb-1">Phone Number</h3>
-        <FirstCol v-for="(first, index) in number" :first="first" />
-      </div>
-
-      <!-- second col -->
-      <div class="second-col mb-3">
-        <h3 class="text-lg font-semibold text-gray-800 mb-1">Social Media Account</h3>
-        <SecondCol v-for="(second, index) in social" :second="second" />
-      </div>
-      <!-- third col -->
-      <div class="third-col mb-3">
-        <h3 class="text-lg font-semibold text-gray-800 mb-1">Business Hours</h3>
-        <ThirdCol v-for="(third, index) in business" :third="third" />
-      </div>
-
+    <!-- contacts -->
+    <div class="flex justify-between mb-3">
+      <h1 class="text-lg font-bold text-gray-700">Contacts</h1>
+      <button @click="showContactsModal"
+        class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end rounded-lg px-2 uppercase text-md font-bold">
+        new
+        <i class="uil uil-plus-circle m-0 ml-1"></i>
+      </button>
     </div>
+    <div class="w-full flex flex-col mb-10">
+      <div class="relative bg-white p-6">
+        <div class="flex items-center">
+          <h3 class="text-md font-bold text-gray-700 mr-5 uppercase">HR Department</h3>
+          <div class="flex-1 border-2"></div>
+        </div>
+
+        <DepartmentContacts v-for="contacts in contact" :title="contacts.title" :number="contacts.number" />
+      </div>
+      <ContacsModal v-if="isContactsModal" :showContactsModal="showContactsModal"/>
+    </div>
+    <!-- contacts ends-->
+
+    <!-- social media links -->
+    <div class="flex justify-between mb-3">
+      <h1 class="text-lg font-bold text-gray-700">Social Media Links</h1>
+      <button @click="showHotlineModal"
+        class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end rounded-lg px-2 uppercase text-md font-bold">
+        new
+        <i class="uil uil-plus-circle m-0 ml-1"></i>
+      </button>
+    </div>
+
+    <div class="w-full flex flex-col mb-5">
+      <div class="relative bg-white p-6">
+        <div class="flex items-center mb-5">
+          <h3 class="text-md font-bold text-gray-700 mr-5 uppercase">Social Media</h3>
+          <div class="flex-1 border-2"></div>
+        </div>
+
+        <SocialMediaLinks v-for="data in social" :links="data.link" :data="data" />
+      </div>
+    </div>
+    <!-- social media links ends-->
   </WrapperContent>
 </template>
 
 <script setup>
 import WrapperContent from '../../../Components/WrapperContent.vue';
-import FirstCol from './FirstCol.vue'
-import SecondCol from './SecondCol.vue'
-import ThirdCol from './ThirdCol.vue'
+import DepartmentContacts from './DepartmentContacts.vue';
+import SocialMediaLinks from './SocialMediaLinks.vue';
+import ContacsModal from './ContacsModal.vue';
+import { ref } from 'vue';
 
-  // object array
-const number = [
-  {
-    mobilePh: "+63-(046)-xxx-xxx",
-    mobileInt: "+63-(0926)-xxx-xxx",
-    telephoneNum:"+1-(750)-xxx-xxx",
-  }
+const isContactsModal = ref(false);
+function showContactsModal() {
+  isContactsModal.value = ! isContactsModal.value;
+}
+
+const contact = [{
+  title: "Mobile Number",
+  number: "+639-234-554-678"
+},
+{
+  title: "Landine Number",
+  number: "(555) 555-1234"
+}
 ]
 
-const social = [
-  {
-    fb: "Facebook",
-    gmail: "Gmail",
-    twitter:"Twitter",
-  }
-]
-
-const business = [
-  {
-    week: "Monday - Friday",
-    time: "8am - 6pm",
-  }
+const social = [{
+  img_link: "https://cdn-icons-png.flaticon.com/512/124/124010.png",
+  link: "https://www.facebook.com/BetterPililla"
+},
+{
+  img_link: "https://cdn-icons-png.flaticon.com/512/281/281769.png",
+  link: "@yahoo.com"
+},
+{
+  img_link: "https://www.clipartmax.com/png/full/35-351265_twitter-png-png-images-twitter-round-logo-png-transparent-background.png",
+  link: "https://"
+}
 ]
 </script>
 
-<style scoped></style>
+<style scoped>
+th,
+td {
+  border: 1px solid rgb(170, 166, 166);
+  padding: 1em;
+}
+</style>
