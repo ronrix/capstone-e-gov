@@ -16,10 +16,16 @@ class BusinessFactory extends Factory
      */
     public function definition()
     {
+        $img_links = [
+            "https://fab.ph/wp-content/uploads/2019/03/8cSDwpg0d9YbVTRxUqrM1.png",
+        ];
+
         return [
-            "business_name" => fake()->company(),
-            "business_type" => fake()->jobTitle(),
-            "established_date" => fake()->postcode(),
+            "title" => fake()->company(),
+            "description" => fake()->paragraph(5),
+            "category" => fake()->catchPhrase(),
+            "location" => fake()->address(),
+            "img_link" => fake()->randomElement($img_links),
         ];
     }
 }

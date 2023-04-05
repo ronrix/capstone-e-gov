@@ -15,9 +15,12 @@ return new class extends Migration
     {
         Schema::create('businesses', function (Blueprint $table) {
             $table->id();
-            $table->string("business_name");
-            $table->string("business_type");
-            $table->timestamp("established_date");
+            $table->text("title");
+            $table->longText("description");
+            $table->text("category");
+            $table->text("location");
+            $table->longText("img_link");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
