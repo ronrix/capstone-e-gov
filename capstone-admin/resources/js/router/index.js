@@ -70,11 +70,6 @@ export const router = createRouter({
       name: "Festivals",
       component: () => import("../Pages/Tourism/Festival.vue")
     },
-    {
-      path: "/tourism/guidelines",
-      name: "Guidelines",
-      component: () => import("../Pages/Tourism/Guidelines.vue")
-    },
     // businesses
     {
       path: "/businesses/business-establishments",
