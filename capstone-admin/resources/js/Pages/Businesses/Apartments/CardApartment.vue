@@ -1,20 +1,20 @@
 <template>
     <div class="flex">
         <button @click="showPreviewModal(data)">
-    <div class="card1 flex flex-col h-[200px] w-full md:w-auto">
-        <!---Image-->
-        <div :style="{ backgroundImage: `url(${data.img})` }"
-            class="rounded-md bg-no-repeat bg-cover bg-center h-[150px] relative">
-        </div>
-        <!--content-->
-        <div class="p-4 flex-1 flex flex-col justify-between">
-            <h3 class="apartment-name font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
-            <h5 class="text-xs text-gray-500 font-bold tracking-wide text-center">{{ data.type }}</h5>
-            
-        </div>
+            <div class="card1 flex flex-col h-[200px] w-full md:w-auto">
+                <!---Image-->
+                <div :style="{ backgroundImage: `url(${data.img})` }"
+                    class="rounded-md bg-no-repeat bg-cover bg-center h-[150px] relative">
+                </div>
+                <!--content-->
+                <div class="p-4 flex-1 flex flex-col justify-between">
+                    <h3 class="apartment-name font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
+                    <h5 class="text-xs text-gray-500 tracking-wide text-center">{{ data.type }}</h5>
+                    <h5 class="text-xs text-gray-500 tracking-wide text-center">{{ data.location }}</h5>
+                </div>
+            </div>
+        </button>
     </div>
-    </button>
-</div>
 </template>
 
 <script setup>
