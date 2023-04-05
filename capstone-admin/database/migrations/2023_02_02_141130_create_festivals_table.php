@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('festivals', function (Blueprint $table) {
             $table->id();
-            $table->text("festival_name");
-            $table->longText("festival_description");
-            $table->timestamp("festival_date");
-            $table->json("festival_img_links");
+            $table->text("title");
+            $table->longText("description");
+            $table->longText("img_link");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
