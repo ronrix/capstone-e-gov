@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Tourist Attractions"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
     <!-- response message -->
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
@@ -18,7 +19,7 @@
       </div>
 
     <!-- TouristSpotCard -->
-    <TouristSpotCard  v-for="data in group" :data="data" :key="data.id" :showTouristSpotPreviewModal="showTouristSpotPreviewModal" :handleDelete="handleDeleteTouristAttraction" />
+    <TourismCard  v-for="data in group" :data="data" :key="data.id" :showTouristSpotPreviewModal="showTouristSpotPreviewModal" :handleDelete="handleDeleteTouristAttraction" />
     </div>
     <!-- PreviewModal -->
     <PreviewModal v-if="isTouristSpotPreviewModal" :selectedData="selectedData" :showPreviewModal="showTouristSpotPreviewModal" :handleSubmit="handleUpdateTouristAttraction" />
@@ -34,7 +35,7 @@ import { computed, ref, onMounted } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';
 import SelectTag from '../../Components/SelectTag.vue';
-import TouristSpotCard from './TouristSpotCard.vue';
+import TourismCard from './TourismCard.vue';
 import AddBtn from '../../Components/AddModal/AddBtn.vue';
 import Notifcation from "../../Components/Notifcation.vue";
 import PreviewModal from '../../Components/PreviewModal.vue';
@@ -100,7 +101,7 @@ function showAddNewModal() {
 function searchFilter(value) {
   // first option: will check the titlePosition match value
   const first_option = dataTourism.value.filter(d => {
-    return d.name.toLowerCase().includes(value.toLowerCase());
+    return d.title.toLowerCase().includes(value.toLowerCase());
   });
 
   // first option: will check the description match value
@@ -158,6 +159,7 @@ async function handleUpdateTouristAttraction(id, formData) {
     }, 3000);
 
     dataTourism.value = data.tourism;
+    originalDataTourism.value = data.tourism;
     return data;
   })
   .catch(err => { 
@@ -187,6 +189,7 @@ async function handleDeleteTouristAttraction(id, deleteRef) {
     }, 3000);
 
     dataTourism.value = data.tourism;
+    originalDataTourism.value = data.tourism;
     return data;
   })
   .catch(err => { 
