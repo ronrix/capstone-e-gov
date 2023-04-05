@@ -10,14 +10,7 @@
       <SearchInput placeholder="search a festival" class="mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn" />
     </div>
 
-    <div v-for="data in dataFestival" :key="category" class="flex flex-col gap-3 mt-5">
-      <div class="flex items-center">
-        <span class="font-bold text-2xl text-gray-500 mr-5 capitalize">
-          <h3>{{ category }}</h3>
-        </span>
-        <div class="flex-1 border"></div>
-      </div>
-
+    <div v-for="data in dataFestival" :key="data.id" class="flex flex-col gap-3 mt-5">
       <!-- TouristSpotCard -->
       <TourismCard :data="data" :key="data.id" :showTourismModal="showTourismModal"
         :handleDelete="handleDeleteFestival" />
@@ -191,7 +184,6 @@ async function handleCreateFestival(formData) {
 onMounted(() => {
   axios.get(be_url + '/festivals')
     .then(({ data }) => {
-      console.log(data);
       dataFestival.value = data.festivals;
       originalDataFestival.value = data.festivals;
     })
