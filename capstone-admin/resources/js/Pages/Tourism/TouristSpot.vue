@@ -18,8 +18,8 @@
         <div class="flex-1 border"></div>
       </div>
 
-    <!-- TouristSpotCard -->
-    <TourismCard  v-for="data in group" :data="data" :key="data.id" :showTouristSpotPreviewModal="showTouristSpotPreviewModal" :handleDelete="handleDeleteTouristAttraction" />
+      <!-- TouristSpotCard -->
+      <TourismCard  v-for="data in group" :data="data" :key="data.id" :showTourismModal="showTouristSpotPreviewModal" :handleDelete="handleDeleteTouristAttraction" />
     </div>
     <!-- PreviewModal -->
     <PreviewModal v-if="isTouristSpotPreviewModal" :selectedData="selectedData" :showPreviewModal="showTouristSpotPreviewModal" :handleSubmit="handleUpdateTouristAttraction" />

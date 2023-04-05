@@ -45,12 +45,14 @@
         </div>
         <!-- content -->
         <div class="h-full">
-          <span class="font-[500] text-xs capitalize mt-3">content</span>
+          <span class="font-[500] text-xs capitalize mt-3">
+            content
+            <button ref="editBtn" type="button" @click="startEditing" class="text-blue-600 cursor-pointer hover:text-blue-500 self-start text-xs ml-2">edit</button>
+          </span>
           <div class="hover:overflow-y-scroll overflow-y-scroll scrollbar h-[300px]">
             <div ref="descEl" v-bind:innerHTML="description" class="text-sm"></div>
             <textarea ref="descText" @blur="stopEditing" v-model="formData.description" class="hidden overflow-y-scroll scrollbar bg-transparent py-3 w-full h-full text-sm outline-none">{{ formData.description }}</textarea>
           </div>
-          <div @click="startEditing" class="text-blue-600 cursor-pointer hover:text-blue-500 self-start text-sm">edit</div>
         </div>
 
         <div class="self-end flex items-center mb-0 mt-auto">
@@ -84,6 +86,7 @@ const descEl = ref(null);
 const descText = ref(null);
 const isLoading = ref(false);
 const isSubmitting = ref(false);
+const editBtn = ref(null);
 
 // form state
 const origImgSrc = formatImgs(selectedData.img_link.split(","));
@@ -152,10 +155,10 @@ function startEditing(e) {
   descEl.value.classList.add("hidden");
   descText.value.classList.remove("hidden");
   descText.value.focus();
-  e.target.classList.add("hidden"); // hide the edit btn
+  editBtn.value.classList.add("hidden") // hide the edit btn
 }
 function stopEditing(e) {
-  e.target.previousElementSibling.classList.remove("hidden");
+  editBtn.value.classList.remove("hidden") // remove hidden class of edit btn
   descEl.value.classList.remove("hidden"); // show the desc
   e.target.classList.add("hidden"); // hide the textarea
 }
