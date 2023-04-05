@@ -1,80 +1,249 @@
 <template>
     <HeadTitle title="Ease of Doing Business"></HeadTitle>
     <WrapperContent>
+        <!-- response message -->
+        <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
         <!--businesses -->
         <h4 class=" text-xl lg:text-2xl font-bold text-gray-800 my-5">Businesses</h4>
         <!-- filter -->
 
         <div class="w-full flex flex-col md:flex-row md:self-center">
-            <SearchInput  placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
-            <SelectTag class="mt-3" type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness" />
+            <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
+            <SelectTag class="mt-3" type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness" addedClass="max-h-[300px] overflow-y-scroll scrollbar" />
         </div>
-        <!-- card businesses -->
-        <CardBusiness  v-for="(data, index) in business" :data="data" :showPreviewModal="showPreviewModal" />
+        <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col mt-10">
+            <div class="flex items-center">
+                <span class="font-bold text-2xl text-gray-500 mr-5 capitalize">
+                    <h3>{{ category }}</h3>
+                </span>
+                <div class="flex-1 border"></div>
+            </div>
 
-        <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
-        
+            <!-- card businesses -->
+            <CardBusiness v-for="data in group" :data="data" :showPreviewModal="showPreviewModal" :key="data.id" :showTouristSpotPreviewModal="showPreviewModal" :handleDelete="handleDeleteFestival"  />
+        </div> 
+
+        <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isBusinessPreviewModal" :handleSubmit="handleUpdateFestival" />
+
         <!-- add new news btn -->
-    <AddBtn :showAddModal="showAddNewModal" class="z-20" />
+        <AddBtn :showAddModal="showAddNewModal" class="z-20" />
 
-<!-- add modal -->
-<AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" title="Headline" />
+        <!-- add modal -->
+        <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal"
+            :handleCreateSubmit="handleCreateBusiness" title="Business" :location="true" :category="true" />
     </WrapperContent>
 </template>
-  
 <script setup>
-import WrapperContent from '../../../Components/WrapperContent.vue';
-import CardBusiness from './CardBusiness.vue';
-import SelectTag from '../../../Components/SelectTag.vue';
+import { computed, ref, onMounted } from 'vue';
 import SearchInput from '../../../Components/SearchInput.vue';
-import PreviewModal from '../../../Components/PreviewModal.vue';
-import AddBtn from '../../../Components/AddModal/AddBtn.vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue';
-import { ref } from 'vue';
+import SelectTag from '../../../Components/SelectTag.vue';
+import AddBtn from '../../../Components/AddModal/AddBtn.vue';
+import Notifcation from "../../../Components/Notifcation.vue";
+import PreviewModal from '../../../Components/PreviewModal.vue';
+import CardBusiness from './CardBusiness.vue';
 
+import axios from 'axios';
+import { be_url } from "../../../config/config";
 
+// init variables
+const isBusinessPreviewModal = ref(false);
+const isAddNewModal = ref(false);
+const selectedData = ref();
+const dataBusiness = ref([]);
+const originalDataBusiness = ref([]);
 
+const filterValue = ref("All");
+const resMsg = ref();
 
+// get all the categories
+const filterBusiness = computed(() => {
+    const categories = originalDataBusiness.value.map(og => og.category);
+    categories.unshift("All");
+    return categories;
+});
 
-// filter selecTag
-const filterBusiness = ["All", "Restaurant", "Departnemnt Store", "Gast Station", "Pharmacy", "Bank"];
-const business = [
-    {
-        title: "Bulawan Floating Restaurant",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        img_link: "https://3.bp.blogspot.com/-DO8GFOij0pA/WZhuUvHzanI/AAAAAAAAAd0/ZX_zREEA0O86R3UYiZLGOHR3gawDqR8ewCPcBGAYYCw/s400/DSC_0165.jpg"
-    },
-    {
-        title: "7-Eleven",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        img_link: "https://images.summitmedia-digital.com/esquiremagph/images/2021/04/19/shutterstock_1404051692%20(1).jpg"
-    },
-    {
-        title: "Generika Pililla, Rizal",
-        description: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-        img_link: "https://fab.ph/wp-content/uploads/2019/03/8cSDwpg0d9YbVTRxUqrM1.png"
+const groupedItems = computed(() => {
+    const groups = {};
+    for (const item of dataBusiness.value) {
+        if (!groups[item.category]) {
+            groups[item.category] = [];
+        }
+        groups[item.category].push(item);
     }
-]
+    return groups;
 
-// preview modal
-const isPreviewModal = ref(false)
-const selectedData = ref()
+}, [dataBusiness]);
+
+function filterBy(type, value) {
+    filterValue.value = value;
+
+    if (value === "All") {
+        dataBusiness.value = originalDataBusiness.value;
+    }
+    else {
+        dataBusiness.value = originalDataBusiness.value.filter(el => {
+            if (el.category.toLocaleLowerCase() === value.toLowerCase()) {
+                return el;
+            }
+        });
+    }
+}
+
+function showAddNewModal() {
+    isAddNewModal.value = !isAddNewModal.value;
+}
+
+// search filtering
+function searchFilter(value) {
+    // first option: will check the titlePosition match value
+    const first_option = dataBusiness.value.filter(d => {
+        return d.title.toLowerCase().includes(value.toLowerCase());
+    });
+
+    // first option: will check the description match value
+    const second_option = dataBusiness.value.filter(d => {
+        return d.location.toLowerCase().includes(value.toLowerCase());
+    });
+
+    // first option: will check the description match value
+    const third_option = dataBusiness.value.filter(d => {
+        return d.category.toLowerCase().includes(value.toLowerCase());
+    });
+
+    // returning the data sorted by date
+    if (first_option.length) {
+        return first_option;
+    }
+    if (third_option.length) {
+        return third_option;
+    }
+    return second_option;
+}
+
+function searchFn(value) {
+    if (value.length) {
+        dataBusiness.value = searchFilter(value);
+        return;
+    }
+    dataBusiness.value = originalDataBusiness.value;
+}
+
 function showPreviewModal(data) {
-  isPreviewModal.value = !isPreviewModal.value;
+  isBusinessPreviewModal.value = !isBusinessPreviewModal.value;
   selectedData.value = data;
 }
 
-// AddModal
+// this function is for updating one tourist attraction
+async function handleUpdateFestival(id, formData) {
+    return await axios.post(be_url + '/businesses/edit', {
+        id,
+        title: formData.title,
+        description: formData.description,
+        location: formData.location,
+        category: formData.category,
+        newImgs: formData.newImgs,
+        deletedImgs: formData.deletedImgIds,
+        defaultThumbnailId: formData.defaultThumbnailId
+    }, { headers: { "Content-Type": "multipart/form-data" } })
+        .then(({ data }) => {
 
-const isAddNewModal = ref(false);
-function showAddNewModal() {
-  isAddNewModal.value = !isAddNewModal.value;
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            dataBusiness.value = data.businesses;
+            originalDataBusiness.value = data.businesses;
+            return data;
+        })
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+        });
 }
 
+// function to handle the delete request
+async function handleDeleteFestival(id, deleteRef) {
+    return await axios.post(be_url + '/delete-businesses', { id })
+        .then(({ data }) => {
+            // this will remove the displaying of the delete modal
+            deleteRef.classList.remove("!translate-y-0");
+            deleteRef.classList.remove("!translate-x-0");
 
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
 
+            dataBusiness.value = data.businesses;
+            originalDataBusiness.value = data.businesses;
+            return data;
+        })
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+        });
+}
+
+// function to handle create request
+async function handleCreateBusiness(formData) {
+    return await axios.post(be_url + "/businesses/add", {
+        title: formData.title,
+        description: formData.content,
+        location: formData.location,
+        category: formData.category,
+        imgFile: formData.imgFile,
+    },
+        { headers: { "Content-Type": "multipart/form-data" } })
+        .then(({ data }) => {
+
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            originalDataBusiness.value = data.businesses;
+            dataBusiness.value = data.businesses;
+            return data;
+        })
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+        });
+}
+
+// get the data from the server
+onMounted(() => {
+    axios.get(be_url + '/businesses')
+        .then(({ data }) => {
+            dataBusiness.value = data.businesses;
+            originalDataBusiness.value = data.businesses;
+        })
+        .catch(err => console.log(err));
+
+});
 
 </script>
-  
-<style scoped></style>
