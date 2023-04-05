@@ -3,14 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Government\NewsController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\Government\AdvisoryController;
 use App\Http\Controllers\Government\HotlinesController;
 use App\Http\Controllers\Government\ExecutivesController;
 use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
+use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
-use App\Models\Government\JobPosting;
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +75,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/hotlines", [HotlinesController::class, "index"]);
     Route::get("/populations", [PopulationController::class, "index"]);
     Route::get("/tourist-attractions", [TourismController::class, "index"]);
+    Route::get("/festivals", [FestivalsController::class, "index"]);
 
     // government post requests
     // edit requests
@@ -85,6 +85,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/hotlines/edit", [HotlinesController::class, "update"]);
     Route::post("/populations/edit", [PopulationController::class, "update"]);
     Route::post("/tourist-attraction/edit", [TourismController::class, "update"]);
+    Route::post("/festival/edit", [FestivalsController::class, "update"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -97,6 +98,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/job-posting/add", [JobPostingController::class, "create"]);
     Route::post("/population/add", [PopulationController::class, "create"]);
     Route::post("/tourist-attraction/add", [TourismController::class, "create"]);
+    Route::post("/festival/add", [FestivalsController::class, "create"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -108,6 +110,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-job-posting", [JobPostingController::class, "deleteOne"]);
     Route::post("/delete-population", [PopulationController::class, "deleteOne"]);
     Route::post("/delete-tourist-spot", [TourismController::class, "delete"]);
+    Route::post("/delete-festival", [FestivalsController::class, "delete"]);
 
     // tourism
     Route::get("/tourism/tourism", function () {

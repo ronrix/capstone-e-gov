@@ -2,123 +2,201 @@
   <HeadTitle title="Festval"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
 
+    <!-- response message -->
+    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
+
     <!-- search filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
-      <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
-      <SelectTag type="category" value="All" :filterArray="filterTourism" />
+      <SearchInput placeholder="search a festival" class="mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn" />
     </div>
 
-    <div v-for="data in filteredData" class="relative bg-white p-5 flex flex-col md:flex-row border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 overflow-hidden shadow-md md:rounded">
-      <Delete :handleDelete="handleDelete" :id="data.id" />
-      <!-- image -->
-      <div class="flex-1 flex flex-col gap-3 items-start justify-between">
-        <div :style="{ backgroundImage: `url(${data.img})` }"
-          class="bg-no-repeat  bg-center h-[250px] mt-2 ml-2 md:w-[300px] lg:w-[500px] after:h-[50px] after:bottom-0 after:w-full after:absolute after:blur-sm">
-        </div>
-        <div class="flex">
-          <i style="margin-top: 2px;" class="ml-2 uil uil-location-point text-cyan-400"></i>
-          <p class="text-ellipsis overflow-hidden pt-1" style="font-size: 12px;">{{ data.address }}</p>
-        </div>
+    <div v-for="data in dataFestival" :key="category" class="flex flex-col gap-3 mt-5">
+      <div class="flex items-center">
+        <span class="font-bold text-2xl text-gray-500 mr-5 capitalize">
+          <h3>{{ category }}</h3>
+        </span>
+        <div class="flex-1 border"></div>
       </div>
-      <!-- content -->
-      <div class="flex-1 p-5 flex flex-col items-start justify-between">
-        <h3 class="font-bold uppercase text-xl tracking-wide">{{ data.placeName }}</h3>
-        <p class="mt-5 text-ellipsis text-sm h-[100px] overflow-hidden">
-          {{ data.content }}
-        </p>
-        <!-- PreviewButton -->
-        <button @click="showTouristSpotPreviewModal(data)"
-          class="bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-20 uppercase">view
-        </button>
-      </div>
-    </div>
 
+      <!-- TouristSpotCard -->
+      <TourismCard :data="data" :key="data.id" :showTourismModal="showTourismModal"
+        :handleDelete="handleDeleteFestival" />
+    </div>
     <!-- PreviewModal -->
-    <TouristSpotPreviewModal :selectedData="selectedData" :showTouristSpotPreviewModal="showTouristSpotPreviewModal"
-      v-if="isTouristSpotPreviewModal" />
+    <PreviewModal v-if="isFestivalPreviewModal" :selectedData="selectedData" :showPreviewModal="showTourismModal"
+      :handleSubmit="handleUpdateFestival" />
 
-    <!-- Add new tourist Button -->
-    <button @click="showAddNewModal"
-      class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
-      <i class="uil uil-plus text-2xl text-white"></i>
-    </button>
-
+    <!-- add new -->
+    <AddBtn :showAddModal="showAddNewModal" class="z-20" />
     <!-- Add Modal -->
-    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal"
+      :handleCreateSubmit="handleCreateFestival" title="festival" />
   </WrapperContent>
 </template>
 <script setup>
-import { ref, onUpdated } from 'vue';
+import { ref, onMounted } from 'vue';
 import SearchInput from '../../Components/SearchInput.vue';
 import AddModal from '../../Components/AddModal/AddModal.vue';
-import TouristSpotPreviewModal from '../../Components/TouristSpotPreviewModal.vue';
-import SelectTag from '../../Components/SelectTag.vue';
-import Delete from '../../Components/Delete.vue';
-const isTouristSpotPreviewModal = ref(false);
+import TourismCard from './TourismCard.vue';
+import AddBtn from '../../Components/AddModal/AddBtn.vue';
+import Notifcation from "../../Components/Notifcation.vue";
+import PreviewModal from '../../Components/PreviewModal.vue';
+
+import axios from 'axios';
+import { be_url } from "../../config/config";
+
+// init variables
+const isFestivalPreviewModal = ref(false);
 const isAddNewModal = ref(false);
 const selectedData = ref();
+const dataFestival = ref([]);
+const originalDataFestival = ref([]);
 
+const resMsg = ref();
 
+function showAddNewModal() {
+  isAddNewModal.value = !isAddNewModal.value;
+}
 
-const sample_data = [{
-  placeName: "Magsolangtan Festival",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://cdn.dribbble.com/users/2089694/screenshots/15254872/media/72cb5ad92a61d36de040a5a7433a2e07.png?compress=1&resize=700x525&vertical=top",
-  address: "M.A. Roxas St.Brgy. Bagumbayan Pililla, Rizal, Pililla, Philippines"
-},
-{
-  placeName: "Kal'baw Festival",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://cdn.dribbble.com/users/2089694/screenshots/15254872/media/72cb5ad92a61d36de040a5a7433a2e07.png?compress=1&resize=700x525&vertical=top",
-  address: "Matagbak Rd. 1910 Pililla, Philippines"
-},
-{
-  placeName: "Festival",
-  content: "Renewable energy is becoming more popular in the Philippines. As an alternative source of power and electricity, wind energy produces no waste and it is beneficial both for the people and the environment. It was in 2008 when the Department of Energy granted permission to Alternergy in creating a wind farm in the mountain slopes of Pililla, Rizal. Its purpose is to serve the nearby towns and municipalities of Rizal and Laguna with clean source of energy.",
-  img: "https://cdn.dribbble.com/users/2089694/screenshots/15254872/media/72cb5ad92a61d36de040a5a7433a2e07.png?compress=1&resize=700x525&vertical=top",
-  address: "99R6+574, Malaya Trail, Pililla, Riza"
-}]
-
-const filterTourism = ['All', 'Kalbaw', 'Magsolangtan']
-
-const filteredData = ref(searchFilter(""));
+// search filtering
 function searchFilter(value) {
-  const first_option = sample_data.filter(data => {
-    return data.placeName.toLowerCase().includes(value.toLowerCase());
+  // first option: will check the titlePosition match value
+  const first_option = dataFestival.value.filter(d => {
+    return d.title.toLowerCase().includes(value.toLowerCase());
   });
 
-  const second_option = sample_data.filter(data => {
-    return data.address.toLowerCase().includes(value.toLowerCase());
+  // first option: will check the description match value
+  const second_option = dataFestival.value.filter(d => {
+    return d.description.toLowerCase().includes(value.toLowerCase());
   });
 
+  // returning the data sorted by date
   if (first_option.length) {
     return first_option;
   }
   return second_option;
 }
-function showAddNewModal() {
-  isAddNewModal.value = !isAddNewModal.value;
-}
+
 function searchFn(value) {
-  filteredData.value = searchFilter(value);
+  if (value.length) {
+    dataFestival.value = searchFilter(value);
+    return;
+  }
+  dataFestival.value = originalDataFestival.value;
 }
-defineProps({
-  showTouristSpotPreviewModal: Function,
-  data: Object
-});
 
-function showTouristSpotPreviewModal(data) {
-  isTouristSpotPreviewModal.value = !isTouristSpotPreviewModal.value;
+function showTourismModal(data) {
+  isFestivalPreviewModal.value = !isFestivalPreviewModal.value;
   selectedData.value = data;
-
 }
-onUpdated(() => {
-  if (isTouristSpotPreviewModal.value || isTouristSpotPreviewModal.value) {
-    document.body.classList.add('overflow-hidden');
-  }
-  else {
-    document.body.classList.remove('overflow-hidden');
-  }
+
+// this function is for updating one tourist attraction
+async function handleUpdateFestival(id, formData) {
+  return await axios.post(be_url + '/festival/edit', {
+    id,
+    title: formData.title,
+    description: formData.description,
+    newImgs: formData.newImgs,
+    deletedImgs: formData.deletedImgIds,
+    defaultThumbnailId: formData.defaultThumbnailId
+  }, { headers: { "Content-Type": "multipart/form-data" } })
+    .then(({ data }) => {
+
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      dataFestival.value = data.festivals;
+      originalDataFestival.value = data.festivals;
+      return data;
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+    });
+}
+
+// function to handle the delete request
+async function handleDeleteFestival(id, deleteRef) {
+  return await axios.post(be_url + '/delete-festival', { id })
+    .then(({ data }) => {
+      // this will remove the displaying of the delete modal
+      deleteRef.classList.remove("!translate-y-0");
+      deleteRef.classList.remove("!translate-x-0");
+
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      dataFestival.value = data.festivals;
+      originalDataFestival.value = data.festivals;
+      console.log(dataFestival);
+      return data;
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+    });
+}
+
+// function to handle create request
+async function handleCreateFestival(formData) {
+  return await axios.post(be_url + "/festival/add", {
+    title: formData.title,
+    description: formData.content,
+    imgFile: formData.imgFile,
+  },
+    { headers: { "Content-Type": "multipart/form-data" } })
+    .then(({ data }) => {
+
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      originalDataFestival.value = data.festivals;
+      dataFestival.value = data.festivals;
+      return data;
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+    });
+}
+
+// get the data from the server
+onMounted(() => {
+  axios.get(be_url + '/festivals')
+    .then(({ data }) => {
+      console.log(data);
+      dataFestival.value = data.festivals;
+      originalDataFestival.value = data.festivals;
+    })
+    .catch(err => console.log(err));
+
 });
 
 </script>
