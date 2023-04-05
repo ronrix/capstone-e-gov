@@ -86,11 +86,6 @@ export const router = createRouter({
       name: "BPLO",
       component: () => import("../Pages/Businesses/BPLO/BPLO.vue")
     },
-    {
-      path: "/businesses/ease-of-doing-business",
-      name: "Ease Of Doing Business",
-      component: () => import("../Pages/Businesses/EaseOfDoingBusiness/EaseOfDoingBusiness.vue")
-    },
     // about
     {
       path: "/about/official-seal",
