@@ -8,33 +8,38 @@
             <p class="text-sm text-gray-500">Add new requirement for awareness of the citizen</p>
             <!-- form -->
             <form @submit="submitFn" class="w-full mt-3 flex flex-col gap-3">
-               
+
+                <label class="flex flex-col w-full">
+                    <span class="font-bold text-gray-500">Department</span>
+                    <p class="text-xs text-gray-500">add the a department name</p>
+                    <div class="flex flex-row items-center">
+                        <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                    </div>
+                </label>
+                <div ref="add">
                     <label class="flex flex-col w-full">
-                        <span class="font-bold text-gray-500">Department</span>
-                        <p class="text-xs text-gray-500">add the a department name</p>
-                        <div class="flex flex-row items-center">
+                        <span class="font-bold text-gray-500">Mobile Number</span>
+                        <p class="text-xs text-gray-500">add the a new mobile number</p>
+                        <div class="flex items-center gap-2">
                             <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                            <button @click="addMore" type="buttton">
+                                <i  class="uil uil-plus-square text-2xl text-blue-600 hover:text-blue-500" ></i>
+                            </button>
                         </div>
                     </label>
-                    <div ref="adds">
-                        <label class="flex flex-col w-full" ref="add">
-                        <span class="font-bold text-gray-500">Mobile Number</span>
-                        <p class="text-xs text-gray-500">add the a new mobile number</p>
-                       <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">                      
-                    </label>
-                    <input @click="addMore" type="button" value="Add more"
-                    class="text-xs text-center bg-white text-blue-500 font-bold py-1 px-2 border-[1px] border-blue-500 hover:bg-blue-500 hover:text-white rounded-lg uppercase cursor-pointer self-end mt-2">
-                    <label class="flex flex-col w-full" ref="add1">
-                        <span class="font-bold text-gray-500">Mobile Number</span>
-                        <p class="text-xs text-gray-500">add the a new mobile number</p>
-                       <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">                      
-                    </label>
-                    <input @click="addMore1" type="button" value="Add more"
-                    class="text-xs text-center bg-white text-blue-500 font-bold py-1 px-2 border-[1px] border-blue-500 hover:bg-blue-500 hover:text-white rounded-lg uppercase cursor-pointer self-end mt-2">
-                    </div>
-                    
 
-               
+                    <label class="flex flex-col w-full">
+                        <span class="font-bold text-gray-500">Telephone Number</span>
+                        <p class="text-xs text-gray-500">add the a new telephone number</p>
+
+                        <div class="flex flex-row items-center gap-2">
+                            <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                            <button @click="addMore">
+                                <i  class="uil uil-plus-square text-2xl text-blue-600 hover:text-blue-500" ></i>
+                            </button>
+                        </div>
+                    </label>
+                </div>
                 <input type="submit" value="Save"
                     class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer">
             </form>
@@ -47,23 +52,34 @@ import { ref } from 'vue';
 
 
 
-const adds = ref(null)
+
 const add = ref(null)
-const add1 = ref(null)
 // const btn = ref(null)
 
 function addMore(e) {
+    // console.log( e.target.parentElement);
+    parent = e.target.parentElement.parentElement.parentElement;
+
+    if (parent === parent) {
+        append(parent)
+    }
+
+}
+
+
+
+function append(parentElement) {
     const labels = document.createElement('label');
     const inputs = document.createElement('input');
     const p = document.createElement('p');
-    const div1 =  document.createElement('div');
-    const div2 =  document.createElement('div');
-    const remove =  document.createElement('button');
+    const div1 = document.createElement('div');
+    const div2 = document.createElement('div');
+    const remove = document.createElement('button');
 
     p.className = "text-xs text-gray-500";
-    labels.className = "flex flex-row w-full";
+    labels.className = "flex flex-col w-full";
     inputs.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600";
-    remove.textContent = "remove";
+    remove.innerHTML = `<p>remove</p>`;
     remove.className = "bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md";
     div2.className = "bg-white pl-2 mr-3";
     div1.className = "flex flex-row items-center";
@@ -76,50 +92,14 @@ function addMore(e) {
     div1.appendChild(div2)
     // added all elements to label
     labels.appendChild(div1);
-   
-    // if(e.targetElement !== btn ){
-        
-    // }
-    
 
-     add.value.appendChild(div1);
-    
+     (parentElement).appendChild(div1);
+    console.log(remove);
+
+    remove.addEventListener('click', function(){
+       (parentElement).removeChild((parentElement).lastElementChild);
+    })
 }
-
-function addMore1(e) {
-    const labels = document.createElement('label');
-    const inputs = document.createElement('input');
-    const p = document.createElement('p');
-    const div1 =  document.createElement('div');
-    const div2 =  document.createElement('div');
-    const remove =  document.createElement('button');
-
-    p.className = "text-xs text-gray-500";
-    labels.className = "flex flex-row w-full";
-    inputs.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600";
-    remove.textContent = "remove";
-    remove.className = "bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md";
-    div2.className = "bg-white pl-2 mr-3";
-    div1.className = "flex flex-row items-center";
-
-    p.textContent = "add the new requirment";
-    labels.appendChild(p);
-    div1.appendChild(inputs);
-    div2.appendChild(remove);
-    // added the div2 to div1
-    div1.appendChild(div2)
-    // added all elements to label
-    labels.appendChild(div1);
-   
-    // if(e.targetElement !== btn ){
-        
-    // }
-    
-
-     add1.value.appendChild(div1);
-    
-}
-
 function submitFn(e) {
     e.preventDefault();
     // console.log(added.value);
@@ -127,7 +107,9 @@ function submitFn(e) {
 
 defineProps({
     showContactsModal: Function,
+    append: Function,
     submitFn: Function,
+
 
 })
 </script>
