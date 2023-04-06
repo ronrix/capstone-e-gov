@@ -3,9 +3,9 @@
   <WrapperContent>
     <!-- contacts -->
     <div class="flex justify-between mb-3">
-      <h1 class="text-lg font-bold text-gray-700">Contacts</h1>
+      <h1 class="text-sm md:text-lg font-bold text-gray-700">Contacts</h1>
       <button @click="showContactsModal"
-        class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end rounded-lg px-2 uppercase text-md font-bold">
+        class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end rounded-lg px-2 uppercase text-sm font-bold">
         new
         <i class="uil uil-plus-circle m-0 ml-1"></i>
       </button>
@@ -13,7 +13,7 @@
     <div class="w-full flex flex-col mb-10">
       <div class="relative bg-white p-6">
         <div class="flex items-center">
-          <h3 class="text-md font-bold text-gray-700 mr-5 uppercase">HR Department</h3>
+          <h3 class="text-xs md:text-lg font-bold text-gray-700 mr-5 uppercase">HR Department</h3>
           <div class="flex-1 border-2"></div>
         </div>
 
@@ -25,10 +25,10 @@
 
     <!-- social media links -->
     <div class="flex justify-between mb-3">
-      <h1 class="text-lg font-bold text-gray-700">Social Media Links</h1>
-      <button @click="showHotlineModal"
-        class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end rounded-lg px-2 uppercase text-md font-bold">
-        new
+      <h1 class="text-sm md:text-lg font-bold text-gray-700">Social Media Links</h1>
+      <button @click="showSocialMediaModal"
+        class="border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white self-end rounded-lg px-2 uppercase text-sm font-bold">
+       new
         <i class="uil uil-plus-circle m-0 ml-1"></i>
       </button>
     </div>
@@ -36,12 +36,13 @@
     <div class="w-full flex flex-col mb-5">
       <div class="relative bg-white p-6">
         <div class="flex items-center mb-5">
-          <h3 class="text-md font-bold text-gray-700 mr-5 uppercase">Social Media</h3>
+          <h3 class="text-xs md:text-lg font-bold text-gray-700 mr-5 uppercase">Social Media</h3>
           <div class="flex-1 border-2"></div>
         </div>
 
         <SocialMediaLinks v-for="data in social" :links="data.link" :data="data" />
       </div>
+      <SocialMediaModal v-if="isSocialMediaModal" :showSocialMediaModal="showSocialMediaModal"/>
     </div>
     <!-- social media links ends-->
   </WrapperContent>
@@ -52,6 +53,7 @@ import WrapperContent from '../../../Components/WrapperContent.vue';
 import DepartmentContacts from './DepartmentContacts.vue';
 import SocialMediaLinks from './SocialMediaLinks.vue';
 import ContacsModal from './ContacsModal.vue';
+import SocialMediaModal from './SocialMediaModal.vue';
 import { ref } from 'vue';
 
 const isContactsModal = ref(false);
@@ -59,12 +61,17 @@ function showContactsModal() {
   isContactsModal.value = ! isContactsModal.value;
 }
 
+const isSocialMediaModal = ref(false);
+function showSocialMediaModal() {
+  isSocialMediaModal.value = ! isSocialMediaModal.value;
+}
+
 const contact = [{
   title: "Mobile Number",
   number: "+639-234-554-678"
 },
 {
-  title: "Landine Number",
+  title: "Telephone Number",
   number: "(555) 555-1234"
 }
 ]
