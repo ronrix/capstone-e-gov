@@ -5,8 +5,11 @@
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
     <!--Remember to add filter for both type and title-->
-    <!-- search filter -->
-    <SearchInput class="mb-5" @searchFn="searchFn" placeholder="Search for apartments" />
+    <!-- search filter and select filtering -->
+    <div class="w-full flex flex-col md:flex-row md:self-center items-center mb-5">
+        <SearchInput class="w-1/2 mr-3" @searchFn="searchFn" placeholder="Search for apartments" />
+        <SelectTag type="category" :value="filterValue" :filterFn="filterBy" :filterArray="filterApartments" addedClass="max-h-[300px] !w-[200px] overflow-y-scroll scrollbar" />
+    </div>
 
     <div class="flex flex-wrap gap-2">
       <CardApartment v-for="data in filteredData" :data="data" :showPreviewModal="showPreviewModal" />
@@ -26,8 +29,9 @@
 <script setup>
 import CardApartment from './CardApartment.vue';
 import Notifcation from "../../../Components/Notifcation.vue";
+import SelectTag from "../../../Components/SelectTag.vue";
 
-import { ref, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue'
 import SearchInput from '../../../Components/SearchInput.vue';
 import PreviewModal from '../../../Components/PreviewModal.vue';
@@ -38,11 +42,33 @@ const isPreviewModal = ref(false);
 const selectedData = ref();
 const dataApartments = ref([]);
 const resMsg = ref();
+const filterValue = ref("All");
+const filterApartments = computed(() => {
+    const categories = dataApartments.value.map(og => og.category);
+    categories.unshift("All");
+    return new Set(categories);
+});
 
 const isAddNewModal = ref(false);
 function showPreviewModal(data){
   isPreviewModal.value = !isPreviewModal.value;
   selectedData.value = data;
+}
+
+// function to filter the data based on categories
+function filterBy(type, value) {
+    filterValue.value = value;
+
+    if (value === "All") {
+        filteredData.value = dataApartments.value;
+    }
+    else {
+        filteredData.value = dataApartments.value.filter(el => {
+            if (el.category.toLocaleLowerCase() === value.toLowerCase()) {
+                return el;
+            }
+        });
+    }
 }
 
 // to show the add modal when add button was clicked
@@ -184,6 +210,7 @@ onMounted(() => {
   .then(({data}) => {
     dataApartments.value = data.apartments;
     filteredData.value = [...data.apartments];
+    filterApartments.value = data.apartments.map(apartment => apartment.category);
   })
   .catch(err => console.log(err));
 });

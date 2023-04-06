@@ -10,7 +10,7 @@
 
         <div class="w-full flex flex-col md:flex-row md:self-center">
             <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
-            <SelectTag class="mt-3" type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness" addedClass="max-h-[300px] overflow-y-scroll scrollbar" />
+            <SelectTag class="mt-3" type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness" addedClass="max-h-[300px] !w-[300px] overflow-y-scroll scrollbar" />
         </div>
         <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col mt-10">
             <div class="flex items-center">
@@ -61,7 +61,7 @@ const resMsg = ref();
 const filterBusiness = computed(() => {
     const categories = originalDataBusiness.value.map(og => og.category);
     categories.unshift("All");
-    return categories;
+    return new Set(categories);
 });
 
 const groupedItems = computed(() => {

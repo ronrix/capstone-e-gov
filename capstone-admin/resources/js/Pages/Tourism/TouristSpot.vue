@@ -9,7 +9,7 @@
 
       <SearchInput placeholder="search" class="mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn"/>
       <span class="text-xs text-gray-600 ml-3 mr-1">filter by:</span>
-      <SelectTag type="category" :value="filterValue" :filterArray="filterTourism" :filterFn="filterBy" addedClass="max-h-[300px] overflow-y-scroll scrollbar" />
+      <SelectTag type="category" :value="filterValue" :filterArray="filterTourism" :filterFn="filterBy" addedClass="max-h-[300px] !w-[300px] overflow-y-scroll scrollbar" />
     </div>
 
     <div v-for="(group, category) in groupedItems" :key="category" class="flex flex-col gap-3 mt-5">
@@ -63,7 +63,7 @@ const resMsg = ref();
 const filterTourism  = computed(() => {
   const categories = originalDataTourism.value.map(og => og.category);
   categories.unshift("All");
-  return categories;
+  return new Set(categories);
 });
 
 const groupedItems = computed(() => {
