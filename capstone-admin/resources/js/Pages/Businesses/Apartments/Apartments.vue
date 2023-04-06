@@ -1,6 +1,9 @@
 <template>
   <HeadTitle title="Apartments"></HeadTitle>
   <WrapperContent>
+    <!-- response message -->
+    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
+
     <!--Remember to add filter for both type and title-->
     <!-- search filter -->
     <SearchInput class="mb-5" @searchFn="searchFn" placeholder="Search for apartments" />
@@ -10,26 +13,31 @@
     </div>
 
     <!-- preview the whole information of apartments using PreviewModal -->
-    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" :handleSubmit="handleUpdateApartment" />
     
     <button @click="showAddModal" class="rounded-full shadow-md p-4 bg-blue-600 flex items-center justify-center w-[50px] h-[50px] fixed bottom-5 right-5 hover:bg-blue-500">
       <i class="uil uil-plus text 2xl text-white"></i>
     </button>
 
-    <AddModal :showAddModal="showAddModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" />
+    <AddModal :showAddModal="showAddModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateApartment" title="Aartment" :category="true" :location="true" />
     </WrapperContent>
 </template>
 
 <script setup>
 import CardApartment from './CardApartment.vue';
+import Notifcation from "../../../Components/Notifcation.vue";
 
-import { ref, onUpdated } from 'vue';
+import { ref, onMounted } from 'vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue'
 import SearchInput from '../../../Components/SearchInput.vue';
 import PreviewModal from '../../../Components/PreviewModal.vue';
+import axios from 'axios';
+import { be_url } from '../../../config/config';
 
 const isPreviewModal = ref(false);
 const selectedData = ref();
+const dataApartments = ref([]);
+const resMsg = ref();
 
 const isAddNewModal = ref(false);
 function showPreviewModal(data){
@@ -42,49 +50,18 @@ function showAddModal() {
   isAddNewModal.value = !isAddNewModal.value;
 }
 
-const sample_data = [
-  {
-    title:"Nux Hotel",
-    type:"Two-bedroom Apartment",
-    location: "930 W Altgeld St, Chicago, IL 60614",
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
-    img:"https://www.apartments.com/images/librariesprovider2/blank-images/parkline-apartment-in-miami-flba486679-f59b-475d-885a-ae52659d1e51.jpg?sfvrsn=264e5d72_1",
-},
-{
-    title:"Apartment #1",
-    type:"One-bedroom Apartment",
-    location: "930 W Altgeld St, Chicago, IL 60614",
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
-    img:"https://images.ctfassets.net/pdf29us7flmy/30jdDV7ig6aoq8JR1G8NSP/02ba1881d2bdfcef85e3dc7c10ced839/-IND-001-017-_How_To_Create_a_Successful_Brand_Positioning_Strategy_Final__1_.jpg"
-},
-{
-    title:"Apartment #1",
-    type:"Two-bedroom Apartment",
-    location: "930 W Altgeld St, Chicago, IL 60614",
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
-    img:"https://www.apartments.com/images/librariesprovider2/blank-images/parkline-apartment-in-miami-flba486679-f59b-475d-885a-ae52659d1e51.jpg?sfvrsn=264e5d72_1",
-},
-{
-    title:"Apartment #1",
-    type:"Two-bedroom Apartment",
-    location: "930 W Altgeld St, Chicago, IL 60614",
-    content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ipsam labore, laborum neque praesentium ullam eos quam eaque laboriosam expedita, ut dicta veritatis rerum molestiae, nemo quod accusantium repellendus corrupti?",
-    img:"https://images.ctfassets.net/pdf29us7flmy/30jdDV7ig6aoq8JR1G8NSP/02ba1881d2bdfcef85e3dc7c10ced839/-IND-001-017-_How_To_Create_a_Successful_Brand_Positioning_Strategy_Final__1_.jpg"
-},
-];
-
 // Should Add data filtering search input
 const filteredData = ref(searchFilter(""));
 function searchFilter(value) {
-  const first_option = sample_data.filter(data => {
+  const first_option = dataApartments.value.filter(data => {
     return data.title?.toLowerCase().includes(value?.toLowerCase());
   });
 
-  const second_option = sample_data.filter(data => {
-    return data.content.toLowerCase().includes(value?.toLowerCase());
+  const second_option = dataApartments.value.filter(data => {
+    return data.description.toLowerCase().includes(value?.toLowerCase());
   });
-  const third_option = sample_data.filter(data => {
-    return data.type.toLowerCase().includes(value?.toLowerCase());
+  const third_option = dataApartments.value.filter(data => {
+    return data.category.toLowerCase().includes(value?.toLowerCase());
   });
 
   if(first_option.length) {
@@ -100,17 +77,115 @@ function searchFn(value) {
   filteredData.value = searchFilter(value);
 }
 
+// this function is for updating one tourist attraction
+async function handleUpdateApartment(id, formData) {
+    return await axios.post(be_url + '/apartment/edit', {
+        id,
+        title: formData.title,
+        description: formData.description,
+        location: formData.location,
+        category: formData.category,
+        newImgs: formData.newImgs,
+        deletedImgs: formData.deletedImgIds,
+        defaultThumbnailId: formData.defaultThumbnailId
+    }, { headers: { "Content-Type": "multipart/form-data" } })
+        .then(({ data }) => {
 
-onUpdated(() => {
-  if(isApartmentModal.value || isApartmentModal.value) {
-    document.body.classList.add('overflow-hidden');
-  }
-  else {
-    document.body.classList.remove('overflow-hidden');
-  }
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            dataApartments.value = data.apartments;
+            filteredData.value = [...data.apartments];
+            return data;
+        })
+        .catch(err => {
+            // set the response msg
+            console.log(err);
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+        });
+}
+
+// function to handle the delete request
+async function handleDeleteApartment(id, deleteRef) {
+    return await axios.post(be_url + '/delete-apartment', { id })
+        .then(({ data }) => {
+            // this will remove the displaying of the delete modal
+            deleteRef.classList.remove("!translate-y-0");
+            deleteRef.classList.remove("!translate-x-0");
+
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            dataApartments.value = data.apartments;
+            filteredData.value = [...data.apartments];
+            return data;
+        })
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+        });
+}
+
+// function to handle create request
+async function handleCreateApartment(formData) {
+    return await axios.post(be_url + "/apartment/add", {
+        title: formData.title,
+        description: formData.content,
+        location: formData.location,
+        category: formData.category,
+        imgFile: formData.imgFile,
+    },
+        { headers: { "Content-Type": "multipart/form-data" } })
+        .then(({ data }) => {
+
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            dataApartments.value = data.apartments;
+            filteredData.value = [...data.apartments];
+            return data;
+        })
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+        });
+}
+
+// get all data from the server
+onMounted(() => {
+  axios.get(be_url + "/apartments")
+  .then(({data}) => {
+    dataApartments.value = data.apartments;
+    filteredData.value = [...data.apartments];
+  })
+  .catch(err => console.log(err));
 });
+
 </script>
-
-<style scoped>
-
-</style>

@@ -78,6 +78,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/tourist-attractions", [TourismController::class, "index"]);
     Route::get("/festivals", [FestivalsController::class, "index"]);
     Route::get("/businesses", [BusinessesController::class, "index"]);
+    Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
 
     // government post requests
     // edit requests
@@ -89,6 +90,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/tourist-attraction/edit", [TourismController::class, "update"]);
     Route::post("/festival/edit", [FestivalsController::class, "update"]);
     Route::post("/businesses/edit", [BusinessesController::class, "update"]);
+    Route::post("/apartment/edit", [BusinessesController::class, "updateApartment"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -103,6 +105,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/tourist-attraction/add", [TourismController::class, "create"]);
     Route::post("/festival/add", [FestivalsController::class, "create"]);
     Route::post("/businesses/add", [BusinessesController::class, "create"]);
+    Route::post("/apartment/add", [BusinessesController::class, "createApartment"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -116,6 +119,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-tourist-spot", [TourismController::class, "delete"]);
     Route::post("/delete-festival", [FestivalsController::class, "delete"]);
     Route::post("/delete-businesses", [BusinessesController::class, "delete"]);
+    Route::post("/delete-apartment", [BusinessesController::class, "deleteApartment"]);
 
     // tourism
     Route::get("/tourism/tourism", function () {
