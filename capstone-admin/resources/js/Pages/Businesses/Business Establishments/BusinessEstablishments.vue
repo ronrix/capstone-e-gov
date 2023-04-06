@@ -21,17 +21,17 @@
             </div>
 
             <!-- card businesses -->
-            <CardBusiness v-for="data in group" :data="data" :showPreviewModal="showPreviewModal" :key="data.id" :showTouristSpotPreviewModal="showPreviewModal" :handleDelete="handleDeleteFestival"  />
+            <CardBusiness v-for="data in group" :data="data" :showPreviewModal="showPreviewModal" :key="data.id" :showTouristSpotPreviewModal="showPreviewModal" :handleDelete="handleDeleteEstablishment"  />
         </div> 
 
-        <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isBusinessPreviewModal" :handleSubmit="handleUpdateFestival" />
+        <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isBusinessPreviewModal" :handleSubmit="handleUpdateEstablishment" />
 
         <!-- add new news btn -->
         <AddBtn :showAddModal="showAddNewModal" class="z-20" />
 
         <!-- add modal -->
         <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal"
-            :handleCreateSubmit="handleCreateBusiness" title="Business" :location="true" :category="true" />
+            :handleCreateSubmit="handleCreateEstablishment" title="Business" :location="true" :category="true" />
     </WrapperContent>
 </template>
 <script setup>
@@ -136,7 +136,7 @@ function showPreviewModal(data) {
 }
 
 // this function is for updating one tourist attraction
-async function handleUpdateFestival(id, formData) {
+async function handleUpdateEstablishment(id, formData) {
     return await axios.post(be_url + '/businesses/edit', {
         id,
         title: formData.title,
@@ -172,7 +172,7 @@ async function handleUpdateFestival(id, formData) {
 }
 
 // function to handle the delete request
-async function handleDeleteFestival(id, deleteRef) {
+async function handleDeleteEstablishment(id, deleteRef) {
     return await axios.post(be_url + '/delete-businesses', { id })
         .then(({ data }) => {
             // this will remove the displaying of the delete modal
@@ -202,7 +202,7 @@ async function handleDeleteFestival(id, deleteRef) {
 }
 
 // function to handle create request
-async function handleCreateBusiness(formData) {
+async function handleCreateEstablishment(formData) {
     return await axios.post(be_url + "/businesses/add", {
         title: formData.title,
         description: formData.content,
