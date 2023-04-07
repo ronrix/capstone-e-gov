@@ -1,9 +1,9 @@
 <template>
-    <div class="w-full mt-5 border h-[400px] relative">
+    <div class="w-full mt-5 h-[400px] relative">
         <!-- img -->
         <img src="/images/hero.png" alt="this is a hero picture" class="absolute mx-auto -z-10 left-0 right-0 w-screen h-full">
         <!-- img-1 -->
-        <img src="/images/hero-2.png" alt="this is a hero picture 2. mayor and a child hugging  together" class="absolute bottom-0 right-0 xl:right-96">
+        <img src="/images/hero-2.png" alt="this is a hero picture 2. mayor and a child hugging  together" class="absolute bottom-0 right-0 xl:right-96 w-[350px] -z-10">
 
         <Wrapper class="flex flex-col gap-3 items-start">
             <h1 class="text-8xl text-primary font-bold capitalize font-['display']">better pililla</h1>
