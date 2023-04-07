@@ -35,7 +35,7 @@
                         <div class="flex flex-row items-center gap-2">
                             <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
                             <button @click="addMore">
-                                <i  class="uil uil-plus-square text-2xl text-blue-600 hover:text-blue-500" ></i>
+                                <i  class="uil uil-plus-square text-2xl text-blue-600 hover:text-blue-400" ></i>
                             </button>
                         </div>
                     </label>
@@ -59,10 +59,7 @@ const add = ref(null)
 function addMore(e) {
     // console.log( e.target.parentElement);
     parent = e.target.parentElement.parentElement.parentElement;
-
-    if (parent === parent) {
         append(parent)
-    }
 
 }
 
@@ -79,22 +76,21 @@ function append(parentElement) {
     p.className = "text-xs text-gray-500";
     labels.className = "flex flex-col w-full";
     inputs.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600";
-    remove.innerHTML = `<p>remove</p>`;
-    remove.className = "bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md";
-    div2.className = "bg-white pl-2 mr-3";
+    remove.innerHTML = `<i class="uil uil-times-square"></i>`;
+    remove.className = "text-2xl text-blue-600 ml-1 hover:text-blue-400";
     div1.className = "flex flex-row items-center";
 
     p.textContent = "add the new requirment";
     labels.appendChild(p);
     div1.appendChild(inputs);
-    div2.appendChild(remove);
+    div1.appendChild(remove);
     // added the div2 to div1
     div1.appendChild(div2)
     // added all elements to label
     labels.appendChild(div1);
 
      (parentElement).appendChild(div1);
-    console.log(remove);
+    // console.log(remove);
 
     remove.addEventListener('click', function(){
        (parentElement).removeChild((parentElement).lastElementChild);

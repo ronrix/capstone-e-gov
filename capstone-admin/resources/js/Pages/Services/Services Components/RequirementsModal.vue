@@ -12,18 +12,15 @@
                 <div ref="add">
                     <label class="flex flex-col w-full">
                         <p class="text-xs text-gray-500">add the new requirement</p>
-                        <div class="flex flex-row items-center">
+                        <div class="flex flex-row  gap-2 items-center">
                             <input type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                            <div class="bg-white pl-2 mr-3"><button
-                                    class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md">remove</button>
-                            </div>
+                            <button @click="addMore" type="buttton">
+                                <i  class="uil uil-plus-square text-2xl text-blue-600 hover:text-blue-400" ></i>
+                            </button>
                         </div>
 
                     </label>
                 </div>
-
-                <input @click="addMore" type="button" value="Add more"
-                    class="text-xs text-center bg-white text-blue-500 font-bold py-1 px-2 border-[1px] border-blue-500 hover:bg-blue-500 hover:text-white rounded-lg uppercase cursor-pointer self-end">
                 <input type="submit" value="Save"
                     class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer">
             </form>
@@ -38,34 +35,40 @@ import { ref } from 'vue';
 
 
 const add = ref(null)
-function addMore() {
+function addMore(e) {
+    parent = e.target.parentElement.parentElement.parentElement;
+        append(parent)
+}
+
+function append(parentElement) {
     const labels = document.createElement('label');
     const inputs = document.createElement('input');
     const p = document.createElement('p');
-    const div1 =  document.createElement('div');
-    const div2 =  document.createElement('div');
-    const btn =  document.createElement('button');
+    const div1 = document.createElement('div');
+    const div2 = document.createElement('div');
+    const remove = document.createElement('button');
 
     p.className = "text-xs text-gray-500";
-    labels.className = "flex flex-row w-full";
+    labels.className = "flex flex-col w-full";
     inputs.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600";
-    btn.textContent = "remove";
-    btn.className = "bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md";
-    div2.className = "bg-white pl-2 mr-3";
-    div1.className = "flex flex-row items-center";
+    remove.innerHTML = `<i class="uil uil-times-square"></i>`;
+    remove.className = "text-2xl text-blue-600 ml-1 hover:text-blue-400";
+    div1.className = "flex items-center";
 
     p.textContent = "add the new requirment";
     labels.appendChild(p);
     div1.appendChild(inputs);
-    div2.appendChild(btn);
     // added the div2 to div1
-    div1.appendChild(div2)
+    div1.appendChild(remove)
     // added all elements to label
     labels.appendChild(div1);
-    
-    
 
-    add.value.appendChild(div1);
+     (parentElement).appendChild(div1);
+    // console.log(remove);
+
+    remove.addEventListener('click', function(){
+       (parentElement).removeChild((parentElement).lastElementChild);
+    })
 }
 
 
@@ -76,6 +79,6 @@ function submitFn(e) {
 
 defineProps({
     showRequirementModal: Function,
-
+    append: Function
 })
 </script>
