@@ -1,7 +1,7 @@
 <template>        
         <!-- list -->
         <div class="flex items-center gap-2 mt-2">
-          <p class="border w-[150px] text-xs md:text-sm text-gray-700 font-medium">
+          <p class="w-[150px] text-xs md:text-sm text-gray-700 font-medium">
             {{ title }}
           </p>
           <input v-model="number" type="text" class="focus:outline-blue-500 border p-2 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx]">
