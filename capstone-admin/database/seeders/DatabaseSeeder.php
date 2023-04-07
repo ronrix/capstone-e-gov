@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\About\About;
 use App\Models\Business\Business;
 use App\Models\Business\Invest;
+use App\Models\Business\Permit;
 use App\Models\Government\Executives;
 use App\Models\Government\Hotlines;
 use App\Models\Government\News;
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
         Festival::factory(10)->create();
         Business::factory(10)->create();
         Invest::factory(10)->create();
-        About::factory(10)->create();
         Service::factory(10)->create();
+        Permit::factory(10)->create();
     }
 }
