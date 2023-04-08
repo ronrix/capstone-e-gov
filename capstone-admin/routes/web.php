@@ -174,6 +174,34 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/services/mswd-department/replacement-of-senior-citizen", function () {
         return inertia("Main");
     });
+    Route::get("/services/mswd-department/government-id", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/agriculture-department/technical-assistance-for-farmer", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/agriculture-department/treatment-and-vaccination-of-animals", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/agriculture-department/distributions-of-assorted-seeds-seedling", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/agriculture-department/delivery-of-farm-fishery-inputs", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/agriculture-department/issuance-of-moa-certification", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/agriculture-department/capacity-building-enhancement-training", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/public-employment-service-office/special-program-employment-for-students", function () {
+        return inertia("Main");
+    });
+    Route::get("/Services/public-employment-service-department/job-fair", function () {
+        return inertia("Main");
+    });
+
 
 
     // about
