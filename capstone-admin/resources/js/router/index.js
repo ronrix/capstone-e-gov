@@ -97,6 +97,9 @@ export const router = createRouter({
       name: "Contacts",
       component: () => import("../Pages/About/Contacts/Contacts.vue")
     },
+    
+    //services
+
     {
       path: "/services/office-of-the-mayor/scholarship-program", 
       name: "Scholar",
@@ -122,15 +125,48 @@ export const router = createRouter({
       name: "Replacement of Senior Citizen",
       component: () => import("../Pages/Services/MSWD Department/Replacement Of Senior Citizen/ReplacementOfSeniorCitizen.vue")
     },
+    
+    // Agriculture
     {
-      path: "/services/agriculture-department/example",
-      name: "Agriculture",
-      component: () => import("../Pages/Services/Agriculture Department/Agriculture.vue")
+      path: "/Services/agriculture-department/technical-assistance-for-farmer",
+      name: "Technical Assistance for Farmer",
+      component: () => import("../Pages/Services/Agriculture Department/Technical Assistance for Farmer/TechnicalAssistanceForFarmer.vue")
     },
     {
-      path: "/services/hr-department/example", 
-      name: "Hr",
-      component: () => import("../Pages/Services/HR Department/Hr.vue")
+      path: "/Services/agriculture-department/treatment-and-vaccination-of-animals",
+      name: "Treatment and Vaccination of Animals",
+      component: () => import("../Pages/Services/Agriculture Department/Treatment and Vaccination of Animals/TreatmentAndVaccinationOfAnimals.vue")
     },
+    {
+      path: "/Services/agriculture-department/distributions-of-assorted-seeds-seedling",
+      name: "Distributions of Assorted Seeds or Seedling",
+      component: () => import("../Pages/Services/Agriculture Department/Distributions of Assorted Seeds or Seedling/DistributionsOfAssortedSeedsSeedling.vue")
+    },
+    {
+      path: "/Services/agriculture-department/delivery-of-farm-fishery-inputs",
+      name: "Delivery of Farm & Fishery Inputs",
+      component: () => import("../Pages/Services/Agriculture Department/Delivery of Farm & Fishery Inputs/DeliveryOfFarmFisheryInputs.vue")
+    },
+    {
+      path: "/Services/agriculture-department/issuance-of-moa-certification",
+      name: "Issuance of MOA Certification",
+      component: () => import("../Pages/Services/Agriculture Department/Issuance of MOA Certification/IssuanceOfMoaCertification.vue")
+    },
+    {
+      path: "/Services/agriculture-department/capacity-building-enhancement-training",
+      name: "Capacity Building Enhancement Training",
+      component: () => import("../Pages/Services/Agriculture Department/Capacity Building Enhancement Training/CapacityBuildingEnhancementTraining.vue")
+    },
+    //peso
+    {
+      path: "/Services/public-employment-service-office/special-program-employment-for-students",
+      name: "Special Program Employment for Students",
+      component: () => import("../Pages/Services/Public Employment Sevice Office/Special Program Employment for Students/SpecialProgramEmploymentForStudents.vue")
+    },
+    {
+      path: "/Services/public-employment-service-department/job-fair",
+      name: "Job Fair",
+      component: () => import("../Pages/Services/Public Employment Sevice Office/Job Fair/JobFair.vue")
+    }
   ]
 });

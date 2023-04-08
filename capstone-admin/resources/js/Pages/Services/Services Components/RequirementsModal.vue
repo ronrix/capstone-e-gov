@@ -52,7 +52,7 @@ function append(parentElement) {
     labels.className = "flex flex-col w-full";
     inputs.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600";
     remove.innerHTML = `<i class="uil uil-times-square"></i>`;
-    remove.className = "text-2xl text-blue-600 ml-1 hover:text-blue-400";
+    remove.className = "text-2xl text-red-500 ml-1 hover:text-red-400";
     div1.className = "flex items-center";
 
     p.textContent = "add the new requirment";
