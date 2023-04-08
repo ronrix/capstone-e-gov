@@ -108,17 +108,41 @@
         <div class="hidden child-sub-navs">
           <div
             class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-            <NavLink name="Example" to="/Services/agriculture-department/example" />
+            <NavLink name="Technical Assistance for Farmer" to="/Services/agriculture-department/technical-assistance-for-farmer"/>
+          </div>
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Treatment and Vaccination of Animals" to="/Services/agriculture-department/treatment-and-vaccination-of-animals" />
+          </div>
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Distributions of Assorted Seeds or Seedling" to="/Services/agriculture-department/distributions-of-assorted-seeds-seedling" />
+          </div>
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Delivery of Farm & Fishery Inputs" to="/Services/agriculture-department/delivery-of-farm-fishery-inputs" />
+          </div>
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Issuance of MOA Certification" to="/Services/agriculture-department/\issuance-of-moa-certification" />
+          </div>
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Capacity Building Enhancement Training" to="/Services/agriculture-department/capacity-building-enhancement-training" />
           </div>
         </div>
         <div @click="showChildSubNavs"
           class="cursor-pointer relative flex items-center hover:bg-blue-600 hover:text-white w-full p-2">
-          HR Department
+          Public Employment Service Office
         </div>
         <div class="hidden child-sub-navs">
           <div
             class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-            <NavLink name="Example" to="/Services/hr-department/example" />
+            <NavLink name="Special Program Employment for Students" to="/Services/public-employment-service-office/special-program-employment-for-students" />
+          </div>
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+            <NavLink name="Job Fair" to="/Services/public-employment-service-department/job-fair" />
           </div>
         </div>
       </SubNavs>
