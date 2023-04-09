@@ -1,6 +1,6 @@
 <template>
     <div class="flex justify-between items-center mb-1 mt-2 gap-2 duration-75">
-        <input type="text" @change.capture="(e) => handleUpdatePermit(e, tableId, perId, reqId, true)" :value="list" class="text-base font-normal flex-1 outline-blue-600 capitalize bg-transparent px-2 py-1 rounded-md">
+        <input type="text" @change.capture="(e) => handleUpdatePermit(e, tableId, perId, reqId, true)" :value="list" class="text-sm sm:text-base font-normal flex-1 outline-blue-600 capitalize bg-transparent px-2 py-1 rounded-md">
         <button @mouseenter="handleMouseEnter" @mouseleave="handleMouseLeave" @click="showDeleteVerificiationModal('one', permitKey, reqId)" class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md rotate-180">
             <i class="uil uil-cancel pointer-events-none"></i>
         </button>

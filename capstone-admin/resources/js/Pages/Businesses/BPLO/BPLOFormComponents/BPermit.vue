@@ -6,7 +6,7 @@
 
         <WrapperReq>
             <div class="flex items-center">
-                <input type="text" @change.capture="(e) => handleUpdatePermitTitle(e, tableId)" :value="title" class="font-bold text-xl text-gray-500 mr-5 uppercase outline-blue-600 flex-1 bg-transparent" />
+                <input type="text" @change.capture="(e) => handleUpdatePermitTitle(e, tableId)" :value="title" class="font-bold text-base sm:text-xl text-gray-500 mr-5 uppercase outline-blue-600 flex-1 bg-transparent" />
 
                 <!-- delete btn -->
                 <button @mouseleave="handleMouseLeave" @mouseenter="handleMouseEnter" @click="showDeleteVerificiationModal('whole', null, null)" class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md rotate-180">
@@ -16,7 +16,7 @@
             <!-- requirements -->
             <div v-for="lists, key, id  in JSON.parse(requirements)" :id="key" class="mt-5">
                 <div class="flex items-center">
-                    <input type="text" @change.capture="(e) => handleUpdatePermit(e, tableId, id, null, false)" :value="key" class="text-base flex-1 outline-blue-600 capitalize font-[500] w-full bg-transparent">
+                    <input type="text" @change.capture="(e) => handleUpdatePermit(e, tableId, id, null, false)" :value="key" class="text-sm sm:text-base flex-1 outline-blue-600 capitalize font-[500] w-full bg-transparent">
                     <!-- delete btn -->
                     <button @mouseleave="handleMouseLeave2" @mouseenter="handleMouseEnter2" @click="showDeleteVerificiationModal('section', key, null)" class="bg-red-100 text-red-600 hover:bg-red-600 hover:text-white px-3 text-sm rounded-md rotate-180">
                         <i class="uil uil-cancel pointer-events-none"></i>

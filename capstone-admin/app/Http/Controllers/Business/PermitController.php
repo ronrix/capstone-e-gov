@@ -311,4 +311,57 @@ class PermitController extends Controller
             return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
     }
+
+    /*
+    * this is the function for adding new permit
+    */
+    public function create(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "title" => "required",
+            "requirements" => "required|array",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        try {
+
+            # store the request ids to variables
+
+            $permit = new Permit;
+            $permit->title = $request->input("title");
+
+            $data = $request->input("requirements");
+            # formatting the json array into associative array
+            $new_data  = [];
+            foreach ($data as $item) {
+                $new_data[$item["title"]] = $item["requirements"];
+            }
+
+            $permit->requirements = json_encode($new_data);
+            $permit->save();
+
+            return response()->json([
+                'permits' => Permit::all(),
+                "res" => [
+                    "msg" => "Successfully added new requirement",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
 }

@@ -6,11 +6,11 @@
 
         <!--For File-->
         <div class="flex flex-cols items-center">
-            <span class="font-bold text-2xl text-gray-500 mr-5">Application Form</span>
+            <span class="font-bold text-lg sm:text-2xl text-gray-500 mr-5">Application Form</span>
             <div class="flex-1 border"></div>
         </div>
         <div class="flex flex-col">
-            <a class=" inline-block mt-3 text-blue-600 mr-2 font-semibold p-1">
+            <a class="inline-block mt-3 text-sm sm:text-base text-blue-600 mr-2 font-semibold p-1">
                 application_form.pdf
             </a>
             <div class="flex flex-row self-end">
@@ -38,7 +38,10 @@
             :handleDeleteWholePermit="handleDeleteWholePermit" :handleDeleteRequirement="handleDeleteRequirement"
             :handleDeleteSectionPermit="handleDeleteSectionPermit"
              />
-        <AddPermit v-if="isPermitModal" :showPermitModal="showPermitModal" />
+
+        <!-- add permit modal -->
+        <AddPermit v-if="isPermitModal" :showPermitModal="showPermitModal" :handleSubmit="handleAddNewPermit" />
+        <!-- add pdf file modal -->
         <AddPDF v-if="isAddPDF" :closeAddPDF="showAddPDF" />
 
     </WrapperContent>
@@ -170,6 +173,26 @@ function handleDeleteRequirement(tableId, permitKey, reqId) {
             }, 3000);
 
             dataRequirements.value = data.permits;
+        })
+        .catch(err => console.log(err));
+}
+
+// this function is for sending a post request to add new permit
+async function handleAddNewPermit(formData) {
+    return await axios.post(be_url + "/permit/add", {
+        title: formData.title,
+        requirements: formData.requirements,
+    })
+        .then(({ data }) => {
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            dataRequirements.value = data.permits;
+            return data;
         })
         .catch(err => console.log(err));
 }
