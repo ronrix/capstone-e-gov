@@ -61,12 +61,87 @@ class DatabaseSeeder extends Seeder
         Festival::factory(10)->create();
         Business::factory(10)->create();
         Invest::factory(10)->create();
+        Permit::factory(10)->create();
+
+        /* services */
         Service::factory()->create([
             "service_department" => "office of the mayor",
             "service_type" => "scholarship program",
             "service_requirements" => implode(",", $service_requirements),
             "service_process" => json_encode($service_process),
         ]);
-        Permit::factory(10)->create();
+        Service::factory()->create([
+            "service_department" => "office of the mayor",
+            "service_type" => "mayor clearance",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "office of the mayor",
+            "service_type" => "civil wedding",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "MSWD",
+            "service_type" => "government id",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "MSWD",
+            "service_type" => "replacement of senior citizen",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "public employment service office",
+            "service_type" => "special program employment for students",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "public employment service office",
+            "service_type" => "job fair",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        /* agriculture */
+        Service::factory()->create([
+            "service_department" => "agriculture department",
+            "service_type" => "technical assistance for farmers",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "agriculture department",
+            "service_type" => "treatment and vaccination of animals",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "agriculture department",
+            "service_type" => "distributions of assorted seeds",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "agriculture department",
+            "service_type" => "delivery of farm and fishery inputs",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "agriculture department",
+            "service_type" => "issuance of moa certification",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
+        Service::factory()->create([
+            "service_department" => "agriculture department",
+            "service_type" => "capacity building enhancement training",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
     }
 }

@@ -10,6 +10,12 @@ use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\Business\PermitController;
+use App\Http\Controllers\Services\Agriculture\CapacityBuildingEnhancementTraining;
+use App\Http\Controllers\Services\Agriculture\DeliveryOfFarmsFisheryInputs;
+use App\Http\Controllers\Services\Agriculture\DistributionsOfAssortedSeedings;
+use App\Http\Controllers\Services\Agriculture\IssuanceOfMOACertification;
+use App\Http\Controllers\Services\Agriculture\TechnicalAssistanceForFarmers;
+use App\Http\Controllers\Services\Agriculture\TreatmentVacinnationOfAnimals;
 use App\Http\Controllers\Services\CivilWeddingController;
 use App\Http\Controllers\Services\MayorClearanceController;
 use App\Http\Controllers\Services\MSWDController;
@@ -93,6 +99,12 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/replacement-senior-citizen", [MSWDController::class, "getSeniorCitizen"]);
     Route::get("/job-fair", [PublicEmploymentController::class, "getJobFair"]);
     Route::get("/spes", [PublicEmploymentController::class, "getSpes"]);
+    Route::get("/technical-assistance-for-farmers", [TechnicalAssistanceForFarmers::class, "index"]);
+    Route::get("/treatment-vaccination-of-animals", [TreatmentVacinnationOfAnimals::class, "index"]);
+    Route::get("/distributions-assorted-seeds", [DistributionsOfAssortedSeedings::class, "index"]);
+    Route::get("/delivery-farm-fishery-inputs", [DeliveryOfFarmsFisheryInputs::class, "index"]);
+    Route::get("/issuance-moa-certification", [IssuanceOfMOACertification::class, "index"]);
+    Route::get("/capacity-building-enhancement-training", [CapacityBuildingEnhancementTraining::class, "index"]);
 
     // government post requests
     // edit requests
@@ -128,6 +140,24 @@ Route::middleware(["auth"])->group(function () {
     /* public employment service office - spes */
     Route::post("/spes/requirement/edit", [PublicEmploymentController::class, "updateRequirementSPES"]);
     Route::post("/spes/process/edit", [PublicEmploymentController::class, "updateProcessSPES"]);
+    /* agriculture - technical assistance for farmers */
+    Route::post("/technical-assistance-for-farmers/requirement/edit", [TechnicalAssistanceForFarmers::class, "updateRequirement"]);
+    Route::post("/technical-assistance-for-farmers/process/edit", [TechnicalAssistanceForFarmers::class, "updateProcess"]);
+    /* agriculture - treatment vaccination of animals*/
+    Route::post("/treatment-vaccination-of-animals/requirement/edit", [TreatmentVacinnationOfAnimals::class, "updateRequirement"]);
+    Route::post("/treatment-vaccination-of-animals/process/edit", [TreatmentVacinnationOfAnimals::class, "updateProcess"]);
+    /* agriculture - distributions of assorted seeds */
+    Route::post("/distributions-assorted-seeds/requirement/edit", [DistributionsOfAssortedSeedings::class, "updateRequirement"]);
+    Route::post("/distributions-assorted-seed/process/edit", [DistributionsOfAssortedSeedings::class, "updateProcess"]);
+    /* agriculture - delivery of farm and fishery inputs */
+    Route::post("/delivery-farm-fishery-inputs/requirement/edit", [DeliveryOfFarmsFisheryInputs::class, "updateRequirement"]);
+    Route::post("/delivery-farm-fishery-inputs/process/edit", [DeliveryOfFarmsFisheryInputs::class, "updateProcess"]);
+    /* agriculture - issuance of moa certification */
+    Route::post("/issuance-moa-certification/requirement/edit", [IssuanceOfMOACertification::class, "updateRequirement"]);
+    Route::post("/issuance-moa-certification/process/edit", [IssuanceOfMOACertification::class, "updateProcess"]);
+    /* agriculture - capacity building enhancement training */
+    Route::post("/capacity-building-enhancement-training/requirement/edit", [CapacityBuildingEnhancementTraining::class, "updateRequirement"]);
+    Route::post("/capacity-building-enhancement-training/process/edit", [CapacityBuildingEnhancementTraining::class, "updateProcess"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -166,6 +196,24 @@ Route::middleware(["auth"])->group(function () {
     /* public employment service office - spes */
     Route::post("/spes/requirement/add", [PublicEmploymentController::class, "createRequirementSPES"]);
     Route::post("/spes/process/add", [PublicEmploymentController::class, "createProcessSPES"]);
+    /* agriculture - treatment assistance for farmers */
+    Route::post("/technical-assistance-for-farmers/requirement/add", [TechnicalAssistanceForFarmers::class, "createRequirement"]);
+    Route::post("/technical-assistance-for-farmers/process/add", [TechnicalAssistanceForFarmers::class, "createProcess"]);
+    /* agriculture - treatment vaccination of animals*/
+    Route::post("/treatment-vaccination-of-animals/requirement/add", [TreatmentVacinnationOfAnimals::class, "createRequirement"]);
+    Route::post("/treatment-vaccination-of-animals/process/add", [TreatmentVacinnationOfAnimals::class, "createProcess"]);
+    /* agriculture - distribution of assorted seeds */
+    Route::post("/distributions-assorted-seeds/requirement/add", [DistributionsOfAssortedSeedings::class, "createRequirement"]);
+    Route::post("/distributions-assorted-seeds/process/add", [DistributionsOfAssortedSeedings::class, "createProcess"]);
+    /* agriculture - delivery farm and fishery inputs */
+    Route::post("/delivery-farm-fishery-inputs/requirement/add", [DeliveryOfFarmsFisheryInputs::class, "createRequirement"]);
+    Route::post("/delivery-farm-fishery-inputs/process/add", [DeliveryOfFarmsFisheryInputs::class, "createProcess"]);
+    /* agriculture - issuance of moa certification */
+    Route::post("/issuance-moa-certification/requirement/add", [IssuanceOfMOACertification::class, "createRequirement"]);
+    Route::post("/issuance-moa-certification/process/add", [IssuanceOfMOACertification::class, "createProcess"]);
+    /* agriculture - capacity of building enhancement training */
+    Route::post("/capacity-building-enhancement-training/requirement/add", [CapacityBuildingEnhancementTraining::class, "createRequirement"]);
+    Route::post("/capacity-building-enhancement-training/process/add", [CapacityBuildingEnhancementTraining::class, "createProcess"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -202,8 +250,26 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/job-fair/requirement/delete", [PublicEmploymentController::class, "deleteRequirement"]);
     Route::post("/job-fair/process/delete", [PublicEmploymentController::class, "deleteProcess"]);
     /* public employment service office - spes */
-    Route::post("/spesr/requirement/delete", [PublicEmploymentController::class, "deleteRequirementSPES"]);
+    Route::post("/spes/requirement/delete", [PublicEmploymentController::class, "deleteRequirementSPES"]);
     Route::post("/spes/process/delete", [PublicEmploymentController::class, "deleteProcessSPES"]);
+    /* agriculture - technical assistance for farmers */
+    Route::post("/technical-assistance-for-farmers/requirement/delete", [TechnicalAssistanceForFarmers::class, "deleteRequirement"]);
+    Route::post("/technical-assistance-for-farmers/process/delete", [TechnicalAssistanceForFarmers::class, "deleteProcess"]);
+    /* agriculture - treatment vaccination of animals */
+    Route::post("/treatment-vaccination-of-animals/requirement/delete", [TreatmentVacinnationOfAnimals::class, "deleteRequirement"]);
+    Route::post("/treatment-vaccination-of-animals/process/delete", [TreatmentVacinnationOfAnimals::class, "deleteProcess"]);
+    /* agriculture - distributions of assorted seeds */
+    Route::post("/distributions-assorted-seeds/requirement/delete", [DistributionsOfAssortedSeedings::class, "deleteRequirement"]);
+    Route::post("/distributions-assorted-seeds/process/delete", [DistributionsOfAssortedSeedings::class, "deleteProcess"]);
+    /* agriculture - delivery of farm and fishery inputs */
+    Route::post("/delivery-farm-fishery-inputs/requirement/delete", [DeliveryOfFarmsFisheryInputs::class, "deleteRequirement"]);
+    Route::post("/delivery-farm-fishery-inputs/process/delete", [DeliveryOfFarmsFisheryInputs::class, "deleteProcess"]);
+    /* agriculture - issuance of moa certification */
+    Route::post("/issuance-moa-certification/requirement/delete", [IssuanceOfMOACertification::class, "deleteRequirement"]);
+    Route::post("/issuance-moa-certification/process/delete", [IssuanceOfMOACertification::class, "deleteProcess"]);
+    /* agriculture - capacity of building enhancement training */
+    Route::post("/capacity-building-enhancement-training/requirement/delete", [CapacityBuildingEnhancementTraining::class, "deleteRequirement"]);
+    Route::post("/capacity-building-enhancement-training/process/delete", [CapacityBuildingEnhancementTraining::class, "deleteProcess"]);
 
 
     // tourism
@@ -253,28 +319,28 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/services/mswd-department/government-id", function () {
         return inertia("Main");
     });
-    Route::get("/Services/agriculture-department/technical-assistance-for-farmer", function () {
+    Route::get("/services/agriculture-department/technical-assistance-for-farmer", function () {
         return inertia("Main");
     });
-    Route::get("/Services/agriculture-department/treatment-and-vaccination-of-animals", function () {
+    Route::get("/services/agriculture-department/treatment-and-vaccination-of-animals", function () {
         return inertia("Main");
     });
-    Route::get("/Services/agriculture-department/distributions-of-assorted-seeds-seedling", function () {
+    Route::get("/services/agriculture-department/distributions-of-assorted-seeds-seedling", function () {
         return inertia("Main");
     });
-    Route::get("/Services/agriculture-department/delivery-of-farm-fishery-inputs", function () {
+    Route::get("/services/agriculture-department/delivery-of-farm-fishery-inputs", function () {
         return inertia("Main");
     });
-    Route::get("/Services/agriculture-department/issuance-of-moa-certification", function () {
+    Route::get("/services/agriculture-department/issuance-of-moa-certification", function () {
         return inertia("Main");
     });
-    Route::get("/Services/agriculture-department/capacity-building-enhancement-training", function () {
+    Route::get("/services/agriculture-department/capacity-building-enhancement-training", function () {
         return inertia("Main");
     });
-    Route::get("/Services/public-employment-service-office/special-program-employment-for-students", function () {
+    Route::get("/services/public-employment-service-office/special-program-employment-for-students", function () {
         return inertia("Main");
     });
-    Route::get("/Services/public-employment-service-department/job-fair", function () {
+    Route::get("/services/public-employment-service-department/job-fair", function () {
         return inertia("Main");
     });
 
