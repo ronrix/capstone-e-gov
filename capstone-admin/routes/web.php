@@ -10,6 +10,7 @@ use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\Business\PermitController;
+use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
 
@@ -81,6 +82,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/businesses", [BusinessesController::class, "index"]);
     Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
     Route::get("/permits", [PermitController::class, "index"]);
+    Route::get("/scholarship", [ServicesController::class, "getScholarshipProgram"]);
 
     // government post requests
     // edit requests
@@ -95,6 +97,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/apartment/edit", [BusinessesController::class, "updateApartment"]);
     Route::post("/permit/edit", [PermitController::class, "update"]);
     Route::post("/permit/title/edit", [PermitController::class, "updatePermitTitle"]);
+    Route::post("/scholarship/requirement/edit", [ServicesController::class, "updateRequirement"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -112,6 +115,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/apartment/add", [BusinessesController::class, "createApartment"]);
     Route::post("/permit/add", [PermitController::class, "create"]);
     Route::post("/permit/add/requirement", [PermitController::class, "saveNewRequirement"]);
+    Route::post("/scholarship/requirement/add", [ServicesController::class, "createRequirement"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -129,6 +133,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-whole-permit", [PermitController::class, "deletePermit"]);
     Route::post("/delete-section-permit", [PermitController::class, "deleteSectionPermit"]);
     Route::post("/delete-permit-req", [PermitController::class, "deleteOneReq"]);
+    Route::post("/scholarship/requirement/delete", [ServicesController::class, "deleteRequirement"]);
 
     // tourism
     Route::get("/tourism/tourism", function () {
