@@ -22,8 +22,8 @@
 
         <h3 class="font-bold text-xl mt-3 mb-3 text-gray-800">What's the process?</h3>
         <div class="w-full flex flex-col bg-white rounded-lg mt-5 p-4">
-            <Table>
-                <Rows v-for="(data, index) in processes" :data="data" />
+            <Table :handleCreateProcess="handleCreateProcess">
+                <Rows v-for="(data, index) in processes" :data="data" :idx="index" :handleUpdateProcess="handleUpdateProcess" :handleDeleteProcess="handleDeleteProcess" />
             </Table>
             
         </div>
@@ -66,7 +66,7 @@ function showRequirementModal() {
     isRequirementModal.value = !isRequirementModal.value;
 }
 
-// function to add new requirement
+// function to delete requirement
 async function handleDeleteRequirement(arrId) {
     return await axios.post(be_url + "/scholarship/requirement/delete", {
         rowId: dataScholarship.value.id,
@@ -114,6 +114,82 @@ async function handleCreateRequirement(newRequirement) {
 
         // get all the lists of requirements by looping through the data.scholarship
         requirements.value = data.scholarship[0].service_requirements.split(",");
+        return data;
+    })
+    .catch(err =>  {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
+}
+
+// function to update the process
+async function handleUpdateProcess(e, arrId, key) {
+    return await axios.post(be_url + "/scholarship/process/edit", {
+        rowId: dataScholarship.value.id,
+        arrId,
+        newValue: e.target.value,
+        key
+    })
+    .then(({data}) => {
+       console.log(data.scholarship[0]);
+    })
+    .catch(err => console.log(err));
+}
+
+// function to delete a process
+async function handleDeleteProcess(arrId) {
+    return await axios.post(be_url + "/scholarship/process/delete", {
+        rowId: dataScholarship.value.id,
+        arrId
+    })
+    .then(({data}) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+
+        dataScholarship.value = data.scholarship[0];
+
+        // get all the services processes by looping through the data.scholarship
+        processes.value = JSON.parse(data.scholarship[0].service_process);
+        return data;
+    })
+    .catch(err =>  {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
+}
+
+// function to add new requirement
+async function handleCreateProcess(formData) {
+    return await axios.post(be_url + "/scholarship/process/add", {
+        rowId: dataScholarship.value.id,
+        client_steps: formData.client_steps,
+        agent_steps: formData.agent_steps,
+        fees: formData.fees,
+        process_time: formData.process_time,
+    })
+    .then(({data}) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        dataScholarship.value = data.scholarship[0];
+
+        // get all the services processes by looping through the data.scholarship
+        processes.value = JSON.parse(data.scholarship[0].service_process);
         return data;
     })
     .catch(err =>  {

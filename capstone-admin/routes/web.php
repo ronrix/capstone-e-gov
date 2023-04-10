@@ -98,6 +98,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/permit/edit", [PermitController::class, "update"]);
     Route::post("/permit/title/edit", [PermitController::class, "updatePermitTitle"]);
     Route::post("/scholarship/requirement/edit", [ServicesController::class, "updateRequirement"]);
+    Route::post("/scholarship/process/edit", [ServicesController::class, "updateProcess"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -116,6 +117,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/permit/add", [PermitController::class, "create"]);
     Route::post("/permit/add/requirement", [PermitController::class, "saveNewRequirement"]);
     Route::post("/scholarship/requirement/add", [ServicesController::class, "createRequirement"]);
+    Route::post("/scholarship/process/add", [ServicesController::class, "createProcess"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -134,6 +136,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-section-permit", [PermitController::class, "deleteSectionPermit"]);
     Route::post("/delete-permit-req", [PermitController::class, "deleteOneReq"]);
     Route::post("/scholarship/requirement/delete", [ServicesController::class, "deleteRequirement"]);
+    Route::post("/scholarship/process/delete", [ServicesController::class, "deleteProcess"]);
 
     // tourism
     Route::get("/tourism/tourism", function () {

@@ -19,7 +19,7 @@
         <i class="uil uil-plus-circle m-0 ml-2"></i>
     </button>
     <!-- Services Modal -->
-    <ServicesModal v-if="isServiceModal" :showServiceModal="showServiceModal" />
+    <ServicesModal v-if="isServiceModal" :showServiceModal="showServiceModal" :handleCreateProcess="handleCreateProcess" />
 </template>
 
 <script setup>
@@ -31,6 +31,7 @@ function showServiceModal() {
     isServiceModal.value = !isServiceModal.value;
 }
 
+defineProps({
+    handleCreateProcess: Function
+});
 </script>
-
-<style scoped></style>
