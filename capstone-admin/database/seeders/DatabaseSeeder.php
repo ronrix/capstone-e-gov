@@ -29,6 +29,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $service_requirements = ["Proof of Enrollment", "Photocopy of School ID", "Letter of Request"];
+        $service_process = [
+            [
+                "client_steps" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
+                "agency_steps" => "office of the mayor",
+                "fees" => "1000",
+                "process_time" => "1min"
+            ],
+            [
+                "client_steps" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
+                "agency_steps" => "office of the mayor",
+                "fees" => "1000",
+                "process_time" => "1min"
+            ],
+        ];
 
         User::factory()->create([
             'name' => 'Test User',
@@ -46,7 +61,12 @@ class DatabaseSeeder extends Seeder
         Festival::factory(10)->create();
         Business::factory(10)->create();
         Invest::factory(10)->create();
-        Service::factory(10)->create();
+        Service::factory()->create([
+            "service_department" => "office of the mayor",
+            "service_type" => "scholarship program",
+            "service_requirements" => implode(",", $service_requirements),
+            "service_process" => json_encode($service_process),
+        ]);
         Permit::factory(10)->create();
     }
 }

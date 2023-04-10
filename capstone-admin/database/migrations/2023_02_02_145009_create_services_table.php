@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->string("service_department");
+            $table->string("service_type");
+            $table->longText("service_requirements");
+            $table->json("service_process");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
