@@ -12,6 +12,8 @@ use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\Business\PermitController;
 use App\Http\Controllers\Services\CivilWeddingController;
 use App\Http\Controllers\Services\MayorClearanceController;
+use App\Http\Controllers\Services\MSWDController;
+use App\Http\Controllers\Services\PublicEmploymentController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
@@ -87,6 +89,10 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/scholarship", [ServicesController::class, "getScholarshipProgram"]);
     Route::get("/mayor-clearance", [MayorClearanceController::class, "getMayorClearance"]);
     Route::get("/civil-wedding", [CivilWeddingController::class, "getCivilWedding"]);
+    Route::get("/government-id", [MSWDController::class, "getGovernmentId"]);
+    Route::get("/replacement-senior-citizen", [MSWDController::class, "getSeniorCitizen"]);
+    Route::get("/job-fair", [PublicEmploymentController::class, "getJobFair"]);
+    Route::get("/spes", [PublicEmploymentController::class, "getSpes"]);
 
     // government post requests
     // edit requests
@@ -110,6 +116,18 @@ Route::middleware(["auth"])->group(function () {
     /* civil  wedding */
     Route::post("/civil-wedding/requirement/edit", [CivilWeddingController::class, "updateRequirement"]);
     Route::post("/civil-wedding/process/edit", [CivilWeddingController::class, "updateProcess"]);
+    /* mswd  government id */
+    Route::post("/government-id/requirement/edit", [MSWDController::class, "updateRequirement"]);
+    Route::post("/government-id/process/edit", [MSWDController::class, "updateProcess"]);
+    /* mswd  replacement of senior citizen */
+    Route::post("/replacement-senior-citizen/requirement/edit", [MSWDController::class, "updateRequirementSenior"]);
+    Route::post("/replacement-senior-citizen/process/edit", [MSWDController::class, "updateProcessSenior"]);
+    /* public employment service office - job fair */
+    Route::post("/job-fair/requirement/edit", [PublicEmploymentController::class, "updateRequirement"]);
+    Route::post("/job-fair/process/edit", [PublicEmploymentController::class, "updateProcess"]);
+    /* public employment service office - spes */
+    Route::post("/spes/requirement/edit", [PublicEmploymentController::class, "updateRequirementSPES"]);
+    Route::post("/spes/process/edit", [PublicEmploymentController::class, "updateProcessSPES"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -136,6 +154,18 @@ Route::middleware(["auth"])->group(function () {
     /* civil wedding */
     Route::post("/civil-wedding/requirement/add", [CivilWeddingController::class, "createRequirement"]);
     Route::post("/civil-wedding/process/add", [CivilWeddingController::class, "createProcess"]);
+    /* mswd government id */
+    Route::post("/government-id/requirement/add", [MSWDController::class, "createRequirement"]);
+    Route::post("/government-id/process/add", [MSWDController::class, "createProcess"]);
+    /* mswd replacement of senior citizen */
+    Route::post("/replacement-senior-citizen/requirement/add", [MSWDController::class, "createRequirementSenior"]);
+    Route::post("/replacement-senior-citizen/process/add", [MSWDController::class, "createProcessSenior"]);
+    /* public employment service office - job fair */
+    Route::post("/job-fair/requirement/add", [PublicEmploymentController::class, "createRequirement"]);
+    Route::post("/job-fair/process/add", [PublicEmploymentController::class, "createProcess"]);
+    /* public employment service office - spes */
+    Route::post("/spes/requirement/add", [PublicEmploymentController::class, "createRequirementSPES"]);
+    Route::post("/spes/process/add", [PublicEmploymentController::class, "createProcessSPES"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -162,6 +192,19 @@ Route::middleware(["auth"])->group(function () {
     /* civil wedding */
     Route::post("/civil-wedding/requirement/delete", [CivilWeddingController::class, "deleteRequirement"]);
     Route::post("/civil-wedding/process/delete", [CivilWeddingController::class, "deleteProcess"]);
+    /* mswd government id */
+    Route::post("/government-id/requirement/delete", [MSWDController::class, "deleteRequirement"]);
+    Route::post("/government-id/process/delete", [MSWDController::class, "deleteProcess"]);
+    /* mswd replacement of senior citizen */
+    Route::post("/replacement-senior-citizen/requirement/delete", [MSWDController::class, "deleteRequirementSenior"]);
+    Route::post("/replacement-senior-citizen/process/delete", [MSWDController::class, "deleteProcessSenior"]);
+    /* public employment service office - job fair */
+    Route::post("/job-fair/requirement/delete", [PublicEmploymentController::class, "deleteRequirement"]);
+    Route::post("/job-fair/process/delete", [PublicEmploymentController::class, "deleteProcess"]);
+    /* public employment service office - spes */
+    Route::post("/spesr/requirement/delete", [PublicEmploymentController::class, "deleteRequirementSPES"]);
+    Route::post("/spes/process/delete", [PublicEmploymentController::class, "deleteProcessSPES"]);
+
 
     // tourism
     Route::get("/tourism/tourism", function () {
