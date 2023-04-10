@@ -10,6 +10,8 @@ use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\Business\PermitController;
+use App\Http\Controllers\Services\CivilWeddingController;
+use App\Http\Controllers\Services\MayorClearanceController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
@@ -83,6 +85,8 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
     Route::get("/permits", [PermitController::class, "index"]);
     Route::get("/scholarship", [ServicesController::class, "getScholarshipProgram"]);
+    Route::get("/mayor-clearance", [MayorClearanceController::class, "getMayorClearance"]);
+    Route::get("/civil-wedding", [CivilWeddingController::class, "getCivilWedding"]);
 
     // government post requests
     // edit requests
@@ -97,8 +101,15 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/apartment/edit", [BusinessesController::class, "updateApartment"]);
     Route::post("/permit/edit", [PermitController::class, "update"]);
     Route::post("/permit/title/edit", [PermitController::class, "updatePermitTitle"]);
+    /* scholarship */
     Route::post("/scholarship/requirement/edit", [ServicesController::class, "updateRequirement"]);
     Route::post("/scholarship/process/edit", [ServicesController::class, "updateProcess"]);
+    /* mayor's  clearance */
+    Route::post("/mayor-clearance/requirement/edit", [MayorClearanceController::class, "updateRequirement"]);
+    Route::post("/mayor-clearance/process/edit", [MayorClearanceController::class, "updateProcess"]);
+    /* civil  wedding */
+    Route::post("/civil-wedding/requirement/edit", [CivilWeddingController::class, "updateRequirement"]);
+    Route::post("/civil-wedding/process/edit", [CivilWeddingController::class, "updateProcess"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -116,8 +127,15 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/apartment/add", [BusinessesController::class, "createApartment"]);
     Route::post("/permit/add", [PermitController::class, "create"]);
     Route::post("/permit/add/requirement", [PermitController::class, "saveNewRequirement"]);
+    /* scholarship */
     Route::post("/scholarship/requirement/add", [ServicesController::class, "createRequirement"]);
     Route::post("/scholarship/process/add", [ServicesController::class, "createProcess"]);
+    /* mayor's clearance */
+    Route::post("/mayor-clearance/requirement/add", [MayorClearanceController::class, "createRequirement"]);
+    Route::post("/mayor-clearance/process/add", [MayorClearanceController::class, "createProcess"]);
+    /* civil wedding */
+    Route::post("/civil-wedding/requirement/add", [CivilWeddingController::class, "createRequirement"]);
+    Route::post("/civil-wedding/process/add", [CivilWeddingController::class, "createProcess"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -135,8 +153,15 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-whole-permit", [PermitController::class, "deletePermit"]);
     Route::post("/delete-section-permit", [PermitController::class, "deleteSectionPermit"]);
     Route::post("/delete-permit-req", [PermitController::class, "deleteOneReq"]);
+    /* scholarship */
     Route::post("/scholarship/requirement/delete", [ServicesController::class, "deleteRequirement"]);
     Route::post("/scholarship/process/delete", [ServicesController::class, "deleteProcess"]);
+    /* mayor's clearance */
+    Route::post("/mayor-clearance/requirement/delete", [MayorClearanceController::class, "deleteRequirement"]);
+    Route::post("/mayor-clearance/process/delete", [MayorClearanceController::class, "deleteProcess"]);
+    /* civil wedding */
+    Route::post("/civil-wedding/requirement/delete", [CivilWeddingController::class, "deleteRequirement"]);
+    Route::post("/civil-wedding/process/delete", [CivilWeddingController::class, "deleteProcess"]);
 
     // tourism
     Route::get("/tourism/tourism", function () {

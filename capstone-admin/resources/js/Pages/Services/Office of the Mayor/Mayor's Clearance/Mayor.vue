@@ -1,78 +1,221 @@
 <template>
-  <HeadTitle title="Mayor's Clearance"></HeadTitle>
+    <HeadTitle title="Mayor's Clearance"></HeadTitle>
     <WrapperContent>
-        <h3 class="font-bold text-xl mb-3 text-gray-800">Checklist of Requiremnts</h3>
-        <WrapperReq>
-            <div>
-                <ListReq title="Proof of Enrollment" />
-                <ListReq title="Copy of Grades of Last Semester" />
-                <ListReq title="Photocopy of School ID" />
-                <ListReq title="Barangay Clearance/ Indigency" />
+        <!-- response message -->
+        <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
+
+        <h3 class="font-bold text-xl mb-3 text-gray-800">Checklist of Requirements</h3>
+        <div class="bg-white rounded-lg p-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
+                <ListReq v-for="(list, idx) in requirements" :title="list" :idx="idx" :handleUpdateRequirement="handleUpdateRequirement" :handleDeleteRequirement="handleDeleteRequirement" />
             </div>
-            <div>
-                <ListReq title="Letter of Request" />
-                <ListReq title="Accomplished Application Form" />
-                <ListReq title="1pc 2 x 2 Photo" />
-            </div>
-        </WrapperReq>
+
+            <!-- add new btn -->
+            <button @click="showRequirementModal"
+                class="ml-auto mr-0 border border-blue-600 text-blue-600 hover:bg-blue-500 hover:text-white mt-5 flex items-center justify-center rounded-md px-3 uppercase text-md font-bold">
+                new
+                <i class="uil uil-plus-circle m-0 ml-2"></i>
+            </button>
+            <!-- Services Modal -->
+            <RequirementsModal v-if="isRequirementModal" :showRequirementModal="showRequirementModal" :handleCreateRequirement="handleCreateRequirement" />
+        </div>
+
         <h3 class="font-bold text-xl mt-3 mb-3 text-gray-800">What's the process?</h3>
         <div class="w-full flex flex-col bg-white rounded-lg mt-5 p-4">
-            <Table>
-                <TableHeader v-for="(header, index) in thead" :header="header" />
-
-                <Rows v-for="(data, index) in table" :data="data" />
+            <Table :handleCreateProcess="handleCreateProcess">
+                <Rows v-for="(data, index) in processes" :data="data" :idx="index" :handleUpdateProcess="handleUpdateProcess" :handleDeleteProcess="handleDeleteProcess" />
             </Table>
+            
         </div>
-      
     </WrapperContent>
 </template>
 
 <script setup>
-import WrapperContent from '../../../../Components/WrapperContent.vue';
-import WrapperReq from '../../Services Components/WrapperReq.vue';
 import ListReq from '../../Services Components/ListReq.vue';
-import TableHeader from '../../Services Components/TableHeader.vue';
-import Table from '../../Services Components/Table.vue';
 import Rows from '../../Services Components/Rows.vue';
+import Table from '../../Services Components/Table.vue';
+import RequirementsModal from '../../Services Components/RequirementsModal.vue';
+
+import { ref, onMounted } from "vue";
+import axios from 'axios';
+import { be_url } from '../../../../config/config';
+import Notifcation from '../../../../Components/Notifcation.vue';
+
+const dataMayorClearance = ref([]);
+const processes = ref([]);
+const requirements = ref([]);
+const resMsg = ref();
+
+// function to update one list of requirement with change.capture event.
+// will update the data as soon as the user change the list and blur out of the input
+function handleUpdateRequirement(e, arrId) {
+    axios.post(be_url + "/mayor-clearance/requirement/edit", {
+        rowId: dataMayorClearance.value.id,
+        arrId,
+        newValue: e.target.value
+    })
+    .then(({data}) => {
+       console.log(data.mayor_clearance);
+    })
+    .catch(err => console.log(err));
+}
 
 
-const table = [
-    {
-        client: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-        agency: "Officeof the Mayor",
-        fees: "",
-        time: "1 min"
-    },
-    {
-        client: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the i when an unknown printer took a galley of type and scrambled",
-        agency: "Officeof the Mayor",
-        fees: "",
-        time: "1 min"
-    },
-    {
-        client: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's",
-        agency: "Officeof the Mayor",
-        fees: "",
-        time: "1 min"
-    },
-    {
-        client: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-        agency: "Officeof the Mayor",
-        fees: "",
-        time: "1 min"
-    }
-]
-const thead = [
-    {
-        clientHead: "Client Steps",
-        agencyHead: "Agency Steps",
-        feesHead: "Fees to Paid",
-        processHead: "Processing Time",
-        action: "Action"
+const isRequirementModal = ref(false);
+function showRequirementModal() {
+    isRequirementModal.value = !isRequirementModal.value;
+}
 
-    }
-]
+// function to delete requirement
+async function handleDeleteRequirement(arrId) {
+    return await axios.post(be_url + "/mayor-clearance/requirement/delete", {
+        rowId: dataMayorClearance.value.id,
+        arrId
+    })
+    .then(({data}) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+
+        dataMayorClearance.value = data.mayor_clearance[0];
+
+        // get all the lists of requirements by looping through the data.mayor_clearance
+        requirements.value = data.mayor_clearance[0].service_requirements.split(",");
+        return data;
+    })
+    .catch(err =>  {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
+}
+
+// function to add new requirement
+async function handleCreateRequirement(newRequirement) {
+    return await axios.post(be_url + "/mayor-clearance/requirement/add", {
+        rowId: dataMayorClearance.value.id,
+        newRequirement
+    })
+    .then(({data}) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+
+        dataMayorClearance.value = data.mayor_clearance[0];
+
+        // get all the lists of requirements by looping through the data.mayor_clearance
+        requirements.value = data.mayor_clearance[0].service_requirements.split(",");
+        return data;
+    })
+    .catch(err =>  {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
+}
+
+// function to update the process
+async function handleUpdateProcess(e, arrId, key) {
+    return await axios.post(be_url + "/mayor-clearance/process/edit", {
+        rowId: dataMayorClearance.value.id,
+        arrId,
+        newValue: e.target.value,
+        key
+    })
+    .then(({data}) => {
+       console.log(data.mayor_clearance[0]);
+    })
+    .catch(err => console.log(err));
+}
+
+// function to delete a process
+async function handleDeleteProcess(arrId) {
+    return await axios.post(be_url + "/mayor-clearance/process/delete", {
+        rowId: dataMayorClearance.value.id,
+        arrId
+    })
+    .then(({data}) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+
+        dataMayorClearance.value = data.mayor_clearance[0];
+
+        // get all the services processes by looping through the data.mayor_clearance
+        processes.value = JSON.parse(data.mayor_clearance[0].service_process);
+        return data;
+    })
+    .catch(err =>  {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
+}
+
+// function to add new requirement
+async function handleCreateProcess(formData) {
+    return await axios.post(be_url + "/mayor-clearance/process/add", {
+        rowId: dataMayorClearance.value.id,
+        client_steps: formData.client_steps,
+        agent_steps: formData.agent_steps,
+        fees: formData.fees,
+        process_time: formData.process_time,
+    })
+    .then(({data}) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        dataMayorClearance.value = data.mayor_clearance[0];
+
+        // get all the services processes by looping through the data.mayor_clearance
+        processes.value = JSON.parse(data.mayor_clearance[0].service_process);
+        return data;
+    })
+    .catch(err =>  {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
+}
+
+// get data from the server
+onMounted(() => {
+    axios.get(be_url + "/mayor-clearance")
+    .then(({ data }) => {
+        // storing the whole data
+        dataMayorClearance.value = data.mayor_clearance[0];
+        
+        // get all the services processes by looping through the data.mayor_clearance
+        processes.value = JSON.parse(data.mayor_clearance[0].service_process);
+
+        // get all the lists of requirements by looping through the data.mayor_clearacne
+        requirements.value = data.mayor_clearance[0].service_requirements.split(",");
+    })
+    .catch(err => console.log(err));
+});
 
 </script>
-
-<style lang="scss" scoped></style>
