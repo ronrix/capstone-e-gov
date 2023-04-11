@@ -13,5 +13,10 @@ export const router = createRouter({
     * copy the example above
     * just modify it based on the components and routes that you're working on
     */ 
+    {
+      path: "/tourism",
+      name: "Tourism",
+      component: () => import("../Pages/Tourism/TourismPage.vue")
+    },
   ]
 })
