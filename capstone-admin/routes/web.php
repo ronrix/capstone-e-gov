@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\About\AboutController;
 use App\Http\Controllers\Business\BusinessesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Government\NewsController;
@@ -105,6 +106,8 @@ Route::middleware(["auth"])->group(function () {
     Route::get("/delivery-farm-fishery-inputs", [DeliveryOfFarmsFisheryInputs::class, "index"]);
     Route::get("/issuance-moa-certification", [IssuanceOfMOACertification::class, "index"]);
     Route::get("/capacity-building-enhancement-training", [CapacityBuildingEnhancementTraining::class, "index"]);
+    Route::get("/official-seal", [AboutController::class, "getOfficialSeal"]);
+    Route::get("/contacts", [AboutController::class, "getContacts"]);
 
     // government post requests
     // edit requests
@@ -158,6 +161,11 @@ Route::middleware(["auth"])->group(function () {
     /* agriculture - capacity building enhancement training */
     Route::post("/capacity-building-enhancement-training/requirement/edit", [CapacityBuildingEnhancementTraining::class, "updateRequirement"]);
     Route::post("/capacity-building-enhancement-training/process/edit", [CapacityBuildingEnhancementTraining::class, "updateProcess"]);
+    /* official seal */
+    Route::post("/official-seal/edit", [AboutController::class, "updateOfficialSeal"]);
+    Route::post("/official-seal/symbol-img/save", [AboutController::class, "saveSymbolImg"]);
+    /* contacts */
+    Route::post("/contacts/edit", [AboutController::class, "updateContacts"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -214,6 +222,11 @@ Route::middleware(["auth"])->group(function () {
     /* agriculture - capacity of building enhancement training */
     Route::post("/capacity-building-enhancement-training/requirement/add", [CapacityBuildingEnhancementTraining::class, "createRequirement"]);
     Route::post("/capacity-building-enhancement-training/process/add", [CapacityBuildingEnhancementTraining::class, "createProcess"]);
+    /* official seal */
+    Route::post("/official-seal/add", [AboutController::class, "createOfficialSeal"]);
+    /* contacts */
+    Route::post("/contacts/add", [AboutController::class, "createContact"]);
+    Route::post("/socmed/add", [AboutController::class, "createNewSocialLink"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -270,6 +283,10 @@ Route::middleware(["auth"])->group(function () {
     /* agriculture - capacity of building enhancement training */
     Route::post("/capacity-building-enhancement-training/requirement/delete", [CapacityBuildingEnhancementTraining::class, "deleteRequirement"]);
     Route::post("/capacity-building-enhancement-training/process/delete", [CapacityBuildingEnhancementTraining::class, "deleteProcess"]);
+    /* official seal */
+    Route::post("/official-seal/delete", [AboutController::class, "deleteOfficialSeal"]);
+    /* contacts */
+    Route::post("/contact/delete", [AboutController::class, "deleteContact"]);
 
 
     // tourism

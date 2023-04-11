@@ -1,6 +1,8 @@
 <template>
   <HeadTitle title="Official Seals"></HeadTitle>
   <WrapperContent>
+    <!-- response message -->
+    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
     <h1 class="font-bold text-xl text-center mb-5 lg:mb-3 text-gray-800 uppercase">PHOTOGRAPHS AND SYMBOLISMS OF<span
         class="block">COMPONENT OF PILILLA LOGO</span></h1>
@@ -8,25 +10,32 @@
     <div class="flex flex-col">
       <div class="w-[460px] md:w-[480px] lg:w-[500px] flex flex-col bg-white rounded-lg pt-0 self-center">
         <img class="w-[460px] md:w-[480px] lg:w-[500px]"
-          src="https://pilillarizal.gov.ph/wp-content/uploads/2022/12/logo-symbolism-0_1_orig.jpg" alt="">
+          :src="showSymbolImg ? showSymbolImg : validURL(dataOfficialSeal?.symbol_logo_img_link) ? dataOfficialSeal?.symbol_logo_img_link : be_url + '/' + dataOfficialSeal?.symbol_logo_img_link"
+          alt="">
 
-          <button @click="showInputFileSelection"
-            class="px-3 py-2 mt-10 mb-0 md:mb-2 md:mr-2 font-bold text-xs border border-blue-500  text-white bg-blue-600 w-full md:w-[118px] rounded-lg  hover:bg-blue-500 self-end items-center">Change
-            Image</button>
-          <input ref="inputFile" @change="handleSelectFile" type="file" class="hidden" />
+        <button v-if="!showSymbolImg" type="button" @click="showInputFileSelection"
+          class="px-3 py-2 mt-10 mb-0 md:mb-2 md:mr-2 font-bold text-xs border border-blue-600 w-full md:w-[118px] rounded-lg  hover:bg-blue-600 hover:text-white self-end items-center">Change
+          Image</button>
+        <input ref="inputFile" @change="handleSelectFile" type="file" class="hidden" />
+        <!-- saving the new img when the original image change. this button will show -->
+        <button v-if="showSymbolImg" @click="saveNewSymbolImg" type="button"
+          class="active:-translate-y-1 px-3 py-2 mt-10 mb-0 md:mb-2 md:mr-2 font-bold text-xs border bg-blue-600 w-full md:w-[118px] text-white rounded-lg self-end items-center">save</button>
       </div>
     </div>
 
-  <!-- card -->
-    <CardSeal v-for="(data, index) in seals" :data="data" :index="index"  :showPreviewModal="showPreviewModal"/>
+    <!-- card -->
+    <CardSeal v-for="(data, index) in logos" :data="data" :index="index" :showPreviewModal="showPreviewModal"
+      :handleDelete="handleDeleteOfficialSeal" />
 
-    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" />
-        
-        <!-- add new news btn -->
+    <OfficialSealModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal"
+      :date="dataOfficialSeal.created_at" :handleSubmit="handleUpdateOfficialSeal" />
+
+    <!-- add new news btn -->
     <AddBtn :showAddModal="showAddNewModal" class="z-20" />
 
-<!-- add modal -->
-<AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" title="Headline" />
+    <!-- add modal -->
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal"
+      :handleCreateSubmit="handleCreateOfficialSeal" title="Official Seal" />
 
   </WrapperContent>
 </template>
@@ -36,8 +45,16 @@ import WrapperContent from '../../../Components/WrapperContent.vue';
 import CardSeal from './CardSeal.vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue';
 import AddBtn from '../../../Components/AddModal/AddBtn.vue';
-import PreviewModal from '../../../Components/PreviewModal.vue';
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import axios from 'axios';
+import { be_url } from '../../../config/config';
+import OfficialSealModal from './OfficialSealModal.vue';
+import Notifcation from "../../../Components/Notifcation.vue";
+import { validURL } from '../../../utils/validUrl';
+
+const dataOfficialSeal = ref();
+const logos = ref([]);
+const resMsg = ref();
 
 // select file
 const inputFile = ref(null);
@@ -47,110 +64,133 @@ function showInputFileSelection() {
   inputFile.value.click();
 }
 
+const newSymbolImg = ref();
+const showSymbolImg = ref();
+function handleSelectFile(e) {
+  showSymbolImg.value = URL.createObjectURL(e.target.files[0]);
+  newSymbolImg.value = e.target.files[0];
+  console.log(newSymbolImg.value);
+  console.log(showSymbolImg.value);
+}
+
+// saving new symbol image
+function saveNewSymbolImg() {
+  axios.post(be_url + "/official-seal/symbol-img/save", {
+    id: dataOfficialSeal.value.id,
+    newImg: newSymbolImg.value
+  }, { headers: { "Content-Type": "multipart/form-data" } })
+    .then(({ data }) => {
+
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      dataOfficialSeal.value = data.official_seal[0];
+    })
+    .catch(err => console.log(err));
+}
+
 // preview modal
 const isPreviewModal = ref(false)
-const selectedData = ref()
-function showPreviewModal(data) {
+const selectedData = ref();
+const selectedId = ref();
+
+function showPreviewModal(data, index) {
   isPreviewModal.value = !isPreviewModal.value;
   selectedData.value = data;
+  selectedId.value = index;
 }
 
 // AddModal
-
 const isAddNewModal = ref(false);
 function showAddNewModal() {
   isAddNewModal.value = !isAddNewModal.value;
 }
 
+async function handleUpdateOfficialSeal(formData) {
+  return await axios.post(be_url + "/official-seal/edit", {
+    id: dataOfficialSeal.value.id,
+    arrId: selectedId.value,
+    title: formData.title,
+    description: formData.description,
+    newImg: formData.newImg,
+  }, { headers: { "Content-Type": "multipart/form-data" } })
+    .then(({ data }) => {
 
-const color_representation = [
-  {
-    title: "BLUE",
-    description: "It represents the abundance of water resources and the Productivity of Pililla as a town. It is dependent upon livelihood and natural resources.",
-  },
-  {
-    title: "RED",
-    description: "Entails active involvement in community transformation and Development towards global competitiveness.",
-  },
-  {
-    title: "GREEN",
-    description: "Implies the protection and preservation of environment as a  key factor for achieving quality life of the residents through sustainable, massive campaign in crops and animal production.",
-  },
-  {
-    title: "YELLOW",
-    description: "Indicates zealousness.",
-  },
-  {
-    title: "SKY BLUE",
-    description: "Symbolizes peace and unity.",
-  }
-]
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-const symbol_representation = [
-  {
-    title: "Holy sacrament",
-    description: "represents that he residents of Pililla are pro-God and pro-people as the first core value.",
-  },
-  {
-    title: "Gable and balance scale",
-    description: "symbolizes dynamic leadership in Governance and fiscal reforms by being just.",
-  },
-  {
-    title: "Sun and three stars",
-    description: "indicate zealousness, integrity and Ingenuity towards quality of life.",
-  },
-  {
-    title: "Palay, Carabao, Fish and Chicken",
-    description: "symbolize agriculture and industries.",
-  },
-  {
-    title: "Torch, Book and Caduceus",
-    description: "represents education and health",
-  },
-  {
-    title: "Hands",
-    description: "entails peace and prosperity can attained Through collaborative efforts.",
-  },
-  {
-    title: "Shield",
-    description: "derived from provincial seal of Rizal where the municipality belongs.",
-  },
-  {
-    title: "1583",
-    description: "the year that Pililla was founded as an independent Municipality",
-  },
-]
+      dataOfficialSeal.value = data.official_seal[0];
+      logos.value = JSON.parse(data.official_seal[0].logo);
+      return data;
+    })
+    .catch(err => console.log(err));
+}
 
-const seals = [
-  {
-    title: "BETTER PILILLA",
-    description: "“BETTER PILILLA” the home of 54 MW Windfarm – our tagline which anchors our governance that leads to the fulfillment of all its Strategic Goals – massive tax campaign, health, special and educational services, human development through skills and development training, increased economic opportunities through business-friendly policies, and infrastructure development which result in attaining the DILG-Seal of Good Local Governance (SGLG) in one year of its first term of public service. (source: LGPMS Profile",
-    img_link: "https://pilillarizal.gov.ph/wp-content/uploads/2022/09/BetterPilillaLogo-1016x400-1-768x302.png"
-  },
-  {
-    title: "ARAW NG PILILLA",
-    description: "Ang hugis ng logo na animo araw ay sumisimbulo sa panahon ng tag-init o panahon ng pag-aani kung kailan din ipinagdiriwang ang Araw ng Pililla. Ito ay ginawang makulay na sumasagisag sa ating pagiging likas na masayahin. Ito ay napapalibutan ng siyam na hugis ng tao na nag mistulang sinag na kumakatawan sa siyam na nagkakaisang Barangay at mga mamamayan nito. Ang logo ay makikitaan din ng mga simbulong sumasagisag sa mga lugar at produktong tanyag sa Bayan ng Pililla.",
-    img_link: "https://pilillarizal.gov.ph/wp-content/uploads/2022/12/araw-ng-pililla-logo-png.png"
-  }
-]
+// function to remove one official seal
+async function handleDeleteOfficialSeal(id, deleteRef) {
+  return await axios.post(be_url + "/official-seal/delete", {
+    id: dataOfficialSeal.value.id,
+    arrId: id,
+  }, { headers: { "Content-Type": "multipart/form-data" } })
+    .then(({ data }) => {
+
+      // this will remove the displaying of the delete modal
+      deleteRef.classList.remove("!translate-y-0");
+      deleteRef.classList.remove("!translate-x-0");
+
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      dataOfficialSeal.value = data.official_seal[0];
+      logos.value = JSON.parse(data.official_seal[0].logo);
+      return data;
+    })
+    .catch(err => console.log(err));
+}
+
+// function to create new official seal
+async function handleCreateOfficialSeal(formData) {
+  return await axios.post(be_url + "/official-seal/add", {
+    id: dataOfficialSeal.value.id,
+    title: formData.title,
+    description: formData.content,
+    newImg: formData.imgFile[0],
+  }, { headers: { "Content-Type": "multipart/form-data" } })
+    .then(({ data }) => {
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      dataOfficialSeal.value = data.official_seal[0];
+      logos.value = JSON.parse(data.official_seal[0].logo);
+      return data;
+    })
+    .catch(err => console.log(err));
+}
+
+// get the data from the server
+onMounted(() => {
+  axios.get(be_url + "/official-seal")
+    .then(({ data }) => {
+      dataOfficialSeal.value = data.official_seal[0];
+      logos.value = JSON.parse(data.official_seal[0].logo);
+    })
+    .catch(err => console.log(err));
+});
+
 </script>
-
-<style scoped>
-table,
-th,
-td {
-  border: 1px solid gray;
-}
-
-table {
-  background-color: white;
-}
-
-td {
-  padding: 0.7em
-}
-
-th {
-  padding: 0.2em;
-}
-</style>

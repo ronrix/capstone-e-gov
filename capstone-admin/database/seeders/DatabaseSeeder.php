@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\About\Contact;
+use App\Models\About\OfficialSeal;
 use App\Models\Business\Business;
 use App\Models\Business\Invest;
 use App\Models\Business\Permit;
@@ -142,6 +144,23 @@ class DatabaseSeeder extends Seeder
             "service_type" => "capacity building enhancement training",
             "service_requirements" => implode(",", $service_requirements),
             "service_process" => json_encode($service_process),
+        ]);
+
+        OfficialSeal::factory(1)->create();
+        Contact::factory()->create([
+            "contact_type" => "HR department",
+            "contact_details" => json_encode([
+                "mobile number" => ["+639-234-554-678"],
+                "telephone number" => ["(555) 555-1234"],
+            ])
+        ]);
+        Contact::factory()->create([
+            "contact_type" => "social media links",
+            "contact_details" => json_encode([
+                "facebook" => ["https://www.facebook.com/BetterPililla"],
+                "twitter" => ["https://twitter.com"],
+                "gmail" => ["betterpillla@gmail.com"],
+            ])
         ]);
     }
 }

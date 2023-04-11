@@ -2,7 +2,7 @@
   <div class="flex items-start h-screen">
     <!-- sidebar -->
     <div class="sticky top-0 pt-5 h-screen hidden sm:block duration-100 bg-white whitespace-nowrap z-10"
-      :class="isWholeSidebar ? 'w-[350px]' : 'w-[70px]'">
+      :class="isWholeSidebar ? 'w-[450px]' : 'w-[70px]'">
       <div class="overflow-y-scroll no-scrollbar h-full">
         <div class="flex px-6 items-center">
           <img :src="$page.props.img_path" alt="this is the pililla government logo" class="w-[50px]">
