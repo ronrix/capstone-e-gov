@@ -1,0 +1,146 @@
+<template>
+  <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-20">
+    <form @submit.prevent="onSubmit" class="backdrop-blur-xl bg-white/70 sm:w-[1000px] p-5 rounded-lg flex flex-col md:flex-row border" enctype="multipart/form-data">
+      <!-- close modal btn -->
+      <i @click="showPreviewModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
+
+      <!-- left -->
+      <!-- news thumbnail -->
+      <div class="overflow-hidden group relative md:h-auto w-full md:w-1/2 flex flex-col items-start justify-start">
+        <div class="overflow-hidden h-[300px] max-h-[300px] flex items-center justify-center w-full border-2 border-blue-600 rounded-md">
+          <Loading class="w-8 h-8" v-if="isLoading" />
+          <img v-if="!isLoading" :src="imgSrc" alt="this is the thumbnail of news" class="w-3/4">
+        </div>
+        <div>
+          <input  @change="handleSelectImg" ref="imgRef" type="file" class="hidden" >
+          <button type="button" @click="selectNewImgFile" class="px-4 mt-3 self-end border border-blue-600 rounded-md font-bold capitalize text-sm hover:bg-blue-600 hover:text-white duration-75">change photo</button>
+        </div>
+      </div>
+
+      <!-- right -->
+      <div class="flex-1 pl-5 w-full flex flex-col justify-start mt-3 md:mt-0 gap-3">
+        <div>
+          <!-- title -->
+          <textarea v-model="formData.title" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent capitalize w-full text-xl font-bold max-h-[71px]">{{ formData.title }}</textarea>
+          <!-- date -->
+          <h5 class="text-xs text-gray-500 font-bold">{{ dateFormat(date) }}</h5>
+        </div>
+        <!-- location, if exists -->
+        <div>
+          <span v-if="selectedData.location" class="font-[500] text-xs capitalize mt-2">address</span>
+          <input v-if="selectedData.location" v-model="formData.location" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent w-full text-sm">
+
+          <!-- category -->
+          <span v-if="selectedData.category" class="font-[500] text-xs capitalize mt-2">category</span>
+          <input v-if="selectedData.category" v-model="formData.category" class="hover:overflow-y-scroll overflow-hidden scrollbar focus:outline-blue-600 bg-transparent w-full text-sm">
+        </div>
+        <!-- content -->
+        <div class="h-full">
+          <span class="font-[500] text-xs capitalize mt-3">
+            content
+            <button ref="editBtn" type="button" @click="startEditing" class="text-blue-600 cursor-pointer hover:text-blue-500 self-start text-xs ml-2">edit</button>
+          </span>
+          <div class="hover:overflow-y-scroll overflow-y-scroll scrollbar h-[200px]">
+            <div ref="descEl" v-bind:innerHTML="description" class="text-sm"></div>
+            <textarea ref="descText" @blur="stopEditing" v-model="formData.description" class="hidden overflow-y-scroll scrollbar bg-transparent py-3 w-full h-full text-sm outline-none">{{ formData.description }}</textarea>
+          </div>
+        </div>
+
+        <div class="self-end flex items-center mb-0 mt-auto">
+          <button :disabled="isSubmitting" type="submit" :class="{'cursor-not-allowed' : isSubmitting}" class="px-4 bg-blue-600 ml-3 text-white rounded-md font-bold flex items-center">
+            <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
+            <span v-if="!isSubmitting">save</span>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import Loading from "../../../Components/Loading.vue";
+import { dateFormat } from '../../../utils/dateFormat';
+import { useForm } from '@inertiajs/inertia-vue3';
+
+import { marked } from "marked";
+import DOMPurify from 'dompurify';
+import { formatImgs } from '../../../utils/formatImgs';
+
+const { selectedData, handleSubmit } = defineProps({
+  showPreviewModal: Function,
+  selectedData: {},
+  date: String,
+  handleSubmit: Function,
+});
+
+const descEl = ref(null);
+const descText = ref(null);
+const isLoading = ref(false);
+const isSubmitting = ref(false);
+const editBtn = ref(null);
+
+// form state
+const origImgSrc = formatImgs(selectedData.img_link.split(","));
+const imgSrc = ref(origImgSrc[0]); // this is the big image to display, on default it will display the first img on the array
+
+const formData = useForm({
+    newImg: "",
+    title: selectedData?.title,
+    description: selectedData.description,
+});
+
+// sanitazing the markdown html strings so that it can render correctly in the DOM
+const description = ref(DOMPurify.sanitize(marked.parse(formData.description)));
+
+// this function is for "description". when p tag is clicked it will turn the element to textarea for editing
+function startEditing(e) {
+  descEl.value.classList.add("hidden");
+  descText.value.classList.remove("hidden");
+  descText.value.focus();
+  editBtn.value.classList.add("hidden") // hide the edit btn
+}
+function stopEditing(e) {
+  editBtn.value.classList.remove("hidden") // remove hidden class of edit btn
+  descEl.value.classList.remove("hidden"); // show the desc
+  e.target.classList.add("hidden"); // hide the textarea
+}
+
+// show image preview
+const imgRef = ref(null);
+function selectNewImgFile() {
+  imgRef.value.click();
+}
+
+function onSubmit() {
+    isSubmitting.value = true;
+    description.value = DOMPurify.sanitize(marked.parse(formData.description)); // update the div content
+
+    handleSubmit(formData).then(() => {
+        isSubmitting.value = false;
+    });
+}
+
+// handle the change event for selecting an image file
+function handleSelectImg(e) {
+  imgSrc.value = URL.createObjectURL(e.target.files[0]);
+  formData.newImg = e.target.files[0];
+
+  // set the loading animation for 1s
+  isLoading.value = true;
+  setTimeout(() => {
+    isLoading.value = false;
+  }, 1000);
+}
+
+// add scroll hidden on mount
+onMounted(() => {
+  document.body.classList.add("overflow-hidden");
+});
+
+// remove scroll hidden on unmount
+onUnmounted(() => {
+  document.body.classList.remove("overflow-hidden");
+});
+
+</script>
