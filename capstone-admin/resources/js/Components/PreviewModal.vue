@@ -9,10 +9,10 @@
       <div class="overflow-hidden group relative md:h-auto w-full md:w-1/2 flex flex-col items-start justify-start">
         <div class="overflow-hidden h-[300px] max-h-[300px] flex items-center justify-center w-full border-2 border-blue-600 rounded-md">
           <Loading class="w-8 h-8" v-if="isLoading" />
-          <img v-if="!isLoading" :src="imgSrc" alt="this is the thumbnail of news" class="align-middel shadow-lg w-full h-full">
+          <img v-if="!isLoading" :src="imgSrc" alt="this is the thumbnail of news" class="w-3/4">
         </div>
         <div class="flex items-start gap-2 sm:h-[150px] overflow-x-scroll scrollbar py-2 w-full el-main">
-          <div v-for="img, idx in imgs"  :class="{ '!border-2 !border-blue-600': selectedImgId === idx }" class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer">
+          <div v-for="img, idx in imgs"  :class="{ '!border-2 !border-blue-600': selectedImgId === idx }" class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer flex items-center justify-center">
             <!-- remove btn -->
             <div :id="idx" @click="handleRemoveImg" class="absolute -top-2 -right-2 cursor-pointer bg-red-600 flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-500">
               <i class="uil uil-times text-white pointer-events-none"></i>
