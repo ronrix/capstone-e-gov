@@ -14,7 +14,7 @@ class AboutController extends Controller
     /*
     * get official seal
     */
-    public function getOfficialSeal(Request $request)
+    public function getOfficialSeal()
     {
         return response()->json(["official_seal" => OfficialSeal::all()]);
     }
@@ -22,7 +22,7 @@ class AboutController extends Controller
     /*
     * get contacts
     */
-    public function getContacts(Request $request)
+    public function getContacts()
     {
         return response()->json(["contacts" => Contact::all()]);
     }
@@ -166,7 +166,53 @@ class AboutController extends Controller
     */
     public function updateContacts(Request $request)
     {
-        return response()->json(["contacts" => Contact::all()]);
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "keyName" => "required",
+            "arrId" => "required",
+            "newValue" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        // get the passed parameter id
+        $id = $request->input("id");
+
+        try {
+
+            # store inputs on a variable
+            $keyName = $request->input("keyName");
+            $arrId = $request->input("arrId");
+
+            $contact = Contact::findOrFail($id);
+            $contact_details = json_decode($contact->contact_details, true);
+            $contact_details[$keyName][$arrId] = $request->input("newValue");
+            $contact->contact_details = json_encode($contact_details);
+            # save updated data
+            $contact->save();
+
+            return response()->json([
+                "contacts" => Contact::all(),
+                "res" => [
+                    "msg" => "Successfully updated contact number",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+        }
     }
 
     /*
@@ -241,7 +287,46 @@ class AboutController extends Controller
     */
     public function createContact(Request $request)
     {
-        return response()->json(["contacts" => Contact::all()]);
+        // validate
+        $validator = Validator::make($request->all(), [
+            "department" => "required",
+            "mobile_nums" => "required",
+            "telephone_nums" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        try {
+            $contact = new Contact;
+            $contact->contact_type = $request->input("department");
+
+            $mobile_nums = explode(", ", $request->input("mobile_nums"));
+            $telephone_nums = explode(", ", $request->input("telephone_nums"));
+
+            $contact->contact_details = json_encode(["mobile number" => $mobile_nums, "telephone number" => $telephone_nums]);
+            $contact->save();
+
+            return response()->json([
+                "contacts" => Contact::all(),
+                "res" => [
+                    "msg" => "Successfully created new contact",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+        }
     }
 
     /*
@@ -300,6 +385,84 @@ class AboutController extends Controller
     */
     public function deleteContact(Request $request)
     {
-        return response()->json(["contacts" => Contact::all()]);
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        try {
+            $id = $request->input("id");
+
+            Contact::findOrFail($id)->delete();
+            return response()->json([
+                "contacts" => Contact::all(),
+                "res" => [
+                    "msg" => "Successfully delete department contact",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+        }
+    }
+
+    /*
+    *  adding new social links
+    */
+    public function createNewSocialLink(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "platform" => "required",
+            "links" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        try {
+            $id = $request->input("id");
+
+            $contact = Contact::findOrFail($id);
+            $contact_details = json_decode($contact->contact_details, true);
+            $contact_details[$request->input("platform")] = explode(", ", $request->input("links"));
+
+            $contact->contact_details = json_encode($contact_details);
+            $contact->save();
+
+            return response()->json([
+                "contacts" => Contact::all(),
+                "res" => [
+                    "msg" => "Successfully created new social media link",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+        }
     }
 }

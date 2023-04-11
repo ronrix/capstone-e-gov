@@ -1,21 +1,23 @@
-<template>        
+<template>
     <!-- list -->
     <div class="flex items-center gap-2 mt-2">
-     <img class="w-8 md:w-10 mr-5" :src="data?.img_link"  alt="this is facebook logo">
-      <input v-model="links" type="text" class="flex-1 focus:outline-blue-500 border p-2 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx]">
-      <button type="button"
-          class="bg-red-300 text-red-500 absolute  text-xs rounded-lg right-2 top-2 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
-          delete</button>
+        <!-- soc med icons -->
+        <i v-if="keyName === 'facebook'" class="uil uil-facebook text-3xl text-blue-600"></i>
+        <i v-if="keyName === 'twitter'" class="uil uil-twitter text-3xl text-blue-400"></i>
+        <i v-if="keyName === 'gmail'" class="uil uil-envelope text-3xl text-red-400"></i>
+        <i v-if="keyName === 'youtube'" class="uil uil-youtube text-3xl text-red-600"></i>
+
+        <input v-for="(link, arrId) in links" :value="link" @change.capture="(e) => handleUpdateSocMed(e, id, keyName, arrId)"  type="text" class="focus:outline-blue-500 border p-2 overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] flex-1">
     </div>
 </template>
 
 <script setup>
 defineProps({
-data: Object,
-links: String
+    links: Array,
+    keyName: String,
+    handleUpdateSocMed: Function,
+    id: Number
 })
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

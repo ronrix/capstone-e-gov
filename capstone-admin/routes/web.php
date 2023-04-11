@@ -225,7 +225,8 @@ Route::middleware(["auth"])->group(function () {
     /* official seal */
     Route::post("/official-seal/add", [AboutController::class, "createOfficialSeal"]);
     /* contacts */
-    Route::post("/contacts/add", [AboutController::class, "createContacts"]);
+    Route::post("/contacts/add", [AboutController::class, "createContact"]);
+    Route::post("/socmed/add", [AboutController::class, "createNewSocialLink"]);
 
     // delete requests
     Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
@@ -285,7 +286,7 @@ Route::middleware(["auth"])->group(function () {
     /* official seal */
     Route::post("/official-seal/delete", [AboutController::class, "deleteOfficialSeal"]);
     /* contacts */
-    Route::post("/contacts/delete", [AboutController::class, "deleteContacts"]);
+    Route::post("/contact/delete", [AboutController::class, "deleteContact"]);
 
 
     // tourism
