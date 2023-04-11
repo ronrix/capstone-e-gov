@@ -1,4 +1,5 @@
 <template>
+    
     <div class="grid place-items-center mt-10 justify-center">
         <div class="text-center w-[400px] ">
             <p class="text-3xl font-semibold font-['display']"><span style="color: rgb(185, 43, 39);">Travel</span> Around the beautiful places in Pililla</p>
@@ -24,23 +25,34 @@
     <div class="flex justify-between items-center pr-[75px] pl-[75px]">
         <p class="font-['display']  text-[30px] font-semibold w-72 mt-10">Find your best destination.</p>
     <div class="pt-8">
-        <p class="text-[12px]">We have more destination you can</p>
-        <input class="h-9 w-72 pl-3 drop-shadow-md rounded-2xl outline-cyan-300 text-[12px] bg-gray-100 " type="text" placeholder="Search destinations">
+        <p class="text-[12px] pb-[2px]">We have more destination you can</p>
+        <div class="relative">
+            <input class="h-10 w-80 pl-10 drop-shadow-lg rounded-3xl outline-cyan-300 text-[12px] bg-gray-100 " type="text" placeholder="Search destinations">
+            <i class="uil uil-search absolute right-[20px] top-[8px] z-50 text-white"></i>
+            <div class="rounded-full h-[30px] w-[30px] absolute right-[12px] top-[6px]" style="background-color: rgb(185, 43, 39);"></div>
+            <i class="uil uil-map-marker text-gray-400 absolute left-[12px] top-[10px]"></i>
+        </div>
+        
     </div>
     </div>
     <div class="flex flex-row flex-wrap mt-4 p-20 pt-0 justify-between gap-y-8 ">
     <div v-for="data in sample_data" >
-        <div class="w-[350px] h-[300px] drop-shadow-md bg-white">
+        <div class="w-[350px] h-[300px] drop-shadow-lg bg-white">
           <div class="w-auto h-[200px]">
             <img :src="data.imgSrc" alt="">
           </div>
-                <p>{{ data.placeName }}</p>
-                <p>{{ data.address }}</p>
+          <div class="p-2 mt-2">
+                 <p class="font-semibold">{{ data.placeName }}</p>
+                 <div class="flex">
+                    <i class="uil uil-map-marker text-cyan-300 relative bottom-[2px]"></i>
+                    <p class="text-[12px] ml-1">{{ data.address }}</p>
+                 </div>
+          </div>
         </div>
     </div>
 </div>
 </template>
-<script setup>
+<script setup> 
 
 const sample_data = [{
         
@@ -52,7 +64,7 @@ const sample_data = [{
         
         placeName: "Pililla Wind Farm",
         address: "F8CX+VJW, Manila E Rd, Pililla, Rizal",
-        imgSrc: "https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/274579439_2419634788171057_6700194066240640258_n.jpg?stp=dst-jpg_p480x480&_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeHUaaI-kyM3lhpYUkNDvkobeTkfTFeFN5F5OR9MV4U3kV80MePrW1SKq06pbp3sW46NZSuH74c8GFQv_JGBw2PG&_nc_ohc=-BS42dF_KM8AX-T8CbR&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfBWtocuUN4QqH_vmhmjJv5BVuDYSIP-lB1UZeVSKAmZNg&oe=643B06E0"
+        imgSrc: "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1000&h=-1&s=1"
     },
     {
         
