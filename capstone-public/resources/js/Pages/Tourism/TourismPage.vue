@@ -12,11 +12,11 @@
             <img class="w-[210px] absolute right-36 top-3" src="https://www.pngaaa.com/api-download/1853846" alt="">
             <img class="w-[200px] absolute left-32 " src="https://png2.cleanpng.com/dy/fe5917c0144c3493c36b68db062ae2c4/L0KzQYm3V8AzN6FvfZH0aYP2gLBuTgRzaadqhJ95YXPucbjsTgRwfaMyj9H2YX6werL3gf4ufpJoeeZyb36wgrL0hgNpf5J3ed82ZHX5crn2jB1qNWZnS9NrOHW1dba9Vcg5NmM3UKYAMUK8QYa6UMU4PWE8TKsCNkWxgLBu/kisspng-travel-package-tour-woman-japan-vacation-rameshwaram-devbhoomi-5b3ab8e2ee6588.2284512915305750749765.png" alt="">
         </div>
-        <div class="flex justify-evenly gap-32 h-auto w-[1200px] absolute top-[320px] text-center p-3 text-white" style="background-color: rgb(185, 43, 39);">
+        <div class="flex justify-evenly gap-32 h-auto w-[1200px] absolute top-[320px] p-3 text-white" style="background-color: rgb(185, 43, 39);">
             <div class="text-[13px] font-['montserrat']" style="border-right: 2px solid white; right: 50%; height: 50px; padding-right: 35px; margin-top: 10px;">
                 <p class="pt-2 w-[250px]">Travel around Pililla to the beauty  of nature easily and safely.</p>
             </div>
-            <div class="text-[16px] font-['display']">
+            <div class="text-[16px] text-center font-['display']">
                 <p >Better Pililla  </p>
                 <p>A better community</p>
                 <p>A better Home</p>
@@ -35,8 +35,13 @@
         <p class="text-[12px] pb-[2px]">We have more destination you can</p>
         <div class="relative">
             <input class="h-10 w-80 pl-10 drop-shadow-lg rounded-3xl outline-cyan-300 text-[12px] bg-gray-100 " type="text" placeholder="Search destinations">
-            <i class="uil uil-search absolute right-[20px] top-[8px] z-50 text-white"></i>
-            <div class="rounded-full h-[30px] w-[30px] absolute right-[12px] top-[6px]" style="background-color: rgb(185, 43, 39);"></div>
+            <div class="group">
+                <div class="group-hover:opacity-70  ">
+                <i class="uil uil-search absolute right-[20px] top-[8px] z-50 text-white"></i>
+                <div class="rounded-full h-[30px] w-[30px] absolute right-[12px] top-[6px]" style="background-color: rgb(185, 43, 39);"></div>
+            </div>
+            </div>
+            
             <i class="uil uil-map-marker text-gray-400 absolute left-[12px] top-[10px]"></i>
         </div>
         
