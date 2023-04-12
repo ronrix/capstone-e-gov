@@ -6,12 +6,9 @@ import SearchContainer from './SearchContainer.vue'
 import { government, business, services, tourism } from '../../assets/config/sublinks'
 
 // show the search input
-const searchInput = ref(null)
 const isShowSearchInput = ref(false)
 function showSearchInput() {
   isShowSearchInput.value = !isShowSearchInput.value
-  // focus the input search element
-  searchInput.value.focus()
 }
 
 // setting the isShowSearchInput on mouse over of the blurred element
@@ -23,6 +20,10 @@ function closeSearchInput() {
 // function to set the sublnks on hover of the navlink
 const selectedSubLinks = ref()
 function setSubLinkOnHover(e) {
+  // first: hide the search container
+  // so the subnavs can display without search container overlapping it
+  isShowSearchInput.value = false
+
   if (e.target.id === 'government') {
     selectedSubLinks.value = government
     return
@@ -56,6 +57,9 @@ function closeSubLink() {
     <WrapperContainer
       class="hidden sm:flex items-center justify-between gap-3 border border-t-0 border-x-0 relative"
     >
+      <!-- logo -->
+      <img src="/images/BetterPilillaLogo-black.png" alt="this is a logo" class="w-32" />
+
       <RouterLink
         to="/"
         class="uppercase font-['display'] font-bold hover:text-primary py-5 text-xs md:text-sm"
@@ -81,9 +85,6 @@ function closeSubLink() {
         tourism
         <i class="uil uil-angle-down" />
       </RouterLink>
-
-      <!-- logo -->
-      <img src="/images/BetterPilillaLogo-black.png" alt="this is a logo" class="w-32" />
 
       <RouterLink
         id="business"
@@ -122,7 +123,6 @@ function closeSubLink() {
     <SearchContainer
       :is-show-search-input="isShowSearchInput"
       :close-search-input="closeSearchInput"
-      :search-input="searchInput"
     />
   </nav>
 </template>

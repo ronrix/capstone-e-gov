@@ -63,22 +63,36 @@ const places = [
     <Programs />
 
     <!-- top places -->
-    <section class="mt-10 flex flex-col gap-5">
-      <h4 class="font-['display'] text-4xl sm:w-3/4 text-center mx-auto">
+    <section class="mt-20 flex flex-col gap-5">
+      <h4 class="font-['display'] text-5xl sm:w-3/4 text-center mx-auto">
         Top <span class="bg-primary px-3 text-white">3</span> places you want to come and visit in
         Pililla
       </h4>
 
-      <div class="relative mt-5 bg-gray-900 rounded-md text-white py-5">
+      <div
+        class="relative mt-5 bg-gradient-to-l from-gray-900 to-gray-700 rounded-md text-white py-5"
+      >
         <!-- map icon -->
         <div
-          class="absolute -top-8 left-1/2 -translate-x-1/2 rounded-full w-10 h-10 flex items-center justify-center bg-white"
+          class="absolute -top-8 left-1/2 -translate-x-1/2 rounded-full w-14 h-14 flex items-center justify-center bg-white"
         >
-          <i class="uil uil-map-pin text-3xl text-black" />
+          <i class="uil uil-map-pin text-5xl text-gray-900" />
         </div>
 
+        <!-- first line -->
+        <div class="h-20 w-2 bg-white mx-auto"></div>
+
         <!-- places -->
-        <Place v-for="(place, idx) in places" :key="idx" :place="place" :idx="idx" />
+        <div v-for="(place, idx) in places" :key="idx">
+          <!-- connected lines -->
+          <div v-if="idx !== 0" class="h-20 w-2 bg-white mx-auto relative my-5">
+            <!-- circles -->
+            <div class="w-5 h-5 rounded-full bg-white absolute -top-2"></div>
+            <div class="w-5 h-5 rounded-full bg-white absolute -bottom-2"></div>
+          </div>
+
+          <Place :place="place" :idx="idx" />
+        </div>
 
         <div class="flex items-center justify-center flex-col mt-10 gap-2 p-5">
           <h5 class="capitalize font-['display'] text-4xl">Find out more</h5>

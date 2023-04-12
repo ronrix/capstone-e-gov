@@ -1,18 +1,24 @@
 <script setup>
+import { ref, onUpdated } from 'vue'
+
 defineProps({
   isShowSearchInput: { type: Boolean, required: true },
-  closeSearchInput: { type: Function, required: true },
-  searchInput: { type: Object, required: true }
+  closeSearchInput: { type: Function, required: true }
+})
+
+const searchInput = ref(null)
+onUpdated(() => {
+  searchInput.value.focus()
 })
 </script>
 
 <template>
   <div
-    class="absolute z-20 top-20 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-500"
+    class="absolute z-20 top-14 md:top-20 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-500"
     :class="{ 'h-screen': isShowSearchInput, 'h-0': !isShowSearchInput }"
   >
     <div class="bg-white p-5" @mouseleave="closeSearchInput">
-      <WrapperContainer>
+      <WrapperContainer class="h-[300px] overflow-y-auto">
         <div class="flex items-center gap-2 mb-5">
           <i class="uil uil-search text-2xl" />
           <input
@@ -38,6 +44,6 @@ defineProps({
       </WrapperContainer>
     </div>
     <!-- bottom backdrop blur  -->
-    <div class="backdrop-blur-3xl bg-white/50 flex-1"></div>
+    <div class="backdrop-filter bg-white/50 h-full"></div>
   </div>
 </template>

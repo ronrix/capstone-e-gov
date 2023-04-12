@@ -14,10 +14,10 @@ import { RouterLink } from 'vue-router'
     <img
       src="/images/hero-2.png"
       alt="this is a hero picture 2. mayor and a child hugging  together"
-      class="absolute bottom-0 -right-1/4 sm:right-0 xl:right-96 w-[280px] sm:w-[350px] -z-10 opacity-75 sm:opacity-100"
+      class="absolute bottom-0 -right-1/4 sm:right-0 xl:right-72 w-[280px] sm:w-[350px] -z-10 opacity-75"
     />
 
-    <WrapperContainer class="flex flex-col gap-3 items-start">
+    <WrapperContainer class="flex flex-col gap-3 items-center">
       <h1 class="text-5xl sm:text-8xl text-primary font-bold capitalize font-['display']">
         better pililla
       </h1>

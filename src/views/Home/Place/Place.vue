@@ -17,10 +17,7 @@
       <h4 class="font-['display'] text-lg sm:text-3xl mb-5">
         {{ place.qoute }}
       </h4>
-      <RouterLink
-        to="/"
-        class="text-sm px-2 py-1 text-white bg-primary rounded-md capitalize"
-      >
+      <RouterLink to="/" class="text-sm px-2 py-1 text-white bg-primary rounded-md capitalize">
         see more
         <i class="uil uil-angle-right" />
       </RouterLink>
@@ -29,20 +26,16 @@
       class="flex-1 overflow-hidden"
       :class="{ 'sm:order-last': idx % 2 === 0, 'sm:order-first': idx % 2 !== 0 }"
     >
-      <img
-        :src="place.imgSrc"
-        alt="this is a picture of pililla wind farm"
-        class="w-full"
-      >
+      <img :src="place.imgSrc" alt="this is a picture of pililla wind farm" class="w-full" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router'
 
 defineProps({
-    place: { type: Object, required: true },
-    idx: { type: Number, required: true }
+  place: { type: Object, required: true },
+  idx: { type: Number, required: true }
 })
 </script>
