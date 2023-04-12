@@ -18,5 +18,10 @@ export default createRouter({
       name: "Tourism",
       component: () => import("../views/Tourism/TourismPage.vue")
     },
+    {
+      path: "/festivals",
+      name: "Festivals",
+      component: () => import("../views/Tourism/Festivals.vue")
+    },
   ]
 })
