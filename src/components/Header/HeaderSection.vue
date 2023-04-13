@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import SubNavs from './SubNavs.vue'
 import SearchContainer from './SearchContainer.vue'
@@ -56,13 +56,11 @@ function closeSubLink() {
 const isShowMobileNav = ref(false)
 function showMobileNav(e) {
   isShowMobileNav.value = !isShowMobileNav.value
-  e.target.firstElementChild.classList.toggle('translate-y-full')
   e.target.firstElementChild.classList.toggle('rotate-45')
   e.target.firstElementChild.classList.toggle('translate-y-[8px]')
 
-  e.target.lastElementChild.classList.toggle('-translate-y-full')
   e.target.lastElementChild.classList.toggle('-rotate-45')
-  e.target.lastElementChild.classList.toggle('translate-y-full')
+  e.target.lastElementChild.classList.toggle('-translate-y-full')
 
   // add fixed to the menu bar button
   // so when user scrolls the button still on top
@@ -70,6 +68,37 @@ function showMobileNav(e) {
   e.target.classList.toggle('top-0')
   e.target.classList.toggle('right-0')
 }
+
+// function to change the theme
+const isDark = ref(localStorage.getItem('theme'))
+function changeTheme() {
+  if (isDark.value === 'white') {
+    logoByTheme.value = '/images/better-pililla-white.png'
+    localStorage.setItem('theme', 'dark')
+    document.querySelector('html').classList.add('dark')
+    isDark.value = 'dark'
+    return
+  }
+
+  logoByTheme.value = '/images/better-pililla-black.png'
+  document.querySelector('html').classList.remove('dark')
+  localStorage.setItem('theme', 'white')
+  isDark.value = 'white'
+}
+
+const logoByTheme = ref('/images/better-pililla-white.png')
+onMounted(() => {
+  if (localStorage.getItem('theme') !== 'dark') {
+    logoByTheme.value = '/images/better-pililla-black.png'
+    localStorage.setItem('theme', 'white')
+    document.querySelector('html').classList.remove('dark')
+    return
+  }
+
+  isDark.value = localStorage.getItem('theme')
+  // set the theme to html tag
+  document.querySelector('html').classList.add('dark')
+})
 </script>
 
 <template>
@@ -77,7 +106,7 @@ function showMobileNav(e) {
     <!-- mobile nav view -->
     <div class="flex sm:hidden items-center justify-end gap-3">
       <i
-        class="uil uil-search hover:text-primary cursor-pointer text-lg"
+        class="uil uil-search hover:text-primary cursor-pointer text-lg text-dark dark:text-bggray"
         @click="showSearchInput"
       ></i>
 
@@ -95,8 +124,12 @@ function showMobileNav(e) {
         class="w-9 h-8 p-2 flex flex-col gap-2 justify-center cursor-pointer duration-1000 z-30"
         @click="showMobileNav"
       >
-        <div class="w-full h-[2px] bg-gray-900 duration-300 pointer-events-none"></div>
-        <div class="w-full h-[2px] bg-gray-900 duration-300 pointer-events-none"></div>
+        <div
+          class="w-full h-[2px] bg-gray-900 dark:bg-bggray duration-300 pointer-events-none"
+        ></div>
+        <div
+          class="w-full h-[2px] bg-gray-900 dark:bg-bggray duration-300 pointer-events-none"
+        ></div>
       </div>
 
       <!-- mobile navigations -->
@@ -105,14 +138,14 @@ function showMobileNav(e) {
 
     <!-- tablet - up view -->
     <WrapperContainer
-      class="hidden sm:flex items-center justify-between gap-3 border border-t-0 border-x-0 relative"
+      class="hidden sm:flex items-center justify-between gap-3 border border-bggray dark:border-darkgray border-t-0 border-x-0 relative bg-white dark:bg-dark"
     >
       <!-- logo -->
-      <img src="/images/BetterPilillaLogo-black.png" alt="this is a logo" class="w-32" />
+      <img :src="logoByTheme" alt="this is a logo" class="w-32" />
 
       <RouterLink
         to="/"
-        class="uppercase font-['display'] font-bold hover:text-primary py-5 text-xs md:text-sm"
+        class="uppercase font-['display'] font-bold text-dark hover:text-primary dark:text-bggray dark:hover:text-white py-5 text-xs md:text-sm"
       >
         home
       </RouterLink>
@@ -120,7 +153,7 @@ function showMobileNav(e) {
       <RouterLink
         id="government"
         to="/government"
-        class="capitalize hover:text-primary text-xs md:text-sm"
+        class="capitalize text-dark dark:text-bggray dark:hover:text-white hover:text-primary text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
       >
         government
@@ -129,7 +162,7 @@ function showMobileNav(e) {
       <RouterLink
         id="tourism"
         to="/tourism"
-        class="capitalize hover:text-primary text-xs md:text-sm"
+        class="capitalize hover:text-primary text-dark dark:text-bggray dark:hover:text-white text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
       >
         tourism
@@ -139,7 +172,7 @@ function showMobileNav(e) {
       <RouterLink
         id="business"
         to="/business"
-        class="capitalize hover:text-primary text-xs md:text-sm"
+        class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
       >
         business
@@ -148,20 +181,35 @@ function showMobileNav(e) {
       <RouterLink
         id="services"
         to="/services"
-        class="capitalize hover:text-primary text-xs md:text-sm"
+        class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
       >
         services
         <i class="uil uil-angle-down" />
       </RouterLink>
 
-      <RouterLink to="/about" class="capitalize hover:text-primary text-xs md:text-sm">
+      <RouterLink
+        to="/about"
+        class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
+      >
         about
       </RouterLink>
 
+      <!-- theme emode  -->
+      <div>
+        <i
+          class="uil text-2xl text-dark hover:text-primary dark:text-bggray dark:hover:text-white cursor-pointer"
+          :class="{
+            'uil-moonset': isDark === 'white',
+            'uil-bright': isDark === 'dark'
+          }"
+          @click="changeTheme"
+        ></i>
+      </div>
+
       <!-- search btn -->
       <i
-        class="uil uil-search hover:text-primary cursor-pointer text-sm md:text-lg"
+        class="uil uil-search hover:text-primary text-dark dark:text-bggray dark:hover:text-white cursor-pointer text-sm md:text-lg"
         @click="showSearchInput"
       />
     </WrapperContainer>

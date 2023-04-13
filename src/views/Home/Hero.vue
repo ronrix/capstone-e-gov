@@ -21,11 +21,15 @@ import { RouterLink } from 'vue-router'
       <h1 class="text-5xl sm:text-8xl text-primary font-bold capitalize font-['display']">
         better pililla
       </h1>
-      <h2 class="font-bold text-xl sm:text-3xl flex flex-col items-start capitalize">
-        <span>A <span class="text-black">better</span> Community,</span>
-        <span>A <span class="text-black">better</span> home</span>
+      <h2
+        class="font-bold text-xl sm:text-3xl flex flex-col items-start capitalize dark:text-bggray"
+      >
+        <span>A <span class="text-dark dark:text-white">better</span> Community,</span>
+        <span>A <span class="text-dark dark:text-white">better</span> home</span>
       </h2>
-      <h3 class="textsm sm:text-base font-semibold">Get to know the places in pililla</h3>
+      <h3 class="textsm sm:text-base font-semibold dark:text-secondary">
+        Get to know the places in pililla
+      </h3>
       <RouterLink
         to="/tourism/highlights"
         class="text-sm sm:text-base capitalize bg-primary rounded-md text-white px-3 py-1 cursor-pointer hover:bg-primarylight font-bold"
@@ -35,7 +39,7 @@ import { RouterLink } from 'vue-router'
       </RouterLink>
 
       <!-- datetime -->
-      <p class="text-sm sm:text-base font-bold text-darkgray">
+      <p class="text-sm sm:text-base font-bold text-secondary">
         {{ new Date() }}
       </p>
     </WrapperContainer>

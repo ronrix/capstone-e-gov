@@ -47,7 +47,7 @@ onUpdated(() => {
 
 <template>
   <div
-    class="fixed z-20 top-0 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-700 bg-white"
+    class="fixed z-20 top-0 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-700 bg-white dark:bg-dark"
     :class="{ 'h-screen': isShowMobileNav, 'h-0': !isShowMobileNav }"
   >
     <!-- sub links  -->
@@ -59,10 +59,14 @@ onUpdated(() => {
     />
 
     <div class="pt-8 px-5 flex flex-col gap-3">
-      <RouterLink to="/home" class="text-3xl text-darkgray hover:text-black">Home</RouterLink>
+      <RouterLink
+        to="/home"
+        class="text-3xl text-dark dark:text-bggray dark:hover:text-white hover:text-black"
+        >Home</RouterLink
+      >
       <div
         id="government"
-        class="text-3xl flex justify-between items-center group cursor-pointer text-darkgray hover:text-black"
+        class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
         @click="setSubLinkOnClick"
       >
         Government
@@ -72,7 +76,7 @@ onUpdated(() => {
       </div>
       <div
         id="business"
-        class="text-3xl flex justify-between items-center group cursor-pointer text-darkgray hover:text-black"
+        class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
         @click="setSubLinkOnClick"
       >
         Business
@@ -82,7 +86,7 @@ onUpdated(() => {
       </div>
       <div
         id="tourism"
-        class="text-3xl flex justify-between items-center group cursor-pointer text-darkgray hover:text-black"
+        class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
         @click="setSubLinkOnClick"
       >
         Tourism
@@ -92,7 +96,7 @@ onUpdated(() => {
       </div>
       <div
         id="services"
-        class="text-3xl flex justify-between items-center group cursor-pointer text-darkgray hover:text-black"
+        class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
         @click="setSubLinkOnClick"
       >
         Services
@@ -100,7 +104,11 @@ onUpdated(() => {
           class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300 pointer-events-none"
         />
       </div>
-      <RouterLink to="/about" class="text-3xl text-darkgray hover:text-black">About</RouterLink>
+      <RouterLink
+        to="/about"
+        class="text-3xl text-dark dark:text-bggray dark:hover:text-white hover:text-black"
+        >About</RouterLink
+      >
     </div>
   </div>
 </template>

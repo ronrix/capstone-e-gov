@@ -9,10 +9,10 @@
       <i class="uil uil-arrow-right" />
     </RouterLink>
 
-    <h3 class="text-center font-['display'] text-5xl sm:w-1/2 text-darkgray mt-5">
+    <h3 class="text-center font-['display'] text-5xl sm:w-1/2 text-darkgray mt-5 dark:text-bggray">
       Apply for assistance in as little as 15 minutes
     </h3>
-    <p class="text-center text-sm">
+    <p class="text-center text-sm dark:text-bggray">
       We help connect families to benefits and services that faster health, safety, resilience, and
       opportunity and help them to meet a wide variety of needs.
     </p>
