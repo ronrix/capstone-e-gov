@@ -6,7 +6,6 @@ import Place from './Place/Place.vue'
 import Hotlines from '../../components/Hotlines.vue'
 import Hero from './Hero.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
-import MobileNav from '../../components/MobileNav/MobileNav.vue'
 
 const places = [
   {
@@ -50,7 +49,6 @@ const places = [
 
   <!-- <WrapperContainer> -->
   <HeaderSection />
-  <MobileNav />
   <!-- </WrapperContainer> -->
   <Hero />
   <WrapperContainer>

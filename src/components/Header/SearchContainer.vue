@@ -14,7 +14,7 @@ onUpdated(() => {
 
 <template>
   <div
-    class="absolute z-20 top-14 md:top-20 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-500"
+    class="absolute z-20 top-8 sm:top-14 md:top-20 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-500"
     :class="{ 'h-screen': isShowSearchInput, 'h-0': !isShowSearchInput }"
   >
     <div class="bg-white p-5" @mouseleave="closeSearchInput">
