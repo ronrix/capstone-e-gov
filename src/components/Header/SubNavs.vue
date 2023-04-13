@@ -9,7 +9,7 @@
           v-for="(sub, idx) in subLinks"
           :key="idx"
           :to="sub.link"
-          class="hover:text-primarylight text-dark dark:text-bggray my-3"
+          class="hover:text-primarylight text-dark dark:text-bggray dark:hover:text-primarylight my-3"
         >
           <span class="capitalize">{{ sub.title }}</span>
           <p class="text-xs text-secondary">

@@ -196,7 +196,7 @@ onMounted(() => {
       </RouterLink>
 
       <!-- theme emode  -->
-      <div>
+      <abbr title="theme">
         <i
           class="uil text-2xl text-dark hover:text-primary dark:text-bggray dark:hover:text-white cursor-pointer"
           :class="{
@@ -205,7 +205,7 @@ onMounted(() => {
           }"
           @click="changeTheme"
         ></i>
-      </div>
+      </abbr>
 
       <!-- search btn -->
       <i
