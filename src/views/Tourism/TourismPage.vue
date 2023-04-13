@@ -51,11 +51,11 @@ const sample_data = [
     <div class="flex relative">
       <div class="mt-6">
         <div
-          class="w-[350px] h-[350px] rounded-full opacity-[12%]"
+          class="w-96 h-96 rounded-full opacity-[12%]"
           style="background-color: rgb(185, 43, 39)"
         />
         <div
-          class="w-[260px] h-[260px] absolute left-12 top-16 rounded-full opacity-[34%]"
+          class="w-72 h-72 absolute left-12 top-16 rounded-full opacity-[34%]"
           style="background-color: rgb(185, 43, 39)"
         />
       </div>
@@ -71,39 +71,37 @@ const sample_data = [
       />
     </div>
     <div
-      class="flex justify-evenly gap-32 h-auto w-full absolute top-[380px] text-center p-3 text-white"
+      class="flex justify-evenly gap-32 h-auto w-full absolute top-[380px]  text-white"
       style="background-color: rgb(185, 43, 39)"
     >
       <div
-        class="text-[13px] font-['montserrat']"
         style="
           border-right: 2px solid white;
           right: 50%;
           height: 50px;
           padding-right: 35px;
-          margin-top: 10px;
+          margin-top: 20px;
         "
       >
-        <p class="pt-2 w-[250px]">
+        <p class="pt-2 w-[250px] text-xs lg:text-sm">
           Travel around Pililla to the beauty of nature easily and safely.
         </p>
       </div>
-      <div class="text-[16px] font-['display']">
+      <div class="text-sm lg:text-2xl font-['display'] text-center">
         <p>Better Pililla</p>
         <p>A better community</p>
         <p>A better Home</p>
       </div>
       <div
-        class="text-[13px] font-['montserrat']"
         style="
           border-left: 2px solid white;
           right: 50%;
           height: 50px;
           padding-left: 35px;
-          margin-top: 10px;
+          margin-top: 20px;
         "
       >
-        <p class="pt-2 w-[250px]">“ Pamunuang mapagmahal at mapagkalinga ”</p>
+        <p class="pt-2 w-[250px] text-xs lg:text-sm">“ Pamunuang mapagmahal at mapagkalinga ”</p>
       </div>
     </div>
     <div class="relative bottom-10 w-screen">
