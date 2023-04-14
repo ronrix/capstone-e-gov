@@ -17,7 +17,7 @@ onUpdated(() => {
     class="absolute z-20 top-8 sm:top-14 md:top-20 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-700"
     :class="{ 'h-screen': isShowSearchInput, 'h-0': !isShowSearchInput }"
   >
-    <div class="bg-white dark:bg-dark p-5" @mouseleave="closeSearchInput">
+    <div class="bg-white dark:bg-dark p-5 duration-200" @mouseleave="closeSearchInput">
       <WrapperContainer class="h-[300px] overflow-y-auto">
         <div class="flex items-center gap-2 mb-5">
           <i class="uil uil-search text-2xl text-dark dark:text-bggray" />

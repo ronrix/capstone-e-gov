@@ -27,7 +27,7 @@ import { RouterLink } from 'vue-router'
         <span>A <span class="text-dark dark:text-white">better</span> Community</span>
         <span>A <span class="text-dark dark:text-white">better</span> home</span>
       </h2>
-      <h3 class="textsm sm:text-base font-semibold dark:text-secondary">
+      <h3 class="textsm sm:text-base text-dark dark:text-bggray">
         Get to know the places in pililla
       </h3>
       <RouterLink
@@ -39,7 +39,7 @@ import { RouterLink } from 'vue-router'
       </RouterLink>
 
       <!-- datetime -->
-      <p class="text-sm sm:text-base font-bold text-secondary">
+      <p class="text-sm sm:text-base font-bold text-dark dark:text-bggray">
         {{ new Date() }}
       </p>
     </WrapperContainer>
