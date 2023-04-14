@@ -1,8 +1,8 @@
 <script setup>
 </script>
 <template>
-  <div class="w-full mt-5 border-white shadow-sm px-8">
-    <div class="flex justify-between">
+  <div class="w-full mt-5 border-white shadow-sm px-8 relative">
+    <div class="flex justify-between before:w-[300px] before:h-[300px] before:bg-[#B92B27] before:opacity-10 before:absolute before:-bottom-44 before:right-8 before:rounded-full before:-z-10">
     <div class="w-full flex bg-gray-50">
       <div class="self-center">
         <h1 class="text-left text-red-800 text-5xl mt-5 ml-28 mb-4 font-semibold">
