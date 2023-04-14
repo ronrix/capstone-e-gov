@@ -8,6 +8,16 @@ export default createRouter({
       name: "Home",
       component: () => import("../views/Home/HomePage.vue")
     },
+    {
+      path: "/news",
+      name: "News",
+      component: () => import("../views/News/News.vue")
+    },
+    {
+      path: "/news/:title",
+      name: "NewsSubPage",
+      component: () => import("../views/News/NewsSubPage/NewsSubPage.vue")
+    },
     /*
     * add your route here
     * copy the example above
@@ -28,5 +38,10 @@ export default createRouter({
       name: "TouristAttractions",
       component: () => import("../views/Tourism/TouristAttractions.vue")
     },
+    {
+      path: "/services",
+      name: "Services",
+      component: () => import("../views/Services/Services.vue")
+    }
   ]
 })
