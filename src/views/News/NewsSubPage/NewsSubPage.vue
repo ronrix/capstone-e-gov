@@ -2,6 +2,62 @@
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import SuggestionCard from './Suggestions/SuggestionCard.vue'
+
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { headlines } from '../../../assets/data/news'
+import moment from 'moment'
+
+const description = ref(`
+### Marked - Markdown Parser
+
+[Marked] lets you convert [Markdown] into HTML.  Markdown is a simple text format whose goal is to be very easy to read and write, even when not converted to HTML.  This demo page will let you type anything you like and see how it gets converted.  Live.  No more waiting around.
+
+#### How To Use The Demo
+
+1. Type in stuff on the left.
+2. See the live updates on the right.
+
+That's it.  Pretty simple.  There's also a drop-down option above to switch between various views:
+
+- **Preview:**  A live display of the generated HTML as it would render in a browser.
+- **HTML Source:**  The generated HTML before your browser makes it pretty.
+- **Lexer Data:**  What [marked] uses internally, in case you like gory stuff like this.
+- **Quick Reference:**  A brief run-down of how to format things using markdown.
+
+### Why Markdown?
+
+It's easy.  It's not overly bloated, unlike HTML.  Also, as the creator of [markdown] says,
+
+> The overriding design goal for Markdown's
+> formatting syntax is to make it as readable
+> as possible. The idea is that a
+> Markdown-formatted document should be
+> publishable as-is, as plain text, without
+> looking like it's been marked up with tags
+> or formatting instructions.
+
+Ready to start writing?  Either start changing stuff on the left or
+[clear everything](/demo/?text=) with a simple click.
+
+[Marked]: https://github.com/markedjs/marked/
+[Markdown]: http://daringfireball.net/projects/markdown/
+`)
+
+// sanitazing the markdown html strings so that it can render correctly in the DOM
+const desc = ref(DOMPurify.sanitize(marked.parse(description.value)))
+const useCustomStyles = ref(true) // Set to true if you want to apply custom styles, false otherwise
+
+// paremeter :title
+const route = useRoute()
+const news = ref()
+onMounted(() => {
+  const newsTitle = route.params.title
+  news.value = headlines.find((el) => el.title === newsTitle)
+  console.log(news.value)
+})
 </script>
 <template>
   <!-- add tab title -->
@@ -11,44 +67,37 @@ import SuggestionCard from './Suggestions/SuggestionCard.vue'
   <HeaderSection />
 
   <WrapperContainer>
-    <div class="mt-10 flex gap-5">
-      <div class="flex flex-col gap-3 items-start flex-[1.5]">
+    <div class="mt-10 flex flex-col md:flex-row gap-5">
+      <div class="flex flex-col gap-3 items-start flex-[3]">
         <p class="flex items-center text-xs text-secondary">
           <i class="uil uil-clock-five"></i>
-          <span>3 days ago</span>
+          <span>{{ moment().endOf('day').fromNow() }}</span>
         </p>
-        <h3 class="font-bold text-2xl text-dark dark:text-bggray w-1/2">
-          Ukraine war: Five ways Russia's Invasion may play out
-        </h3>
+        <h3 class="font-bold text-2xl text-dark dark:text-bggray w-1/2">{{ news?.title }}</h3>
 
-        <img
-          class="w-full"
-          src="https://media.cnn.com/api/v1/images/stellar/prod/230406060125-02-macron-xi-meeting-040623.jpg?c=16x9&q=h_540,w_960,c_fill/f_webp"
-          alt=""
-        />
+        <img class="w-full" :src="news?.thumbnail" alt="" />
 
-        <p class=":text-dark dark:text-secondary text-justify leading-loose">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nostrum debitis officiis neque
-          nemo, aspernatur adipisci itaque recusandae totam culpa dolorem laudantium est hic quae
-          soluta excepturi. Maxime reprehenderit possimus nam repellat aliquam molestias officiis
-          deserunt dicta repellendus accusamus animi atque, ut magnam consectetur? Corrupti, velit
-          omnis illo pariatur debitis delectus! Lorem ipsum dolor, sit amet consectetur adipisicing
-          elit. Nemo ducimus deleniti autem, odio fugiat doloribus repudiandae quo aut qui, dolores
-          totam aliquam ad, ipsa laborum mollitia illo id nisi error ullam dolorum cumque. Itaque
-          nobis quas incidunt aliquam, autem cum soluta voluptatibus facere nisi sit veniam maiores
-          amet cumque voluptas in quis magnam quia culpa ducimus ullam quam, possimus nemo eligendi
-          qui. Animi exercitationem laudantium blanditiis tempore delectus asperiores praesentium.
-          Ad maxime, eum vel magni hic ducimus excepturi amet corrupti eaque accusantium quam
-          deserunt voluptatum quo consequatur quidem suscipit maiores a nesciunt! Nihil quos culpa
-          at? Ipsa vero commodi officiis.
-        </p>
+        <div
+          class=":text-dark dark:text-secondary text-justify leading-loose"
+          :class="{ markdown: useCustomStyles }"
+          :innerHTML="desc"
+        ></div>
       </div>
 
       <!-- suggestions -->
       <div class="flex-1">
-        <SuggestionCard v-for="i in Array.from([0, 0, 0, 0])" :key="i" />
+        <h4 class="font-bold text-sm text-dark dark:text-bggray mb-5">Suggestions</h4>
+        <SuggestionCard v-for="a in headlines.slice(0, 3)" :key="a.id" :news="a" />
       </div>
     </div>
   </WrapperContainer>
   <FooterSection />
 </template>
+
+<style>
+.markdown h3 {
+  font-size: 1.5em;
+  margin-top: 0.5em;
+  font-weight: bold;
+}
+</style>

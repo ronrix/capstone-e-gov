@@ -1,27 +1,6 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-
-const news = [
-  {
-    id: 1,
-    title: 'The Juice mission will soon launch to Jupiter’s icy ocean worlds',
-    img_link:
-      'https://media.cnn.com/api/v1/images/stellar/prod/230412192103-04-esa-juice-mission.jpg?c=16x9&q=h_540,w_960,c_fill/f_webp'
-  },
-  {
-    id: 2,
-    title: 'Analysis: ‘Tone deaf’ Macron faces backlash over Taiwan comments',
-    img_link:
-      'https://media.cnn.com/api/v1/images/stellar/prod/230406060125-02-macron-xi-meeting-040623.jpg?c=16x9&q=h_540,w_960,c_fill/f_webp'
-  },
-  {
-    id: 3,
-    title:
-      'Fear and confusion in Japan’s Hokkaido as North Korean missile triggers evacuation order',
-    img_link:
-      'https://media.cnn.com/api/v1/images/stellar/prod/230412195003-j-alert-north-korea-missile-041223.jpg?c=16x9&q=h_540,w_960,c_fill/f_webp'
-  }
-]
+import { headlines } from '../../assets/data/news'
 </script>
 <template>
   <div class="flex flex-col items-center justify-center">
@@ -33,17 +12,15 @@ const news = [
 
     <div class="flex flex-col sm:flex-row items-center">
       <div
-        v-for="n in news"
+        v-for="n in headlines.slice(0, 3)"
         :key="n.id"
         class="p-5 flex flex-col justify-end mt-5 h-[500px] w-full bg-no-repeat bg-cover group overflow-hidden"
-        :style="{ backgroundImage: 'url(' + n.img_link + ')' }"
+        :style="{ backgroundImage: 'url(' + n.thumbnail + ')' }"
       >
         <div
           class="duration-500 translate-y-10 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 flex flex-col items-start"
         >
-          <h3 class="font-bold text-xl md:text-3xl text-white w-3/4">
-            The Juice mission will soon launch to Jupiter’s icy ocean worlds
-          </h3>
+          <h3 class="font-bold text-xl md:text-3xl text-white w-3/4">{{ n.title }}</h3>
           <RouterLink
             :to="'/news/' + n.title"
             type="button"
