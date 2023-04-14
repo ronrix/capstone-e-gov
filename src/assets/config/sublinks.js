@@ -34,10 +34,15 @@ export const tourism = [
 
 export const services = [
   {
-    link: '/scholarship',
-    title: 'scholarship',
+    link: '/scholarship rpogram',
+    title: 'scholarship ',
     desc: 'get to know the process and requirements for getting a scholarship'
-  }
+  },
+  {
+    link: '/programs-events',
+    title: 'programs and events',
+    desc: 'Updated programs and events in pililla'
+  },
 ]
 
 export const business = [

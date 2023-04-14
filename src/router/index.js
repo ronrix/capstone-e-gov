@@ -38,5 +38,10 @@ export default createRouter({
       name: "TouristAttractions",
       component: () => import("../views/Tourism/TouristAttractions.vue")
     },
+    {
+      path: "/services",
+      name: "Services",
+      component: () => import("../views/Services/Services.vue")
+    }
   ]
 })
