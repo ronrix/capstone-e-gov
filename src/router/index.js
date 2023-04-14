@@ -58,5 +58,15 @@ export default createRouter({
       name: "Mayors Clearance",
       component: () => import("../views/Services/Office of the Mayor/Mayors Clearance/MayorClearance.vue")
     },
+    {
+      path: "/job-op",
+      name: "Job Opportunities",
+      component: () => import("../views/JobOp/JobOp.vue")
+    },
+    {
+      path: "/programs-events",
+      name: "Programs and Events",
+      component: () => import("../views/ProgEvents/ProgEvents.vue")
+    }
   ]
 })

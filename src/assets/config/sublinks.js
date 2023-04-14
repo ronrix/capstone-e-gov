@@ -5,7 +5,7 @@ export const government = [
     title: 'programs and events',
     desc: 'Updated programs and events in pililla'
   },
-  { link: '/job-listings', title: 'job opportunities', desc: 'Looking for opportunities' },
+  { link: '/job-op', title: 'job opportunities', desc: 'Looking for opportunities' },
   {
     link: '/demographic-profile',
     title: 'demographic profile',
