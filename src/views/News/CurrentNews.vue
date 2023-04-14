@@ -27,11 +27,11 @@ const news = [
   <div class="flex flex-col items-center justify-center">
     <h5 class="font-bold text-xs capitalize text-dark dark:text-bggray">news</h5>
     <h4 class="capitalize text-3xl text-dark dark:text-bggray font-bold">
-      <span class="text-primarylight">hot </span> topic current
+      <span class="text-primarylight">hot </span> topic
       <span class="text-primarylight">news</span>
     </h4>
 
-    <div class="flex items-center">
+    <div class="flex flex-col sm:flex-row items-center">
       <div
         v-for="n in news"
         :key="n.id"
@@ -41,7 +41,7 @@ const news = [
         <div
           class="duration-500 translate-y-10 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 flex flex-col items-start"
         >
-          <h3 class="font-bold text-3xl text-white w-3/4">
+          <h3 class="font-bold text-xl md:text-3xl text-white w-3/4">
             The Juice mission will soon launch to Jupiter’s icy ocean worlds
           </h3>
           <RouterLink

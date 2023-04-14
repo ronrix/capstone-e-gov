@@ -105,6 +105,19 @@ onMounted(() => {
   <nav>
     <!-- mobile nav view -->
     <div class="flex sm:hidden items-center justify-end gap-3">
+      <!-- theme emode  -->
+      <abbr title="theme">
+        <i
+          class="uil text-2xl text-dark hover:text-primary dark:text-bggray dark:hover:text-white cursor-pointer"
+          :class="{
+            'uil-moonset': isDark === 'white',
+            'uil-brightness': isDark === 'dark'
+          }"
+          @click="changeTheme"
+        ></i>
+      </abbr>
+
+      <!-- search button -->
       <i
         class="uil uil-search hover:text-primary cursor-pointer text-lg text-dark dark:text-bggray"
         @click="showSearchInput"
@@ -138,7 +151,7 @@ onMounted(() => {
 
     <!-- tablet - up view -->
     <WrapperContainer
-      class="hidden sm:flex items-center justify-between gap-3 border border-bggray dark:border-darkgray border-t-0 border-x-0 relative bg-white dark:bg-dark"
+      class="hidden sm:flex items-center justify-between gap-3 border border-bggray dark:border-darkgray border-t-0 border-x-0 relative bg-white dark:bg-dark duration-200"
     >
       <!-- logo -->
       <img :src="logoByTheme" alt="this is a logo" class="w-32" />
@@ -201,7 +214,7 @@ onMounted(() => {
           class="uil text-2xl text-dark hover:text-primary dark:text-bggray dark:hover:text-white cursor-pointer"
           :class="{
             'uil-moonset': isDark === 'white',
-            'uil-bright': isDark === 'dark'
+            'uil-brightness': isDark === 'dark'
           }"
           @click="changeTheme"
         ></i>

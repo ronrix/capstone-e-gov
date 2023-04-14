@@ -53,7 +53,7 @@ const places = [
   <Hero />
   <WrapperContainer>
     <!-- assistance section -->
-    <section class="bg-bggray dark:bg-darkgray p-5">
+    <section class="bg-bggray dark:bg-darkgray p-5 duration-200">
       <Assistance />
     </section>
 
@@ -129,11 +129,11 @@ const places = [
         />
       </div>
     </section>
-
-    <!-- hotlines -->
-    <section class="mt-10">
-      <Hotlines />
-    </section>
   </WrapperContainer>
+  <!-- hotlines -->
+  <section class="mt-10">
+    <Hotlines />
+  </section>
+
   <FooterSection />
 </template>

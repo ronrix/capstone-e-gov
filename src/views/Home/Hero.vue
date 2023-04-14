@@ -22,16 +22,16 @@ import { RouterLink } from 'vue-router'
         better pililla
       </h1>
       <h2
-        class="font-bold text-xl sm:text-3xl flex flex-col items-start capitalize dark:text-bggray"
+        class="font-bold text-xl sm:text-3xl flex flex-col items-center capitalize dark:text-bggray"
       >
-        <span>A <span class="text-dark dark:text-white">better</span> Community,</span>
+        <span>A <span class="text-dark dark:text-white">better</span> Community</span>
         <span>A <span class="text-dark dark:text-white">better</span> home</span>
       </h2>
       <h3 class="textsm sm:text-base font-semibold dark:text-secondary">
         Get to know the places in pililla
       </h3>
       <RouterLink
-        to="/tourism/highlights"
+        to="/tourism"
         class="text-sm sm:text-base capitalize bg-primary rounded-md text-white px-3 py-1 cursor-pointer hover:bg-primarylight font-bold"
       >
         <i class="uil uil-map-marker-question mr-2" />
