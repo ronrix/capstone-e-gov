@@ -9,6 +9,9 @@ department : {type: Object, required: true }
 
 function showServices(e) {
  document.querySelectorAll('.dropdown').forEach(el => {
+    if(e.target.nextElementSibling === el){
+        return
+    }
     el.classList.add('hidden')
  })  
  e.target.nextElementSibling.classList.toggle('hidden')

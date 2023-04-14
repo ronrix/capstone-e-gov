@@ -42,6 +42,21 @@ export default createRouter({
       path: "/services",
       name: "Services",
       component: () => import("../views/Services/Services.vue")
-    }
+    },
+    {
+      path: "/scholarship-program",
+      name: "Scholarship Program",
+      component: () => import("../views/Services/Office of the Mayor/Scholarship Program/ScholarshipProgram.vue")
+    },
+    {
+      path: "/civil-wedding-program",
+      name: "Civil Wedding Program",
+      component: () => import("../views/Services/Office of the Mayor/Civil wedding Program/Civil.vue")
+    },
+    {
+      path: "/mayors-clearance",
+      name: "Mayors Clearance",
+      component: () => import("../views/Services/Office of the Mayor/Mayors Clearance/MayorClearance.vue")
+    },
   ]
 })
