@@ -1,76 +1,111 @@
 <script setup>
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
-
- const sample_data = [{
-            placeName: 'Pililla Wind Farm',
-            address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-            imgSrc:
-            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1000&h=-1&s=1',
-            date: 'April 13, 2023'
-        },
-        {
-            placeName: 'Pililla Wind Farm',
-            address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-            imgSrc:
-            'https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/274579439_2419634788171057_6700194066240640258_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeHUaaI-kyM3lhpYUkNDvkobeTkfTFeFN5F5OR9MV4U3kV80MePrW1SKq06pbp3sW46NZSuH74c8GFQv_JGBw2PG&_nc_ohc=-BS42dF_KM8AX-pnn5m&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfADlapiutu3bBB5gJvkeC6s2ZiZuVJ6Rf_l2O8AxoadSA&oe=643B06E0',
-            date: 'April 13, 2023'
-        },
-        {
-            placeName: 'Pililla Wind Farm',
-            address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-            imgSrc:
-            'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1000&h=-1&s=1',
-            date: 'April 13, 2023'
-        },
-        {
-            placeName: 'Pililla Wind Farm',
-            address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-            imgSrc:
-            'https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/274579439_2419634788171057_6700194066240640258_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeHUaaI-kyM3lhpYUkNDvkobeTkfTFeFN5F5OR9MV4U3kV80MePrW1SKq06pbp3sW46NZSuH74c8GFQv_JGBw2PG&_nc_ohc=-BS42dF_KM8AX-pnn5m&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfADlapiutu3bBB5gJvkeC6s2ZiZuVJ6Rf_l2O8AxoadSA&oe=643B06E0',
-            date: 'April 13, 2023'
-        },]
-
 </script>
-<template>
-    <HeaderSection></HeaderSection>
-    <div class="flex justify-between p-28 pt-5">
-       <div>
-        <h1 class="text-2xl font-semibold pb-5">Tourist Attractions</h1>
-        <p>CHURCH</p>
-        <P class="text-2xl font-semibold w-80">The Diocesan Shrine and Parish of St. Mary Magdalene</P>
-        <img src="https://boyplakwatsa.files.wordpress.com/2014/04/rizal-tour-march-15-2014-orig-011.jpg" alt="">
-       <p class="text-sm w-[750px] mt-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+<template >
+  <HeaderSection></HeaderSection>
+  <div class="">
+    <div class="flex justify-between p-20 pb-0">
+      <div>
+        <h1 class="text-7xl font-semibold">Tourist <span class="block ml-20">Attraction</span></h1>
+        <p class="pt-12 w-[700px] italic">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.
+        </p>
+      </div>
+      <div>
+        <div class="flex h-[600px] relative pr-20">
+          <div
+            class="drop-shadow-lg h-[400px] w-[300px] bg-slate-300 bg-auto bg-no-repeat bg-center -skew-x-12 self-end absolute right-[350px] z-10"
+            style="background-image: url()"
+          >
+            <img
+              class="h-full contrast-"
+              src="https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg"
+              alt=""
+            />
+          </div>
+          <div
+            class="drop-shadow-lg h-[400px] w-[310px] bg-slate-300 bg-auto bg-no-repeat bg-center -skew-x-12 z-10"
+            style="background-image: url()"
+          >
+            <img
+              class="h-full"
+              src="https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
     </div>
-       <div 
-        class="" style="
-          border-left: 2px solid gray;
-          right: 50%;
-          height: auto;
-          padding-left: 35px;
-          
-        
-        ">
-        <h2 class="mb-3 text-xl font-semibold">SUGGESTIONS</h2>
-        <div class="flex flex-col gap-5">
-        <div v-for="(data, idn) in sample_data" :key="idn" class="group">
-            <div class=" flex h-auto w-96 bg-white drop-shadow-md group-hover:opacity-80">
-                <div class="w-80">
-                    <img class="object-cover w-full h-40 " :src="data.imgSrc" alt="" />
-                </div>
-                    <div class="grid p-2">
-                        <h2 class="font-semibold">{{ data.placeName }}<span class="block text-xs font-normal">{{ data.date }}</span></h2>
-                        <p class="text-sm">Lorem Ipsum is simply dummy text of the printing and typeset</p>
-                    </div>
-                
+    <div
+      class="h-[400px] bg-black w-full -translate-y-52 bg-auto bg-no-repeat bg-center"
+      style="background-image: url()"
+    >
+      <div class="flex justify-between">
+        <div class="pt-6">
+          <img
+            class="w-[800px]"
+            src="https://i.postimg.cc/nrGCXPV1/windmillnobg-VECTOR.png"
+            alt=""
+          />
         </div>
+        <div class="text-white">
+          <p class="font-semibold pt-5 text-4xl">Lorem ipsum</p>
+          <p class="w-[400px] text-sm pr-20 pt-4">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          </p>
         </div>
-        </div>
-       </div>
+      </div>
     </div>
-    <FooterSection></FooterSection>
+  </div>
+  <div class="pr-20 pl-20">
+    <div class="flex justify-between bg-white drop-shadow-md">
+      <h2 class="text-5xl font-semibold pl-10 pt-5">
+        Wind farm<span class="block w-[600px] font-normal text-sm mt-3"
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.</span
+        >
+      </h2>
+      <div></div>
+      <img
+        class="w-[50%] rounded-bl-full"
+        src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1200&h=1200&s=1"
+        alt=""
+      />
+    </div>
+    <div class="flex justify-between bg-white drop-shadow-md">
+      <img
+        class="w-[50%] rounded-tr-full"
+        src="http://www.wewander.ph/wp-content/uploads/2019/06/Screen-Shot-2019-06-30-at-9.24.59-AM-17-1024x573.jpg"
+        alt=""
+      />
+      <h2 class="text-5xl font-semibold pl-10 pt-5">
+        Mt. Sembrano<span class="block w-[600px] font-normal text-sm mt-3"
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+          ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur
+          sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
+          est laborum.</span
+        >
+      </h2>
+      <div></div>
+    </div>
+  </div>
+
+  <FooterSection></FooterSection>
 </template>
 
 <style>
-    
 </style>
