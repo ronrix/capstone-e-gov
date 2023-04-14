@@ -53,8 +53,8 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
         ">
         <h2 class="mb-3 text-xl font-semibold">SUGGESTIONS</h2>
         <div class="flex flex-col gap-5">
-        <div v-for="(data, idn) in sample_data" :key="idn">
-            <div class=" flex h-auto w-96 bg-white drop-shadow-md ">
+        <div v-for="(data, idn) in sample_data" :key="idn" class="group">
+            <div class=" flex h-auto w-96 bg-white drop-shadow-md group-hover:opacity-80">
                 <div class="w-80">
                     <img class="object-cover w-full h-40 " :src="data.imgSrc" alt="" />
                 </div>
