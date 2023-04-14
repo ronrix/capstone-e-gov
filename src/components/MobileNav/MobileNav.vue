@@ -60,7 +60,7 @@ onUpdated(() => {
 
     <div class="pt-8 px-5 flex flex-col gap-3">
       <RouterLink
-        to="/home"
+        to="/"
         class="text-3xl text-dark dark:text-bggray dark:hover:text-white hover:text-black"
         >Home</RouterLink
       >

@@ -1,4 +1,5 @@
 <script setup>
+import { headlines } from '../../assets/data/news'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import CurrentNews from './CurrentNews.vue'
@@ -22,7 +23,9 @@ import NewsCard from './NewsCard.vue'
         <div class="flex-1 h-[2px] bg-secondary"></div>
       </div>
 
-      <NewsCard v-for="i in Array.from([0, 0, 0])" :key="i" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <NewsCard v-for="news in headlines.slice(3)" :key="news.id" :news="news" />
+      </div>
     </div>
   </WrapperContainer>
 
