@@ -39,8 +39,8 @@ export const services = [
     desc: 'get to know the process and requirements for getting a scholarship'
   },
   {
-    link: '/programs-events',
-    title: 'programs and events',
+    link: '/services-programs-events',
+    title: 'services programs and events',
     desc: 'Updated programs and events in pililla'
   },
 ]
