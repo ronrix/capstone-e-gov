@@ -1,6 +1,6 @@
 <script setup>
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
-import  HeaderSection  from '../../components/Header/HeaderSection.vue'
+import HeaderSection from '../../components/Header/HeaderSection.vue'
 
 const sample_data = [
   {
@@ -40,6 +40,10 @@ const sample_data = [
 ]
 </script>
 <template>
+  <head>
+    <title>Tourism | Pililla Rizal</title>
+  </head>
+
   <HeaderSection></HeaderSection>
 
   <div class="grid place-items-center mt-10 justify-center">
@@ -71,7 +75,7 @@ const sample_data = [
       />
     </div>
     <div
-      class="flex justify-evenly gap-32 h-auto w-full absolute top-[380px]  text-white"
+      class="flex justify-evenly gap-32 h-auto w-full absolute top-[380px] text-white"
       style="background-color: rgb(185, 43, 39)"
     >
       <div
@@ -106,14 +110,16 @@ const sample_data = [
     </div>
     <div class="relative bottom-10 w-screen">
       <img
-        class=" w-full"
+        class="w-full"
         src="https://pilillarizal.gov.ph/wp-content/uploads/2022/10/pililla_painting-1024x326.png"
         alt=""
       />
     </div>
   </div>
   <div class="flex justify-between items-center pr-[75px] pl-[75px]">
-    <p class="font-['display'] text-sm lg:text-4xl font-semibold w-72">Find your best destination.</p>
+    <p class="font-['display'] text-sm lg:text-4xl font-semibold w-72">
+      Find your best destination.
+    </p>
     <div>
       <p class="text-[12px] pb-[2px]">We have more destination you can</p>
       <div class="relative">
