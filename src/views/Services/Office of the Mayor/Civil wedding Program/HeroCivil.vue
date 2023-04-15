@@ -5,7 +5,7 @@
     <img
       src="/images/wedding.jpg"
       alt=""
-      class="opacity-40 absolute mx-auto -z-10 left-0 right-0 w-screen h-full"
+      class="opacity-50 absolute mx-auto -z-10 left-0 right-0 w-screen h-full"
     />
     <div class="flex flex-col items-center">
       <h1 class="text-2xl md:text-4xl text-primary font-bold text-center ml-10 mt-36 uppercase">
