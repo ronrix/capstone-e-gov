@@ -6,6 +6,10 @@ import Department from './Department.vue'
 </script>
 
 <template>
+  <head>
+    <title>Services | Pililla Rizal</title>
+  </head>
+
   <!-- header -->
   <HeaderSection />
   <!-- hero -->
