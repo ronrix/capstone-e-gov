@@ -47,9 +47,9 @@ const sample_data = [
   <HeaderSection></HeaderSection>
 
   <div class="grid place-items-center mt-10 justify-center">
-    <div class="text-center w-[400px]">
-      <p class="text-3xl font-semibold font-['display']">
-        <span style="color: rgb(185, 43, 39)">Travel</span> Around the beautiful places in Pililla
+    <div class="text-center w-1/2">
+      <p class="text-5xl font-semibold font-['display'] text-dark dark:text-bggray">
+        <span class="text-primary">Travel</span> Around the beautiful places in Pililla
       </p>
     </div>
     <div class="flex relative">
@@ -75,75 +75,65 @@ const sample_data = [
       />
     </div>
     <div
-      class="flex justify-evenly gap-32 h-auto w-full absolute top-[380px] text-white"
-      style="background-color: rgb(185, 43, 39)"
+      class="flex justify-between h-auto w-full absolute top-[480px] sm:top-[380px] text-white bg-primary items-center p-5"
     >
-      <div
-        style="
-          border-right: 2px solid white;
-          right: 50%;
-          height: 50px;
-          padding-right: 35px;
-          margin-top: 20px;
-        "
-      >
-        <p class="pt-2 w-[250px] text-xs lg:text-sm">
+      <div class="text-center flex-1 px-3">
+        <p class="pt-2 text-xs lg:text-sm">
           Travel around Pililla to the beauty of nature easily and safely.
         </p>
       </div>
-      <div class="text-sm lg:text-2xl font-['display'] text-center">
+      <div class="lg:text-2xl font-['display'] text-center border-2 border-y-0 flex-1">
         <p>Better Pililla</p>
         <p>A better community</p>
         <p>A better Home</p>
       </div>
-      <div
-        style="
-          border-left: 2px solid white;
-          right: 50%;
-          height: 50px;
-          padding-left: 35px;
-          margin-top: 20px;
-        "
+      <div class="flex-1 text-center px-3">
+        <p class="pt-2 text-xs lg:text-sm">“ Pamunuang mapagmahal at mapagkalinga ”</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- banner -->
+  <div class="relative bottom-20 md:bottom-10 w-full">
+    <img
+      class="w-full object-cover"
+      src="https://pilillarizal.gov.ph/wp-content/uploads/2022/10/pililla_painting-1024x326.png"
+      alt=""
+    />
+  </div>
+
+  <WrapperContainer>
+    <div class="flex justify-between">
+      <p
+        class="font-['display'] text-sm lg:text-4xl font-semibold w-1/4 text-dark dark:text-bggray"
       >
-        <p class="pt-2 w-[250px] text-xs lg:text-sm">“ Pamunuang mapagmahal at mapagkalinga ”</p>
-      </div>
-    </div>
-    <div class="relative bottom-10 w-screen">
-      <img
-        class="w-full"
-        src="https://pilillarizal.gov.ph/wp-content/uploads/2022/10/pililla_painting-1024x326.png"
-        alt=""
-      />
-    </div>
-  </div>
-  <div class="flex justify-between items-center pr-[75px] pl-[75px]">
-    <p class="font-['display'] text-sm lg:text-4xl font-semibold w-72">
-      Find your best destination.
-    </p>
-    <div>
-      <p class="text-[12px] pb-[2px]">We have more destination you can</p>
-      <div class="relative">
-        <input
-          class="h-10 w-80 pl-10 drop-shadow-lg rounded-3xl outline-cyan-300 text-[12px] bg-gray-100"
-          type="text"
-          placeholder="Search destinations"
-        />
-        <i class="uil uil-search absolute right-[20px] top-[8px] z-50 text-white" />
-        <div
-          class="rounded-full h-[30px] w-[30px] absolute right-[12px] top-[6px]"
-          style="background-color: rgb(185, 43, 39)"
-        />
-        <i class="uil uil-map-marker text-gray-400 absolute left-[12px] top-[10px]" />
-      </div>
-    </div>
-  </div>
-  <div class="flex flex-row flex-wrap mt-4 p-20 pt-0 justify-between gap-y-8">
-    <div v-for="(data, idx) in sample_data" :key="idx">
-      <div class="grid w-[400px] h-[400px] drop-shadow-lg bg-white">
-        <div class="h-[200px]">
-          <img class="object-cover h-[200px] w-[400px]" :src="data.imgSrc" alt="" />
+        Find your best destination.
+      </p>
+      <div>
+        <p class="text-xs pb-1 text-secondary">We have more destination you can</p>
+        <div class="relative">
+          <input
+            class="h-10 w-80 pl-10 drop-shadow-lg rounded-3xl outline-cyan-300 text-[12px] bg-gray-100"
+            type="text"
+            placeholder="Search destinations"
+          />
+          <i class="uil uil-search absolute right-[20px] top-[8px] z-50 text-white" />
+          <div
+            class="rounded-full h-[30px] w-[30px] absolute right-[12px] top-[6px] flex items-center justify-center"
+            style="background-color: rgb(185, 43, 39)"
+          />
+          <i class="uil uil-map-marker text-gray-400 absolute left-[12px] top-[10px]" />
         </div>
-        <div class="p-2">
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-5">
+      <div
+        v-for="(data, idx) in sample_data"
+        :key="idx"
+        class="flex flex-col drop-shadow-lg bg-white"
+      >
+        <img class="object-cover h-[150px] w-full" :src="data.imgSrc" alt="" />
+        <div class="py-5 px-3">
           <p class="font-semibold">
             {{ data.placeName }}
           </p>
@@ -156,6 +146,6 @@ const sample_data = [
         </div>
       </div>
     </div>
-  </div>
+  </WrapperContainer>
   <FooterSection></FooterSection>
 </template>
