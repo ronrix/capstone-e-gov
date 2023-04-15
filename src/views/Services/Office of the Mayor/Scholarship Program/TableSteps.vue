@@ -3,7 +3,7 @@
 <template>
   <table class="border table-auto mt-2 mb-10">
     <thead>
-      <tr class="text-lg text-left text-gray-700 font-semibold bg-gray-50">
+      <tr class="text-lg text-left text-dark font-semibold bg-gray-50 dark:bg-gray-50">
         <th>Client Steps</th>
         <th>Agency Steps</th>
         <th>Fees to Paid</th>
@@ -11,7 +11,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="text-gray-500 text-sm">
+      <tr class=" text-dark dark:text-white  text-sm">
         <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, sit!</td>
         <td>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis commodi rerum tempore
@@ -20,7 +20,7 @@
         <td></td>
         <td>5 mins.</td>
       </tr>
-      <tr class="text-gray-500 text-sm">
+      <tr class=" text-dark dark:text-white  text-sm">
         <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, sit!</td>
         <td>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis commodi rerum tempore
@@ -29,7 +29,7 @@
         <td></td>
         <td>5 mins.</td>
       </tr>
-      <tr class="text-gray-500 text-sm">
+      <tr class=" text-dark dark:text-white ">
         <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, sit!</td>
         <td>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis commodi rerum tempore
@@ -45,7 +45,7 @@
 <style scoped>
 td,
 th {
-  border: 1px solid #bcbcc0;
+  border: 1px solid #cfcfcf;
 }
 th {
   padding: 5px;

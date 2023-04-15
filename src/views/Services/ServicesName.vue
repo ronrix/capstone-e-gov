@@ -9,7 +9,7 @@ defineProps({
   <!-- Serrvices name -->
   <RouterLink
     :to="service.path"
-    class="px-2 py-1 hover:bg-gray-300 block text-md text-dark mb-1 text-sm sm:text-base"
+    class="px-2 py-1 hover:bg-gray-300 dark:hover:bg-gray-400 block text-md text-dark dark:text-white mb-1 text-sm sm:text-base"
   >
     {{ service.name }}
   </RouterLink>

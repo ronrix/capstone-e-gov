@@ -52,13 +52,13 @@ const departments = [
 
 <template>
   <div class="flex items-center justify-center mt-10 p-5 h-[100px] relative">
-    <h1 class="text-center text-xl sm:text-4xl font-bold text-dark">
+    <h1 class="text-center text-xl sm:text-4xl font-bold text-dark dark:text-white">
       What we can offer in <span class="block">every department.</span>
     </h1>
   </div>
   <!-- departments with services -->
   <WrapperContainer>
-    <h2 class="z-100 text-sm sm:text-2xl font-semibold text-dark mb-2">Departments</h2>
+    <h2 class="text-sm sm:text-2xl font-semibold  text-dark dark:text-white mb-2">Departments</h2>
     <Dropdown v-for="(department, id) in departments" :key="id" :department="department" />
   </WrapperContainer>
 </template>
