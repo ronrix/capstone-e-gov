@@ -5,7 +5,7 @@ export const government = [
     title: 'programs and events',
     desc: 'Updated programs and events in pililla'
   },
-  { link: '/job-listings', title: 'job opportunities', desc: 'Looking for opportunities' },
+  { link: '/job-op', title: 'job opportunities', desc: 'Looking for opportunities' },
   {
     link: '/demographic-profile',
     title: 'demographic profile',
@@ -39,8 +39,8 @@ export const services = [
     desc: 'get to know the process and requirements for getting a scholarship'
   },
   {
-    link: '/programs-events',
-    title: 'programs and events',
+    link: '/services-programs-events',
+    title: 'services programs and events',
     desc: 'Updated programs and events in pililla'
   },
 ]

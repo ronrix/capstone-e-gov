@@ -158,6 +158,7 @@ onMounted(() => {
 
       <RouterLink
         to="/"
+        active-class="!text-primarylight"
         class="uppercase font-['display'] font-bold text-dark hover:text-primary dark:text-bggray dark:hover:text-white py-5 text-xs md:text-sm"
       >
         home
@@ -165,6 +166,7 @@ onMounted(() => {
 
       <RouterLink
         id="government"
+        active-class="!text-primarylight"
         to="/government"
         class="capitalize text-dark dark:text-bggray dark:hover:text-white hover:text-primary text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
@@ -174,6 +176,7 @@ onMounted(() => {
       </RouterLink>
       <RouterLink
         id="tourism"
+        active-class="!text-primarylight"
         to="/tourism"
         class="capitalize hover:text-primary text-dark dark:text-bggray dark:hover:text-white text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
@@ -184,6 +187,7 @@ onMounted(() => {
 
       <RouterLink
         id="business"
+        active-class="!text-primarylight"
         to="/business"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
@@ -193,6 +197,7 @@ onMounted(() => {
       </RouterLink>
       <RouterLink
         id="services"
+        active-class="!text-primarylight"
         to="/services"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
@@ -203,6 +208,7 @@ onMounted(() => {
 
       <RouterLink
         to="/about"
+        active-class="!text-primarylight"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
       >
         about

@@ -4,7 +4,7 @@
     :class="{ 'h-screen': subLinks, 'h-0': !subLinks }"
   >
     <div
-      class="bg-white dark:bg-dark p-5 min-h-[400px] max-h-[400px] overflow-y-auto"
+      class="bg-white dark:bg-dark p-5 min-h-[400px] max-h-[400px] overflow-y-auto duration-200"
       @mouseleave="closeSubLink"
     >
       <WrapperContainer class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -14,8 +14,8 @@
           :to="sub.link"
           class="hover:text-primarylight text-dark dark:text-bggray dark:hover:text-primarylight my-3"
         >
-          <span class="capitalize">{{ sub.title }}</span>
-          <p class="text-xs text-secondary">
+          <span class="capitalize pointer-events-none">{{ sub.title }}</span>
+          <p class="text-xs text-secondary pointer-events-none">
             {{ sub.desc }}
           </p>
         </RouterLink>

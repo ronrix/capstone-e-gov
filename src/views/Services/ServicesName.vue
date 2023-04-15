@@ -7,12 +7,11 @@ defineProps({
 </script>
 <template>
   <!-- Serrvices name -->
-  <RouterLink :to="service.path">
-    <div class="flex flex-col justify-center">
-      <div class="hover:bg-gray-300 rounded-lg">
-        {{ service.name }}
-      </div>
-    </div>
+  <RouterLink
+    :to="service.path"
+    class="px-2 py-1 hover:bg-gray-300 block text-md text-dark mb-1 text-sm sm:text-base"
+  >
+    {{ service.name }}
   </RouterLink>
 </template>
 
