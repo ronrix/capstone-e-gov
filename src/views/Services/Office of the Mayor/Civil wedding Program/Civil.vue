@@ -20,11 +20,11 @@ import TableSteps from "../Scholarship Program/TableSteps.vue"
     <div class="rounded-lg  border-white p-5 shadow-sm relative">
       <h1 class="text-2xl font-bold text-dark dark:text-white mt-10 mb-5">Checklist of Requirement</h1>
       <div class="grid grid-cols-2 gap-2">
-        <SecondSection name="ID Xerox" />
-        <SecondSection name="Barangay Indigency" />
-        <SecondSection name="2x2 Pictures" />
-        <SecondSection name="Proofed of Enrollment" />
-        <SecondSection name="Latest Grades" />
+        <SecondSection name="Example requirements" />
+        <SecondSection name="Example requirements" />
+        <SecondSection name="Example requirements" />
+        <SecondSection name="Example requirements" />
+        <SecondSection name="Example requirements" />
       </div>
       <div class="absolute w-[360px] h-[360px] -top-36 right-0 rounded-full bg-red-500 opacity-10 -z-10"></div>
     </div>
