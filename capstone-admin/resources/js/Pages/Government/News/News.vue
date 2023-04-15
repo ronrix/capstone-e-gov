@@ -2,14 +2,14 @@
   <HeadTitle title="News"></HeadTitle>
   <WrapperContent class="flex flex-col gap-5">
     <!-- response message -->
-    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
+    <Notifcation :msg="resMsg" class="z-[1000]" />
 
     <!-- filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
       <label class="flex items-center rounded-lg p-2 text-sm bg-white">
         <i class="uil uil-search-alt pr-3"></i>
         <input type="search" v-model.lazy="search" placeholder="search news" class="bg-transparent outline-none" />
-      </label> 
+      </label>
 
       <!-- filter by date -->
       <!-- month -->
@@ -29,7 +29,7 @@
     <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
       <i class="uil uil-folder-times text-5xl"></i>
       Empty Collection
-    </h5>  
+    </h5>
     <Loading class="w-14 h-14 mx-auto" v-if="isLoading" />
 
     <!-- news card -->
@@ -38,17 +38,20 @@
         <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.month }}</span>
         <div class="flex-1 border"></div>
       </div>
-      <CardNews :handleDelete="handleDelete" v-for="data in group.items" :data="data" :showPreviewModal="showPreviewModal" />
+      <CardNews :handleDelete="handleDelete" v-for="data in group.items" :data="data" :key="data.id"
+        :showPreviewModal="showPreviewModal" />
       <!-- no result  -->
       <div v-if="!group.items.length" class="font-bold text-gray-800">No results found!</div>
     </div>
-    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal" :handleSubmit="handleUpdateSubmit" />
+    <PreviewModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal"
+      :handleSubmit="handleUpdateSubmit" />
 
     <!-- add new news btn -->
     <AddBtn :showAddModal="showAddNewModal" class="z-20" />
 
     <!-- add modal -->
-    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal" :handleCreateSubmit="handleCreateSubmit" title="Headline" :location="false" />
+    <AddModal :showAddModal="showAddNewModal" :isAddModal="isAddNewModal" v-if="isAddNewModal"
+      :handleCreateSubmit="handleCreateSubmit" title="Headline" :location="false" />
   </WrapperContent>
 </template>
 
@@ -69,11 +72,8 @@ import Loading from "../../../Components/Loading.vue";
 
 const resMsg = ref();
 // delete a news data based on the passed id
-function handleDelete(id, deleteRef) {
-  axios.post(be_url + "/delete-news/" + id, { id }).then(({data}) => {
-    // this will remove the displaying of the delete modal
-    deleteRef.classList.remove("!translate-y-0");
-    deleteRef.classList.remove("!translate-x-0");
+function handleDelete(id) {
+  axios.post(be_url + "/delete-news/" + id, { id }).then(({ data }) => {
 
     // set the response msg
     resMsg.value = data.res;
@@ -91,62 +91,62 @@ function handleDelete(id, deleteRef) {
 
 // handle the submit function to update the new news
 function handleUpdateSubmit(id, formData) {
-  axios.post(be_url + "/news/edit", { 
-    id, 
-    title: formData.title, 
-    description: formData.description, 
+  axios.post(be_url + "/news/edit", {
+    id,
+    title: formData.title,
+    description: formData.description,
     imgFile: formData.imgFile,
     newImgs: formData.newImgs,
     deletedImgs: formData.deletedImgIds,
     defaultThumbnailId: formData.defaultThumbnailId
-  }, 
-  { headers: { "Content-Type": "multipart/form-data" }})
-  .then(response => {
-    originalDataNews.value = response.data.news;
-    dataNews.value = response.data.news;
+  },
+    { headers: { "Content-Type": "multipart/form-data" } })
+    .then(response => {
+      originalDataNews.value = response.data.news;
+      dataNews.value = response.data.news;
 
-    // set the response msg
-    resMsg.value = response.data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
-  })
-  .catch(err => console.log(err));
+      // set the response msg
+      resMsg.value = response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    })
+    .catch(err => console.log(err));
 }
 
 // submit form
 async function handleCreateSubmit(formData) {
-  return await axios.post(be_url + "/news/create", { title: formData.title, description: formData.content, imgFile: [...formData.imgFile] }, { headers: { "Content-Type": "multipart/form-data" }})
-  .then(response => {
-    originalDataNews.value = response.data.news;
-    dataNews.value = response.data.news;
+  return await axios.post(be_url + "/news/create", { title: formData.title, description: formData.content, imgFile: [...formData.imgFile] }, { headers: { "Content-Type": "multipart/form-data" } })
+    .then(response => {
+      originalDataNews.value = response.data.news;
+      dataNews.value = response.data.news;
 
-    // set the response msg
-    resMsg.value = response.data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+      // set the response msg
+      resMsg.value = response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    return response.data;
-  })
-  .catch(err => console.log(err));
+      return response.data;
+    })
+    .catch(err => console.log(err));
 }
 
 // sort/filter function for select and input year
 const filterMonth = ref("All");
-const filterYear= ref("All");
+const filterYear = ref("All");
 const filterMonths = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const filterYears = [ "All", 2023, 2022, 2021, 2020, 2019, 2018, 2017, ];
+const filterYears = ["All", 2023, 2022, 2021, 2020, 2019, 2018, 2017,];
 
 function filterBy(type, value) {
-  if(type === "month") {
+  if (type === "month") {
     // update the value of filterMonth with the selected one
     filterMonth.value = value;
 
     // if value is "all" select all the data
-    if(value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
+    if (value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
       dataNews.value = originalDataNews.value;
       return;
     }
@@ -155,15 +155,15 @@ function filterBy(type, value) {
     // and set the new value to dataNews to re-render the filtered news
     const groups = originalDataNews.value.filter(group => {
       const date = dateFormat(group.created_at);
-      if(filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
+      if (filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
         return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
       }
-      if(filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
+      if (filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
         return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
       }
       // return the group if month exists 
       return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
-    }); 
+    });
     dataNews.value = groups;
   }
   else {
@@ -171,7 +171,7 @@ function filterBy(type, value) {
     filterYear.value = value;
 
     // if value is "all" select all the data
-    if(value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
+    if (value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
       dataNews.value = originalDataNews.value;
       return;
     }
@@ -180,18 +180,18 @@ function filterBy(type, value) {
     // and set the new value to dataNews to re-render the filtered news
     const groups = originalDataNews.value.filter(group => {
       const date = dateFormat(group.created_at);
-      if(filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
+      if (filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
         return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
       }
-      if(filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
+      if (filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
         return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
       }
       // return the group if month exists 
       return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
-    }); 
+    });
     dataNews.value = groups;
   }
- 
+
 }
 
 const isPreviewModal = ref(false); // this state is for toggling/showing preview modal
@@ -209,11 +209,11 @@ function showAddNewModal() {
 // fetch the news data from backend
 onMounted(() => {
   // requesting data from /news
-  axios.get(be_url + "/news").then(({data}) => {
-      dataNews.value = data.news; 
-      originalDataNews.value = data.news; 
-      if(!dataNews.value.length) isEmpty.value = true;
-      isLoading.value = false;
+  axios.get(be_url + "/news").then(({ data }) => {
+    dataNews.value = data.news;
+    originalDataNews.value = data.news;
+    if (!dataNews.value.length) isEmpty.value = true;
+    isLoading.value = false;
   });
 });
 
@@ -252,7 +252,7 @@ const groupData = computed(() => {
 
   const newGroup = convertToObjectArray(groups);
   return newGroup;
-}, [dataNews]);
+});
 
 // then this function will turn the array of objects to an object of array
 // from [{jan: [], feb: []}] -> {jan: [], feb: []} 
@@ -263,18 +263,13 @@ function convertToObjectArray(groups) {
   }, {});
 }
 
-const searchData = ref([{ month: "Search Results", items: []}]);
+const searchData = ref([{ month: "Search Results", items: [] }]);
 const dataToLoop = computed(() => {
-  if(search.value.length) {
+  if (search.value.length) {
     searchData.value[0].items = searchFilter(dataNews.value, search);
     return searchData;
   }
   return groupData;
-}, [search, filterMonth, filterYear, dataNews, originalDataNews]);
-
+});
 
 </script>
-
-<style lang="scss" scoped>
-
-</style>
