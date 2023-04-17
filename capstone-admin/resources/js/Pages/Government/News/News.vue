@@ -26,8 +26,9 @@
     </div>
 
     <!-- empty: this will display when there is no data to display -->
-    <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
-      <i class="uil uil-folder-times text-5xl"></i>
+    <h5 v-if="isEmpty"
+      class="font-bold text-xl capitarize text-red-500 mt-5 border border-x-0 border-b-0 flex items-center">
+      <i class="uil uil-folder-times text-3xl"></i>
       Empty Collection
     </h5>
     <div v-if="isLoading" class="flex items-center justify-center">
@@ -87,8 +88,10 @@ function filterDelete(type, value) {
         if (data.news) {
           dataNews.value = data.news;
           originalDataNews.value = data.news;
+          isEmpty.value = false;
           return;
         }
+        isEmpty.value = true; // set the isEmpty to true, so there would be an indication that data is empty
 
         // set the response msg
         resMsg.value = data.res;
@@ -111,6 +114,7 @@ function filterDelete(type, value) {
   axios.get(be_url + '/news')
     .then(({ data }) => {
       isLoading.value = false;
+      isEmpty.value = false;
       if (data.news) {
         dataNews.value = data.news;
         originalDataNews.value = data.news;
@@ -186,6 +190,7 @@ function handleUpdateSubmit(id, formData) {
     id,
     title: formData.title,
     description: formData.description,
+    authors: formData.authors,
     imgFile: formData.imgFile,
     newImgs: formData.newImgs,
     deletedImgs: formData.deletedImgIds,

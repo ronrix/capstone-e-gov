@@ -124,6 +124,7 @@ class NewsController extends Controller
             "id" => "required",
             "title" => "required",
             "description" => "required",
+            "authors" => "required",
             "deletedImgs" => "nullable|array",
             "defaultThumbnailId" => "required",
             "newImgs" => "nullable|array", # 5mb is the max 
@@ -153,6 +154,7 @@ class NewsController extends Controller
             $news = News::findOrFail($id);
             $news->title = $request->input("title");
             $news->description = $request->input("description");
+            $news->authors = $request->input("authors");
 
             if ($request->file("newImgs")) {
 

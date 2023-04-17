@@ -34,7 +34,8 @@
         <h3 class="font-bold capitalize text-xl tracking-wide">
           {{ data.title }}
         </h3>
-        <h5 class="text-xs text-gray-500 font-bold">{{ date }}</h5>
+        <h5 class="text-sm text-gray-600 font-bold capitalize">By {{ data.authors }}</h5>
+        <h5 class="text-xs text-gray-500">{{ date }}</h5>
       </div>
       <p class="text-xs overflow-hidden whitespace-pre-wrap h-[100px]" v-bind:innerHTML="description">
       </p>

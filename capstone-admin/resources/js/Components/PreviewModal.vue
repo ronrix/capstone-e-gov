@@ -1,6 +1,6 @@
 <template>
   <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-30">
-    <form
+    <form @submit.prevent="onSubmit"
       class="backdrop-blur-xl bg-white/70 h-[500px] sm:h-auto sm:w-[1000px] p-5 rounded-lg flex flex-col md:flex-row border overflow-y-scroll scrollbar"
       enctype="multipart/form-data">
       <!-- close modal btn -->
@@ -45,6 +45,14 @@
           <!-- date -->
           <h5 class="text-xs text-gray-500 font-bold">{{ date }}</h5>
         </div>
+
+        <!-- author -->
+        <div class="flex items-center">
+          <span class="text-xs text-gray-500 font-bold">By</span>
+          <textarea v-model="formData.authors" @input="addHeight" rows="1"
+            class="scrollbar focus:outline-blue-600 bg-transparent capitalize w-full text-sm font-bold max-h-[100px]"></textarea>
+        </div>
+
         <!-- location, if exists -->
         <div>
           <span v-if="selectedData.location" class="font-[500] text-xs capitalize mt-2">address</span>
@@ -71,8 +79,8 @@
         </div>
 
         <div class="self-end flex items-center mb-0 mt-auto">
-          <p class="text-xs text-gray-400">you have to restore it before editing it</p>
-          <button @click="setSubmitting" :disabled="isSubmitting || selectedData.deleted_at" type="submit"
+          <p v-if="selectedData.deleted_at" class="text-xs text-gray-400">you have to restore it before editing it</p>
+          <button :disabled="isSubmitting || selectedData.deleted_at" type="submit"
             :class="{ 'cursor-not-allowed': isSubmitting || selectedData.deleted_at }"
             class="px-4 bg-blue-600 ml-3 text-white rounded-md font-bold flex items-center">
             <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
@@ -160,6 +168,7 @@ const formData = useForm({
   defaultThumbnailId: selectedImgId.value,
   deletedImgIds: deleteImgIds.value,
   title: selectedData?.title,
+  authors: selectedData?.authors,
   location: selectedData.location,
   category: selectedData.category,
   description: selectedData.description,
@@ -195,7 +204,7 @@ function selectNewImgFile() {
   imgRef.value.click();
 }
 
-function setSubmitting() {
+function onSubmit() {
   isSubmitting.value = true;
   description.value = DOMPurify.sanitize(marked.parse(formData.description)); // update the div content
 
