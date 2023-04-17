@@ -1,7 +1,7 @@
 <template>
   <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-30">
     <form @submit.prevent="onSubmit"
-      class="backdrop-blur-xl bg-white/70 h-[500px] sm:h-auto sm:w-[1000px] p-5 rounded-lg flex flex-col md:flex-row border overflow-y-scroll scrollbar"
+      class="backdrop-blur-xl bg-white/70 h-[500px] sm:h-auto sm:w-[1000px] p-5 rounded-lg flex flex-col sm:flex-row border overflow-y-scroll scrollbar"
       enctype="multipart/form-data">
       <!-- close modal btn -->
       <i @click="showPreviewModal"
@@ -9,9 +9,9 @@
 
       <!-- left -->
       <!-- news thumbnail -->
-      <div class="overflow-hidden group relative w-full md:w-1/2 flex sm:flex-col items-start justify-start">
+      <div class="overflow-hidden group relative w-full flex-1 md:w-1/2 flex sm:flex-col items-start justify-start">
         <div
-          class="overflow-hidden h-[300px] sm:max-h-[300px] flex items-center justify-center w-full border-2 border-blue-600 rounded-md">
+          class="overflow-hidden h-[100px] sm:max-h-[300px] flex items-center justify-center w-full border-2 border-blue-600 rounded-md">
           <Loading class="w-8 h-8" v-if="isLoading" />
           <img v-if="!isLoading" :src="imgSrc" alt="this is the thumbnail of news" class="w-full object-cover">
         </div>
@@ -72,7 +72,7 @@
               class="text-blue-600 cursor-pointer hover:text-blue-500 self-start text-xs ml-2">edit</button>
           </span>
           <div class="overflow-y-auto scrollbar sm:h-[300px]">
-            <div ref="descEl" v-bind:innerHTML="description" class="text-sm"></div>
+            <div ref="descEl" v-bind:innerHTML="description" class="text-sm marked-desc"></div>
             <textarea ref="descText" @blur="stopEditing" v-model="formData.description"
               class="hidden overflow-y-scroll scrollbar bg-transparent py-3 w-full h-full text-sm outline"></textarea>
           </div>
@@ -248,8 +248,17 @@ onUnmounted(() => {
 
 </script>
 
-<style scoped>
+<style>
 textarea {
   resize: none;
+}
+
+.marked-desc p {
+  margin: 1em 0 !important;
+}
+
+.marked-desc h3 {
+  font-size: 1.2em;
+  font-weight: bold;
 }
 </style>
