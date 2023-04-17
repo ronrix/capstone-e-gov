@@ -29,14 +29,16 @@
             <span class="text-sm font-bold capitalize mb-2">location:</span>
             <input v-model="formData.location" name="title" type="text" placeholder="Type the location here..."
               class="rounded-md mb-5 p-2 focus:outline-blue-600">
-            <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message }}
+            <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message
+            }}
             </p>
           </label>
           <label v-if="category" class="flex flex-col flex-1">
             <span class="text-sm font-bold capitalize mb-2">category:</span>
             <input v-model="formData.category" name="title" type="text" placeholder="Type the category here..."
               class="rounded-md mb-5 p-2 focus:outline-blue-600">
-            <p v-if="v$.category.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.category.$errors[0].$message }}
+            <p v-if="v$.category.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.category.$errors[0].$message
+            }}
             </p>
           </label>
         </div>
@@ -63,7 +65,7 @@
             <!-- TODO: add images here -->
             <div ref="assetDiv"
               class="flex items-start flex-wrap gap-2 sm:h-[150px] overflow-y-scroll py-2 scrollbar w-full el-main">
-              <div v-for="img, idx in toUploadImgs"
+              <div v-for="img, idx in toUploadImgs" :key="idx"
                 class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer">
                 <!-- remove btn -->
                 <div :id="idx" @click="handleRemoveImg"
@@ -71,7 +73,7 @@
                   <i class="uil uil-times text-white pointer-events-none"></i>
                 </div>
                 <img @click="handleSelectDefaultThumbnail" :id="idx" :src="img" alt="this is an image of something"
-                  class="w-full h-full prev-img">
+                  class="w-full h-full prev-img object-cover">
               </div>
               <!-- upload btn -->
               <div @click="addNewImg"
@@ -127,7 +129,7 @@ const rules = computed(() => (location && category ? {
     required: helpers.withMessage("The image is required", required),
     array: helpers.withMessage("At least one image file is reuqired", (value) => value.length > 0),
   },
-} ));
+}));
 
 const isSubmitting = ref(false);
 const assetDiv = ref(null);
@@ -242,7 +244,8 @@ const { handleCreateSubmit, location, category } = defineProps({
 </script>
 
 <style scoped>
-div.el-main.small > * {
+div.el-main.small>* {
   height: 50px;
   width: 50px;
-}</style>
+}
+</style>
