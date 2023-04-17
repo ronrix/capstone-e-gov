@@ -11,7 +11,7 @@
       <!-- news thumbnail -->
       <div class="overflow-hidden group relative w-full flex-1 md:w-1/2 flex sm:flex-col items-start justify-start">
         <div
-          class="overflow-hidden h-[100px] sm:max-h-[300px] flex items-center justify-center w-full border-2 border-blue-600 rounded-md">
+          class="overflow-hidden flex-1 sm:max-h-[300px] flex items-center justify-center w-full border-2 border-blue-600 rounded-md">
           <Loading class="w-8 h-8" v-if="isLoading" />
           <img v-if="!isLoading" :src="imgSrc" alt="this is the thumbnail of news" class="w-full object-cover">
         </div>

@@ -128,7 +128,7 @@ class NewsController extends Controller
             "deletedImgs" => "nullable|array",
             "defaultThumbnailId" => "required",
             "newImgs" => "nullable|array", # 5mb is the max 
-            "newImgs.*" => "nullable|image|mimes:jpg,png,jpeg,gif,svg" # 5mb is the max 
+            "newImgs.*" => "nullable|image|mimes:jpg,png,jpeg,gif,svg,webp|max:5000" # 5mb is the max 
         ]);
 
         /*
@@ -240,8 +240,9 @@ class NewsController extends Controller
         $validator = Validator::make($request->all(), [
             "title" => "required",
             "description" => "required",
+            "authors" => "required",
             "imgFile" => "required|array", # 5mb is the max 
-            "imgFile.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
+            "imgFile.*" => "nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000", # 2mb is the max 
         ]);
 
         /*
@@ -256,8 +257,6 @@ class NewsController extends Controller
                 ], 400
             ]);
         }
-
-
 
         try {
             if ($request->file("imgFile")) {
@@ -280,6 +279,7 @@ class NewsController extends Controller
                 $news = new News;
                 $news->title = $request->input("title");
                 $news->description = $request->input("description");
+                $news->authors = $request->input("authors");
                 $news->img_link = implode(",", $imgPaths);
                 $news->save();
             }

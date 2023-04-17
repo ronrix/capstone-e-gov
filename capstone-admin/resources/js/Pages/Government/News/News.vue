@@ -85,20 +85,17 @@ function filterDelete(type, value) {
     axios.get(be_url + '/news/deleted')
       .then(({ data }) => {
         isLoading.value = false;
-        if (data.news) {
+        // add deleted data to dataNews and originalDataNews
+        if (data.news.length) {
           dataNews.value = data.news;
           originalDataNews.value = data.news;
           isEmpty.value = false;
           return;
         }
+        // else just render "empty collection" text
         isEmpty.value = true; // set the isEmpty to true, so there would be an indication that data is empty
-
-        // set the response msg
-        resMsg.value = data.res;
-        // hide the notification message in 3s
-        setTimeout(() => {
-          resMsg.value = null;
-        }, 3000);
+        dataNews.value = data.news;
+        originalDataNews.value = data.news;
       })
       .catch(err => {
         // set the response msg
@@ -220,7 +217,13 @@ function handleUpdateSubmit(id, formData) {
 
 // submit form
 async function handleCreateSubmit(formData) {
-  return await axios.post(be_url + "/news/create", { title: formData.title, description: formData.content, imgFile: [...formData.imgFile] }, { headers: { "Content-Type": "multipart/form-data" } })
+  return await axios.post(be_url + "/news/create", {
+    title: formData.title,
+    description: formData.content,
+    authors: formData.authors,
+    imgFile: [...formData.imgFile]
+  },
+    { headers: { "Content-Type": "multipart/form-data" } })
     .then(response => {
       originalDataNews.value = response.data.news;
       dataNews.value = response.data.news;

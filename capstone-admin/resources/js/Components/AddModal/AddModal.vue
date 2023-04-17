@@ -5,47 +5,58 @@
       <i @click="showAddModal"
         class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
-      <h2 class="font-bold text-2xl capitalize mb-0 text-gray-900">Create new {{ title }}</h2>
-      <p class="text-sm text-gray-600 whitespace-pre-wrap">
+      <h2 class="font-bold text-lg sm:text-2xl capitalize mb-0 text-gray-900">Create new {{ title }}</h2>
+      <p class="text-xs text-gray-600 whitespace-pre-wrap">
         To format for your content appropriately, you should understand how markdown works
       </p>
       <!-- link to go the markdown document -->
       <a target="_blank" href="https://www.markdownguide.org/basic-syntax/"
-        class="m-0 text-sm mb-5 text-blue-600 underline font-[500] self-start">
+        class="m-0 text-xs mb-5 text-blue-600 underline font-[500] self-start">
         <i class="uil uil-info-circle"></i>
         click here to learn how to format your contents
       </a>
 
       <form method="POST" action="/create-news" @submit.prevent="onSubmit" class="flex flex-col">
-        <label class="flex flex-col">
-          <span class="text-sm font-bold capitalize mb-2">title:</span>
-          <input v-model="formData.title" name="title" type="text" placeholder="Type the title here..."
-            class="rounded-md mb-5 p-2 focus:outline-blue-600">
-          <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message }} </p>
-        </label>
+        <div class="flex items-center gap-3">
+          <label class="flex flex-col flex-1">
+            <span class="text-xs sm:text-sm font-bold capitalize mb-2">title:</span>
+            <input v-model="formData.title" name="title" type="text" placeholder="Type the title here..."
+              class="rounded-md mb-5 p-2 focus:outline-blue-600 text-xs sm:text-sm">
+            <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message }}
+            </p>
+          </label>
+          <!-- authors -->
+          <label class="flex flex-col flex-1">
+            <span class="text-xs sm:text-sm font-bold capitalize mb-2">authors:</span>
+            <input v-model="formData.authors" name="title" type="text" placeholder="Type the authors here..."
+              class="rounded-md mb-5 p-2 focus:outline-blue-600 text-xs sm:text-sm">
+            <p v-if="v$.authors.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.authors.$errors[0].$message }}
+            </p>
+          </label>
+        </div>
         <!-- optional -->
         <div class="flex items-center gap-5">
           <label v-if="location" class="flex flex-col flex-1">
-            <span class="text-sm font-bold capitalize mb-2">location:</span>
+            <span class="text-xs sm:text-sm font-bold capitalize mb-2">location:</span>
             <input v-model="formData.location" name="title" type="text" placeholder="Type the location here..."
-              class="rounded-md mb-5 p-2 focus:outline-blue-600">
+              class="rounded-md mb-5 p-2 focus:outline-blue-600 text-xs sm:text-sm">
             <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.location.$errors[0].$message
             }}
             </p>
           </label>
           <label v-if="category" class="flex flex-col flex-1">
-            <span class="text-sm font-bold capitalize mb-2">category:</span>
+            <span class="text-xs sm:text-sm font-bold capitalize mb-2">category:</span>
             <input v-model="formData.category" name="title" type="text" placeholder="Type the category here..."
-              class="rounded-md mb-5 p-2 focus:outline-blue-600">
+              class="rounded-md mb-5 p-2 focus:outline-blue-600 text-xs sm:text-sm">
             <p v-if="v$.category.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.category.$errors[0].$message
             }}
             </p>
           </label>
         </div>
         <label class="flex flex-col">
-          <span class="text-sm font-bold capitalize mb-2">content:</span>
+          <span class="text-ss sm:text-sm font-bold capitalize mb-2">content:</span>
           <textarea v-model="formData.content" name="description" placeholder="Type the content here..."
-            class="rounded-md p-2 h-[80px] sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto"></textarea>
+            class="rounded-md p-2 h-[80px] sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto text-xs sm:text-sm"></textarea>
           <p v-if="v$.content.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.content.$errors[0].$message }}
           </p>
         </label>
@@ -86,7 +97,7 @@
         </div>
 
         <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }"
-          class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center">
+          class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center text-xs sm:text-sm">
           <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
           <span v-if="!isSubmitting">save</span>
         </button>
@@ -108,6 +119,7 @@ import { required, helpers } from "@vuelidate/validators"
 const rules = computed(() => (location && category ? {
   title: { required: helpers.withMessage("The field title is required", required) },
   location: { required: helpers.withMessage("The field location is required", required) },
+  authors: { required: helpers.withMessage("The field authors is required", required) },
   category: { required: helpers.withMessage("The field category is required", required) },
   content: { required: helpers.withMessage("The field content is required", required) },
   imgFile: {
@@ -117,6 +129,7 @@ const rules = computed(() => (location && category ? {
 } : location ? {
   title: { required: helpers.withMessage("The field title is required", required) },
   location: { required: helpers.withMessage("The field location is required", required) },
+  authors: { required: helpers.withMessage("The field authors is required", required) },
   content: { required: helpers.withMessage("The field content is required", required) },
   imgFile: {
     required: helpers.withMessage("The image is required", required),
@@ -124,6 +137,7 @@ const rules = computed(() => (location && category ? {
   }
 } : {
   title: { required: helpers.withMessage("The field title is required", required) },
+  authors: { required: helpers.withMessage("The field authors is required", required) },
   content: { required: helpers.withMessage("The field content is required", required) },
   imgFile: {
     required: helpers.withMessage("The image is required", required),
@@ -136,6 +150,7 @@ const assetDiv = ref(null);
 const formData = useForm({
   title: "",
   location: "",
+  authors: "",
   category: "",
   content: "",
   imgFile: [],
