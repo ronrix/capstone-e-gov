@@ -2,10 +2,19 @@
   <div
     class="relative overflow-hidden flex flex-col md:flex-row shadow-md bg-white border border-r-0 border-y-0 border-l-[5px] border-l-blue-600">
 
+    <!-- restore button -->
+    <div v-if="data.deleted_at" @click="showRestoreModal"
+      class="bg-blue-300 text-blue-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-blue-400 hover:text-blue-200 cursor-pointer">
+      restore</div>
+
     <!-- delete button -->
-    <div @click="showDeleteVerificationModal"
+    <div v-else @click="showDeleteVerificationModal"
       class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
       delete</div>
+
+    <!-- restore -->
+    <RestoreVerificationModal v-if="isRestoreModal" :close-modal="showRestoreModal" :handle-restore="handleRestore"
+      :id="data.id" />
 
     <!-- delete -->
     <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
@@ -43,16 +52,23 @@ import { dateFormat } from "../../../utils/dateFormat";
 import { validURL } from "../../../utils/validUrl";
 import { be_url } from "../../../config/config";
 import DeleteVerificationModal from "../../../Components/DeleteVerificationModal.vue";
+import RestoreVerificationModal from "../../../Components/RestoreVerificationModal.vue";
 
 import { marked } from "marked";
 import DOMPurify from "dompurify";
 
 const isVerificationModal = ref(false);
+const isRestoreModal = ref(false);
 const description = DOMPurify.sanitize(marked.parse(data.description));
 
 // function to handle the delete 
 function showDeleteVerificationModal() {
   isVerificationModal.value = !isVerificationModal.value;
+}
+
+// function to handle the delete 
+function showRestoreModal() {
+  isRestoreModal.value = !isRestoreModal.value;
 }
 
 // the first value of the img_links is a img link but it has a '"' on the first character
@@ -74,5 +90,6 @@ const { data } = defineProps({
   showPreviewModal: Function,
   data: Object,
   handleDelete: Function,
+  handleRestore: Function,
 });
 </script>

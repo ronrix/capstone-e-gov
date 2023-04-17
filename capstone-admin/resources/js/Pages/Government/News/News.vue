@@ -13,15 +13,15 @@
 
       <!-- filter by date -->
       <!-- month -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
-        month:
-      </span>
+      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> month: </span>
       <SelectTag type="month" :filterFn="filterBy" :value="filterMonth" :filterArray="filterMonths" />
       <!-- year -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
-        year:
-      </span>
+      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> year: </span>
       <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears" />
+
+      <!-- filter the deleted data -->
+      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
+      <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
 
     </div>
 
@@ -30,16 +30,19 @@
       <i class="uil uil-folder-times text-5xl"></i>
       Empty Collection
     </h5>
-    <Loading class="w-14 h-14 mx-auto" v-if="isLoading" />
+    <div v-if="isLoading" class="flex items-center justify-center">
+      <Loading class="w-8 h-8" />
+      <p>Loading...</p>
+    </div>
 
     <!-- news card -->
-    <div v-for="group in dataToLoop.value" :key="group.month" class="flex flex-col gap-3 mt-5">
+    <div v-else v-for="group in dataToLoop.value" :key="group.month" class="flex flex-col gap-3 mt-5">
       <div class="flex items-center">
         <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.month }}</span>
         <div class="flex-1 border"></div>
       </div>
-      <CardNews :handleDelete="handleDelete" v-for="data in group.items" :data="data" :key="data.id"
-        :showPreviewModal="showPreviewModal" />
+      <CardNews :handle-restore="handleRestore" :handleDelete="handleDelete" v-for="data in group.items" :data="data"
+        :key="data.id" :showPreviewModal="showPreviewModal" />
       <!-- no result  -->
       <div v-if="!group.items.length" class="font-bold text-gray-800">No results found!</div>
     </div>
@@ -70,10 +73,64 @@ import axios from 'axios';
 import AddBtn from "../../../Components/AddModal/AddBtn.vue";
 import Loading from "../../../Components/Loading.vue";
 
+// filter deleted data
+const activeData = ref("active");
+function filterDelete(type, value) {
+  activeData.value = value;
+  isLoading.value = true;
+
+  // get request for deleted data
+  if (activeData.value === 'deleted') {
+    axios.get(be_url + '/news/deleted')
+      .then(({ data }) => {
+        isLoading.value = false;
+        if (data.news) {
+          dataNews.value = data.news;
+          originalDataNews.value = data.news;
+          return;
+        }
+
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+          resMsg.value = null;
+        }, 3000);
+      })
+      .catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+          resMsg.value = null;
+        }, 3000);
+      });
+    return;
+  }
+  // else the undeleted data
+  axios.get(be_url + '/news')
+    .then(({ data }) => {
+      isLoading.value = false;
+      if (data.news) {
+        dataNews.value = data.news;
+        originalDataNews.value = data.news;
+        return;
+      }
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
+}
+
 const resMsg = ref();
 // delete a news data based on the passed id
 function handleDelete(id) {
-  axios.post(be_url + "/delete-news/" + id, { id }).then(({ data }) => {
+  axios.post(be_url + "/delete-news", { id }).then(({ data }) => {
 
     // set the response msg
     resMsg.value = data.res;
@@ -86,6 +143,40 @@ function handleDelete(id) {
     // this will update the state variable of the news
     originalDataNews.value = data.news;
     dataNews.value = data.news;
+  }).catch(err => {
+    // set the response msg
+    resMsg.value = err.response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+  });
+}
+
+// restore a news data based on the passed id
+async function handleRestore(id) {
+  return await axios.post(be_url + "/news/restore", { id }).then(({ data }) => {
+    if (data.news) {
+      dataNews.value = data.news;
+      originalDataNews.value = data.news;
+    }
+
+    // set the response msg
+    resMsg.value = data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
+
+    activeData.value = "deleted";
+    return data;
+  }).catch(err => {
+    // set the response msg
+    resMsg.value = err.response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
   });
 }
 
@@ -112,7 +203,14 @@ function handleUpdateSubmit(id, formData) {
         resMsg.value = null;
       }, 3000);
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // submit form
@@ -131,7 +229,15 @@ async function handleCreateSubmit(formData) {
 
       return response.data;
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // sort/filter function for select and input year
@@ -214,6 +320,13 @@ onMounted(() => {
     originalDataNews.value = data.news;
     if (!dataNews.value.length) isEmpty.value = true;
     isLoading.value = false;
+  }).catch(err => {
+    // set the response msg
+    resMsg.value = err.response.data.res;
+    // hide the notification message in 3s
+    setTimeout(() => {
+      resMsg.value = null;
+    }, 3000);
   });
 });
 

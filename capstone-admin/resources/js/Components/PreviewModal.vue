@@ -71,8 +71,9 @@
         </div>
 
         <div class="self-end flex items-center mb-0 mt-auto">
-          <button @click="setSubmitting" :disabled="isSubmitting" type="submit"
-            :class="{ 'cursor-not-allowed': isSubmitting }"
+          <p class="text-xs text-gray-400">you have to restore it before editing it</p>
+          <button @click="setSubmitting" :disabled="isSubmitting || selectedData.deleted_at" type="submit"
+            :class="{ 'cursor-not-allowed': isSubmitting || selectedData.deleted_at }"
             class="px-4 bg-blue-600 ml-3 text-white rounded-md font-bold flex items-center">
             <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
             <span v-if="!isSubmitting">save</span>

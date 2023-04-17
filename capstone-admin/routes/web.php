@@ -45,6 +45,34 @@ Route::get('/logout', [LoginController::class, "logout"]);
 // public get methods
 // get news json response data
 Route::get("/news", [NewsController::class, "getNews"]);
+Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
+Route::get("/current-officials", [ExecutivesController::class, "index"]);
+Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
+Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
+Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
+Route::get("/job-postings", [JobPostingController::class, "index"]);
+Route::get("/hotlines", [HotlinesController::class, "index"]);
+Route::get("/populations", [PopulationController::class, "index"]);
+Route::get("/tourist-attractions", [TourismController::class, "index"]);
+Route::get("/festivals", [FestivalsController::class, "index"]);
+Route::get("/businesses", [BusinessesController::class, "index"]);
+Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
+Route::get("/permits", [PermitController::class, "index"]);
+Route::get("/scholarship", [ServicesController::class, "getScholarshipProgram"]);
+Route::get("/mayor-clearance", [MayorClearanceController::class, "getMayorClearance"]);
+Route::get("/civil-wedding", [CivilWeddingController::class, "getCivilWedding"]);
+Route::get("/government-id", [MSWDController::class, "getGovernmentId"]);
+Route::get("/replacement-senior-citizen", [MSWDController::class, "getSeniorCitizen"]);
+Route::get("/job-fair", [PublicEmploymentController::class, "getJobFair"]);
+Route::get("/spes", [PublicEmploymentController::class, "getSpes"]);
+Route::get("/technical-assistance-for-farmers", [TechnicalAssistanceForFarmers::class, "index"]);
+Route::get("/treatment-vaccination-of-animals", [TreatmentVacinnationOfAnimals::class, "index"]);
+Route::get("/distributions-assorted-seeds", [DistributionsOfAssortedSeedings::class, "index"]);
+Route::get("/delivery-farm-fishery-inputs", [DeliveryOfFarmsFisheryInputs::class, "index"]);
+Route::get("/issuance-moa-certification", [IssuanceOfMOACertification::class, "index"]);
+Route::get("/capacity-building-enhancement-training", [CapacityBuildingEnhancementTraining::class, "index"]);
+Route::get("/official-seal", [AboutController::class, "getOfficialSeal"]);
+Route::get("/contacts", [AboutController::class, "getContacts"]);
 
 // government
 Route::middleware(["auth"])->group(function () {
@@ -79,35 +107,11 @@ Route::middleware(["auth"])->group(function () {
         return inertia("Main");
     });
 
-    // government get requests
-    Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
-    Route::get("/current-officials", [ExecutivesController::class, "index"]);
-    Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
-    Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
-    Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
-    Route::get("/job-postings", [JobPostingController::class, "index"]);
-    Route::get("/hotlines", [HotlinesController::class, "index"]);
-    Route::get("/populations", [PopulationController::class, "index"]);
-    Route::get("/tourist-attractions", [TourismController::class, "index"]);
-    Route::get("/festivals", [FestivalsController::class, "index"]);
-    Route::get("/businesses", [BusinessesController::class, "index"]);
-    Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
-    Route::get("/permits", [PermitController::class, "index"]);
-    Route::get("/scholarship", [ServicesController::class, "getScholarshipProgram"]);
-    Route::get("/mayor-clearance", [MayorClearanceController::class, "getMayorClearance"]);
-    Route::get("/civil-wedding", [CivilWeddingController::class, "getCivilWedding"]);
-    Route::get("/government-id", [MSWDController::class, "getGovernmentId"]);
-    Route::get("/replacement-senior-citizen", [MSWDController::class, "getSeniorCitizen"]);
-    Route::get("/job-fair", [PublicEmploymentController::class, "getJobFair"]);
-    Route::get("/spes", [PublicEmploymentController::class, "getSpes"]);
-    Route::get("/technical-assistance-for-farmers", [TechnicalAssistanceForFarmers::class, "index"]);
-    Route::get("/treatment-vaccination-of-animals", [TreatmentVacinnationOfAnimals::class, "index"]);
-    Route::get("/distributions-assorted-seeds", [DistributionsOfAssortedSeedings::class, "index"]);
-    Route::get("/delivery-farm-fishery-inputs", [DeliveryOfFarmsFisheryInputs::class, "index"]);
-    Route::get("/issuance-moa-certification", [IssuanceOfMOACertification::class, "index"]);
-    Route::get("/capacity-building-enhancement-training", [CapacityBuildingEnhancementTraining::class, "index"]);
-    Route::get("/official-seal", [AboutController::class, "getOfficialSeal"]);
-    Route::get("/contacts", [AboutController::class, "getContacts"]);
+    // routes to get deleted data
+    Route::get('/news/deleted', [NewsController::class, 'getAllTrashed']);
+
+    // routes to restore dat
+    Route::post('/news/restore', [NewsController::class, 'restore']);
 
     // government post requests
     // edit requests
@@ -229,7 +233,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/socmed/add", [AboutController::class, "createNewSocialLink"]);
 
     // delete requests
-    Route::post("/delete-news/{id}", [NewsController::class, "deleteOneNews"]);
+    Route::post("/delete-news", [NewsController::class, "deleteOneNews"]);
     Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
     Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);
     Route::post("/delete-barangay-official/", [ExecutivesController::class, "deleteOneBarangay"]);
