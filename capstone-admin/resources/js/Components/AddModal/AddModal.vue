@@ -75,9 +75,9 @@
           <div class="flex items-center w-full gap-2">
             <!-- TODO: add images here -->
             <div ref="assetDiv"
-              class="flex items-start flex-wrap gap-2 sm:h-[150px] overflow-y-scroll py-2 scrollbar w-full el-main">
+              class="flex items-start flex-wrap gap-2 sm:h-[60px] overflow-y-scroll py-2 scrollbar w-full el-main">
               <div v-for="img, idx in toUploadImgs" :key="idx"
-                class="border border-gray-500 p-2 rounded-md w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] relative cursor-pointer">
+                class="border border-gray-500 p-2 rounded-md w-[50px] h-[50px] relative cursor-pointer">
                 <!-- remove btn -->
                 <div :id="idx" @click="handleRemoveImg"
                   class="absolute -top-2 -right-2 cursor-pointer bg-red-600 flex items-center justify-center w-5 h-5 rounded-full hover:bg-red-500">
@@ -88,8 +88,8 @@
               </div>
               <!-- upload btn -->
               <div @click="addNewImg"
-                class="text-center flex items-center justify-center rounded-md px-2 border-blue-600 cursor-pointer border-2 ml-2 w-[50px] sm:w-[100px] h-[50px] sm:h-[100px] el-btn">
-                <i class="uil uil-image-plus text-2xl sm:text-5xl pointer-events-none"></i>
+                class="text-center flex items-center justify-center rounded-md px-2 border-blue-600 cursor-pointer border-2 w-[50px] h-[50px] el-btn">
+                <i class="uil uil-image-plus text-sm pointer-events-none"></i>
               </div>
             </div>
           </div>
@@ -213,7 +213,7 @@ onMounted(() => {
   if (vh <= 630) {
     // Update the style of the elements
     const elMain = document.querySelector(".el-main");
-    elMain.style.height = "80px";
+    elMain.style.height = "50px";
     elMain.classList.add("small");
 
     const elBtn = document.querySelector(".el-btn");

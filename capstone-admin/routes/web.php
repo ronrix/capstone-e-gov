@@ -109,9 +109,11 @@ Route::middleware(["auth"])->group(function () {
 
     // routes to get deleted data
     Route::get('/news/deleted', [NewsController::class, 'getAllTrashed']);
+    Route::get('/programs-and-events/deleted', [ProgramsEventsController::class, 'getAllTrashed']);
 
     // routes to restore dat
     Route::post('/news/restore', [NewsController::class, 'restore']);
+    Route::post('/programs-and-events/restore', [ProgramsEventsController::class, 'restore']);
 
     // government post requests
     // edit requests

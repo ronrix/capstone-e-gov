@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('programs_events', function (Blueprint $table) {
             $table->id();
             $table->string("title");
+            $table->string("authors");
             $table->longText("description");
             $table->text("location");
             $table->longText("img_link");
