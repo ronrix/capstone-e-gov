@@ -10,7 +10,11 @@
     <DemographicProfileModal :showModal="showModal" v-if="isShowModal" :handleCreate="handleCreateNewCensus" />
 
     <!-- delete verfication modal -->
-    <DeleteVerificationModal v-if="isVerificationModal" :closeModal="showDeleteVerificiationModal" :id="filteredData.id" :handleDelete="handleDeleteCensus" />
+    <DeleteVerificationModal v-if="isVerificationModal" :closeModal="showDeleteVerificiationModal" :id="filteredData.id"
+      :handleDelete="handleDeleteCensus" />
+    <!-- edit verification modal -->
+    <EditVerification :close-modal="showEditVerification" v-if="isEditVerification" :data="editedInput"
+      :handle-edit="handleEdit" />
 
     <!-- hotlines table -->
     <div class="w-full flex flex-col">
@@ -34,10 +38,10 @@
         </div>
 
         <!-- add new btn -->
-        <button @click="showModal" class="bg-blue-600 py-2 px-3 rounded-lg text-white font-bold capitalize">add census</button>
+        <button @click="showModal" class="bg-blue-600 py-2 px-3 rounded-lg text-white font-bold capitalize">add
+          census</button>
       </div>
-      <button
-        @click="showDeleteVerificiationModal"
+      <button @click="showDeleteVerificiationModal"
         class="self-end px-3 bg-red-300 rounded-md text-red-600 mb-2 hover:bg-red-400 hover:text-red-200">
         <i class="uil uil-times-circle"></i>
         delete this census
@@ -68,39 +72,39 @@
             </th>
           </tr>
         </thead>
-        <tbody>
-          <tr v-if="filteredData?.barangays" v-for="a, idx in JSON.parse(filteredData?.barangays)" class="text-xs md:text-sm font-medium border">
+        <tbody v-if="filteredData?.barangays">
+          <tr v-for="a, idx in JSON.parse(filteredData?.barangays)" :key="idx"
+            class="text-xs md:text-sm font-medium border">
             <td class="bg-white text-center">{{ idx + 1 }}</td>
             <td class="bg-white border pl-2 border-l-0">
-              <textarea v-model="a.barangay"
-                @change.capture="(e) => updateAmount(e, a.barangay + '|barangay', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full m-0 text-sm h-[40px] max-h-[40px] capitalize scrollbar"></textarea>
+              <input v-model="a.barangay"
+                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|barangay', filteredData.id, idx)"
+                class="focus:outline-blue-500 py-2 w-full m-0 text-sm capitalize scrollbar">
             </td>
             <td class="bg-white border pl-2 border-l-0">
-              <input v-model="a.male"
-                type="number"
-                @change.capture="(e) => updateAmount(e, a.barangay + '|male', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full overflow-scroll m-0 text-sm h-[40px] max-h-[40ppx]">
+              <input v-model="a.male" type="number"
+                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|male', filteredData.id, idx)"
+                class="focus:outline-blue-500 py-2 w-full overflow-scroll m-0 text-sm">
             </td>
             <td class="bg-white border pl-2 border-l-0">
-              <input v-model="a.female"
-                type="number"
-                @change.capture="(e) => updateAmount(e, a.barangay + '|female', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full overflow-scroll m-0 text-sm h-[40px] max-h-[40ppx]">
+              <input v-model="a.female" type="number"
+                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|female', filteredData.id, idx)"
+                class="focus:outline-blue-500 py-2 w-full overflow-scroll m-0 text-sm">
             </td>
             <td class="bg-white border pl-2 border-l-0">
-              <div class="h-[100px] overflow-y-scroll scrollbar">
-                <div v-for="rel, relId in JSON.parse(filteredData.religion)[idx]">
+              <div class="overflow-y-scroll scrollbar h-[50px]">
+                <div v-for="rel, relId in JSON.parse(filteredData.religion)[idx]" :key="relId">
                   <span class="capitalize font-semibold">{{ rel.religion }}</span>
-                  <input type="number" v-model="rel.count" @change.capture="(e) => updateAmount(e, 'religion|' + rel.religion, filteredData.id, relId)" class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                  <input type="number" v-model="rel.count"
+                    @change.capture="(e) => showEditVerification(e.target.value, 'religion|' + rel.religion, filteredData.id, relId)"
+                    class="focus:outline-blue-500 overflow-scroll no-scrollbar m-0 text-sm w-full">
                 </div>
               </div>
             </td>
             <td class="bg-white border pl-2 border-l-0">
-              <input v-model="a.household"
-                type="number"
-                @change.capture="(e) => updateAmount(e, a.barangay + '|household', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-3 w-full overflow-scroll m-0 text-sm h-[40px] max-h-[40ppx]">
+              <input v-model="a.household" type="number"
+                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|household', filteredData.id, idx)"
+                class="focus:outline-blue-500 py-2 w-full overflow-scroll m-0 text-sm">
             </td>
           </tr>
         </tbody>
@@ -117,6 +121,7 @@ import SelectTag from '../../../Components/SelectTag.vue';
 import axios from 'axios';
 import { be_url } from '../../../config/config';
 import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
+import EditVerification from '../../../Components/EditVerification.vue';
 
 const isShowModal = ref(false);
 const selectedYear = ref();
@@ -137,20 +142,49 @@ function filterBy(type, value) {
   filteredData.value = originalData.value.filter(orig => parseInt(orig.census_year) === parseInt(value))[0];
 }
 
+// save verification on edit
+const isEditVerification = ref(false);
+const editedInput = ref({ value: "", id: null, type: "", idx: null });
+function showEditVerification(inputValue, type, id, idx) {
+  editedInput.value.value = inputValue;
+  editedInput.value.type = type;
+  editedInput.value.id = id;
+  editedInput.value.idx = idx;
+
+  isEditVerification.value = !isEditVerification.value;
+}
 // function to update the population data on change.capture event
 // when done typing it will update the data automatically
-function updateAmount(e, type, id, idx) {
+function handleEdit(value, id, type, idx) {
   axios.post(be_url + "/populations/edit", {
-    id, 
+    id,
     type,
     idx,
-    value: e.target.value
+    value
   })
-  .then(({data}) => {
-    filteredData.value = data.populations[0];
-    originalData.value = data.populations;
-  })
-  .catch(err => console.log(err));
+    .then(({ data }) => {
+      isEditVerification.value = false;
+
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      filteredData.value = data.populations[0];
+      originalData.value = data.populations;
+      filteredData.value = originalData.value.filter(orig => parseInt(orig.census_year) === parseInt(selectedYear.value))[0];
+    })
+    .catch(err => {
+
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // create new census
@@ -165,26 +199,34 @@ async function handleCreateNewCensus(formData) {
     total_population += parseInt(b.census?.male) + parseInt(b.census?.female);
   })
 
-  return await axios.post(be_url + "/population/add", { 
+  return await axios.post(be_url + "/population/add", {
     census_year: formData.census_year,
     total_population: total_population,
     barangays,
     religions,
   })
-  .then(({data}) => {
-    filteredData.value = data.populations[0];
-    originalData.value = data.populations;
+    .then(({ data }) => {
+      filteredData.value = data.populations[0];
+      originalData.value = data.populations;
+      years.value = data.populations.map(a => a.census_year); // get the years to display in the select tag
 
-    // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    return data;
-  })
-  .catch(err => console.log(err));
+      return data;
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // function to show the delete modal
@@ -194,27 +236,34 @@ function showDeleteVerificiationModal() {
 
 // delete by id, this function is used for delete request
 function handleDeleteCensus(id) {
-  axios.post(be_url + "/delete-population", { 
+  axios.post(be_url + "/delete-population", {
     id
   })
-  .then(({data}) => {
-    filteredData.value = data.populations[0];
-    originalData.value = data.populations;
- 
-    years.value = data.populations.map(a => a.census_year);
-    selectedYear.value = years.value[0];
+    .then(({ data }) => {
+      filteredData.value = data.populations[0];
+      originalData.value = data.populations;
 
-    // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+      years.value = data.populations.map(a => a.census_year);
+      selectedYear.value = years.value[0];
 
-    // close the verification delete modal
-    isVerificationModal.value = false;
-  })
-  .catch(err => console.log(err));
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      // close the verification delete modal
+      isVerificationModal.value = false;
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // this function will get all the populations data from the server
@@ -222,14 +271,14 @@ function handleDeleteCensus(id) {
 // and the filteredData will get the one data only, that will be used for filtering
 onMounted(() => {
   axios.get(be_url + "/populations")
-  .then(({data}) => {
-    filteredData.value = data.populations[0];
-    originalData.value = data.populations;
+    .then(({ data }) => {
+      filteredData.value = data.populations[0];
+      originalData.value = data.populations;
 
-    years.value = data.populations.map(a => a.census_year);
-    selectedYear.value = years.value[0];
-  })
-  .catch(err => console.log(err));
+      years.value = data.populations.map(a => a.census_year);
+      selectedYear.value = years.value[0];
+    })
+    .catch(err => console.log(err));
 });
 
 </script>

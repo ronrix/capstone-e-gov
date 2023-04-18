@@ -13,8 +13,10 @@
             cencus year
             <i class="uil uil-angle-down"></i>
           </span>
-          <input type="text" v-model="formData.census_year" class="border p-3 focus:outline-blue-600" placeholder="set year">
-          <p v-if="v$.census_year.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.census_year.$errors[0].$message }}</p>
+          <input type="text" v-model="formData.census_year" class="border p-3 focus:outline-blue-600"
+            placeholder="set year">
+          <p v-if="v$.census_year.$error && isError" class="text-xs text-red-400 mb-2"> {{
+            v$.census_year.$errors[0].$message }}</p>
         </label>
 
         <div class="overflow-y-scroll h-[300px] scrollbar">
@@ -44,43 +46,37 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="barangay, idx in barangays"
-                class="text-xs md:text-sm font-medium border">
+              <tr v-for="barangay, idx in barangays" :key="idx" class="text-xs md:text-sm font-medium border">
                 <td class="bg-white text-center">{{ idx + 1 }}</td>
                 <td class="bg-white border pl-2 border-l-0"> {{ barangay }}</td>
                 <td class="bg-white border pl-2 border-l-0">
-                  <input type="number"
-                    v-model="formData.barangays[idx].census.male"
-                    class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                  <input type="number" v-model="formData.barangays[idx].census.male"
+                    class="focus:outline-blue-500 py-2 w-full overflow-scroll no-scrollbar m-0 text-sm">
                 </td>
                 <td class="bg-white border pl-2 border-l-0">
-                  <input type="number"
-                    v-model="formData.barangays[idx].census.female"
-                    class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                  <input type="number" v-model="formData.barangays[idx].census.female"
+                    class="focus:outline-blue-500 py-2 w-full overflow-scroll no-scrollbar m-0 text-sm">
                 </td>
                 <td class="bg-white border pl-2 border-l-0">
-                  <div class="h-[100px] overflow-y-scroll scrollbar">
-                    <div v-for="rel, relId in religions">
+                  <div class="overflow-y-scroll scrollbar h-[50px]">
+                    <div v-for="rel, relId in religions" :key="relId">
                       <span class="capitalize font-semibold">{{ rel }}</span>
-                      <input type="number"
-                        v-model="formData.barangays[idx].religion[relId].count"
-                        class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                      <input type="number" v-model="formData.barangays[idx].religion[relId].count"
+                        class="focus:outline-blue-500 w-full overflow-scroll no-scrollbar m-0 text-sm">
                     </div>
                   </div>
                 </td>
                 <td class="bg-white border pl-2 border-l-0">
-                  <input type="number"
-                    v-model="formData.barangays[idx].census.household"
-                    class="focus:outline-blue-500 py-3 w-full overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx]">
+                  <input type="number" v-model="formData.barangays[idx].census.household"
+                    class="focus:outline-blue-500 py-2 w-full overflow-scroll no-scrollbar m-0 text-sm">
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
 
-        <button
-          type="submit"
-          class="active:-translate-y-1 p-3 bg-blue-600 text-white font-bold cursor-pointer uppercase flex items-center justify-center">
+        <button type="submit"
+          class="active:-translate-y-1 p-2 bg-blue-600 text-white font-bold cursor-pointer uppercase flex items-center justify-center rounded-md text-sm">
           <Loading class="w-5 h-5 mr-2" v-if="isSubmitting" color="#fff" />
           <span v-if="!isSubmitting">save</span>
         </button>
@@ -90,7 +86,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 
 // validation
@@ -149,5 +145,15 @@ async function onSubmit() {
 const { handleCreate } = defineProps({
   showModal: Function,
   handleCreate: Function
+});
+
+// add scroll hidden on unmount
+onMounted(() => {
+  document.body.classList.add("overflow-hidden");
+});
+
+// remove scroll hidden on unmount
+onUnmounted(() => {
+  document.body.classList.remove("overflow-hidden");
 });
 </script>

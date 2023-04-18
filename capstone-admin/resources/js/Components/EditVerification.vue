@@ -7,7 +7,7 @@
                 <button @click="closeModal"
                     class="whitespace-pre-wrap px-3 bg-gray-300 rounded-md py-1 hover:bg-gray-500 hover:text-white">No, i
                     don't want to save this.</button>
-                <button @click="handleEdit(data.value, data.id, data.type)"
+                <button @click="handleEdit(data.value, data.id, data.type, data?.idx)"
                     class="whitespace-pre-wrap px-3 bg-green-300 text-green-700 rounded-md py-1 hover:text-green-300 hover:bg-green-700 duration-75">Yes,
                     i want to save this.</button>
             </div>
