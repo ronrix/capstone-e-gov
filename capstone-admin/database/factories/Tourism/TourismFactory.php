@@ -26,6 +26,7 @@ class TourismFactory extends Factory
 
         return [
             "title" => fake()->city(),
+            "authors" => fake()->name(),
             "category" => fake()->catchPhrase(),
             "description" => fake()->paragraph(5),
             "img_link" => fake()->randomElement($img_links),

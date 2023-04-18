@@ -10,6 +10,59 @@ use Image;
 
 class TourismController extends Controller
 {
+    /*
+    * get all trashed data
+    */
+    public function getAllTrashed(Request $request)
+    {
+        try {
+            $news_data = Tourism::onlyTrashed()->get();
+            if ($news_data) {
+                return response()->json(["tourism" => $news_data]);
+            }
+            return response()->json(["msg" => $news_data, "status" => 404], 404);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
+    * restore trashed data
+    */
+    public function restore(Request $request)
+    {
+        // get the passed parameter id
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+        ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        $id = $request->input("id");
+        try {
+            Tourism::withTrashed()->find($id)->restore();
+
+            # return all the trashed data
+            return response()->json(["tourism" => Tourism::onlyTrashed()->get(), "res" => ["msg" => "successfully restore data", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -58,6 +111,7 @@ class TourismController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "location" => "required",
             "category" => "required",
@@ -84,13 +138,21 @@ class TourismController extends Controller
                 $imgPaths = [];
                 foreach ($request->file('imgFile') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/tourism/" . $filename;
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/tourism/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
 
                 $tourism = new Tourism;
                 $tourism->title = $request->input("title");
+                $tourism->authors = $request->input("authors");
                 $tourism->description = $request->input("description");
                 $tourism->location = $request->input("location");
                 $tourism->category = $request->input("category");
@@ -112,39 +174,6 @@ class TourismController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -157,6 +186,7 @@ class TourismController extends Controller
         $validator = Validator::make($request->all(), [
             "id" => "required",
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "location" => "required",
             "deletedImgs" => "nullable|array",
@@ -184,6 +214,7 @@ class TourismController extends Controller
 
             $tourism = Tourism::findOrFail($id);
             $tourism->title = $request->input("title");
+            $tourism->authors = $request->input("authors");
             $tourism->description = $request->input("description");
             $tourism->location = $request->input("location");
 
@@ -194,7 +225,14 @@ class TourismController extends Controller
                 $imgs = explode(",", $tourism->img_link);
                 foreach ($request->file('newImgs') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/tourism/" . $filename;
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/tourism/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
@@ -250,16 +288,5 @@ class TourismController extends Controller
             //throw $th;
             return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -1,14 +1,28 @@
 <template>
     <div
-        class="relative bg-white p-5 flex flex-col md:flex-row border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 overflow-hidden shadow-md">
-        <div class="z-10">
-            <Delete :handleDelete="handleDelete" :id="data.id" />
-        </div>
+        class="relative bg-white p-2 flex flex-col md:flex-row border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 overflow-hidden shadow-md">
+        <!-- restore button -->
+        <div v-if="data.deleted_at" @click="showRestoreModal"
+            class="bg-blue-300 text-blue-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-blue-400 hover:text-blue-200 cursor-pointer">
+            restore</div>
+
+        <!-- delete button -->
+        <div v-else @click="showDeleteVerificationModal"
+            class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
+            delete</div>
+
+        <!-- restore -->
+        <RestoreVerificationModal v-if="isRestoreModal" :close-modal="showRestoreModal" :handle-restore="handleRestore"
+            :id="data.id" />
+
+        <!-- delete -->
+        <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
+            :handle-delete="handleDelete" :id="data.id" />
 
         <!-- image -->
         <div class="flex-1 flex flex-col gap-3 items-start justify-between ">
             <div class="img-hover-zoom-slide h-[300px] w-full">
-                <img class="h-[300px] max-h-[400px] w-full lg:w-[max]" :src="imgSrc">
+                <img class="h-[300px] max-h-[400px] w-full object-cover" :src="imgSrc">
             </div>
             <div class="flex">
                 <i style="margin-top: 2px;" class="mr-2 uil uil-location-point text-cyan-400"></i>
@@ -17,7 +31,10 @@
         </div>
         <!-- content -->
         <div class="flex-1 p-5 flex flex-col items-start justify-between">
-            <h3 class="font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
+            <div>
+                <h3 class="font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
+                <h5 class="text-sm text-gray-600 font-bold capitalize">By {{ data.authors }}</h5>
+            </div>
             <p class="text-ellipsis text-sm h-[100px] overflow-hidden" v-bind:innerHTML="description"></p>
             <!-- PreviewButton -->
             <button @click="showTourismModal(data)"
@@ -26,19 +43,34 @@
     </div>
 </template>
 <script setup>
-import Delete from '../../Components/Delete.vue';
 import { formatImgs } from '../../utils/formatImgs';
 
+import { ref } from 'vue';
 import { marked } from "marked";
 import DOMPurify from 'dompurify';
+import RestoreVerificationModal from '../../Components/RestoreVerificationModal.vue';
+import DeleteVerificationModal from '../../Components/DeleteVerificationModal.vue';
 
 const imgSrc = formatImgs(data.img_link.split(","))[0];
 const description = DOMPurify.sanitize(marked.parse(data.description));
+
+const isVerificationModal = ref(false);
+const isRestoreModal = ref(false);
+// function to handle the delete 
+function showDeleteVerificationModal() {
+    isVerificationModal.value = !isVerificationModal.value;
+}
+
+// function to handle the delete 
+function showRestoreModal() {
+    isRestoreModal.value = !isRestoreModal.value;
+}
 
 const { data } = defineProps({
     showTourismModal: Function,
     data: Object,
     handleDelete: Function,
+    handleRestore: Function,
 });
 </script>
 <style scope></style>

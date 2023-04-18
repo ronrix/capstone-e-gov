@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('tourisms', function (Blueprint $table) {
             $table->id();
             $table->text("title");
+            $table->text("authors");
             $table->text("category");
             $table->longText("description");
             $table->longText("img_link");
