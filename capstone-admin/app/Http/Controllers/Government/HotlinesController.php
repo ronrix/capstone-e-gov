@@ -17,7 +17,7 @@ class HotlinesController extends Controller
     public function index()
     {
         //
-        return response()->json([ "hotlines" => Hotlines::orderBy("id", "desc")->get()]);
+        return response()->json(["hotlines" => Hotlines::orderBy("id", "desc")->get()]);
     }
 
     /**
@@ -29,11 +29,11 @@ class HotlinesController extends Controller
     {
         // validate
         $validator = Validator::make($request->all(), [
-            "department" => "required", 
-            "smart" => "required", 
-            "globe" => "required", 
-            "landline" => "required", 
-        ]); 
+            "department" => "required",
+            "smart" => "required",
+            "globe" => "required",
+            "landline" => "required",
+        ]);
 
         /*
         * customizing the validation response
@@ -76,39 +76,6 @@ class HotlinesController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Hotlines  $hotlines
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Hotlines $hotlines)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Hotlines  $hotlines
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Hotlines $hotlines)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -119,10 +86,10 @@ class HotlinesController extends Controller
     {
         // validate
         $validator = Validator::make($request->all(), [
-            "id" => "required", 
-            "number" => "required", 
-            "provider" => "required", 
-        ]); 
+            "id" => "required",
+            "number" => "required",
+            "provider" => "required",
+        ]);
 
         /*
         * customizing the validation response
@@ -144,14 +111,14 @@ class HotlinesController extends Controller
             $hotline = Hotlines::findOrFail($id);
 
             // check what provider to update
-            if($request->input("provider") === "smart") {
+            if ($request->input("provider") === "smart") {
                 $hotline->smart = $request->input("number");
-            }
-            else if($request->input("provider") === "globe") {
+            } else if ($request->input("provider") === "globe") {
                 $hotline->globe = $request->input("number");
-            }
-            else if($request->input("provider") === "landline") {
+            } else if ($request->input("provider") === "landline") {
                 $hotline->landline = $request->input("number");
+            } else if ($request->input("provider") === "department") { # will update the title instead
+                $hotline->department = $request->input("number");
             }
 
             $hotline->save();
@@ -171,17 +138,5 @@ class HotlinesController extends Controller
                 ]
             ]);
         }
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Hotlines  $hotlines
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Hotlines $hotlines)
-    {
-        //
     }
 }

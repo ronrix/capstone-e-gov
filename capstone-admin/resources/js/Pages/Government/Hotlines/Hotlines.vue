@@ -3,9 +3,12 @@
   <WrapperContent>
     <!-- response message -->
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
-    
+
     <!-- delete modal -->
     <DeleteVerificationModal :closeModal="showDelete" v-if="isShowDelete" :id="deleteId" />
+    <!-- edit verification modal -->
+    <EditVerification :close-modal="showEditVerification" v-if="isEditVerification" :data="editedInput"
+      :handle-edit="handleEdit" />
 
     <h3 class="font-bold text-xl mb-3 text-gray-800 here" ref="h1">Municipal Hotlines</h3>
 
@@ -18,43 +21,27 @@
 
     <!-- hotlines table -->
     <div class="w-full flex flex-col gap-3">
-      <div v-for="a in hotlines" class="bg-white p-3 rounded-md relative shadow-sm">
-        <textarea v-model="a.department"
-          class="focus:outline-blue-500 py-3 w-full font-bold overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx] capitalize">{{ a.department }}</textarea>
-        <div class="flex items-center gap-2">
-          <img src="https://d9t5qjot8jvsq.cloudfront.net/client-assets/bayadcenter/biller-assets/1550740294NKRm.png"
-            class="w-10" />
-          <input @change.capture="(e) => handleEdit(e, a.id, 'smart')" v-model="a.smart"
-            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            maxlength="11"
-            class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
-        </div>
-        <div class="flex items-center gap-2">
-          <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Globe-logo.png" class="w-10" />
-          <input @change.capture="(e) => handleEdit(e, a.id, 'globe')" v-model="a.globe" 
-            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            maxlength="11"
-            class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
-        </div>
-        <div class="flex items-center gap-2">
-          <span class="w-10 flex items-center justify-center px-3">
-            <i class="uil uil-phone-volume text-xl"></i>
-          </span>
-          <input @change.capture="(e) => handleEdit(e, a.id, 'landline')" v-model="a.landline"
-            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-            maxlength="8"
-            class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
+      <div v-for="a in hotlines" :key="a.id" class="bg-white p-3 rounded-md relative shadow-sm">
+        <textarea v-model="a.department" @change.capture="(e) => showEditVerification(e.target.value, a.id, 'department')"
+          class="focus:outline-blue-500 py-3 w-full font-bold overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx] capitalize border"></textarea>
+        <div class="flex items-start sm:items-center flex-col sm:flex-row gap-5">
+          <NumberInput :id="a.id" :handleEdit="handleEdit" type="smart" :number="a.smart"
+            :show-edit-verification="showEditVerification" />
+          <NumberInput :id="a.id" :handleEdit="handleEdit" type="globe" :number="a.globe"
+            :show-edit-verification="showEditVerification" />
+          <NumberInput :id="a.id" :handleEdit="handleEdit" type="landline" :number="a.landline"
+            :show-edit-verification="showEditVerification" />
         </div>
 
-        <button type="button"
-          @click="showDelete(a.id)"
+        <button type="button" @click="showDelete(a.id)"
           class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-2 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
           delete</button>
       </div>
     </div>
 
     <!-- hotline modal -->
-    <HotlineModal v-if="isHotlineModal" :showHotlineModal="showHotlineModal" :sample_data="sample_data" :handleSubmit="handleSubmit" />
+    <HotlineModal v-if="isHotlineModal" :showHotlineModal="showHotlineModal" :sample_data="sample_data"
+      :handleSubmit="handleSubmit" />
 
   </WrapperContent>
 </template>
@@ -63,10 +50,12 @@
 import HotlineModal from "./HotlineModal.vue";
 import { ref, onMounted } from 'vue';
 
+import NumberInput from "./NumberInput.vue";
 import DeleteVerificationModal from "../../../Components/DeleteVerificationModal.vue";
 import axios from "axios";
 import { be_url } from "../../../config/config";
 import Notifcation from "../../../Components/Notifcation.vue";
+import EditVerification from "../../../Components/EditVerification.vue";
 
 const hotlines = ref([]);
 const isShowDelete = ref(false);
@@ -83,35 +72,58 @@ function showDelete(id) {
   deleteId.value = id;
 }
 
+// save verification on edit
+const isEditVerification = ref(false);
+const editedInput = ref({ value: "", id: null, type: "" });
+function showEditVerification(inputValue, id, type) {
+  editedInput.value.value = inputValue;
+  editedInput.value.id = id;
+  editedInput.value.type = type;
+  console.log(editedInput.value);
+
+  isEditVerification.value = !isEditVerification.value;
+}
+
 // update the data when input change
-function handleEdit(e, id, prov) {
-  axios.post(be_url + "/hotlines/edit", { id, number: e.target.value, provider: prov })
-  .then(({data}) => console.log(data))
-  .catch(err => console.log(err));
+function handleEdit(number, id, prov) {
+  axios.post(be_url + "/hotlines/edit", { id, number, provider: prov })
+    .then(({ data }) => {
+      editedInput.value = { value: "", id: null, type: "" };
+      isEditVerification.value = false;
+
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+    })
+    .catch(err => console.log(err));
 }
 
 // handle add new hotline numbers
 async function handleSubmit(formData) {
   return await axios.post(be_url + "/hotlines/create", { department: formData.department, smart: formData.smart, globe: formData.globe, landline: formData.landline })
-      .then(({data}) => {
-        // set the response msg
-        resMsg.value = data.res;
-        // hide the notification message in 3s
-        setTimeout(() => {
-          resMsg.value = null;
-        }, 3000);
+    .then(({ data }) => {
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-        hotlines.value = data.hotlines;
-        return data;
-      })
-      .catch(err => console.log(err));
+      hotlines.value = data.hotlines;
+      return data;
+    })
+    .catch(err => console.log(err));
 }
 
 // get all hotlines from the server
 onMounted(() => {
   axios.get(be_url + "/hotlines")
-  .then(({data}) => hotlines.value = data.hotlines)
-  .catch(err => console.log(err));
+    .then(({ data }) => hotlines.value = data.hotlines)
+    .catch(err => console.log(err));
 });
 
 </script>
