@@ -51,15 +51,15 @@ const departments = [
 </script>
 
 <template>
-  <div class="flex items-center justify-center mt-10 p-5 h-[100px]">
-    <h1 class="text-center text-xl sm:text-4xl font-bold text-dark dark:text-white">
+  <div class="flex items-center justify-center sm:mb-5 mt-44 md:mt-52 p-2 h-[100px]">
+    <h1 class="text-center text-2xl lg:text-3xl mb-0 font-bold text-dark dark:text-white">
       What we can offer in <span class="block">every department.</span>
     </h1>
   </div>
   <!-- departments with services -->
   <WrapperContainer>
-    <h2 class="text-sm sm:text-2xl font-semibold  text-dark dark:text-white mb-2">Departments</h2>
-    <Dropdown v-for="(department, id) in departments" :key="id" :department="department" />
+    <h2 class="text-xl md:text-2xl ml-2 sm:ml-1 font-semibold  text-dark dark:text-white mb-2">Departments</h2>
+    <Dropdown v-for="(department, id) in departments" :key="id" :department="department"/>
   </WrapperContainer>
 </template>
 
