@@ -1,17 +1,22 @@
 <script setup>
 import HeaderSection from '../../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../../components/FooterSection/FooterSection.vue'
-import HeroCivil from './HeroCivil.vue'
+import Hero from '../../Services Components/Hero.vue'
 import FirstSection from "../Scholarship Program/FirstSection.vue"
 import SecondSection from "../Scholarship Program/SecondSection.vue"
 import TableSteps from "../Scholarship Program/TableSteps.vue"
+
+const civil = [{
+  name:'civil wedding program',
+  imgSrc:'/images/wedding.jpg'
+}]
 </script>
 
 <template>
   <HeaderSection />
   <!-- hero section -->
 
-  <HeroCivil />
+  <Hero v-for="(data, id) in civil" :key="id" :data="data"/>
   <div class="mx-10">
     <!-- content -->
     <!-- first section -->
@@ -26,7 +31,6 @@ import TableSteps from "../Scholarship Program/TableSteps.vue"
         <SecondSection name="Example requirements" />
         <SecondSection name="Example requirements" />
       </div>
-      <div class="absolute w-[360px] h-[360px] -top-36 right-0 rounded-full bg-red-500 opacity-10 -z-10"></div>
     </div>
 
     <!-- table -->

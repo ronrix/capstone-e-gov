@@ -1,10 +1,16 @@
 <script setup>
 import HeaderSection from '../../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../../components/FooterSection/FooterSection.vue'
-import HeroScholar from './HeroScholar.vue'
+// import HeroScholar from './HeroScholar.vue'
 import FirstSection from './FirstSection.vue'
 import SecondSection from './SecondSection.vue'
 import TableSteps from './TableSteps.vue'
+import Hero from '../../Services Components/Hero.vue'
+
+const scholar = [{
+  name:'educational assistance for students',
+  imgSrc:'./images/scholar.jpg'
+}]
 </script>
 
 <template>
@@ -15,7 +21,8 @@ import TableSteps from './TableSteps.vue'
   <HeaderSection />
   <!-- hero section -->
 
-  <HeroScholar />
+  <!-- <HeroScholar /> -->
+  <Hero v-for="(data, index) in scholar" :key="index" :data="data"/>
   <div class="mx-10">
     <!-- content -->
     <!-- first section -->
@@ -34,9 +41,6 @@ import TableSteps from './TableSteps.vue'
           <SecondSection name="Proofed of Enrollment" />
           <SecondSection name="Latest Grades" />
         </div>
-        <div
-          class="absolute w-[360px] h-[360px] -top-36 right-0 rounded-full bg-red-500 opacity-10 -z-10"
-        ></div>
       </div>
 
       <!-- table -->

@@ -1,15 +1,15 @@
 <script setup>
+defineProps({
+  data: { type: Object, required: true }
+})
+
 </script>
 <template>
   <div class="sm:mt-5 h-[300px] lg:h-[405px] relative mx-10 ">
-    <img
-      src="/images/mayor.jpg"
-      alt=""
-      class="opacity-50 absolute mx-auto -z-10 left-0 right-0 w-screen h-full"
-    />
+    <img class="opacity-50 absolute mx-auto -z-10 left-0 right-0 w-screen h-full" :src="data?.imgSrc" alt="this is hero picture for services" />
     <div class="flex flex-col items-center">
       <h1 class="text-2xl md:text-4xl text-primary font-bold text-center ml-10 mt-36 uppercase">
-      Mayor's Clearance
+      {{ data?.name }}
       </h1>
     </div>
   </div>

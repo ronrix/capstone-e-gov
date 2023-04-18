@@ -1,17 +1,22 @@
 <script setup>
 import HeaderSection from '../../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../../components/FooterSection/FooterSection.vue'
-import HeroMayor from './HeroMayor.vue'
+import Hero from '../../Services Components/Hero.vue'
 import FirstSection from "../Scholarship Program/FirstSection.vue"
 import SecondSection from "../Scholarship Program/SecondSection.vue"
 import TableSteps from "../Scholarship Program/TableSteps.vue"
+
+const mayor = [{
+  name:'Mayors Clearance',
+  imgSrc:'/images/mayor.jpg'
+}]
 </script>
 
 <template>
   <HeaderSection />
   <!-- hero section -->
+  <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
 
-  <HeroMayor />
   <div class="mx-10">
     <!-- content -->
     <!-- first section -->
@@ -26,7 +31,6 @@ import TableSteps from "../Scholarship Program/TableSteps.vue"
         <SecondSection name="Example requirements" />
         <SecondSection name="Example requirements" />
       </div>
-      <div class="absolute w-[360px] h-[360px] -top-36 right-0 rounded-full bg-red-500 opacity-10 -z-10"></div>
     </div>
 
     <!-- table -->
