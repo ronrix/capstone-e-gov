@@ -52,7 +52,7 @@ const departments = [
 
 <template>
   <div class="flex items-center justify-center sm:mb-5 mt-44 md:mt-52 p-2 h-[100px]">
-    <h1 class="text-center text-2xl lg:text-3xl mb-0 font-bold text-dark dark:text-white">
+    <h1 class="text-center text-2xl lg:text-4xl mb-0 font-bold text-dark dark:text-white">
       What we can offer in <span class="block">every department.</span>
     </h1>
   </div>

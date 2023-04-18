@@ -1,10 +1,11 @@
 <script setup>
 import HeaderSection from '../../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../../components/FooterSection/FooterSection.vue'
+import FirstSection from '../../Services Components/FirstSection.vue'
+import RequirementsWrapper from '../../Services Components/RequirementsWrapper.vue'
+import SecondSection from '../../Services Components/SecondSection.vue'
+import TableSteps from '../../Services Components/TableSteps.vue'
 import Hero from '../../Services Components/Hero.vue'
-import FirstSection from "../Scholarship Program/FirstSection.vue"
-import SecondSection from "../Scholarship Program/SecondSection.vue"
-import TableSteps from "../Scholarship Program/TableSteps.vue"
 
 const mayor = [{
   name:'Mayors Clearance',
@@ -22,19 +23,16 @@ const mayor = [{
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
     <!-- second section -->
-    <div class="rounded-lg  border-white p-5 shadow-sm relative">
-      <h1 class="text-2xl font-bold text-dark dark:text-white mt-10 mb-5">Checklist of Requirement</h1>
-      <div class="grid grid-cols-2 gap-2">
+   <RequirementsWrapper>
+      <SecondSection name="Example requirements" />
         <SecondSection name="Example requirements" />
         <SecondSection name="Example requirements" />
         <SecondSection name="Example requirements" />
         <SecondSection name="Example requirements" />
-        <SecondSection name="Example requirements" />
-      </div>
-    </div>
+   </RequirementsWrapper>
+       
 
     <!-- table -->
-    <h1 class="text-2xl font-bold text-dark dark:text-white ml-10 mt-10 mb-0">What's the process?</h1>
     <TableSteps />
   </div>
 

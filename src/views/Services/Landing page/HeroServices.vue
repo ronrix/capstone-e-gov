@@ -3,7 +3,7 @@
 <template>
   <div class="w-full mt-10 border-white relative">
     <div
-      class="flex flex-col before:w-0 before:md:w-[350px] before:md:h-[350px] before:bg-primarylight before:opacity-5 before:absolute before:-top-3 before:-left-16 before:rounded-full before:-z-10 before:dark:opacity-20 before:dark:z-10 before:lg:w-[380px] before:lg:h-[380px]"
+      class="flex flex-col before:w-0 before:md:w-[350px] before:md:h-[350px] before:bg-primarylight before:opacity-5 before:absolute before:-top-3 before:-left-16 before:rounded-full before:-z-10 before:dark:opacity-20 before:dark:z-10 before:lg:w-[360px] before:lg:h-[360px]"
     >
       <div class="flex flex-col ml-20 lg:ml-28 mt-20">
           <h1 class="text-primary text-4xl lg:text-5xl font-bold">
