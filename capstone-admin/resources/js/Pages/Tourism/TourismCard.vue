@@ -24,21 +24,23 @@
             <div class="img-hover-zoom-slide h-[300px] w-full">
                 <img class="h-[300px] max-h-[400px] w-full object-cover" :src="imgSrc">
             </div>
-            <div class="flex">
+            <div v-if="data.location" class="flex">
                 <i style="margin-top: 2px;" class="mr-2 uil uil-location-point text-cyan-400"></i>
                 <p class="text-ellipsis overflow-hidden pt-1 text-[12px] capitalize">{{ data.location }}</p>
             </div>
         </div>
         <!-- content -->
-        <div class="flex-1 p-5 flex flex-col items-start justify-between">
+        <div class="flex-1 px-5 pt-5 flex flex-col items-start justify-between gap-3">
             <div>
                 <h3 class="font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
                 <h5 class="text-sm text-gray-600 font-bold capitalize">By {{ data.authors }}</h5>
             </div>
-            <p class="text-ellipsis text-sm h-[100px] overflow-hidden" v-bind:innerHTML="description"></p>
+            <p class="text-xs overflow-hidden whitespace-pre-wrap h-[100px] marked-desc" v-bind:innerHTML="description"></p>
             <!-- PreviewButton -->
             <button @click="showTourismModal(data)"
-                class="bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-20 uppercase md:rounded ">view</button>
+                class="active:-translate-y-[1px] mb-2 rounded-md bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-5 uppercase">
+                view
+            </button>
         </div>
     </div>
 </template>

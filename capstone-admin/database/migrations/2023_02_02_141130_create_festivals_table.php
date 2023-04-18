@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('festivals', function (Blueprint $table) {
             $table->id();
             $table->text("title");
+            $table->text("authors");
             $table->longText("description");
             $table->longText("img_link");
             $table->softDeletes();

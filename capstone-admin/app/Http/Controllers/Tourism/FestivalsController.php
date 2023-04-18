@@ -10,6 +10,58 @@ use Image;
 
 class FestivalsController extends Controller
 {
+    /*
+    * get all trashed data
+    */
+    public function getAllTrashed(Request $request)
+    {
+        try {
+            $festival  = Festival::onlyTrashed()->get();
+            if ($festival) {
+                return response()->json(["festivals" => $festival], 200);
+            }
+            return response()->json(["festivals" => $festival, "status" => 404], 404);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
+    * restore trashed data
+    */
+    public function restore(Request $request)
+    {
+        // get the passed parameter id
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+        ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        $id = $request->input("id");
+        try {
+            Festival::withTrashed()->find($id)->restore();
+
+            # return all the trashed data
+            return response()->json(["festivals" => Festival::onlyTrashed()->get(), "res" => ["msg" => "successfully restore data", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +69,7 @@ class FestivalsController extends Controller
      */
     public function index()
     {
-        return response()->json(['festivals' => Festival::orderBy('created_at', 'desc')->get()]);
+        return response()->json(['festivals' => Festival::orderBy('created_at', 'desc')->get()], 200);
     }
 
     public function delete(Request $request)
@@ -40,10 +92,10 @@ class FestivalsController extends Controller
 
         try {
             Festival::findOrFail($id)->delete();
-            return response()->json(["festivals" => Festival::orderBy('created_at', 'desc')->get(), "res" => ["msg" => "Successfully deleted a festival", "status" => 200]]);
+            return response()->json(["festivals" => Festival::orderBy('created_at', 'desc')->get(), "res" => ["msg" => "Successfully deleted a festival", "status" => 200]], 200);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json(["res" => ["msg" => $th, "status" => 400]]);
+            return response()->json(["res" => ["msg" => $th, "status" => 400]], 400);
         }
     }
 
@@ -59,6 +111,7 @@ class FestivalsController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "imgFile" => "required|array", # 5mb is the max 
             "imgFile.*" => "image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
@@ -83,13 +136,21 @@ class FestivalsController extends Controller
                 $imgPaths = [];
                 foreach ($request->file('imgFile') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/festivals/" . $filename;
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/festivals/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
 
                 $festival = new Festival;
                 $festival->title = $request->input("title");
+                $festival->authors = $request->input("authors");
                 $festival->description = $request->input("description");
                 $festival->img_link = implode(",", $imgPaths);
                 $festival->save();
@@ -100,7 +161,7 @@ class FestivalsController extends Controller
                 "res" => [
                     "msg" => "Successfully created a festival",
                     "status" => 200
-                ]
+                ], 200
             ]);
         } catch (\Throwable $err) {
             //throw $th;
@@ -122,6 +183,7 @@ class FestivalsController extends Controller
         $validator = Validator::make($request->all(), [
             "id" => "required",
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "deletedImgs" => "nullable|array",
             "defaultThumbnailId" => "required",
@@ -148,6 +210,7 @@ class FestivalsController extends Controller
 
             $festival = Festival::findOrFail($id);
             $festival->title = $request->input("title");
+            $festival->authors = $request->input("authors");
             $festival->description = $request->input("description");
 
             if ($request->file("newImgs")) {
@@ -157,7 +220,14 @@ class FestivalsController extends Controller
                 $imgs = explode(",", $festival->img_link);
                 foreach ($request->file('newImgs') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/festivals" . $filename;
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/festivals/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
@@ -208,7 +278,7 @@ class FestivalsController extends Controller
                     "msg" => "Successfully updated a festival",
                     "status" => 200
                 ]
-            ]);
+            ], 200);
         } catch (\Throwable $err) {
             //throw $th;
             return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);

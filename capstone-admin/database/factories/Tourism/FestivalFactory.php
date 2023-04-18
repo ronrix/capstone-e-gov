@@ -24,6 +24,7 @@ class FestivalFactory extends Factory
         ];
         return [
             "title" => fake()->firstName(),
+            "authors" => fake()->firstName(),
             "description" => fake()->paragraph(5),
             "img_link" => fake()->randomElement($img_links),
         ];
