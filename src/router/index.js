@@ -41,7 +41,7 @@ export default createRouter({
     {
       path: "/services",
       name: "Services",
-      component: () => import("../views/Services/Services.vue")
+      component: () => import("../views/Services/Landing page/Services.vue")
     },
     {
       path: "/scholarship-program",
