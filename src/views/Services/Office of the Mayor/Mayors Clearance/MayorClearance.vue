@@ -18,7 +18,7 @@ const mayor = [{
   <!-- hero section -->
   <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
 
-  <div class="mx-10">
+  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />

@@ -25,7 +25,7 @@ const scholar = [{
 
   <!-- <HeroScholar /> -->
   <Hero v-for="(data, index) in scholar" :key="index" :data="data"/>
-  <div class="mx-10">
+  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
