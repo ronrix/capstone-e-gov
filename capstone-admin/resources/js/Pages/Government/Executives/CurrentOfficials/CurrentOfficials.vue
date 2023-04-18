@@ -1,19 +1,19 @@
 <template>
   <HeadTitle title="Current Officials"></HeadTitle>
+  <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-50" />
   <WrapperContent>
-    <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-80" />
     <h1 class="text-xl font-bold capitalize">Current officials of pililla rizal</h1>
-
     <!-- empty: this will display when there is no data to display -->
     <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
       <i class="uil uil-folder-times text-5xl"></i>
       Empty Collection
-    </h5>  
+    </h5>
     <Loading class="w-14 h-14 mx-auto" v-if="isLoading" />
 
     <!-- cards -->
     <div class="flex items-center flex-wrap gap-3 mt-5">
-      <CardOfficial v-for="official in dataCurrentOfficials" :official="official" :handleDelete="handleDelete" />
+      <CardOfficial v-for="official in dataCurrentOfficials" :key="official.id" :official="official"
+        :handleDelete="handleDelete" />
     </div>
     <OfficialModal v-if="isModalShow" :closeModal="toggleShowModal" :handleSubmit="handleSubmit" />
 
@@ -46,40 +46,36 @@ function toggleShowModal() {
 
 // this is for adding new data
 async function handleSubmit(formData) {
-  return await axios.post(be_url + "/current-official/add", { fullName: formData.fullName, position: formData.position + "," + formData.optionalPosition, startTerm: formData.startTerm, endTerm: formData.endTerm, imgFile: formData.imgFile }, { headers: { "Content-Type": "multipart/form-data" }})
-  .then(({data}) => {
-    // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+  return await axios.post(be_url + "/current-official/add", { fullName: formData.fullName, position: formData.position, startTerm: formData.startTerm, endTerm: formData.endTerm, imgFile: formData.imgFile }, { headers: { "Content-Type": "multipart/form-data" } })
+    .then(({ data }) => {
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    // this will update the state variable of the officials, if theres officialData response
-    console.log(data);
-    if(data.officialData) {
-      dataCurrentOfficials.value = data.officialData;
-    }
+      // this will update the state variable of the officials, if theres officialData response
+      console.log(data);
+      if (data.officialData) {
+        dataCurrentOfficials.value = data.officialData;
+      }
 
-    return data; // for promise response, we can use this data for validation on the method that calls it
-  })
-  .catch(err => {
-    // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
-  });
+      return data; // for promise response, we can use this data for validation on the method that calls it
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // this is for deleting a data
-function handleDelete(id, deleteRef) {
-  axios.post(be_url + "/delete-current-official/", { id }).then(({data}) => {
-    // this will remove the displaying of the delete modal
-    deleteRef.classList.remove("!translate-y-0");
-    deleteRef.classList.remove("!translate-x-0");
-
+function handleDelete(id) {
+  axios.post(be_url + "/delete-current-official/", { id }).then(({ data }) => {
     // set the response msg
     resMsg.value = data.res;
     // hide the notification message in 3s
@@ -88,8 +84,7 @@ function handleDelete(id, deleteRef) {
     }, 3000);
 
     // this will update the state variable of the officials, if theres officialData response
-    console.log(data);
-    if(data.officialData) {
+    if (data.officialData) {
       dataCurrentOfficials.value = data.officialData;
     }
   });
@@ -98,12 +93,12 @@ function handleDelete(id, deleteRef) {
 // get all the data from the server with axios
 onMounted(() => {
   axios.get(be_url + "/current-officials")
-  .then(({data}) => {
-    dataCurrentOfficials.value = data.currentOfficials
-    if(!dataCurrentOfficials.value.length) isEmpty.value = true;
-    isLoading.value = false;
-  })
-  .catch(err => console.log(err));
+    .then(({ data }) => {
+      dataCurrentOfficials.value = data.currentOfficials
+      if (!dataCurrentOfficials.value.length) isEmpty.value = true;
+      isLoading.value = false;
+    })
+    .catch(err => console.log(err));
 });
 
 </script>

@@ -30,7 +30,7 @@ class ExecutivesController extends Controller
             ->whereDate('end_term', '>=', $this->date_now)
             ->orderBy("end_term", "desc")
             ->get();
-        
+
         return response()->json(['currentOfficials' => $officials]);
     }
 
@@ -38,7 +38,7 @@ class ExecutivesController extends Controller
     {
         //
         $officials = Executives::whereDate('end_term', '<=', $this->date_now)->orderBy("end_term", "desc")->get();
-        
+
         return response()->json(['formerOfficials' => $officials]);
     }
 
@@ -53,9 +53,9 @@ class ExecutivesController extends Controller
     {
         # get the new data
         $officials = Executives::where('position', "LIKE", '%agriculture%')
-            ->orWhere("position", "LIKE",'%department%')
-            ->orWhere("position", "LIKE",'%treasurer%')
-            ->orWhere("position", "LIKE",'%hr%')
+            ->orWhere("position", "LIKE", '%department%')
+            ->orWhere("position", "LIKE", '%treasurer%')
+            ->orWhere("position", "LIKE", '%hr%')
             ->orderBy("end_term", "desc")
             ->get();
         return response()->json(['departmentHeads' => $officials]);
@@ -63,7 +63,7 @@ class ExecutivesController extends Controller
 
     /*
     * Delete executive data by id
-    */ 
+    */
     public function deleteOneFromCurrent(Request $request)
     {
         // get the passed parameter id
@@ -79,10 +79,10 @@ class ExecutivesController extends Controller
                 ->orderBy("end_term", "desc")
                 ->get();
 
-            return response()->json([ "officialData" => $officials, "res" => [ "msg" => "Successfully deleted a official", "status" => 200 ]]);
+            return response()->json(["officialData" => $officials, "res" => ["msg" => "Successfully deleted a official", "status" => 200]]);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $th, "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $th, "status" => 400]]);
         }
     }
 
@@ -101,10 +101,10 @@ class ExecutivesController extends Controller
                 ->orderBy("end_term", "desc")
                 ->get();
 
-            return response()->json([ "officialData" => $officials, "res" => [ "msg" => "Successfully deleted a official", "status" => 200 ]]);
+            return response()->json(["officialData" => $officials, "res" => ["msg" => "Successfully deleted a official", "status" => 200]]);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $th, "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $th, "status" => 400]]);
         }
     }
 
@@ -122,10 +122,10 @@ class ExecutivesController extends Controller
             $officials = Executives::where('position', "LIKE", "%barangay official%")
                 ->orderBy("end_term", "desc")
                 ->get();
-            return response()->json([ "officialData" => $officials, "res" => [ "msg" => "Successfully deleted a official", "status" => 200 ]]);
+            return response()->json(["officialData" => $officials, "res" => ["msg" => "Successfully deleted a official", "status" => 200]]);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $th, "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $th, "status" => 400]]);
         }
     }
 
@@ -143,10 +143,10 @@ class ExecutivesController extends Controller
             $officials = Executives::whereIn('position', ['agriculture', 'treasurer', 'hr'])
                 ->orderBy("end_term", "desc")
                 ->get();
-            return response()->json([ "officialData" => $officials, "res" => [ "msg" => "Successfully deleted a official", "status" => 200 ]]);
+            return response()->json(["officialData" => $officials, "res" => ["msg" => "Successfully deleted a official", "status" => 200]]);
         } catch (\Throwable $th) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $th, "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $th, "status" => 400]]);
         }
     }
 
@@ -157,12 +157,12 @@ class ExecutivesController extends Controller
      */
     public function createCurrentOfficial(Request $request)
     {
-         // validate
+        // validate
         $validator = Validator::make($request->all(), [
-            "fullName" => "required", 
-            "position" => "required", 
-            "startTerm" => "required|date", 
-            "endTerm" => "required|date", 
+            "fullName" => "required",
+            "position" => "required",
+            "startTerm" => "required|date",
+            "endTerm" => "required|date",
             "imgFile" => "image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
 
@@ -180,13 +180,20 @@ class ExecutivesController extends Controller
         }
 
         try {
-            if($request->file("imgFile")) {
+            if ($request->file("imgFile")) {
                 $file = $request->file("imgFile");
                 // save all the images
                 $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" .$filename;
+                $path = "uploads/executives/" . $filename;
+
+                # create a folder if not exists before saving the image
+                $folder = "uploads/executives/";
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+
                 Image::make($file)->save(public_path($path)); // save the file image
-                
+
                 $exec = new Executives;
                 $exec->executive_name = strtolower($request->input("fullName"));
                 $exec->position = strtolower($request->input("position"));
@@ -194,7 +201,7 @@ class ExecutivesController extends Controller
                 $exec->end_term = Carbon::parse($request->input("endTerm"))->format("Y-m-d H:i:s");
                 $exec->img_link = $path;
                 $exec->save();
-            }     
+            }
 
             # get the new data
             $officials = Executives::whereDate('start_term', '<=', $this->date_now)
@@ -210,18 +217,18 @@ class ExecutivesController extends Controller
             ]);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
         }
     }
 
     public function createFormerOfficial(Request $request)
     {
-         // validate
+        // validate
         $validator = Validator::make($request->all(), [
-            "fullName" => "required", 
-            "position" => "required", 
-            "startTerm" => "required|date", 
-            "endTerm" => "required|date", 
+            "fullName" => "required",
+            "position" => "required",
+            "startTerm" => "required|date",
+            "endTerm" => "required|date",
             "imgFile" => "image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
 
@@ -239,13 +246,13 @@ class ExecutivesController extends Controller
         }
 
         try {
-            if($request->file("imgFile")) {
+            if ($request->file("imgFile")) {
                 $file = $request->file("imgFile");
                 // save all the images
                 $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" .$filename;
+                $path = "uploads/" . $filename;
                 Image::make($file)->save(public_path($path)); // save the file image
-                
+
                 $exec = new Executives;
                 $exec->executive_name = strtolower($request->input("fullName"));
                 $exec->position = strtolower($request->input("position"));
@@ -253,7 +260,7 @@ class ExecutivesController extends Controller
                 $exec->end_term = Carbon::parse($request->input("endTerm"))->format("Y-m-d H:i:s");
                 $exec->img_link = $path;
                 $exec->save();
-            }     
+            }
 
             # get the new data
             $officials = Executives::whereDate('end_term', '<=', $this->date_now)
@@ -268,18 +275,18 @@ class ExecutivesController extends Controller
             ]);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
         }
     }
 
     public function createBarangayOfficial(Request $request)
     {
-         // validate
+        // validate
         $validator = Validator::make($request->all(), [
-            "fullName" => "required", 
-            "position" => "required", 
-            "startTerm" => "required|date", 
-            "endTerm" => "required|date", 
+            "fullName" => "required",
+            "position" => "required",
+            "startTerm" => "required|date",
+            "endTerm" => "required|date",
             "imgFile" => "image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
 
@@ -297,13 +304,13 @@ class ExecutivesController extends Controller
         }
 
         try {
-            if($request->file("imgFile")) {
+            if ($request->file("imgFile")) {
                 $file = $request->file("imgFile");
                 // save all the images
                 $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" .$filename;
+                $path = "uploads/" . $filename;
                 Image::make($file)->save(public_path($path)); // save the file image
-                
+
                 $exec = new Executives;
                 $exec->executive_name = strtolower($request->input("fullName"));
                 $exec->position = strtolower($request->input("position"));
@@ -311,7 +318,7 @@ class ExecutivesController extends Controller
                 $exec->end_term = Carbon::parse($request->input("endTerm"))->format("Y-m-d H:i:s");
                 $exec->img_link = $path;
                 $exec->save();
-            }     
+            }
 
             # get the new data
             $officials = Executives::where('position', "LIKE", "%barangay official%")
@@ -326,18 +333,18 @@ class ExecutivesController extends Controller
             ]);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
         }
     }
 
     public function createDepHead(Request $request)
     {
-         // validate
+        // validate
         $validator = Validator::make($request->all(), [
-            "fullName" => "required", 
-            "position" => "required", 
-            "startTerm" => "required|date", 
-            "endTerm" => "required|date", 
+            "fullName" => "required",
+            "position" => "required",
+            "startTerm" => "required|date",
+            "endTerm" => "required|date",
             "imgFile" => "image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
         ]);
 
@@ -355,13 +362,13 @@ class ExecutivesController extends Controller
         }
 
         try {
-            if($request->file("imgFile")) {
+            if ($request->file("imgFile")) {
                 $file = $request->file("imgFile");
                 // save all the images
                 $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" .$filename;
+                $path = "uploads/" . $filename;
                 Image::make($file)->save(public_path($path)); // save the file image
-                
+
                 $exec = new Executives;
                 $exec->executive_name = strtolower($request->input("fullName"));
                 $exec->position = strtolower($request->input("position"));
@@ -369,13 +376,13 @@ class ExecutivesController extends Controller
                 $exec->end_term = Carbon::parse($request->input("endTerm"))->format("Y-m-d H:i:s");
                 $exec->img_link = $path;
                 $exec->save();
-            }     
+            }
 
             # get the new data
             $officials = Executives::where('position', "LIKE", '%agriculture%')
-                ->orWhere("position", "LIKE",'%department%')
-                ->orWhere("position", "LIKE",'%treasurer%')
-                ->orWhere("position", "LIKE",'%hr%')
+                ->orWhere("position", "LIKE", '%department%')
+                ->orWhere("position", "LIKE", '%treasurer%')
+                ->orWhere("position", "LIKE", '%hr%')
                 ->orderBy("end_term", "desc")
                 ->get();
             return response()->json([
@@ -387,7 +394,7 @@ class ExecutivesController extends Controller
             ]);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
         }
     }
 
