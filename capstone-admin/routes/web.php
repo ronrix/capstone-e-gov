@@ -180,6 +180,8 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/official-seal/symbol-img/save", [AboutController::class, "saveSymbolImg"]);
     /* contacts */
     Route::post("/contacts/edit", [AboutController::class, "updateContacts"]);
+    /* add new section for the permit (BPLO) */
+    Route::post("/permit/add/section", [PermitController::class, "addNewSection"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);

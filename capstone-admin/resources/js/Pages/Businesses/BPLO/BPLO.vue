@@ -32,12 +32,12 @@
 
         <!--For Permit-->
         <!-- to get "title" and "requirements", you have to use defineProps inside the component file BPermit -->
-        <BPermit v-for="permit in dataRequirements" :tableId="permit.id" :title="permit.title"
+        <BPermit v-for="permit in dataRequirements" :key="permit.id" :tableId="permit.id" :title="permit.title"
             :requirements="permit.requirements" class="mb-3" :handleUpdatePermit="handleUpdatePermit"
             :handleUpdatePermitTitle="handleUpdatePermitTitle" :saveNewRequirement="saveNewRequirement"
             :handleDeleteWholePermit="handleDeleteWholePermit" :handleDeleteRequirement="handleDeleteRequirement"
             :handleDeleteSectionPermit="handleDeleteSectionPermit"
-             />
+            :handle-add-new-section-permit="handleAddNewSectionPermit" />
 
         <!-- add permit modal -->
         <AddPermit v-if="isPermitModal" :showPermitModal="showPermitModal" :handleSubmit="handleAddNewPermit" />
@@ -69,6 +69,37 @@ function showAddPDF() {
     isAddPDF.value = !isAddPDF.value;
 }
 
+// this is a function to handle the updating of permit data to add new section
+function handleAddNewSectionPermit(formData, tableId) {
+    axios.post(be_url + "/permit/add/section", {
+        tableId,
+        sectionTitle: formData.title,
+        requirements: formData.requirements
+    }).then(({ data }) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+
+        dataRequirements.value = data.permits;
+
+        // after successfully adding new requirement
+        // remove the new input added
+        div.remove();
+    }).catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
+}
+
+
+
 // this is a function to handle the updating of permit data
 function handleUpdatePermitTitle(e, id) {
     axios.post(be_url + "/permit/title/edit", {
@@ -78,7 +109,14 @@ function handleUpdatePermitTitle(e, id) {
         .then(({ data }) => {
             console.log(data);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 }
 
 // function to save new added requirement
@@ -102,7 +140,14 @@ function saveNewRequirement(value, tableId, perId, div) {
             // remove the new input added
             div.remove();
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 }
 
 // this is a function to handle the updating of permit data
@@ -117,7 +162,14 @@ function handleUpdatePermit(e, tableId, perId, reqId, isReq) {
         .then(({ data }) => {
             console.log(data);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 }
 
 // this function is to delete the whole permit
@@ -135,7 +187,14 @@ function handleDeleteWholePermit(tableId) {
 
             dataRequirements.value = data.permits;
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 }
 
 // this function is to delete the one requirement
@@ -154,7 +213,14 @@ function handleDeleteSectionPermit(tableId, permitKey) {
 
             dataRequirements.value = data.permits;
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 }
 
 // this function is to delete the one requirement
@@ -174,7 +240,14 @@ function handleDeleteRequirement(tableId, permitKey, reqId) {
 
             dataRequirements.value = data.permits;
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 }
 
 // this function is for sending a post request to add new permit
@@ -194,7 +267,14 @@ async function handleAddNewPermit(formData) {
             dataRequirements.value = data.permits;
             return data;
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 }
 
 // get all the permits from the server
@@ -203,6 +283,14 @@ onMounted(() => {
         .then(({ data }) => {
             dataRequirements.value = data.permits;
         })
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 });
 
 </script>

@@ -8,22 +8,24 @@
             <p class="text-sm text-gray-500">Add new requirement for the permit</p>
             <!-- form -->
             <form @submit.prevent="submitFn" class="mt-3 w-full">
-                <label class="flex flex-col justify-start gap-1 px-3">
+                <label class="flex flex-col justify-start gap-1">
                     <span class="font-bold text-gray-500">Title</span>
                     <p class="text-xs text-gray-500">add new requirement for the permit</p>
                     <input type="text" v-model="formData.title" class="border p-2 rounded-lg focus:outline-blue-600">
-                    <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message }}</p>
+                    <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message
+                    }}</p>
                 </label>
 
                 <span class="font-bold text-gray-500">Requirements</span>
                 <p class="text-xs text-gray-500">
-                    Format the requirements correctly by copying the first { "title": "", "requirements": [] } and pasting it below with a comma separation
+                    Format the requirements correctly by copying the first { "title": "", "requirements": [] } and pasting
+                    it below with a comma separation
                     it should look like this [ [ { "title": "", "requirements": [] }, { "title": "", "requirements": [] }] ]
                 </p>
                 <!-- requirements in JSONeditor format -->
                 <div ref="reqContainer" class="w-full border mt-3 bg-slate-100 relative"></div>
 
-               <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }"
+                <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }"
                     class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center w-full">
                     <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
                     <span v-if="!isSubmitting">save</span>
@@ -45,7 +47,7 @@ import JSONEditor from "jsoneditor";
 
 // adding rules for validation of the form
 const rules = computed(() => ({
-  title: { required: helpers.withMessage("The field title is required", required) },
+    title: { required: helpers.withMessage("The field title is required", required) },
 }));
 
 const formData = useForm({
@@ -75,7 +77,7 @@ async function submitFn(e) {
 
     isSubmitting.value = true;
     if (isError.value) isError.value = false; // remove the error message from displaying when validation passed
-    
+
     // TODO: get all the value of the JSONeditor and store them to formData 
     formData.requirements = editor.get();
     // then send a post request to the server
@@ -99,7 +101,7 @@ onMounted(() => {
 
 // remove scroll hidden on unmount
 onUnmounted(() => {
-  document.body.classList.remove("overflow-hidden");
+    document.body.classList.remove("overflow-hidden");
 });
 
 const { handleSubmit } = defineProps({

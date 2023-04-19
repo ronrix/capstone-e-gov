@@ -16,7 +16,64 @@ class PermitController extends Controller
      */
     public function index()
     {
-        return response()->json(['permits' => Permit::all()]);
+        return response()->json(['permits' => Permit::orderBy("created_at", "desc")->get()]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Business\Permit  $permit
+     * @return \Illuminate\Http\Response
+     */
+    public function addNewSection(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "tableId" => "required|int",
+            "sectionTitle" => "required",
+            "requirements" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        try {
+
+            # store the request ids to variables
+            $id = $request->input("tableId");
+            $sectionTitle = $request->input("sectionTitle");
+            $_requirements = explode(", ", $request->input("requirements"));
+
+            $permit = Permit::findOrFail($id);
+            $requirements = json_decode($permit->requirements, true);
+
+            # combine title and requirements (input)
+            $newRequirements = array_merge($requirements, [$sectionTitle => $_requirements]);
+
+            $permit->requirements = json_encode($newRequirements);
+            $permit->save();
+
+            return response()->json([
+                'permits' => Permit::orderBy("created_at", "desc")->get(),
+                "res" => [
+                    "msg" => "Successfully added new section on permit",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
     }
 
     /**
@@ -167,7 +224,7 @@ class PermitController extends Controller
             $permit->save();
 
             return response()->json([
-                'permits' => Permit::all(),
+                'permits' => Permit::orderBy("created_at", "desc")->get(),
                 "res" => [
                     "msg" => "Successfully added new requirement",
                     "status" => 200
@@ -206,7 +263,7 @@ class PermitController extends Controller
 
             Permit::findOrFail($id)->delete();
             return response()->json([
-                'permits' => Permit::all(),
+                'permits' => Permit::orderBy("created_at", "desc")->get(),
                 "res" => [
                     "msg" => "Successfully delete the permit",
                     "status" => 200
@@ -252,7 +309,7 @@ class PermitController extends Controller
             $permit->save();
 
             return response()->json([
-                'permits' => Permit::all(),
+                'permits' => Permit::orderBy("created_at", "desc")->get(),
                 "res" => [
                     "msg" => "Successfully delete one section of permit",
                     "status" => 200
@@ -300,7 +357,7 @@ class PermitController extends Controller
             $permit->save();
 
             return response()->json([
-                'permits' => Permit::all(),
+                'permits' => Permit::orderBy("created_at", "desc")->get(),
                 "res" => [
                     "msg" => "Successfully delete one section of permit",
                     "status" => 200
@@ -353,7 +410,7 @@ class PermitController extends Controller
             $permit->save();
 
             return response()->json([
-                'permits' => Permit::all(),
+                'permits' => Permit::orderBy("created_at", "desc")->get(),
                 "res" => [
                     "msg" => "Successfully added new requirement",
                     "status" => 200
