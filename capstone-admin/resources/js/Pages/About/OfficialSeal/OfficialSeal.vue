@@ -24,8 +24,8 @@
     </div>
 
     <!-- card -->
-    <CardSeal v-for="(data, index) in logos" :data="data" :index="index" :showPreviewModal="showPreviewModal"
-      :handleDelete="handleDeleteOfficialSeal" />
+    <CardSeal v-for="(data, index) in logos" :key="data.id" :data="data" :index="index"
+      :showPreviewModal="showPreviewModal" :handleDelete="handleDeleteOfficialSeal" />
 
     <OfficialSealModal :selectedData="selectedData" :showPreviewModal="showPreviewModal" v-if="isPreviewModal"
       :date="dataOfficialSeal.created_at" :handleSubmit="handleUpdateOfficialSeal" />
@@ -135,17 +135,12 @@ async function handleUpdateOfficialSeal(formData) {
 }
 
 // function to remove one official seal
-async function handleDeleteOfficialSeal(id, deleteRef) {
+async function handleDeleteOfficialSeal(id) {
   return await axios.post(be_url + "/official-seal/delete", {
     id: dataOfficialSeal.value.id,
     arrId: id,
   }, { headers: { "Content-Type": "multipart/form-data" } })
     .then(({ data }) => {
-
-      // this will remove the displaying of the delete modal
-      deleteRef.classList.remove("!translate-y-0");
-      deleteRef.classList.remove("!translate-x-0");
-
       // set the response msg
       resMsg.value = data.res;
       // hide the notification message in 3s
