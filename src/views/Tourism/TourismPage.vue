@@ -70,7 +70,7 @@ const sample_data = [
       />
       <img
         class="w-[200px] absolute left-32"
-        src="https://png2.cleanpng.com/dy/fe5917c0144c3493c36b68db062ae2c4/L0KzQYm3V8AzN6FvfZH0aYP2gLBuTgRzaadqhJ95YXPucbjsTgRwfaMyj9H2YX6werL3gf4ufpJoeeZyb36wgrL0hgNpf5J3ed82ZHX5crn2jB1qNWZnS9NrOHW1dba9Vcg5NmM3UKYAMUK8QYa6UMU4PWE8TKsCNkWxgLBu/kisspng-travel-package-tour-woman-japan-vacation-rameshwaram-devbhoomi-5b3ab8e2ee6588.2284512915305750749765.png"
+        src="https://i.postimg.cc/63XWfN0Z/kisspng-travel-package-tour-woman-japan-vacation-rameshwaram-devbhoomi-5b3ab8e2ee6588-22845129153057.png"
         alt=""
       />
     </div>
