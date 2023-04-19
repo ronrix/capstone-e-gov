@@ -9,7 +9,8 @@
                 <div class="flex-col mt-10 px-10 text-left">
                     <img src="/images/logo/white/better-pililla.png" alt="Better Pililla Logo" class="w-32 lg:w-44 mb-5">
                     <h1 class="text-5xl lg:text-7xl font-bold">Municipality of Pililla Rizal.</h1>
-                    <p class="text-lg lg:text-3xl text-slate-300 mt-5">Easily modify the information of the official website of the municipality.</p>
+                    <p class="text-lg lg:text-3xl text-slate-300 mt-5">Easily modify the information of the official website
+                        of the municipality.</p>
                 </div>
 
                 <!-- circles -->
@@ -22,7 +23,9 @@
         <div class="flex-1 bg-slate-100 h-full flex items-center justify-center">
             <form @submit.prevent="submitForm" :disabled="formData.processing"
                 class="w-full px-14 flex flex-col gap-3 max-w-[1000px]">
-                <img class="w-20" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Emoji_u1f44b.svg/1024px-Emoji_u1f44b.svg.png" alt="hand wave icon">
+                <img class="w-20"
+                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Emoji_u1f44b.svg/1024px-Emoji_u1f44b.svg.png"
+                    alt="hand wave icon">
 
                 <div>
                     <h2 class="text-xl sm:text-3xl font-bold text-gray-800">Welcome Back</h2>
@@ -32,14 +35,17 @@
                 <label class="text-gray-800 mb-2 rounded-md">
                     <span class="font-bold text-sm sm:text-base mb-1">E-mail or username</span>
                     <input v-model="formData.email" name="email" type="text" placeholder="Type your email or username"
-                        class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600"  :class="{'outline-red-400' : v$.email.$error}" />
+                        class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600"
+                        :class="{ 'outline-red-400': v$.email.$error }" />
                     <p v-if="v$.email.$error" class="text-xs text-red-400 my-2"> {{ v$.email.$errors[0].$message }} </p>
                 </label>
                 <label class="mb-2 rounded-md text-gray-800">
                     <span class="font-bold text-base mb-1">Password</span>
                     <input v-model="formData.password" name="password" type="password" placeholder="Type your password"
-                        class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600" :class="{'outline-red-400' : v$.password.$error}" />
-                    <p v-if="v$.password.$error" class="text-xs text-red-400 my-2"> {{ v$.password.$errors[0].$message }} </p>
+                        class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600"
+                        :class="{ 'outline-red-400': v$.password.$error }" />
+                    <p v-if="v$.password.$error" class="text-xs text-red-400 my-2"> {{ v$.password.$errors[0].$message }}
+                    </p>
                 </label>
                 <input type="submit" value="Login"
                     class="active:-translate-y-1 p-2 my-2 cursor-pointer text-white rounded-md w-full bg-blue-600 text-sm sm:text-base font-bold" />
@@ -58,6 +64,7 @@ import axios from "axios";
 // validation
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators"
+import { be_url } from "../config/config";
 
 // form state
 const formData = useForm({
@@ -83,17 +90,17 @@ async function submitForm() {
 
     // send login request
     try {
-        const response = await axios.post('http://localhost:8000/login', formData);
+        const response = await axios.post(be_url + '/login', formData);
 
         // success
         // redirect to '/dashboard'
-        if(response.data.status === 200) {
+        if (response.data.status === 200) {
             window.location.href = "/dashboard"; // redirect to dashboard 
-           return;
+            return;
         }
 
         // error 
-        if(response.data.status === 400) {
+        if (response.data.status === 400) {
             errorMsg.value = response.data; // set the error msg to display in notif component 
             isMounted.value = true; // show the notif component
             formData.password = ""; // reset the password input
