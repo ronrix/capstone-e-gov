@@ -1,8 +1,8 @@
 <script setup>
-import HeaderSection from '../../components/Header/HeaderSection.vue'
-import FooterSection from '../../components/FooterSection/FooterSection.vue'
-import HeroServices from './HeroServices.vue'
-import Department from './Department.vue'
+import HeaderSection from '../../../components/Header/HeaderSection.vue';
+import FooterSection from '../../../components/FooterSection/FooterSection.vue';
+import HeroServices from './HeroServices.vue';
+import Department from './Department.vue';
 </script>
 
 <template>

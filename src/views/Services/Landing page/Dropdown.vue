@@ -1,7 +1,7 @@
 <script setup>
-import DepartmentName from './DepartmentName.vue'
-import DropdownServices from './DropdownServices.vue'
-import ServicesName from './ServicesName.vue'
+import DepartmentName from './DepartmentName.vue';
+import DropdownServices from './DropdownServices.vue';
+import ServicesName from './ServicesName.vue';
 
 defineProps({
   department: { type: Object, required: true }
@@ -19,7 +19,7 @@ function showServices(e) {
 </script>
 <template>
   <div class="flex flex-col cursor-pointer" @click="showServices">
-    <DepartmentName :name="department.name" />
+    <DepartmentName :name="department.name"/>
   </div>
 
   <DropdownServices>
