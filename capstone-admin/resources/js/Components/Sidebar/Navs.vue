@@ -26,7 +26,7 @@
         <span class="pointer-events-none">Executives</span>
         <i class="uil uil-angle-down pointer-events-none"></i>
       </div>
-      <div class="hidden child-sub-navs">
+      <div class="hidden child-sub-navs w-full">
         <div
           class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
           <NavLink name="Current Officials of Pililla Rizal" to="/government/executives/current-officials" />
@@ -83,7 +83,7 @@
         <span class="pointer-events-none">Office of the Mayor</span>
         <i class="uil uil-angle-down pointer-events-none"></i>
       </div>
-      <div class="hidden child-sub-navs">
+      <div class="hidden child-sub-navs w-full">
         <div
           class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
           <NavLink name="scholarship program" to="/services/office-of-the-mayor/scholarship-program" />
@@ -96,7 +96,7 @@
         <span class="pointer-events-none">MSDWD Department</span>
         <i class="uil uil-angle-down pointer-events-none"></i>
       </div>
-      <div class="hidden child-sub-navs">
+      <div class="hidden child-sub-navs w-full">
         <div
           class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
           <NavLink name="Government ID" to="/services/mswd-department/government-id" />
@@ -108,7 +108,7 @@
         <span class="pointer-events-none">Agriculture Department</span>
         <i class="uil uil-angle-down pointer-events-none"></i>
       </div>
-      <div class="hidden child-sub-navs">
+      <div class="hidden child-sub-navs w-full">
         <div
           class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
           <NavLink name="Technical Assistance for Farmer"
@@ -145,7 +145,7 @@
         <span class="pointer-events-none">Public Employment Service Office</span>
         <i class="uil uil-angle-down pointer-events-none"></i>
       </div>
-      <div class="hidden child-sub-navs">
+      <div class="hidden child-sub-navs w-full">
         <div
           class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
           <NavLink name="Special Program Employment for Students"

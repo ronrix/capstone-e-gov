@@ -51,7 +51,7 @@ import CardApartment from './CardApartment.vue';
 import Notifcation from "../../../Components/Notifcation.vue";
 import SelectTag from "../../../Components/SelectTag.vue";
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import AddModal from '../../../Components/AddModal/AddModal.vue'
 import SearchInput from '../../../Components/SearchInput.vue';
 import PreviewModal from '../../../Components/PreviewModal.vue';

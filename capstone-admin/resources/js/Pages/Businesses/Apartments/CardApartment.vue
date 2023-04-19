@@ -22,16 +22,18 @@
 
             <button @click="showPreviewModal(data)">
 
-                <div class="card1 flex flex-col w-full md:w-auto">
+                <div class="card1 flex flex-col w-[250px]">
                     <!---Image-->
                     <div :style="{ backgroundImage: `url(${imgSrc})` }"
-                        class="rounded-md bg-no-repeat bg-cover bg-center h-[150px] max-h-[150px] object-cover relative">
+                        class="rounded-tt-md bg-no-repeat bg-cover bg-center h-[150px] max-h-[150px] object-cover relative">
                     </div>
                     <!--content-->
-                    <div class="p-4 flex-1 flex flex-col justify-between">
-                        <h3 class="apartment-name font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
-                        <h5 class="text-xs text-gray-500 tracking-wide text-center">{{ data.category }}</h5>
-                        <h5 class="text-xs text-gray-500 tracking-wide text-center">{{ data.location }}</h5>
+                    <div class="p-2 flex-1 flex flex-col items-start">
+                        <h3 class="font-bold capitalize text-xl tracking-wide">{{ data.title }}</h3>
+                        <h5 class="text-sm text-gray-500 tracking-wide text-center">
+                            <i class="uil uil-location-arrow"></i>
+                            {{ data.location }}
+                        </h5>
                     </div>
                 </div>
             </button>
@@ -75,14 +77,6 @@ const { data } = defineProps({
 .APcontent {
     margin-bottom: 5px;
     width: 260px
-}
-
-.apartment-name {
-    margin-top: 0.5em;
-    font-weight: bold;
-    margin-left: 5px;
-    margin-bottom: 5px;
-    width: 250px
 }
 
 .card1 {

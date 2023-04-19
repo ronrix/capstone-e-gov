@@ -1,22 +1,25 @@
 <template>
   <div class="fixed top-0 right-0 bottom-0 left-0 flex items-center justify-center bg-black bg-opacity-50 z-20">
-    <div class="backdrop-blur-xl bg-white/70 sm:w-[700px] mx-auto p-5 flex flex-col relative overflow-hidden rounded-lg">
+    <div
+      class="backdrop-blur-xl bg-white/70 h-full sm:h-auto sm:w-[700px] mx-auto p-5 flex flex-col relative justify-between overflow-y-auto rounded-lg">
       <!-- close btn -->
       <i @click="showAddModal"
         class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
-      <h2 class="font-bold text-lg sm:text-2xl capitalize mb-0 text-gray-900">Create new {{ title }}</h2>
-      <p class="text-xs text-gray-600 whitespace-pre-wrap">
-        To format for your content appropriately, you should understand how markdown works
-      </p>
-      <!-- link to go the markdown document -->
-      <a target="_blank" href="https://www.markdownguide.org/basic-syntax/"
-        class="m-0 text-xs mb-5 text-blue-600 underline font-[500] self-start">
-        <i class="uil uil-info-circle"></i>
-        click here to learn how to format your contents
-      </a>
+      <div>
+        <h2 class="font-bold text-lg sm:text-2xl capitalize mb-0 text-gray-900">Create new {{ title }}</h2>
+        <p class="text-xs text-gray-600 whitespace-pre-wrap">
+          To format for your content appropriately, you should understand how markdown works
+        </p>
+        <!-- link to go the markdown document -->
+        <a target="_blank" href="https://www.markdownguide.org/basic-syntax/"
+          class="m-0 text-xs mb-5 text-blue-600 underline font-[500] self-start">
+          <i class="uil uil-info-circle"></i>
+          click here to learn how to format your contents
+        </a>
+      </div>
 
-      <form method="POST" action="/create-news" @submit.prevent="onSubmit" class="flex flex-col">
+      <form method="POST" action="/create-news" @submit.prevent="onSubmit" class="flex flex-col justify-between flex-1">
         <div class="flex items-center gap-3">
           <label class="flex flex-col flex-1">
             <span class="text-xs sm:text-sm font-bold capitalize mb-2">title:</span>
@@ -46,7 +49,8 @@
           </label>
           <label v-if="category" class="flex flex-col flex-1">
             <span class="text-xs sm:text-sm font-bold capitalize mb-2">category:</span>
-            <input v-model="formData.category" name="title" type="text" placeholder="Type the category here..."
+            <input :readonly="isApartment" v-model="formData.category" name="title" type="text"
+              placeholder="Type the category here..."
               class="rounded-md mb-5 p-2 focus:outline-blue-600 text-xs sm:text-sm">
             <p v-if="v$.category.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.category.$errors[0].$message
             }}
@@ -97,7 +101,7 @@
         </div>
 
         <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }"
-          class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center text-xs sm:text-sm">
+          class="active:-translate-y-[1px] mt-5 bg-blue-600 px-5 py-2 text-white rounded-md font-bold uppercase flex items-center justify-center text-xs sm:text-sm self-end">
           <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
           <span v-if="!isSubmitting">save</span>
         </button>
@@ -151,7 +155,7 @@ const formData = useForm({
   title: "",
   location: "",
   authors: "",
-  category: "",
+  category: isApartment ? "apartment" : "",
   content: "",
   imgFile: [],
 });
@@ -249,12 +253,13 @@ async function onSubmit() {
   });
 }
 
-const { handleCreateSubmit, location, category } = defineProps({
+const { handleCreateSubmit, location, category, isApartment } = defineProps({
   showAddModal: Function,
   handleCreateSubmit: Function,
   title: String,
   location: Boolean,
   category: Boolean,
+  isApartment: Boolean
 })
 </script>
 
