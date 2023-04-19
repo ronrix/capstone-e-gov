@@ -13,6 +13,60 @@ class BusinessesController extends Controller
     /*
     * get all trashed data
     */
+    public function getAllTrashedApartments(Request $request)
+    {
+        try {
+            $business = Business::onlyTrashed()->where("category", "=", "apartment")->orderBy('created_at', 'desc')->get();
+            if ($business) {
+                return response()->json(["apartments" => $business]);
+            }
+            return response()->json(["msg" => $business, "status" => 404], 404);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
+    * restore trashed data
+    */
+    public function restoreApartment(Request $request)
+    {
+        // get the passed parameter id
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+        ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        $id = $request->input("id");
+        try {
+            Business::withTrashed()->find($id)->restore();
+
+            # return all the trashed data
+            return response()->json(["apartments" => Business::onlyTrashed()->where("category", "=", "apartment")->orderBy('created_at', 'desc')->get(), "res" => ["msg" => "successfully restore data", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+
+    /*
+    * get all trashed data
+    */
     public function getAllTrashed(Request $request)
     {
         try {
@@ -62,7 +116,6 @@ class BusinessesController extends Controller
             return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
     }
-
 
     /**
      * Display a listing of the resource.

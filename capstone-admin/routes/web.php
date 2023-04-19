@@ -113,6 +113,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get('/tourist-attractions/deleted', [TourismController::class, 'getAllTrashed']);
     Route::get('/festivals/deleted', [FestivalsController::class, 'getAllTrashed']);
     Route::get('/business-establishment/deleted', [BusinessesController::class, 'getAllTrashed']);
+    Route::get('/apartments/deleted', [BusinessesController::class, 'getAllTrashedApartments']);
 
     // routes to restore dat
     Route::post('/news/restore', [NewsController::class, 'restore']);
@@ -120,6 +121,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post('/tourist-attractions/restore', [TourismController::class, 'restore']);
     Route::post('/festivals/restore', [FestivalsController::class, 'restore']);
     Route::post('/business-establishment/restore', [BusinessesController::class, 'restore']);
+    Route::post('/apartment/restore', [BusinessesController::class, 'restoreApartment']);
 
     // government post requests
     // edit requests
