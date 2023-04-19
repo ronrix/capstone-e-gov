@@ -42,7 +42,7 @@ const sample_card = [{
       </div>
       <div class="flex">
         <div
-          class="drop-shadow-lg h-[300px] sm:h-[400px] w-[200px] sm:w-[300px] bg-slate-300 bg-auto bg-no-repeat bg-center z-10 translate-y-36 sm:translate-y-32"
+          class="topimage1 drop-shadow-lg h-[300px] sm:h-[400px] w-[200px] sm:w-[300px] bg-slate-300 bg-auto bg-no-repeat bg-center z-10 translate-y-36 sm:translate-y-32"
           style="background-image: url()"
         >
           <img
@@ -88,7 +88,7 @@ const sample_card = [{
       <div
         v-for="(data, idx) in sample_card"
         :key="idx" 
-        class="cards flex flex-col bg-white border-2"
+        class="cards flex flex-col dark:bg-dark border-2"
       >
         <img class="object-cover h-[250px] w-full" :src="data.imgSrc" alt="" />
         <div class="py-5 px-3">
