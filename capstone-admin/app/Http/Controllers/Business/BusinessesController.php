@@ -10,6 +10,60 @@ use Image;
 
 class BusinessesController extends Controller
 {
+    /*
+    * get all trashed data
+    */
+    public function getAllTrashed(Request $request)
+    {
+        try {
+            $business = Business::onlyTrashed()->where("category", "!=", "apartment")->orderBy('created_at', 'desc')->get();
+            if ($business) {
+                return response()->json(["businesses" => $business]);
+            }
+            return response()->json(["msg" => $business, "status" => 404], 404);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
+    * restore trashed data
+    */
+    public function restore(Request $request)
+    {
+        // get the passed parameter id
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+        ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        $id = $request->input("id");
+        try {
+            Business::withTrashed()->find($id)->restore();
+
+            # return all the trashed data
+            return response()->json(["businesses" => Business::where("category", "!=", "apartment")->orderBy('created_at', 'desc')->get(), "res" => ["msg" => "successfully restore data", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -69,6 +123,7 @@ class BusinessesController extends Controller
         $validator = Validator::make($request->all(), [
             "id" => "required",
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "location" => "required",
             "category" => "required",
@@ -97,6 +152,7 @@ class BusinessesController extends Controller
 
             $business = Business::findOrFail($id);
             $business->title = $request->input("title");
+            $business->authors = $request->input("authors");
             $business->description = $request->input("description");
             $business->location = $request->input("location");
             $business->category = $request->input("category");
@@ -108,7 +164,14 @@ class BusinessesController extends Controller
                 $imgs = explode(",", $business->img_link);
                 foreach ($request->file('newImgs') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/businesses/" . $filename;
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/businesses/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
@@ -179,6 +242,7 @@ class BusinessesController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "location" => "required",
             "category" => "required",
@@ -205,13 +269,21 @@ class BusinessesController extends Controller
                 $imgPaths = [];
                 foreach ($request->file('imgFile') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/businesses/apartments/" . $filename;
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/businesses/apartments/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
 
                 $business = new Business;
                 $business->title = $request->input("title");
+                $business->authors = $request->input("authors");
                 $business->description = $request->input("description");
                 $business->location = $request->input("location");
                 $business->category = $request->input("category");
@@ -278,6 +350,7 @@ class BusinessesController extends Controller
         $validator = Validator::make($request->all(), [
             "id" => "required",
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "location" => "required",
             "category" => "required",
@@ -306,6 +379,7 @@ class BusinessesController extends Controller
 
             $business = Business::findOrFail($id);
             $business->title = $request->input("title");
+            $business->authors = $request->input("authors");
             $business->description = $request->input("description");
             $business->location = $request->input("location");
             $business->category = $request->input("category");
@@ -317,7 +391,14 @@ class BusinessesController extends Controller
                 $imgs = explode(",", $business->img_link);
                 foreach ($request->file('newImgs') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/businesses/" . $filename;
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/businesses/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
@@ -386,6 +467,7 @@ class BusinessesController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "title" => "required",
+            "authors" => "required",
             "description" => "required",
             "location" => "required",
             "category" => "required",
@@ -412,13 +494,22 @@ class BusinessesController extends Controller
                 $imgPaths = [];
                 foreach ($request->file('imgFile') as $file) {
                     $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                    $path = "uploads/" . $filename;
+                    $path = "uploads/businesses/" . $filename;
+
+
+                    # create a folder if not exists before saving the image
+                    $folder = "uploads/businesses/";
+                    if (!file_exists($folder)) {
+                        mkdir($folder, 0777, true);
+                    }
+
                     Image::make($file)->save(public_path($path)); // save the file image
                     array_push($imgPaths, $path);
                 }
 
                 $business = new Business;
                 $business->title = $request->input("title");
+                $business->authors = $request->input("authors");
                 $business->description = $request->input("description");
                 $business->location = $request->input("location");
                 $business->category = $request->input("category");

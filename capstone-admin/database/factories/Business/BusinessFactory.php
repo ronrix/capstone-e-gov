@@ -22,6 +22,7 @@ class BusinessFactory extends Factory
 
         return [
             "title" => fake()->company(),
+            "authors" => fake()->name(),
             "description" => fake()->paragraph(5),
             "category" => fake()->catchPhrase(),
             "location" => fake()->address(),
