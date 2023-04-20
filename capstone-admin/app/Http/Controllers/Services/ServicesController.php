@@ -102,6 +102,51 @@ class ServicesController extends Controller
     * office of the mayor
     * update one requirement
     */
+    public function updateIntendedFor(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "newValue" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        try {
+
+            # store the request variables
+            $id = $request->input("id");
+            $newValue = $request->input("newValue");
+
+            $service = Service::findOrFail($id);
+            $service->intended_for = json_encode(explode(", ", $newValue));
+            $service->save();
+
+            return response()->json([
+                "res" => [
+                    "msg" => "Successfully updated intended for",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+    /*
+    * office of the mayor
+    * update one requirement
+    */
     public function updateRequirement(Request $request)
     {
         // validate

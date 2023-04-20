@@ -1,8 +1,19 @@
 <template>
     <HeadTitle :title="headTitle"></HeadTitle>
+    <!-- edit verification modal -->
+
+    <EditVerification :close-modal="closeEditVerificationModal" v-if="isEditVerification" :data="editedInput"
+        :handle-edit="handleUpdateIntendedFor" />
+
     <WrapperContent>
         <!-- response message -->
         <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
+
+        <h3 class="font-bold text-xl text-gray-800">Inteded for</h3>
+        <p class="text-gray-600 text-xs">to update "intended for" please separte theme with comma "," </p>
+        <textarea @change="(e) => showEditVerification(e.target.value)"
+            class="w-full border h-[30px] max-h-[30px] mb-3 resize-none px-2 outline-blue-600"
+            :value="intendedFor"></textarea>
 
         <h3 class="font-bold text-xl mb-3 text-gray-800">Checklist of Requirements</h3>
         <div class="bg-white rounded-lg p-4">
@@ -51,6 +62,7 @@ import axios from 'axios';
 import { be_url } from '../../config/config';
 import Notifcation from '../../Components/Notifcation.vue';
 import { useRoute } from 'vue-router';
+import EditVerification from '../../Components/EditVerification.vue';
 
 const dataServices = ref([]);
 const processes = ref([]);
@@ -253,6 +265,46 @@ async function handleCreateProcess(formData) {
     });
 }
 
+// save verification on edit
+const isEditVerification = ref(false);
+const editedInput = ref({ value: "" });
+function showEditVerification(inputValue) {
+    editedInput.value.value = inputValue;
+    intendedFor.value = inputValue;
+
+    isEditVerification.value = !isEditVerification.value; // display the edit verification modal
+}
+function closeEditVerificationModal() {
+    isEditVerification.value = false;
+    editedInput.value = intendedFor.value;
+}
+
+// function to update the intended for
+function handleUpdateIntendedFor(value) {
+    axios.post(be_url + "/services/intended-for/edit", {
+        id: dataServices.value.id,
+        newValue: value
+    }).then(({ data }) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        isEditVerification.value = false; // close the edit verification modal
+
+        return data;
+    }).catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        return;
+    });
+}
+
 // string to capitalize the first letter of the word
 function toCapitalize(str) {
     // split the string by "space"
@@ -269,6 +321,7 @@ function toCapitalize(str) {
 // get data from the server
 const service = ref("");
 const headTitle = ref("");
+const intendedFor = ref([]);
 onMounted(() => {
     service.value = routes.path.split("/")[3];
     // make the headTitle capitalize
@@ -279,10 +332,9 @@ onMounted(() => {
         .then(({ data }) => {
             // storing the whole data
             dataServices.value = data.services[0];
-
+            intendedFor.value = JSON.parse(dataServices.value.intended_for).join(", ");
             // get all the services processes by looping through the data.services
             processes.value = JSON.parse(data.services[0].service_process);
-
             // get all the lists of requirements by looping through the data.services
             requirements.value = JSON.parse(data.services[0].service_requirements);
         })
@@ -306,8 +358,6 @@ onUpdated(() => {
         .then(({ data }) => {
             // storing the whole data
             dataServices.value = data.services[0];
-
-            console.log("here");
             // get all the services processes by looping through the data.services
             processes.value = [];
             requirements.value = [];

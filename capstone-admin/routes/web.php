@@ -89,6 +89,7 @@ Route::middleware(["auth"])->group(function () {
     /* services */
     Route::post("/services/requirement/edit", [ServicesController::class, "updateRequirement"]);
     Route::post("/services/process/edit", [ServicesController::class, "updateProcess"]);
+    Route::post("/services/intended-for/edit", [ServicesController::class, "updateIntendedFor"]);
 
     /* official seal */
     Route::post("/official-seal/edit", [AboutController::class, "updateOfficialSeal"]);
