@@ -44,7 +44,8 @@ const departments = [
         path: '/special-program-employment-for-students',
         name: 'Special Program Employment for Students'
       },
-      { path: '/job-fair', name: 'Job Fair' }
+      { path: '/job-fair', name: 'Job Fair' 
+      }
     ]
   }
 ]

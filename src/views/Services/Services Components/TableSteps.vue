@@ -6,7 +6,7 @@
       </h1>
   <table class="border table-auto mt-2 mb-10">
     <thead>
-      <tr class="text-sm md:text-lg text-left text-dark font-semibold bg-gray-50 dark:bg-gray-50">
+      <tr class="text-sm lg:text-lg text-left text-dark font-semibold bg-gray-50 dark:bg-gray-50">
         <th>Client Steps</th>
         <th>Agency Steps</th>
         <th>Fees to Paid</th>
