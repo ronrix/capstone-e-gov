@@ -28,6 +28,7 @@ class ServicesController extends Controller
         $validator = Validator::make($request->all(), [
             "rowId" => "required",
             "arrId" => "required",
+            "valueId" => "required",
             "newValue" => "required",
         ]);
         /*
@@ -48,16 +49,25 @@ class ServicesController extends Controller
             # store the request ids to variables
             $id = $request->input("rowId");
             $arrId = $request->input("arrId");
+            $valueId = $request->input("valueId");
+            $newValue = $request->input("newValue");
 
             $service = Service::findOrFail($id);
-            $service_requirements = explode(",", $service->service_requirements);
-            $service_requirements[$arrId] = $request->input("newValue");
-            $service->service_requirements = implode(",", $service_requirements);
+            $service_requirements = json_decode($service->service_requirements, true);
+            $keys = array_keys($service_requirements);
+            $values = array_values($service_requirements);
+            if ($valueId == 0) { # check the keys and update the selected value
+                $keys[$arrId] = $newValue;
+            } else {
+                $values[$arrId] = $newValue;
+            }
+
+            $service->service_requirements = array_combine($keys, $values);
             $service->save();
 
             return response()->json([
                 "res" => [
-                    "msg" => "Successfully added new requirement",
+                    "msg" => "Successfully updated requirement",
                     "status" => 200
                 ]
             ]);
@@ -77,6 +87,7 @@ class ServicesController extends Controller
         $validator = Validator::make($request->all(), [
             "rowId" => "required",
             "newRequirement" => "required",
+            "newWhereToGo" => "required",
         ]);
         /*
         * customizing the validation response
@@ -97,11 +108,11 @@ class ServicesController extends Controller
             $id = $request->input("rowId");
 
             $service = Service::findOrFail($id);
-            $service_requirements = explode(",", $service->service_requirements);
+            $service_requirements = json_decode($service->service_requirements, true);
 
             # appending the new requiremnts
-            array_push($service_requirements, $request->input("newRequirement"));
-            $service->service_requirements = implode(",", $service_requirements);
+            $merged_array = $service_requirements + array_combine($request->input("newRequirement"), $request->input("newWhereToGo"));;
+            $service->service_requirements = json_encode($merged_array);
             $service->save();
 
             return response()->json([
@@ -148,9 +159,9 @@ class ServicesController extends Controller
             $arrId = $request->input("arrId");
 
             $service = Service::findOrFail($id);
-            $service_requirements = explode(",", $service->service_requirements);
-            unset($service_requirements[$arrId]);
-            $service->service_requirements = implode(",", $service_requirements);
+            $service_requirements = json_decode($service->service_requirements, true);
+            $new_requirements = array_slice($service_requirements, $arrId + 1, null, true);
+            $service->service_requirements = json_encode($new_requirements);
             $service->save();
 
             return response()->json([
@@ -279,6 +290,7 @@ class ServicesController extends Controller
             "agent_steps" => "required",
             "fees" => "required",
             "process_time" => "required",
+            "person_responsible" => "required",
         ]);
         /*
         * customizing the validation response
@@ -302,9 +314,10 @@ class ServicesController extends Controller
 
             $new_process = [
                 "client_steps" => $request->input("client_steps"),
-                "agent_steps" => $request->input("agent_steps"),
+                "agency_steps" => $request->input("agent_steps"),
                 "fees" => $request->input("fees"),
                 "process_time" => $request->input("process_time"),
+                "person_responsible" => $request->input("person_responsible"),
             ];
             array_push($service_process, $new_process); # append the new process
             $service->service_process = $service_process;
