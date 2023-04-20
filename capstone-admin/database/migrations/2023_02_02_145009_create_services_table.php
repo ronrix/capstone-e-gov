@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string("service_department");
             $table->json("intended_for");
             $table->string("service_type");
-            $table->json("service_requirements");
-            $table->json("service_process");
+            $table->json("service_requirements")->nullable()->default(null);
+            $table->json("service_process")->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
         });
