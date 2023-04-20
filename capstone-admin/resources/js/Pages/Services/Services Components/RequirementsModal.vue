@@ -9,19 +9,23 @@
             <!-- form -->
             <!-- <div class="form"></div> -->
             <form @submit.prevent="submitFn" class="w-full mt-3 flex flex-col gap-3">
-                    <label>
-                        <p class="text-sm text-gray-600">Requirements</p>
-                        <div class="flex flex-row  gap-2 items-center">
-                            <input v-model="formData.requirement" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                            <button @click="addMore" type="button">
-                                <i  class="uil uil-plus-square text-2xl text-blue-600 hover:text-blue-400" ></i>
-                            </button>
-                        </div>
-                    </label>
-                    <p v-if="v$.requirement.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.requirement.$errors[0].$message }}</p>
+                <label>
+                    <div class="flex flex-row  gap-2 items-center">
+                        <input v-model="formData.requirement" type="text" placeholder="Requirement"
+                            class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                        <input v-model="formData.whereToGo" type="text" placeholder="Where to go?"
+                            class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                        <button @click="addMore" type="button">
+                            <i class="uil uil-plus-square text-2xl text-blue-600 hover:text-blue-400"></i>
+                        </button>
+                    </div>
+                </label>
+                <p v-if="v$.requirement.$error && isError" class="text-xs text-red-400 mb-2"> {{
+                    v$.requirement.$errors[0].$message }}</p>
                 <div ref="add"></div>
 
-                <button :disabled="isSubmitting" type="submit" :class="{'cursor-not-allowed' : isSubmitting}" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer flex items-center justify-center">
+                <button :disabled="isSubmitting" type="submit" :class="{ 'cursor-not-allowed': isSubmitting }"
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer flex items-center justify-center">
                     <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
                     <span v-if="!isSubmitting">save</span>
                 </button>
@@ -41,12 +45,13 @@ import { required, helpers } from "@vuelidate/validators"
 
 // adding rules for validation of the form
 const rules = computed(() => ({
-  requirement: { required: helpers.withMessage("One field of requirement is required", required) },
-} ));
+    requirement: { required: helpers.withMessage("One field of requirement is required", required) },
+}));
 
 const isSubmitting = ref(false);
 const formData = useForm({
     requirement: "",
+    whereToGo: "",
 });
 const isError = ref(false);
 const v$ = useVuelidate(rules, formData);
@@ -54,21 +59,26 @@ const v$ = useVuelidate(rules, formData);
 const add = ref(null)
 function addMore(e) {
     const div = document.createElement("div");
-    const input = document.createElement('input');
+    const inputReq = document.createElement('input');
+    const inputToGo = document.createElement('input');
     const removeBtn = document.createElement('button');
 
     removeBtn.innerHTML = `<i  class="uil uil-times-square text-2xl text-red-500 ml-1 hover:text-red-400"></i> `;
-    input.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600 more-input";
+    inputReq.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600 input-req";
+    inputReq.placeholder = "Requirement";
+    inputToGo.className = "mt-3 border w-full p-2 rounded-lg focus:outline-blue-600 input-to-go";
+    inputToGo.placeholder = "Where to go?";
 
     div.className = "flex flex-row  gap-2 items-center";
-    div.appendChild(input);
+    div.appendChild(inputReq);
+    div.appendChild(inputToGo);
     div.appendChild(removeBtn)
 
     // focus the input
-    input.focus();
+    inputReq.focus();
 
     // TODO: function for cancel btn or remove the new added input
-    removeBtn.addEventListener("click", function(e) {
+    removeBtn.addEventListener("click", function (e) {
         div.remove();
     });
 
@@ -85,16 +95,22 @@ async function submitFn(e) {
     }
 
     // get all the value of "more-input"/s and append it to the formData.requirements
-    let newRequirement = formData.requirement;
+    let newRequirement = [formData.requirement];
+    let newWhereToGo = [formData.whereToGo];
     Array.from(e.srcElement).forEach(el => {
-        if(el.nodeName === "INPUT" && el.classList.contains("more-input")) {
-            newRequirement += ", " + el.value;
+        // get the input req
+        if (el.nodeName === "INPUT" && el.classList.contains("input-req")) {
+            newRequirement.push(el.value);
+        }
+        // get the input where to go
+        if (el.nodeName === "INPUT" && el.classList.contains("input-to-go")) {
+            newWhereToGo.push(el.value);
         }
     });
 
     isSubmitting.value = true;
     if (isError.value) isError.value = false; // remove the error message from displaying when validation passed
-    handleCreateRequirement(newRequirement).then(() => {
+    handleCreateRequirement(newRequirement, newWhereToGo).then(() => {
         isSubmitting.value = false;
         formData.reset();
         add.value.innerHTML = "";

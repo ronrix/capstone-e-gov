@@ -12,29 +12,41 @@
                 <label class="flex flex-col w-full">
                     <span class="font-bold text-gray-500">Client Steps</span>
                     <p class="text-xs text-gray-500">add the clients steps below</p>
-                    <input v-model="formData.client_steps" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                    <p v-if="v$.client_steps.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.client_steps.$errors[0].$message }}</p>
+                    <input v-model="formData.client_steps" type="text"
+                        class="border w-full p-2 rounded-lg focus:outline-blue-600">
                 </label>
                 <label class="flex flex-col w-full">
                     <span class="font-bold text-gray-500">Agency Steps</span>
                     <p class="text-xs text-gray-500">add the agency steps below</p>
-                    <input v-model="formData.agent_steps" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                    <p v-if="v$.agent_steps.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.agent_steps.$errors[0].$message }}</p>
+                    <input v-model="formData.agent_steps" type="text"
+                        class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                    <p v-if="v$.agent_steps.$error && isError" class="text-xs text-red-400 mb-2"> {{
+                        v$.agent_steps.$errors[0].$message }}</p>
                 </label>
                 <label class="flex flex-col w-full">
                     <span class="font-bold text-gray-500">Fees to paid</span>
                     <p class="text-xs text-gray-500">add the fees to paid below</p>
                     <input v-model="formData.fees" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                    <p v-if="v$.fees.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.fees.$errors[0].$message }}</p>
                 </label>
                 <label class="flex flex-col w-full">
                     <span class="font-bold text-gray-500">Processing time</span>
                     <p class="text-xs text-gray-500">add the processing time below</p>
-                    <input v-model="formData.process_time" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-                    <p v-if="v$.process_time.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.process_time.$errors[0].$message }}</p>
+                    <input v-model="formData.process_time" type="text"
+                        class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                    <p v-if="v$.process_time.$error && isError" class="text-xs text-red-400 mb-2"> {{
+                        v$.process_time.$errors[0].$message }}</p>
+                </label>
+                <label class="flex flex-col w-full">
+                    <span class="font-bold text-gray-500">Person responsible</span>
+                    <p class="text-xs text-gray-500">add the name of the person responsible for the service</p>
+                    <input v-model="formData.person_responsible" type="text"
+                        class="border w-full p-2 rounded-lg focus:outline-blue-600">
+                    <p v-if="v$.person_responsible.$error && isError" class="text-xs text-red-400 mb-2"> {{
+                        v$.person_responsible.$errors[0].$message }}</p>
                 </label>
 
-                <button :disabled="isSubmitting" type="submit" :class="{'cursor-not-allowed' : isSubmitting}" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer flex items-center justify-center">
+                <button :disabled="isSubmitting" type="submit" :class="{ 'cursor-not-allowed': isSubmitting }"
+                    class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold p-2 rounded-lg uppercase cursor-pointer flex items-center justify-center">
                     <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
                     <span v-if="!isSubmitting">save</span>
                 </button>
@@ -44,7 +56,7 @@
 </template>
   
 <script setup>
-import {computed, ref } from "vue";
+import { computed, ref } from "vue";
 import { useForm } from '@inertiajs/inertia-vue3';
 
 // validation
@@ -54,11 +66,10 @@ import Loading from "../../../Components/Loading.vue";
 
 // adding rules for validation of the form
 const rules = computed(() => ({
-  client_steps: { required: helpers.withMessage("One field of client steps is required", required) },
-  agent_steps: { required: helpers.withMessage("One field of agent steps is required", required) },
-  fees: { required: helpers.withMessage("One field of fees to paid is required", required) },
-  process_time: { required: helpers.withMessage("One field of processing time is required", required) },
-} ));
+    agent_steps: { required: helpers.withMessage("One field of agent steps is required", required) },
+    process_time: { required: helpers.withMessage("One field of processing time is required", required) },
+    person_responsible: { required: helpers.withMessage("One field of processing time is required", required) },
+}));
 
 const formData = useForm({
     client_steps: "",

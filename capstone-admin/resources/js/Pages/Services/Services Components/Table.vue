@@ -7,6 +7,7 @@
                 <th class="bg-gray-50">Agency Steps</th>
                 <th class="bg-gray-50">Fees to Paid</th>
                 <th class="bg-gray-50">Processing Time</th>
+                <th class="bg-gray-50">Person Responsible</th>
                 <th class="bg-gray-50">Action</th>
             </tr>
         </thead>
