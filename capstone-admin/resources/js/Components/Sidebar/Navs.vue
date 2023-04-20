@@ -78,82 +78,18 @@
       </div>
     </SideNav>
     <SubNavs v-show="isWholeSidebar">
-      <div @click="showChildSubNavs"
-        class="cursor-pointer relative flex items-center justify-between hover:bg-blue-600 hover:text-white w-full p-2">
-        <span class="pointer-events-none">Office of the Mayor</span>
-        <i class="uil uil-angle-down pointer-events-none"></i>
-      </div>
-      <div class="hidden child-sub-navs w-full">
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
-          <NavLink name="scholarship program" to="/services/office-of-the-mayor/scholarship-program" />
-          <NavLink name="Civil Wedding Schedule" to="/services/office-of-the-mayor/civil-wedding-schedule" />
-          <NavLink name="Mayor's Clearance" to="/services/office-of-the-mayor/mayors-clearance" />
+      <div v-for="services, key, idx in serviceTypes" :key="idx" class="w-full">
+        <div @click="showChildSubNavs"
+          class="cursor-pointer relative flex items-center justify-between hover:bg-blue-600 hover:text-white w-full p-2">
+          <span class="pointer-events-none capitalize">{{ key }}</span>
+          <i class="uil uil-angle-down pointer-events-none"></i>
         </div>
-      </div>
-      <div @click="showChildSubNavs"
-        class="cursor-pointer relative flex items-center justify-between hover:bg-blue-600 hover:text-white w-full p-2">
-        <span class="pointer-events-none">MSDWD Department</span>
-        <i class="uil uil-angle-down pointer-events-none"></i>
-      </div>
-      <div class="hidden child-sub-navs w-full">
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Government ID" to="/services/mswd-department/government-id" />
-          <NavLink name="Replacement of Senior Citizen" to="/services/mswd-department/replacement-of-senior-citizen" />
-        </div>
-      </div>
-      <div @click="showChildSubNavs"
-        class="cursor-pointer relative flex items-center justify-between hover:bg-blue-600 hover:text-white w-full p-2">
-        <span class="pointer-events-none">Agriculture Department</span>
-        <i class="uil uil-angle-down pointer-events-none"></i>
-      </div>
-      <div class="hidden child-sub-navs w-full">
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Technical Assistance for Farmer"
-            to="/services/agriculture-department/technical-assistance-for-farmer" />
-        </div>
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Treatment and Vaccination of Animals"
-            to="/services/agriculture-department/treatment-and-vaccination-of-animals" />
-        </div>
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Distributions of Assorted Seeds or Seedling"
-            to="/services/agriculture-department/distributions-of-assorted-seeds-seedling" />
-        </div>
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Delivery of Farm & Fishery Inputs"
-            to="/services/agriculture-department/delivery-of-farm-fishery-inputs" />
-        </div>
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Issuance of MOA Certification"
-            to="/services/agriculture-department/issuance-of-moa-certification" />
-        </div>
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Capacity Building Enhancement Training"
-            to="/services/agriculture-department/capacity-building-enhancement-training" />
-        </div>
-      </div>
-      <div @click="showChildSubNavs"
-        class="cursor-pointer relative flex items-center justify-between hover:bg-blue-600 hover:text-white w-full p-2">
-        <span class="pointer-events-none">Public Employment Service Office</span>
-        <i class="uil uil-angle-down pointer-events-none"></i>
-      </div>
-      <div class="hidden child-sub-navs w-full">
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Special Program Employment for Students"
-            to="/services/public-employment-service-office/special-program-employment-for-students" />
-        </div>
-        <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
-          <NavLink name="Job Fair" to="/services/public-employment-service-department/job-fair" />
+        <div class="hidden child-sub-navs w-full">
+          <div
+            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
+            <NavLink v-for="service, id in services" :key="id" :name="service"
+              :to="`/services/${key.toLowerCase().replaceAll(' ', '-')}/${service.toLowerCase().replaceAll(' ', '-')}`" />
+          </div>
         </div>
       </div>
     </SubNavs>
@@ -180,6 +116,18 @@ import SideNav from './SideNav.vue';
 import SideNavName from './SideNavName.vue';
 import SubNavs from './SubNavs.vue';
 
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import { be_url } from '../../config/config';
+
+const serviceTypes = ref([]);
+onMounted(() => {
+  axios.get(be_url + "/service-types")
+    .then(({ data }) => {
+      serviceTypes.value = data.service_types;
+      console.log(serviceTypes.value);
+    });
+});
 
 defineProps({
   showSubNavs: Function,

@@ -11,11 +11,35 @@ class ServicesController extends Controller
 {
     /*
     * office of the mayor
+    * get all the service types
+    */
+    public function getAllServiceTypes()
+    {
+        $data = Service::select("service_department", "service_type")->get();
+        $json_data = json_decode($data, true);
+
+        $grouped_data = [];
+
+        foreach ($json_data as $service_type) {
+            $department = $service_type['service_department'];
+            $type = $service_type['service_type'];
+
+            if (!isset($grouped_data[$department])) {
+                $grouped_data[$department] = [];
+            }
+
+            array_push($grouped_data[$department], $type);
+        }
+        return response()->json(["service_types" => $grouped_data]);
+    }
+
+    /*
+    * office of the mayor
     * get all the data for scholarship program
     */
-    public function getScholarshipProgram()
+    public function get(string $_service)
     {
-        return response()->json(["scholarship" => Service::where("service_type", "=", "scholarship program")->get()]);
+        return response()->json(["services" => Service::where("service_type", "=", str_replace("-", " ", $_service))->get()]);
     }
 
     /*
@@ -81,7 +105,7 @@ class ServicesController extends Controller
     * office of the mayor
     * create new requirement and append that to the existing requirements
     */
-    public function createRequirement(Request $request)
+    public function createRequirement(Request $request, string $_service)
     {
         // validate
         $validator = Validator::make($request->all(), [
@@ -116,7 +140,7 @@ class ServicesController extends Controller
             $service->save();
 
             return response()->json([
-                'scholarship' => Service::where("service_type", "=", "scholarship program")->get(),
+                'services' => Service::where("service_type", "=", str_replace("-", " ", $_service))->get(),
                 "res" => [
                     "msg" => "Successfully added new requirement",
                     "status" => 200
@@ -132,7 +156,7 @@ class ServicesController extends Controller
     * office of the mayor
     * delete one requirement
     */
-    public function deleteRequirement(Request $request)
+    public function deleteRequirement(Request $request, string $_service)
     {
         // validate
         $validator = Validator::make($request->all(), [
@@ -165,7 +189,7 @@ class ServicesController extends Controller
             $service->save();
 
             return response()->json([
-                'scholarship' => Service::where("service_type", "=", "scholarship program")->get(),
+                'services' => Service::where("service_type", "=", str_replace("-", " ", $_service))->get(),
                 "res" => [
                     "msg" => "Successfully delete requirement",
                     "status" => 200
@@ -232,7 +256,7 @@ class ServicesController extends Controller
     * office of the mayor
     * delete one process
     */
-    public function deleteProcess(Request $request)
+    public function deleteProcess(Request $request, string $_service)
     {
         // validate
         $validator = Validator::make($request->all(), [
@@ -265,7 +289,7 @@ class ServicesController extends Controller
             $service->save();
 
             return response()->json([
-                'scholarship' => Service::where("service_type", "=", "scholarship program")->get(),
+                'services' => Service::where("service_type", "=", str_replace("-", " ", $_service))->get(),
                 "res" => [
                     "msg" => "Successfully delete process",
                     "status" => 200
@@ -281,7 +305,7 @@ class ServicesController extends Controller
     * office of the mayor
     * create new requirement and append that to the existing requirements
     */
-    public function createProcess(Request $request)
+    public function createProcess(Request $request, string $_service)
     {
         // validate
         $validator = Validator::make($request->all(), [
@@ -324,7 +348,7 @@ class ServicesController extends Controller
             $service->save();
 
             return response()->json([
-                'scholarship' => Service::where("service_type", "=", "scholarship program")->get(),
+                'services' => Service::where("service_type", "=", str_replace("-", " ", $_service))->get(),
                 "res" => [
                     "msg" => "Successfully added new requirement",
                     "status" => 200

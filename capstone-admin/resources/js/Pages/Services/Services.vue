@@ -1,5 +1,5 @@
 <template>
-    <HeadTitle title="Scholarship Program"></HeadTitle>
+    <HeadTitle :title="headTitle"></HeadTitle>
     <WrapperContent>
         <!-- response message -->
         <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
@@ -41,26 +41,28 @@
 </template>
 
 <script setup>
-import ListReq from '../../Services Components/ListReq.vue';
-import Rows from '../../Services Components/Rows.vue';
-import Table from '../../Services Components/Table.vue';
-import RequirementsModal from '../../Services Components/RequirementsModal.vue';
+import ListReq from './Services Components/ListReq.vue';
+import Rows from './Services Components/Rows.vue';
+import Table from './Services Components/Table.vue';
+import RequirementsModal from './Services Components/RequirementsModal.vue';
 
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from 'axios';
-import { be_url } from '../../../../config/config';
-import Notifcation from '../../../../Components/Notifcation.vue';
+import { be_url } from '../../config/config';
+import Notifcation from '../../Components/Notifcation.vue';
+import { useRoute } from 'vue-router';
 
-const dataScholarship = ref([]);
+const dataServices = ref([]);
 const processes = ref([]);
 const requirements = ref([]);
 const resMsg = ref();
+const routes = useRoute();
 
 // function to update one list of requirement with change.capture event.
 // will update the data as soon as the user change the list and blur out of the input
 async function handleUpdateRequirement(value, arrId, valueId) {
-    return await axios.post(be_url + "/scholarship/requirement/edit", {
-        rowId: dataScholarship.value.id,
+    return await axios.post(be_url + "/services/requirement/edit", {
+        rowId: dataServices.value.id,
         arrId,
         valueId,
         newValue: value
@@ -79,6 +81,7 @@ async function handleUpdateRequirement(value, arrId, valueId) {
         setTimeout(() => {
             resMsg.value = null;
         }, 3000);
+        return;
     });
 }
 
@@ -90,8 +93,8 @@ function showRequirementModal() {
 
 // function to delete requirement
 async function handleDeleteRequirement(arrId) {
-    return await axios.post(be_url + "/scholarship/requirement/delete", {
-        rowId: dataScholarship.value.id,
+    return await axios.post(be_url + `/services/${service.value}/requirement/delete`, {
+        rowId: dataServices.value.id,
         arrId
     }).then(({ data }) => {
         // set the response msg
@@ -101,7 +104,7 @@ async function handleDeleteRequirement(arrId) {
             resMsg.value = null;
         }, 3000);
 
-        dataScholarship.value = data.scholarship[0];
+        dataServices.value = data.services[0];
 
         /* 
         * this code is to solve of the requirements lists
@@ -111,7 +114,7 @@ async function handleDeleteRequirement(arrId) {
         */
         requirements.value = [];
         setTimeout(() => {
-            requirements.value = JSON.parse(dataScholarship.value.service_requirements);
+            requirements.value = JSON.parse(dataServices.value.service_requirements);
         }, 1);
         return data;
     }).catch(err => {
@@ -121,13 +124,14 @@ async function handleDeleteRequirement(arrId) {
         setTimeout(() => {
             resMsg.value = null;
         }, 3000);
+        return;
     });
 }
 
 // function to add new requirement
 async function handleCreateRequirement(newRequirement, newWhereToGo) {
-    return await axios.post(be_url + "/scholarship/requirement/add", {
-        rowId: dataScholarship.value.id,
+    return await axios.post(be_url + `/services/${service.value}/requirement/add`, {
+        rowId: dataServices.value.id,
         newRequirement,
         newWhereToGo
     }).then(({ data }) => {
@@ -138,7 +142,7 @@ async function handleCreateRequirement(newRequirement, newWhereToGo) {
             resMsg.value = null;
         }, 3000);
 
-        dataScholarship.value = data.scholarship[0];
+        dataServices.value = data.services[0];
 
         /* 
         * this code is to solve of the requirements lists
@@ -148,7 +152,7 @@ async function handleCreateRequirement(newRequirement, newWhereToGo) {
         */
         requirements.value = [];
         setTimeout(() => {
-            requirements.value = JSON.parse(dataScholarship.value.service_requirements);
+            requirements.value = JSON.parse(dataServices.value.service_requirements);
         }, 1);
         return data;
     }).catch(err => {
@@ -158,81 +162,129 @@ async function handleCreateRequirement(newRequirement, newWhereToGo) {
         setTimeout(() => {
             resMsg.value = null;
         }, 3000);
+        return;
     });
 }
 
 // function to update the process
 async function handleUpdateProcess(value, arrId, key) {
-    return await axios.post(be_url + "/scholarship/process/edit", {
-        rowId: dataScholarship.value.id,
+    return await axios.post(be_url + "/services/process/edit", {
+        rowId: dataServices.value.id,
         arrId,
         newValue: value,
         key
-    })
-        .then(({ data }) => {
-            // set the response msg
-            resMsg.value = data.res;
-            // hide the notification message in 3s
-            setTimeout(() => {
-                resMsg.value = null;
-            }, 3000);
-            return data;
-        })
-        .catch(err => console.log(err));
+    }).then(({ data }) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        return data;
+    }).catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        return;
+    });
 }
 
 // function to delete a process
 async function handleDeleteProcess(arrId) {
-    return await axios.post(be_url + "/scholarship/process/delete", {
-        rowId: dataScholarship.value.id,
+    return await axios.post(be_url + `/services/${service.value}/process/delete`, {
+        rowId: dataServices.value.id,
         arrId
-    })
-        .then(({ data }) => {
-            // set the response msg
-            resMsg.value = data.res;
-            // hide the notification message in 3s
-            setTimeout(() => {
-                resMsg.value = null;
-            }, 3000);
+    }).then(({ data }) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
 
-            dataScholarship.value = data.scholarship[0];
+        dataServices.value = data.services[0];
 
-            // get all the services processes by looping through the data.scholarship
-            processes.value = JSON.parse(data.scholarship[0].service_process);
-            return data;
-        })
-        .catch(err => {
-            // set the response msg
-            resMsg.value = err.response.data.res;
-            // hide the notification message in 3s
-            setTimeout(() => {
-                resMsg.value = null;
-            }, 3000);
-        });
+        // get all the services processes by looping through the data.services
+        processes.value = JSON.parse(data.services[0].service_process);
+        return data;
+    }).catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        return;
+    });
 }
 
 // function to add new requirement
 async function handleCreateProcess(formData) {
-    return await axios.post(be_url + "/scholarship/process/add", {
-        rowId: dataScholarship.value.id,
+    return await axios.post(be_url + `/services/${service.value}/process/add`, {
+        rowId: dataServices.value.id,
         client_steps: formData.client_steps,
         agent_steps: formData.agent_steps,
         fees: formData.fees,
         process_time: formData.process_time,
         person_responsible: formData.person_responsible,
-    })
-        .then(({ data }) => {
-            // set the response msg
-            resMsg.value = data.res;
-            // hide the notification message in 3s
-            setTimeout(() => {
-                resMsg.value = null;
-            }, 3000);
-            dataScholarship.value = data.scholarship[0];
+    }).then(({ data }) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        dataServices.value = data.services[0];
 
-            // get all the services processes by looping through the data.scholarship
-            processes.value = JSON.parse(data.scholarship[0].service_process);
-            return data;
+        // get all the services processes by looping through the data.services
+        processes.value = JSON.parse(data.services[0].service_process);
+        return data;
+    }).catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        return;
+    });
+}
+
+// string to capitalize the first letter of the word
+function toCapitalize(str) {
+    // split the string by "space"
+    const arrStr = str.split(" ");
+
+    // loop through the string
+    str = arrStr.map((s) => {
+        return s[0].toUpperCase() + s.slice(1);
+    });
+
+    return str.join(",").replace(",", " ");
+}
+
+// get data from the server
+const service = ref("");
+const headTitle = ref("");
+onMounted(() => {
+    service.value = routes.path.split("/")[3];
+    // make the headTitle capitalize
+    headTitle.value = toCapitalize(service.value.replaceAll("-", " "));
+
+    axios
+        .get(be_url + "/services/" + service.value)
+        .then(({ data }) => {
+            // storing the whole data
+            dataServices.value = data.services[0];
+
+            // get all the services processes by looping through the data.services
+            processes.value = JSON.parse(data.services[0].service_process);
+
+            // get all the lists of requirements by looping through the data.services
+            requirements.value = JSON.parse(data.services[0].service_requirements);
         })
         .catch(err => {
             // set the response msg
@@ -242,22 +294,37 @@ async function handleCreateProcess(formData) {
                 resMsg.value = null;
             }, 3000);
         });
-}
+});
 
-// get data from the server
-onMounted(() => {
-    axios.get(be_url + "/scholarship")
+watch(routes, () => {
+    service.value = routes.path.split("/")[3];
+    // make the headTitle capitalize
+    headTitle.value = toCapitalize(service.value.replaceAll("-", " "));
+
+    axios
+        .get(be_url + "/services/" + service.value)
         .then(({ data }) => {
             // storing the whole data
-            dataScholarship.value = data.scholarship[0];
+            dataServices.value = data.services[0];
 
-            // get all the services processes by looping through the data.scholarship
-            processes.value = JSON.parse(data.scholarship[0].service_process);
+            console.log("here");
+            // get all the services processes by looping through the data.services
+            processes.value = [];
+            requirements.value = [];
+            setTimeout(() => {
+                processes.value = JSON.parse(data.services[0].service_process);
+                requirements.value = JSON.parse(data.services[0].service_requirements);
+            }, 1);
 
-            // get all the lists of requirements by looping through the data.scholarship
-            requirements.value = JSON.parse(data.scholarship[0].service_requirements);
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
 });
 
 </script>

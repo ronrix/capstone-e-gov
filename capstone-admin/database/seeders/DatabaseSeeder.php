@@ -427,7 +427,7 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Service::factory()->create([
             "service_department" => "office of the mayor",
             "intended_for" => json_encode(["certificate of no pending case", "permit to carry firearms"]),
-            "service_type" => "mayor's clearance",
+            "service_type" => "mayor clearance",
             "service_requirements" => json_encode([
                 "filled-out reuqest form or request letter" => "office of the mayor",
                 "certicate of no marriage (CENOMAR)" => "PSA",

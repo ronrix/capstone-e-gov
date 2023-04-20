@@ -90,13 +90,12 @@ function onDelete() {
 }
 
 const agencySteps = ref(data.agency_steps);
-console.log(data);
 const fees = ref(data.fees);
 const clientSteps = ref(data.client_steps);
 const processTime = ref(data.process_time);
 const personResponsible = ref(data.person_responsible);
 const { handleUpdateProcess, handleDeleteProcess, idx, data } = defineProps({
-    data: Array,
+    data: Object,
     handleUpdateProcess: Function,
     idx: Number,
     handleDeleteProcess: Function
