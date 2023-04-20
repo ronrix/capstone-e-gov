@@ -57,7 +57,7 @@ import Rows from './Services Components/Rows.vue';
 import Table from './Services Components/Table.vue';
 import RequirementsModal from './Services Components/RequirementsModal.vue';
 
-import { ref, onMounted, onUpdated } from "vue";
+import { ref, onMounted, watch } from "vue";
 import axios from 'axios';
 import { be_url } from '../../config/config';
 import Notifcation from '../../Components/Notifcation.vue';
@@ -348,33 +348,37 @@ onMounted(() => {
         });
 });
 
-onUpdated(() => {
-    service.value = routes.path.split("/")[3];
-    // make the headTitle capitalize
-    headTitle.value = toCapitalize(service.value.replace(/-/g, " "));
+watch(() => {
+    if (routes.path.split("/")[1] === 'services') {
+        service.value = routes.path.split("/")[3];
+        // make the headTitle capitalize
+        headTitle.value = toCapitalize(service.value.replace(/-/g, " "));
 
-    axios
-        .get(be_url + "/services/" + service.value)
-        .then(({ data }) => {
-            // storing the whole data
-            dataServices.value = data.services[0];
-            // get all the services processes by looping through the data.services
-            processes.value = [];
-            requirements.value = [];
-            setTimeout(() => {
-                processes.value = JSON.parse(data.services[0].service_process);
-                requirements.value = JSON.parse(data.services[0].service_requirements);
-            }, 1);
+        axios
+            .get(be_url + "/services/" + service.value)
+            .then(({ data }) => {
+                // storing the whole data
+                dataServices.value = data.services[0];
+                intendedFor.value = JSON.parse(dataServices.value.intended_for).join(", ");
+                // get all the services processes by looping through the data.services
+                processes.value = [];
+                requirements.value = [];
+                setTimeout(() => {
+                    processes.value = JSON.parse(data.services[0].service_process);
+                    requirements.value = JSON.parse(data.services[0].service_requirements);
+                }, 1);
 
-        })
-        .catch(err => {
-            // set the response msg
-            resMsg.value = err.response.data.res;
-            // hide the notification message in 3s
-            setTimeout(() => {
-                resMsg.value = null;
-            }, 3000);
-        });
+            })
+            .catch(err => {
+                // set the response msg
+                resMsg.value = err.response.data.res;
+                // hide the notification message in 3s
+                setTimeout(() => {
+                    resMsg.value = null;
+                }, 3000);
+            });
+
+    }
 });
 
 </script>
