@@ -20,7 +20,7 @@
 
         <!-- navigations -->
         <Navs :showChildSubNavs="showChildSubNavs" :showSubNavs="showSubNavs" :isWholeSidebar="isWholeSidebar"
-          :page="page" />
+          :page="page" :show-create-service="showCreateService" :service-types="serviceTypes" />
       </div>
     </div>
     <div class="flex-1 h-full relative">
@@ -98,6 +98,11 @@ function hideElements(e) {
     el.classList.add("hidden");
   });
 }
+
+defineProps({
+  showCreateService: Function,
+  serviceTypes: Object,
+});
 </script>
 
 <style scoped>

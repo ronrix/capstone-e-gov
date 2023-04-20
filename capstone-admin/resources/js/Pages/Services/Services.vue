@@ -46,7 +46,7 @@ import Rows from './Services Components/Rows.vue';
 import Table from './Services Components/Table.vue';
 import RequirementsModal from './Services Components/RequirementsModal.vue';
 
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, onUpdated } from "vue";
 import axios from 'axios';
 import { be_url } from '../../config/config';
 import Notifcation from '../../Components/Notifcation.vue';
@@ -272,7 +272,7 @@ const headTitle = ref("");
 onMounted(() => {
     service.value = routes.path.split("/")[3];
     // make the headTitle capitalize
-    headTitle.value = toCapitalize(service.value.replaceAll("-", " "));
+    headTitle.value = toCapitalize(service.value.replace("-", " "));
 
     axios
         .get(be_url + "/services/" + service.value)
@@ -296,10 +296,10 @@ onMounted(() => {
         });
 });
 
-watch(routes, () => {
+onUpdated(() => {
     service.value = routes.path.split("/")[3];
     // make the headTitle capitalize
-    headTitle.value = toCapitalize(service.value.replaceAll("-", " "));
+    headTitle.value = toCapitalize(service.value.replace(/-/g, " "));
 
     axios
         .get(be_url + "/services/" + service.value)

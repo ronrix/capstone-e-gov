@@ -70,12 +70,16 @@
     </SubNavs>
 
     <!-- services -->
-    <SideNav @click="showSubNavs" class="flex" :class="{ 'bg-blue-600 text-white': page === 'services' }">
+    <SideNav @click="showSubNavs" class="flex relative" :class="{ 'bg-blue-600 text-white': page === 'services' }">
       <i class="uil uil-heartbeat mr-3 text-2xl pointer-events-none"></i>
       <div class="flex items-center justify-between w-full pointer-events-none">
         <SideNavName name="Services" :isWholeSidebar="isWholeSidebar" />
         <i class="uil uil-angle-down pointer-events-none"></i>
       </div>
+
+      <!-- button to show a modal to create new service -->
+      <button type="button" @click="showCreateService" :class="{ 'hidden': !isWholeSidebar }"
+        class="absolute top-1/2 -translate-y-1/2 right-10 border hover:bg-white hover:!text-black border-green-300 text-green-300 rounded-md px-2 mr-2 text-xs create-service-btn">create</button>
     </SideNav>
     <SubNavs v-show="isWholeSidebar">
       <div v-for="services, key, idx in serviceTypes" :key="idx" class="w-full">
@@ -88,7 +92,7 @@
           <div
             class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
             <NavLink v-for="service, id in services" :key="id" :name="service"
-              :to="`/services/${key.toLowerCase().replaceAll(' ', '-')}/${service.toLowerCase().replaceAll(' ', '-')}`" />
+              :to="`/services/${key.toLowerCase().replace(/ /g, '-')}/${service.toLowerCase().replace(/ /g, '-')}`" />
           </div>
         </div>
       </div>
@@ -116,23 +120,12 @@ import SideNav from './SideNav.vue';
 import SideNavName from './SideNavName.vue';
 import SubNavs from './SubNavs.vue';
 
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { be_url } from '../../config/config';
-
-const serviceTypes = ref([]);
-onMounted(() => {
-  axios.get(be_url + "/service-types")
-    .then(({ data }) => {
-      serviceTypes.value = data.service_types;
-      console.log(serviceTypes.value);
-    });
-});
-
 defineProps({
   showSubNavs: Function,
   isWholeSidebar: Boolean,
   page: String,
   showChildSubNavs: Function,
+  showCreateService: Function,
+  serviceTypes: Object,
 })
 </script>

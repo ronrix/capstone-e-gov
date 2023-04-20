@@ -11,6 +11,62 @@ class ServicesController extends Controller
 {
     /*
     * office of the mayor
+    * create new service
+    */
+    public function createNewService(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "department" => "required",
+            "intendedFor" => "required",
+            "serviceType" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        try {
+
+            $service = new Service;
+            $service->service_department = $request->input("department");
+            $service->intended_for = json_encode(explode(", ", $request->input("intendedFor")));
+            $service->service_type = $request->input("serviceType");
+            $service->save(); #save the new service
+
+            # get the updated services
+            $data = Service::select("service_department", "service_type")->get();
+            $json_data = json_decode($data, true);
+
+            $grouped_data = [];
+
+            foreach ($json_data as $service_type) {
+                $department = $service_type['service_department'];
+                $type = $service_type['service_type'];
+
+                if (!isset($grouped_data[$department])) {
+                    $grouped_data[$department] = [];
+                }
+
+                array_push($grouped_data[$department], $type);
+            }
+            return response()->json(["service_types" => $grouped_data, "res" => ["msg" => "successfully created new service", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
+    * office of the mayor
     * get all the service types
     */
     public function getAllServiceTypes()

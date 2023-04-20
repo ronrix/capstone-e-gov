@@ -168,6 +168,7 @@ Route::middleware(["auth"])->group(function () {
     // services
     /* services - get the service type for navs*/
     Route::get("/service-types", [ServicesController::class, "getAllServiceTypes"]);
+    Route::post("/service/create", [ServicesController::class, "createNewService"]);
     Route::get("/services/{any}", function () {
         return inertia("Main");
     })->where("any", ".*");
