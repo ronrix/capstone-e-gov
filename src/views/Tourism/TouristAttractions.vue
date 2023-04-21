@@ -42,7 +42,7 @@ const sample_card = [{
       </div>
       <div class="flex">
         <div
-          class="topimage1 drop-shadow-lg h-[300px] sm:h-[400px] w-[200px] sm:w-[300px] bg-slate-300 bg-auto bg-no-repeat bg-center z-10 translate-y-36 sm:translate-y-32"
+          class="topimage drop-shadow-lg h-[300px] sm:h-[400px] w-[200px] sm:w-[300px] bg-slate-300 bg-auto bg-no-repeat bg-center z-10 translate-y-36 sm:translate-y-32"
           style="background-image: url()"
         >
           <img
@@ -64,17 +64,18 @@ const sample_card = [{
     </div>
   </WrapperContainer>
   <div
-    class="h-[400px] bg-dark w-full bg-auto bg-no-repeat bg-center flex flex-1 items-center mb-20"
+    class="h-[400px] bg-dark w-full bg-auto bg-no-repeat bg-center flex flex-1 items-center mb-5 sm:mb-20"
   >
+ 
     <img
       class="w-1/2 translate-y-44 sm:translate-y-28 translate-x-24 sm:translate-x-0"
       src="https://i.postimg.cc/nrGCXPV1/windmillnobg-VECTOR.png"
       alt=""
     />
-    <div class="text-white absolute right-2 z-20">
+    <div class="bg-text text-white absolute right-2 z-20">
       <p class="font-semibold pt-5 text-4xl">
         Lorem ipsum
-        <span class="w-[400px] text-sm pt-4 block font-normal">
+        <span class="bg-description w-[400px] text-sm pt-4 block font-normal">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
           ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -88,7 +89,10 @@ const sample_card = [{
       <div
         v-for="(data, idx) in sample_card"
         :key="idx" 
-        class="cards flex flex-col dark:bg-dark border-2"
+        class="cards flex flex-col dark:bg-dark rounded-lg"
+        style="
+        border: 1px solid #d8d8d8;
+        "
       >
         <img class="object-cover h-[250px] w-full" :src="data.imgSrc" alt="" />
         <div class="py-5 px-3">
@@ -108,16 +112,30 @@ const sample_card = [{
 
 <style scoped>
  .cards:hover {
-  transform: translateY(-6px);
+    transform: translateY(-6px);
+    border: none;
 		z-index:2;
-		box-shadow: 2px 3px 10px #707070;
-		transition: 0.2s;
-    
+    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
+		-webkit-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+
  }
  @media (max-width: 375px){
     .topimage{
-      width: 180px;
-      height:300px;
+      transform: translateX(  40px);
+      transform: translateY(144px);
+      z-index: 10;
+      display: none;
+    }
+    .bg-text{
+      position: absolute;
+      left: 5px;
+    }
+    .bg-description{
+      width: 350px;
+      margin-right: 0px;
+      
     }
  }
 

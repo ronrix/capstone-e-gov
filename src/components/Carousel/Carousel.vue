@@ -39,25 +39,22 @@ export default defineComponent({
    <Carousel  v-bind="settings"  :breakpoints="breakpoints" >
     <Slide v-for="(card, index) in contentCard" :key="index " >
       <div class=" sm:flex sm:justify-evenly md:flex drop-shadow-md rounded-md bg-white h-auto cursor-grab">
-        <img :src="card.imgSrc" alt="" class="w-full sm:w-1/2 h-[400px] object-cover">
+        <img :src="card.imgSrc" alt="" class="w-full sm:w-1/2 h-[400px] object-cover rounded-l-lg">
         <div class="flex flex-col gap-4 text-left self-start pt-10 pl-6 pr-6  text-dark">
-            <h1 class="!text-4xl !font-semibold">{{ card.title }}</h1>
-            <p class="! !font-thin">{{ card.content }}</p>
-            <div class="group flex">
-              <a class="cursor-pointer group-hover:underline mb-8 text-primary pr-2">Read more</a>
-             <div class="group-hover:-translate-x-1 transition duration-200 bg-primary h-[20px] w-[20px] rounded-full ">
-              <i class="fa-solid fa-arrow-right text-white pl-[2px]"></i>
+            <h1 class="!text-4xl !font-semibold !drop-shadow-none ">{{ card.title }}</h1>
+            <p class="">{{ card.content }}</p>
+            <div class="group flex w-fit ">
+              <a class=" cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primary pr-2">Read more</a>
+              <i class=" group-hover:-translate-x-1 duration-75 uil uil-arrow-right text-primary "></i>
              </div>
             </div>
          
         </div>
-      
-      </div>
     </Slide>
 
     <template #addons>
       <Navigation class=""></Navigation>
-      <Pagination class="-translate-y-2"/>
+      <Pagination class="-translate-y-2 visible sm:invisible"/>
     </template>
   </Carousel>
   </b-carousel>
@@ -65,6 +62,18 @@ export default defineComponent({
 
 
 <style>
+* {
+  text-shadow: none;
+  transition-timing-function:ease-in-out !important;
+  transition-duration:.5s !important;
+}
+.carousel__next--disabled, 
+.carousel__prev--disabled {
+    cursor: grab;
+    opacity: 0;
+
+}
+
 .carousel__pagination-button::after {
     display: block;
     content: '';
@@ -92,9 +101,12 @@ export default defineComponent({
 .carousel__prev,
 .carousel__next {
   color: white;
+  transform: translateY(-30px);
+  
 }
 @media (max-width: 467px),
-       (max-width: 620px) {
+       (max-width: 620px),
+       (max-width: 637px) {
         .carousel__prev,
         .carousel__next {
           display: none;
