@@ -33,7 +33,7 @@
         <!--For Permit-->
         <!-- to get "title" and "requirements", you have to use defineProps inside the component file BPermit -->
         <BPermit v-for="permit in dataRequirements" :key="permit.id" :tableId="permit.id" :title="permit.title"
-            :requirements="permit.requirements" class="mb-3" :handleUpdatePermit="handleUpdatePermit"
+            :requirements="JSON.parse(permit.requirements)" class="mb-3" :handleUpdatePermit="handleUpdatePermit"
             :handleUpdatePermitTitle="handleUpdatePermitTitle" :saveNewRequirement="saveNewRequirement"
             :handleDeleteWholePermit="handleDeleteWholePermit" :handleDeleteRequirement="handleDeleteRequirement"
             :handleDeleteSectionPermit="handleDeleteSectionPermit"
@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import AddPDF from './BPLOFormComponents/AddPDF.vue';
+import AddPDF from '../../../Components/AddPDF.vue';
 import AddPermit from './BPLOFormComponents/AddPermit.vue';
 import BPermit from './BPLOFormComponents/BPermit.vue';
 import { ref, onMounted } from 'vue';

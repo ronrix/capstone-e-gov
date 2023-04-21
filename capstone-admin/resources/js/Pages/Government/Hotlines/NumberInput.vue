@@ -13,6 +13,6 @@ defineProps({
     id: Number,
     showEditVerification: Function,
     type: String,
-    number: Number
+    number: String
 });
 </script>

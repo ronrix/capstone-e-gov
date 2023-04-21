@@ -139,12 +139,7 @@ const filterValue = ref("All");
 const resMsg = ref();
 
 // get all the categories
-const filterTourism = computed(() => {
-  const categories = originalDataTourism.value.map(og => og.category);
-  categories.unshift("All");
-  return new Set(categories);
-});
-
+const filterTourism = ref([]);
 const groupedItems = computed(() => {
   const groups = {};
   for (const item of dataTourism.value) {
@@ -351,6 +346,9 @@ onMounted(() => {
       isLoading.value = false;
       dataTourism.value = data.tourism;
       originalDataTourism.value = data.tourism;
+      const categories = originalDataTourism.value.map(og => og.category);
+      categories.unshift("All");
+      filterTourism.value = [...new Set(categories)];
     })
     .catch(err => console.log(err));
 

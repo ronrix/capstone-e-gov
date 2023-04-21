@@ -8,7 +8,7 @@
         <AddSectionModal v-if="isAddNewSection" :close-modal="showAddNewSection"
             :handle-add-new-section-permit="handleAddNewSectionPermit" :id="tableId" />
 
-        <WrapperReq>
+        <div>
             <div class="flex items-center">
                 <input type="text" @change.capture="(e) => handleUpdatePermitTitle(e, tableId)" :value="title"
                     class="font-bold text-base sm:text-xl text-gray-500 mr-5 uppercase outline-blue-600 flex-1 bg-transparent" />
@@ -21,7 +21,7 @@
                 </button>
             </div>
             <!-- requirements -->
-            <div v-for="lists, key, id  in JSON.parse(requirements)" :key="id" :id="key" class="mt-5">
+            <div v-for="lists, key, id  in requirements" :key="id" :id="key" class="mt-5">
                 <div class="flex items-center">
                     <input type="text" @change.capture="(e) => handleUpdatePermit(e, tableId, id, null, false)" :value="key"
                         class="text-sm sm:text-base flex-1 outline-blue-600 capitalize font-[500] w-full bg-transparent">
@@ -50,7 +50,7 @@
                 <i class="uil uil-plus pointer-events-none"></i>
                 Add new section
             </button>
-        </WrapperReq>
+        </div>
     </div>
 </template>
 
@@ -153,7 +153,7 @@ function showDeleteVerificiationModal(type, perId, reqId) {
 const { saveNewRequirement, tableId, handleDeleteRequirement, handleDeleteSectionPermit, handleDeleteWholePermit } = defineProps({
     title: String,
     tableId: Number,
-    requirements: Array,
+    requirements: Object,
     handleUpdatePermit: Function,
     handleAddNewSectionPermit: Function,
     handleUpdatePermitTitle: Function,

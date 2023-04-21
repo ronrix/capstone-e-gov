@@ -10,7 +10,7 @@
 
         <div class="w-full flex flex-col md:flex-row md:self-center items-center">
             <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
-            <SelectTag type="category" value="All" :filterFn="filterBy" :filterArray="filterBusiness"
+            <SelectTag type="category" :value="filterValue" :filterFn="filterBy" :filterArray="filterBusiness"
                 addedClass="max-h-[300px] !w-[300px] overflow-y-scroll scrollbar" />
 
             <!-- filter the deleted data -->
@@ -135,11 +135,7 @@ const filterValue = ref("All");
 const resMsg = ref();
 
 // get all the categories
-const filterBusiness = computed(() => {
-    const categories = originalDataBusiness.value.map(og => og.category);
-    categories.unshift("All");
-    return new Set(categories);
-});
+const filterBusiness = ref([]);
 
 const groupedItems = computed(() => {
     const groups = {};
@@ -236,6 +232,9 @@ async function handleUpdateEstablishment(id, formData) {
 
             dataBusiness.value = data.businesses;
             originalDataBusiness.value = data.businesses;
+            const categories = originalDataBusiness.value.map(og => og.category);
+            categories.unshift("All");
+            filterBusiness.value = [...new Set(categories)];
             return data;
         })
         .catch(err => {
@@ -262,6 +261,9 @@ async function handleDeleteEstablishment(id) {
 
             dataBusiness.value = data.businesses;
             originalDataBusiness.value = data.businesses;
+            const categories = originalDataBusiness.value.map(og => og.category);
+            categories.unshift("All");
+            filterBusiness.value = [...new Set(categories)];
             return data;
         })
         .catch(err => {
@@ -281,6 +283,9 @@ async function handleRestore(id) {
         if (data.businesses) {
             dataBusiness.value = data.businesses;
             originalDataBusiness.value = data.businesses;
+            const categories = originalDataBusiness.value.map(og => og.category);
+            categories.unshift("All");
+            filterBusiness.value = [...new Set(categories)];
         }
 
         // set the response msg
@@ -325,6 +330,9 @@ async function handleCreateEstablishment(formData) {
 
             originalDataBusiness.value = data.businesses;
             dataBusiness.value = data.businesses;
+            const categories = originalDataBusiness.value.map(og => og.category);
+            categories.unshift("All");
+            filterBusiness.value = [...new Set(categories)];
             return data;
         })
         .catch(err => {
@@ -345,6 +353,9 @@ onMounted(() => {
             isLoading.value = false;
             dataBusiness.value = data.businesses;
             originalDataBusiness.value = data.businesses;
+            const categories = originalDataBusiness.value.map(og => og.category);
+            categories.unshift("All");
+            filterBusiness.value = [...new Set(categories)];
         })
         .catch(err => console.log(err));
 
