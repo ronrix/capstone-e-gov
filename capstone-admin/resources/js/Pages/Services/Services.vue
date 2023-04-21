@@ -57,7 +57,7 @@ import Rows from './Services Components/Rows.vue';
 import Table from './Services Components/Table.vue';
 import RequirementsModal from './Services Components/RequirementsModal.vue';
 
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, watchEffect } from "vue";
 import axios from 'axios';
 import { be_url } from '../../config/config';
 import Notifcation from '../../Components/Notifcation.vue';
@@ -348,7 +348,7 @@ onMounted(() => {
         });
 });
 
-watch(() => {
+watchEffect([routes], () => {
     if (routes.path.split("/")[1] === 'services') {
         service.value = routes.path.split("/")[3];
         // make the headTitle capitalize
