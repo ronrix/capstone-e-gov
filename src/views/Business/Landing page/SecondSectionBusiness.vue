@@ -12,7 +12,7 @@ const apartments = [{
 </script>
 
 <template>
-  <div class="flex items-center gap-5 mt-24 mb-5">
+  <div class="flex items-center gap-5 mx-10 mt-24 mb-5">
     <div class="flex-1 border border-gray-600 dark:border-white"></div>
     <h1 class="text-3xl text-dark dark:text-white font-bold">Looking for apartment?</h1>
   </div>
