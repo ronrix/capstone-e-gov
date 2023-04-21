@@ -11,6 +11,7 @@ use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\Business\PermitController;
+use App\Http\Controllers\FilesController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
@@ -51,6 +52,10 @@ Route::get("/permits", [PermitController::class, "index"]);
 Route::get("/services/{service}", [ServicesController::class, "get"]);
 Route::get("/official-seal", [AboutController::class, "getOfficialSeal"]);
 Route::get("/contacts", [AboutController::class, "getContacts"]);
+// GET Files
+Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"]);
+Route::get("/application-forms", [FilesController::class, "getApplicationForms"]);
+Route::get("/file/download/{file}", [FilesController::class, "download"]);
 
 // government
 Route::middleware(["auth"])->group(function () {
@@ -153,6 +158,9 @@ Route::middleware(["auth"])->group(function () {
     /* contacts */
     Route::post("/contact/delete", [AboutController::class, "deleteContact"]);
 
+    //  upload a file
+    Route::post("/upload-file", [FilesController::class, "saveFile"]);
+    Route::post("/file/delete", [FilesController::class, "delete"]);
 
     // government
     Route::get("/government/{any}", function () {
