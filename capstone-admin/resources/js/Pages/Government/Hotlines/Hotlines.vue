@@ -5,9 +5,9 @@
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
     <!-- delete modal -->
-    <DeleteVerificationModal :closeModal="showDelete" v-if="isShowDelete" :id="deleteId" />
+    <DeleteVerificationModal :closeModal="showDelete" v-if="isShowDelete" :id="deleteId" :handle-delete="handleDelete" />
     <!-- edit verification modal -->
-    <EditVerification :close-modal="showEditVerification" v-if="isEditVerification" :data="editedInput"
+    <EditVerification :close-modal="closeEditVerification" v-if="isEditVerification" :data="editedInput"
       :handle-edit="handleEdit" />
 
     <h3 class="font-bold text-xl mb-3 text-gray-800 here" ref="h1">Municipal Hotlines</h3>
@@ -79,9 +79,43 @@ function showEditVerification(inputValue, id, type) {
   editedInput.value.value = inputValue;
   editedInput.value.id = id;
   editedInput.value.type = type;
-  console.log(editedInput.value);
 
   isEditVerification.value = !isEditVerification.value;
+}
+function closeEditVerification() {
+  isEditVerification.value = false;
+
+  // pinagbabawal na teknik
+  // set the hotines to empty array but store the value first to a variable
+  const tempHotlines = [...hotlines.value];
+  hotlines.value = [];
+  setTimeout(() => {
+    hotlines.value = tempHotlines;
+  }, 1);
+}
+
+// delete request to delete the hotline number
+function handleDelete() {
+  axios.post(be_url + "/hotlines/delete", { id: deleteId.value })
+    .then(({ data }) => {
+      hotlines.value = data.hotlines
+      isShowDelete.value = false;
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+    })
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // update the data when input change
@@ -99,7 +133,14 @@ function handleEdit(number, id, prov) {
       }, 3000);
 
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // handle add new hotline numbers
@@ -116,7 +157,14 @@ async function handleSubmit(formData) {
       hotlines.value = data.hotlines;
       return data;
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // get all hotlines from the server

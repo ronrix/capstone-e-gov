@@ -139,4 +139,54 @@ class HotlinesController extends Controller
             ]);
         }
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Hotlines  $hotlines
+     * @return \Illuminate\Http\Response
+     */
+    public function delete(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+        ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        $id = $request->input("id");
+
+        try {
+            //code...
+            Hotlines::findOrFail($id)->delete();
+            return response()->json([
+                "hotlines" => Hotlines::orderBy("id", "desc")->get(),
+                "res" => [
+                    "msg" => "Successfully delete hotline number",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json([
+                "res" => [
+                    "msg" => $err->getMessage(),
+                    "status" => 400
+                ]
+            ]);
+        }
+    }
 }
