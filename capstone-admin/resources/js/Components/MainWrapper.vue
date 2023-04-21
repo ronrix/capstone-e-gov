@@ -3,7 +3,7 @@
     <!-- sidebar -->
     <div class="sticky top-0 pt-5 h-screen hidden sm:block duration-100 bg-white whitespace-nowrap z-10"
       :class="isWholeSidebar ? 'w-[500px]' : 'w-[70px]'">
-      <div class="overflow-y-auto h-full">
+      <div class="overflow-y-auto overflow-x-hidden h-full">
         <div class="flex px-6 items-center">
           <img :src="$page.props.img_path" alt="this is the pililla government logo" class="w-[50px]" />
           <h4 class="font-bold text-2xl ml-2 whitespace-pre-wrap text-gray-800"
@@ -23,7 +23,7 @@
           :page="page" :show-create-service="showCreateService" :service-types="serviceTypes" />
       </div>
     </div>
-    <div class="flex-1 h-full relative">
+    <div class="flex-1 relative">
       <!-- header -->
       <Topbar :showChildSubNavs="showChildSubNavs" :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page"
         class="sticky top-0 p-5 z-20" />

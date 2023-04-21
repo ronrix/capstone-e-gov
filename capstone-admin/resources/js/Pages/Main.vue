@@ -3,7 +3,7 @@
   <CreateServiceModal v-if="isShowCreateServiceModal" :close-modal="showCreateServiceModal"
     :handle-create-service="handleCreateService" />
   <MainWrapper :show-create-service="showCreateServiceModal" :showAddModal="showAddModal" :service-types="serviceTypes"
-    class="h-auto min-h-full bg-slate-100">
+    class="h-full min-h-full bg-slate-100">
     <!-- show this modal when add new button was clicked -->
     <AddModal v-if="addModal" :showAddModal="showAddModal" />
 

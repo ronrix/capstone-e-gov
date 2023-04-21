@@ -69,8 +69,6 @@ const showSymbolImg = ref();
 function handleSelectFile(e) {
   showSymbolImg.value = URL.createObjectURL(e.target.files[0]);
   newSymbolImg.value = e.target.files[0];
-  console.log(newSymbolImg.value);
-  console.log(showSymbolImg.value);
 }
 
 // saving new symbol image
