@@ -115,6 +115,15 @@ export default createRouter({
       component: () => import("../views/Services/Public Employment Service Office/JobFair.vue")
     },
     // Services end
+
+    //business page starts
+    {
+      path: "/business",
+      name: "Business",
+      component: () => import("../views/Business/Landing page/Business.vue")
+    },
+
+    //business page starts
     {
       path: "/job-op",
       name: "Job Opportunities",
