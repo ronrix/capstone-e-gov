@@ -123,9 +123,11 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/official-seal/add", [AboutController::class, "createOfficialSeal"]);
     /* contacts */
     Route::post("/contacts/add", [AboutController::class, "createContact"]);
+    Route::post("/contacts/list/add", [AboutController::class, "addNewNumber"]);
     Route::post("/socmed/add", [AboutController::class, "createNewSocialLink"]);
 
     // delete requests
+    Route::post("/hotlines/delete", [HotlinesController::class, "delete"]);
     Route::post("/delete-news", [NewsController::class, "deleteOneNews"]);
     Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
     Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);

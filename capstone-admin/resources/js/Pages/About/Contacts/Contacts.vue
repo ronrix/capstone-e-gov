@@ -5,7 +5,11 @@
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
     <!-- delete verfication modal -->
-    <DeleteVerificationModal v-if="isVerificationModal" :closeModal="showDeleteVerificiationModal" :id="contactId" :handleDelete="handleDeleteContact" />
+    <DeleteVerificationModal v-if="isVerificationModal" :closeModal="showDeleteVerificiationModal" :id="contactId"
+      :handleDelete="handleDeleteContact" />
+    <!-- edit verification modal -->
+    <EditVerification :close-modal="closeEditVerification" v-if="isEditVerification" :data="editedInput"
+      :handle-edit="handleUpdateContactAndSocMed" />
 
     <!-- contacts -->
     <div class="flex justify-between mb-3">
@@ -18,7 +22,7 @@
     </div>
     <div class="w-full flex flex-col mb-10">
       <div class="relative bg-white p-6">
-        <div v-for="con in contacts" class="mt-5">
+        <div v-for="con in contacts" :key="con.id" class="mt-5">
           <div class="flex items-center">
             <h3 class="text-xs md:text-lg font-bold text-gray-700 mr-5 uppercase">{{ con.contact_type }}</h3>
             <div class="flex-1 border-2"></div>
@@ -29,11 +33,15 @@
               delete</button>
           </div>
 
-          <DepartmentContacts v-for="(numbers, keyName) in JSON.parse(con?.contact_details)" :keyName="keyName" :id="con.id"
-            :nums="numbers" :handleUpdateContactNumber="handleUpdateContactAndSocMed" />
+          <DepartmentContacts keyName="mobile number" :id="con.id" :nums="JSON.parse(con?.contact_details).mobile_number"
+            :show-edit-verification="showEditVerification" :handle-add-new-number="handleAddNewNumber" />
+          <DepartmentContacts keyName="telephone number" :id="con.id"
+            :nums="JSON.parse(con?.contact_details).telephone_number" :show-edit-verification="showEditVerification"
+            :handle-add-new-number="handleAddNewNumber" />
         </div>
       </div>
-      <ContacsModal v-if="isContactsModal" :showContactsModal="showContactsModal" :handleCreateNewContact="handleCreateNewContact" />
+      <ContacsModal v-if="isContactsModal" :showContactsModal="showContactsModal"
+        :handleCreateNewContact="handleCreateNewContact" />
     </div>
     <!-- contacts ends-->
 
@@ -54,11 +62,13 @@
           <div class="flex-1 border-2"></div>
         </div>
 
-        <div v-for="soc in socMedias">
-          <SocialMediaLinks v-for="(links, keyName) in JSON.parse(soc?.contact_details)" :links="links" :keyName="keyName" :id="soc.id" :handleUpdateSocMed="handleUpdateContactAndSocMed" />
+        <div v-for="soc in socMedias" :key="soc.id">
+          <SocialMediaLinks v-for="(links, keyName, id) in JSON.parse(soc?.contact_details)" :links="links"
+            :keyName="keyName" :key="id" :id="soc.id" :show-edit-verification="showEditVerification" />
         </div>
       </div>
-      <SocialMediaModal v-if="isSocialMediaModal" :showSocialMediaModal="showSocialMediaModal" :handleCreateNewSocialLinks="handleCreateNewSocialLinks" />
+      <SocialMediaModal v-if="isSocialMediaModal" :showSocialMediaModal="showSocialMediaModal"
+        :handleCreateNewSocialLinks="handleCreateNewSocialLinks" />
     </div>
     <!-- social media links ends-->
   </WrapperContent>
@@ -75,6 +85,7 @@ import axios from 'axios';
 import { be_url } from '../../../config/config';
 import Notifcation from '../../../Components/Notifcation.vue';
 import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
+import EditVerification from '../../../Components/EditVerification.vue';
 
 const isContactsModal = ref(false);
 function showContactsModal() {
@@ -85,9 +96,36 @@ const isVerificationModal = ref(false);
 const contactId = ref();
 // function to show the delete verfication modal
 function showDeleteVerificiationModal(id) {
-  isVerificationModal.value = !isVerificationModal.value; 
+  isVerificationModal.value = !isVerificationModal.value;
   contactId.value = id;
 }
+
+// save verification on edit
+const isEditVerification = ref(false);
+const editedInput = ref({ value: "", id: null, type: "", idx: null });
+function showEditVerification(inputValue, id, type, arrId) {
+  editedInput.value.value = inputValue;
+  editedInput.value.id = id;
+  editedInput.value.type = type.replace(" ", "_");
+  editedInput.value.idx = arrId;
+
+  isEditVerification.value = !isEditVerification.value;
+}
+function closeEditVerification() {
+  isEditVerification.value = false;
+
+  // pinagbabawal na teknik
+  // set the hotines to empty array but store the value first to a variable
+  const tempHotlines = [...contacts.value];
+  const tempSocMed = [...socMedias.value];
+  contacts.value = [];
+  socMedias.value = {};
+  setTimeout(() => {
+    contacts.value = tempHotlines;
+    socMedias.value = tempSocMed;
+  }, 1);
+}
+
 
 const isSocialMediaModal = ref(false);
 function showSocialMediaModal() {
@@ -99,20 +137,34 @@ const socMedias = ref([]);
 const resMsg = ref();
 
 // function to update the contact number
-function handleUpdateContactAndSocMed(e, id, keyName, arrId) {
+function handleUpdateContactAndSocMed(value, id, keyName, arrId) {
   axios.post(be_url + "/contacts/edit", {
-    id, 
+    id,
     keyName,
     arrId,
-    newValue: e.target.value 
+    newValue: value
   })
-  .then(({data}) => {
-    // get the contacts
-    contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
-    // get the soc media
-    socMedias.value = JSON.parse(data.contacts.filter(el => el.contact_type === "social media links")[0].contact_details);
-  })
-  .catch(err => console.log(err));
+    .then(({ data }) => {
+      isEditVerification.value = false;
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+
+      // get the contacts
+      contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
+      // get the soc media
+      socMedias.value = data.contacts.filter(el => el.contact_type === "social media links");
+    }).catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // function to create new contact info
@@ -122,19 +174,26 @@ async function handleCreateNewContact(formData) {
     mobile_nums: formData.mobile_nums,
     telephone_nums: formData.telephone_nums,
   })
-  .then(({data}) => {
+    .then(({ data }) => {
 
-     // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
-    return data;
-  })
-  .catch(err => console.log(err));
+      contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
+      return data;
+    }).catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+      return;
+    });
 }
 
 // function to create new contact info
@@ -144,37 +203,80 @@ async function handleCreateNewSocialLinks(formData) {
     platform: formData.platform,
     links: formData.links,
   })
-  .then(({data}) => {
+    .then(({ data }) => {
 
-     // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    socMedias.value = data.contacts.filter(el => el.contact_type === "social media links");
-    return data;
-  })
-  .catch(err => console.log(err));
+      socMedias.value = data.contacts.filter(el => el.contact_type === "social media links");
+      return data;
+    }).catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+      return;
+    });
 }
 
 // function to delete department contact
 async function handleDeleteContact(id, deleteRef) {
   return await axios.post(be_url + "/contact/delete", { id })
-  .then(({data}) => {
-     // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+    .then(({ data }) => {
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
-    isVerificationModal.value = false;
-    return data;
+      contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
+      isVerificationModal.value = false;
+      return data;
+    }).catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+      return;
+    });
+}
+
+// function to add new number in an existing contact lists
+async function handleAddNewNumber(number, id, key) {
+  return await axios.post(be_url + "/contacts/list/add", {
+    id,
+    key,
+    number
   })
-  .catch(err => console.log(err));
+    .then(({ data }) => {
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+      // get the contacts
+      contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
+
+      return data;
+    }).catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+      return;
+    });
 }
 
 // get all the data from the server
@@ -185,8 +287,14 @@ onMounted(() => {
       contacts.value = data.contacts.filter(el => el.contact_type !== "social media links");
       // get the soc media
       socMedias.value = data.contacts.filter(el => el.contact_type === "social media links");
-    })
-    .catch(err => console.log(err));
+    }).catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 });
 
 </script>

@@ -7,7 +7,9 @@
         <i v-if="keyName === 'gmail'" class="uil uil-envelope text-3xl text-red-400"></i>
         <i v-if="keyName === 'youtube'" class="uil uil-youtube text-3xl text-red-600"></i>
 
-        <input v-for="(link, arrId) in links" :value="link" @change.capture="(e) => handleUpdateSocMed(e, id, keyName, arrId)"  type="text" class="focus:outline-blue-500 border p-2 overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] flex-1">
+        <input v-for="(link, arrId) in links" :key="link" :value="link"
+            @change.capture="(e) => showEditVerification(e.target.value, id, keyName, arrId)" type="text"
+            class="focus:outline-blue-500 border p-2 overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] flex-1">
     </div>
 </template>
 
@@ -15,7 +17,7 @@
 defineProps({
     links: Array,
     keyName: String,
-    handleUpdateSocMed: Function,
+    showEditVerification: Function,
     id: Number
 })
 </script>

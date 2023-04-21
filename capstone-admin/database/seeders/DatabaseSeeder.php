@@ -31,21 +31,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $service_process = [
-            [
-                "client_steps" => "Accomplish",
-                "agency_steps" => "office of the mayor",
-                "fees" => "1000",
-                "process_time" => "1min"
-            ],
-            [
-                "client_steps" => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled",
-                "agency_steps" => "office of the mayor",
-                "fees" => "1000",
-                "process_time" => "1min"
-            ],
-        ];
-
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -516,8 +501,8 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Contact::factory()->create([
             "contact_type" => "HR department",
             "contact_details" => json_encode([
-                "mobile number" => ["+639-234-554-678"],
-                "telephone number" => ["(555) 555-1234"],
+                "mobile_number" => ["09234554678"],
+                "telephone_number" => ["5551234"],
             ])
         ]);
         Contact::factory()->create([

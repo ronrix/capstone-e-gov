@@ -171,7 +171,7 @@ class AboutController extends Controller
             "id" => "required",
             "keyName" => "required",
             "arrId" => "required",
-            "newValue" => "required",
+            "newValue" => "nullable",
         ]);
         /*
         * customizing the validation response
@@ -194,10 +194,17 @@ class AboutController extends Controller
             # store inputs on a variable
             $keyName = $request->input("keyName");
             $arrId = $request->input("arrId");
+            $number = $request->input("newValue");
 
             $contact = Contact::findOrFail($id);
             $contact_details = json_decode($contact->contact_details, true);
-            $contact_details[$keyName][$arrId] = $request->input("newValue");
+
+            if ($number) {
+                $contact_details[$keyName][$arrId] = $number;
+            } else { #remove if $number is empty
+                unset($contact_details[$keyName][$arrId]);
+            }
+
             $contact->contact_details = json_encode($contact_details);
             # save updated data
             $contact->save();
@@ -318,6 +325,53 @@ class AboutController extends Controller
 
             return response()->json([
                 "contacts" => Contact::all(),
+                "res" => [
+                    "msg" => "Successfully created new contact",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+        }
+    }
+
+    /*
+    *  adding new contact
+    */
+    public function addNewNumber(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "key" => "required",
+            "number" => "required",
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ]);
+        }
+
+        try {
+            $id = $request->input("id");
+            $key = $request->input("key");
+            $number = $request->input("number");
+
+            $contact = Contact::findOrFail($id);
+            $contact_details = json_decode($contact->contact_details, true);
+            array_push($contact_details[$key], $number);
+            $contact->contact_details = json_encode($contact_details);
+            $contact->save();
+
+            return response()->json([
                 "res" => [
                     "msg" => "Successfully created new contact",
                     "status" => 200

@@ -45,7 +45,6 @@ function showDeleteVerificationModal() {
 }
 
 const imgSrc = validURL(data.img_link) ? data.img_link : be_url + "/" + data.img_link;
-console.log(data.id);
 const { data } = defineProps({
     showPreviewModal: Function,
     data: Object,
