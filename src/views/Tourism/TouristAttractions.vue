@@ -1,27 +1,28 @@
 <script setup>
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
-import Carousel from '../../components/Carousel/Carousel.vue';
+import Carousel from '../../components/Carousel/Carousel.vue'
 
-const sample_card = [{
-    title: "Lorem Ipsum",
-    imgSrc: "https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg",
-    description: "Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua"
-
-},
-{
-    title: "Lorem Ipsum",
-    imgSrc: "https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg",
-    description: "Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua"
-
-},
-{
-    title: "Lorem Ipsum",
-    imgSrc: "https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg",
-    description: "Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua"
-
-},
-]    
+const sample_card = [
+  {
+    title: 'Lorem Ipsum',
+    imgSrc:
+      'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
+  },
+  {
+    title: 'Lorem Ipsum',
+    imgSrc:
+      'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
+  },
+  {
+    title: 'Lorem Ipsum',
+    imgSrc:
+      'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
+    description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
+  }
+]
 </script>
 <template >
   <head>
@@ -66,7 +67,6 @@ const sample_card = [{
   <div
     class="h-[400px] bg-dark w-full bg-auto bg-no-repeat bg-center flex flex-1 items-center mb-5 sm:mb-20"
   >
- 
     <img
       class="w-1/2 translate-y-44 sm:translate-y-28 translate-x-24 sm:translate-x-0"
       src="https://i.postimg.cc/nrGCXPV1/windmillnobg-VECTOR.png"
@@ -85,14 +85,12 @@ const sample_card = [{
   </div>
   <carousel></carousel>
   <WrapperContainer>
-    <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  mt-5 gap-5 rounded-lg ">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5 rounded-lg">
       <div
         v-for="(data, idx) in sample_card"
-        :key="idx" 
+        :key="idx"
         class="cards flex flex-col dark:bg-dark rounded-lg"
-        style="
-        border: 1px solid #d8d8d8;
-        "
+        style="border: 1px solid #d8d8d8"
       >
         <img class="object-cover h-[250px] w-full" :src="data.imgSrc" alt="" />
         <div class="py-5 px-3">
@@ -103,40 +101,35 @@ const sample_card = [{
         </div>
       </div>
     </div>
-   
-    
   </WrapperContainer>
 
   <FooterSection></FooterSection>
 </template>
 
 <style scoped>
- .cards:hover {
-    transform: translateY(-6px);
-    border: none;
-		z-index:2;
-    -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); 
-		-webkit-transition: all 0.2s ease-in;
-    transition: all 0.2s ease-in;
-
- }
- @media (max-width: 375px){
-    .topimage{
-      transform: translateX(  40px);
-      transform: translateY(144px);
-      z-index: 10;
-      display: none;
-    }
-    .bg-text{
-      position: absolute;
-      left: 5px;
-    }
-    .bg-description{
-      width: 350px;
-      margin-right: 0px;
-      
-    }
- }
-
+.cards:hover {
+  transform: translateY(-6px);
+  border: none;
+  z-index: 2;
+  -webkit-box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+@media (max-width: 375px) {
+  .topimage {
+    transform: translateX(40px);
+    transform: translateY(144px);
+    z-index: 10;
+    display: none;
+  }
+  .bg-text {
+    position: absolute;
+    left: 5px;
+  }
+  .bg-description {
+    width: 350px;
+    margin-right: 0px;
+  }
+}
 </style>
