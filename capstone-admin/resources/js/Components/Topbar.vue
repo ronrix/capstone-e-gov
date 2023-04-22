@@ -25,8 +25,9 @@
     <div class="flex items-end md:items-center justify-center">
       <!-- avatar -->
       <div @click="showAvatarDropDown" class="relative cursor-pointer flex items-center">
-        <img class="w-[30px] rounded-full" src="https://sm.ign.com/ign_ap/cover/a/avatar-gen/avatar-generations_hugw.jpg"
-          alt="">
+        <div class="w-[30px] h-[30px] rounded-full bg-primary-dark flex items-center justify-center overflow-hidden">
+          <img class="object-cover w-3/4" src="/images/admin-logo.png" alt="">
+        </div>
         <i class="uil uil-angle-down text-gray-700 text-2xl"></i>
         <!-- dropdown when avatar was clicked -->
         <div v-show="isAvatarDropDown"
