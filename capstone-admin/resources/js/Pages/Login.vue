@@ -41,9 +41,17 @@
                 </label>
                 <label class="mb-2 rounded-md text-gray-800">
                     <span class="font-bold text-base mb-1">Password</span>
-                    <input v-model="formData.password" name="password" type="password" placeholder="Type your password"
-                        class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600"
-                        :class="{ 'outline-red-400': v$.password.$error }" />
+                    <div class="relative">
+                        <input v-model="formData.password" name="password" :type="hideNshowPass ? 'text' : 'password'"
+                            placeholder="Type your password"
+                            class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600"
+                            :class="{ 'outline-red-400': v$.password.$error }" />
+                        <!-- hide and display password -->
+                        <i @click="handleHideNShowPass"
+                            :class="{ 'uil-eye': hideNshowPass, 'uil-eye-slash': !hideNshowPass }"
+                            class="uil absolute top-1/2 -translate-y-1/2 right-2 text-gray-500 hover:text-blue-600"></i>
+                    </div>
+
                     <p v-if="v$.password.$error" class="text-xs text-red-400 my-2"> {{ v$.password.$errors[0].$message }}
                     </p>
                 </label>
@@ -77,6 +85,7 @@ const rules = computed(() => ({
     password: { required: helpers.withMessage("The field password is required", required) }
 }));
 const v$ = useVuelidate(rules, formData);
+const hideNshowPass = ref(false);
 
 // function to call when form submits
 const isMounted = ref(false);
@@ -116,6 +125,10 @@ async function submitForm() {
     }
 
     // niremove ko para di siya magrefresh pagclick ng login sa form para magwork yung prevent na code formData.reset();
+}
+
+function handleHideNShowPass() {
+    hideNshowPass.value = !hideNshowPass.value;
 }
 
 

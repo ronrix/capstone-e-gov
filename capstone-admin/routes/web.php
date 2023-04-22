@@ -61,6 +61,9 @@ Route::get("/file/download/{file}", [FilesController::class, "download"]);
 Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
 
+    // change password
+    Route::post('/change-password', [LoginController::class, "changePassword"]);
+
     // routes to get deleted data
     Route::get('/news/deleted', [NewsController::class, 'getAllTrashed']);
     Route::get('/programs-and-events/deleted', [ProgramsEventsController::class, 'getAllTrashed']);
