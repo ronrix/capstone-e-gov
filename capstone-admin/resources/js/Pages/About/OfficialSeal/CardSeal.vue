@@ -15,9 +15,8 @@
             <h1 class="text-2xl md:text-4xl text-center md:text-left font-extrabold text-red-800 mb-4 capitalize">{{
                 data?.title }}
             </h1>
-            <p
-                class="h-[95px] md:h-[100px] overflow-hidden md:text-sm font-medium text-gray-800 justify-center items-center mr-0 lg:mr-28 text-left">
-                {{ data?.description }}</p>
+            <p class="text-xs whitespace-pre-wrap line-clamp-6 pr-5" v-bind:innerHTML="description">
+            </p>
             <!-- button view -->
             <button @click="showPreviewModal(data, index)"
                 class="w-[70px] bg-blue-600 rounded-md mb-0  hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-start uppercase mt-5 lg:mt-14">view
@@ -37,8 +36,12 @@ import DeleteVerificationModal from '../../../Components/DeleteVerificationModal
 import { be_url } from '../../../config/config';
 import { validURL } from '../../../utils/validUrl';
 
+import { marked } from "marked";
+import DOMPurify from "dompurify";
+
 const isVerificationModal = ref(false);
 
+const description = DOMPurify.sanitize(marked.parse(data.description));
 // function to handle the delete 
 function showDeleteVerificationModal() {
     isVerificationModal.value = !isVerificationModal.value;

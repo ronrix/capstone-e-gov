@@ -27,7 +27,7 @@
       <h3 class="font-bold capitalize text-xl tracking-wide">{{ data?.title }}</h3>
       <h5 class="text-sm text-gray-600 font-bold capitalize">By {{ data.authors }}</h5>
       <h5 class="text-xs text-gray-500 font-bold">{{ date }}</h5>
-      <p v-bind:innerHTML="description" class="mt-5 text-sm h-[100px] overflow-hidden marked-desc"></p>
+      <p v-bind:innerHTML="description" class="mt-5 text-xs whitespace-pre-wrap line-clamp-6"></p>
       <!-- button view -->
       <button @click="showPreviewModal(data)"
         class="w-[70px] bg-blue-600 rounded-md mb-2 ml-2 md:ml-2 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end uppercase mt-5 lg:mt-10">view

@@ -35,7 +35,7 @@
                 <h3 class="font-bold uppercase text-xl tracking-wide">{{ data.title }}</h3>
                 <h5 class="text-sm text-gray-600 font-bold capitalize">By {{ data.authors }}</h5>
             </div>
-            <p class="text-xs overflow-hidden whitespace-pre-wrap h-[100px] marked-desc" v-bind:innerHTML="description"></p>
+            <p class="text-xs whitespace-pre-wrap line-clamp-[7]" v-bind:innerHTML="description"></p>
             <!-- PreviewButton -->
             <button @click="showTourismModal(data)"
                 class="active:-translate-y-[1px] mb-2 rounded-md bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-5 uppercase">
