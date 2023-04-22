@@ -1,6 +1,8 @@
 <script setup>
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
+import Carousel from '../../components/Carousel/CarouselImgCard.vue'
+
 </script>
 <template>
   <head>
@@ -8,41 +10,25 @@ import HeaderSection from '../../components/Header/HeaderSection.vue'
   </head>
 
   <HeaderSection></HeaderSection>
-  <div class="grid">
+  
+    <div>
+      <div class="sm:flex justify-end">
     <div
-      class="flex justify-evenly items-center bg-auto bg-no-repeat bg-center contrast-150 ..."
-      style="background-image: url()"
+      class="items-center  bg-no-repeat bg-center contrast-150 h-[600px] rounded-none sm:rounded-bl-full sm:w-3/5 "
+      style="background-image: url(https://scontent.fmnl25-5.fna.fbcdn.net/v/t39.30808-6/294631385_168890845630966_4287727958245532156_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeG69spQ2qYT5NS83eS9rxGhXaCR1tnWinddoJHW2daKd19K-Ogt0U_AHA_KODqkdmkPbclnSJX-H9SxP1XceQ7U&_nc_ohc=ZfpKpkn2qlYAX-i20sa&_nc_ht=scontent.fmnl25-5.fna&oh=00_AfAZ8-IU2unkhRHguG4HtA75nCd0fVBJPauxJemJdKdI-w&oe=644961DF)"
     >
-      <p class="pl-20 text-8xl pt-10 font-bold text-dark dark:text-bggray">
+    </div>
+  </div>
+    <p class="pl-20 text-7xl md:text-7xl lg:text-8xl font-bold text-white sm:text-dark dark:text-bggray absolute top-60 drop-shadow-md">
         Pililla Rizal<span class="block font-['display'] italic text-red-600">Festival</span>
       </p>
-      <div class="flex-1">
-        <img
-          class="w-full rounded-bl-full"
-          src="https://scontent.fmnl25-2.fna.fbcdn.net/v/t1.6435-9/37954445_915526281972378_1758665335344463872_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeHl_E-2KxR9Mc_qGpN0dQBFRxc4mjhGlv1HFziaOEaW_R8W0gha9nabo7Lg3AEZPItH337iJ1c6eUyB593SfraQ&_nc_ohc=MGLmCzITthUAX-VwSNm&_nc_ht=scontent.fmnl25-2.fna&oh=00_AfD677bq_XdM4LiyaM3q8P8yHllkRfy4p9CxmK8eAlqfBg&oe=6460DABB"
-          alt=""
-        />
-      </div>
     </div>
-    <div class="h-[500px] flex flex-col md:flex-row pb-10 my-10">
-      <div class="flex gap-5">
-        <div
-          class="drop-shadow-lg h-[400px] w-[250px] bg-dark dark:bg-bggray text-bggray dark:text-dark self-end bg-auto bg-no-repeat bg-left text-8xl text-center duration-200"
-        >
-          Fes
+    <WrapperContainer>
+    <div class="sm:flex drop-shadow-md h-auto pb-5">
+        <div class="sm:w-1/2 drop-shadow-lg">
+          <carousel></carousel>
         </div>
-        <div
-          class="drop-shadow-lg h-[400px] w-[250px] bg-dark dark:bg-bggray text-bggray dark:text-dark bg-auto bg-no-repeat bg-center text-8xl duration-200"
-        >
-          ti
-        </div>
-        <div
-          class="drop-shadow-lg h-[400px] w-[250px] bg-dark dark:bg-bggray text-bggray dark:text-dark self-end bg-auto bg-no-repeat bg-right text-8xl duration-200"
-        >
-          val
-        </div>
-      </div>
-      <p class="pl-10 self-center text-dark dark:text-bggray">
+      <p class="sm:pl-10 self-center text-dark dark:text-bggray text-sm md:text-sm ">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
         labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
         laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
@@ -50,17 +36,14 @@ import HeaderSection from '../../components/Header/HeaderSection.vue'
         cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
       </p>
     </div>
+  </WrapperContainer>
+  <div style="background-color: #f5f5f5;">
     <WrapperContainer>
-      <div class="h-[600px] w-full pt-2">
-        <div class="flex justify-evenly drop-shadow-md gap-5">
-          <img
-            class="w-[50%] contrast-125"
-            src="https://www.localguidesconnect.com/t5/image/serverpage/image-id/901602i9309756AF08A07CA/image-size/large?v=v2&px=999"
-            alt=""
-          />
+      <div class="h-[600px] w-full pt-12">
+        <div class="sm:flex justify-evenly drop-shadow-md gap-5">
           <div>
-            <h2 class="text-5xl font-semibold text-dark dark:text-bggray">Magsolangtan Festival</h2>
-            <p class="blockfont-normal text-sm mt-3 text-dark dark:text-bggray">
+            <h2 class="text-3xl sm:text-5xl font-semibold text-dark dark:text-bggray">Magsolangtan Festival</h2>
+            <p class="blockfont-normal text-sm  mt-3 text-dark dark:text-bggray">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
               incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
               exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
@@ -69,8 +52,14 @@ import HeaderSection from '../../components/Header/HeaderSection.vue'
               mollit anim id est laborum.
             </p>
           </div>
+          <img
+            class="sm:w-[50%] "
+            src="https://scontent.fmnl25-5.fna.fbcdn.net/v/t39.30808-6/294828742_168890512297666_6697916517948535727_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeFoC5JY1hBsjZRujCcVlI2pTeiYwEcQAQ9N6JjARxABD5qrfjHGyCzYZgNgaWmUfuiiIK-aArSqAWR-RRLO7sYo&_nc_ohc=5OOT-XjVIx0AX_UObQT&_nc_ht=scontent.fmnl25-5.fna&oh=00_AfB_J6wgBfqG-6qrIZfBR4fU3WGB7YGxejcicBajXprp_g&oe=6449767C"
+            alt=""
+          />
         </div>
       </div>
+  
     </WrapperContainer>
   </div>
   <FooterSection></FooterSection>
