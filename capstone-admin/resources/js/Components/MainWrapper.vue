@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-start h-screen">
+  <div class="flex items-start min-h-screen">
     <!-- sidebar -->
     <div class="sticky top-0 pt-5 h-screen hidden sm:block duration-100 bg-white whitespace-nowrap z-10"
       :class="isWholeSidebar ? 'w-[500px]' : 'w-[70px]'">

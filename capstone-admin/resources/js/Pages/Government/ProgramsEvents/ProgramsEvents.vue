@@ -9,8 +9,8 @@
       :handleSubmit="handleSubmitUpdate" />
 
     <!-- filter -->
-    <div class="w-full flex items-center">
-      <label class="flex items-center rounded-lg p-2 text-sm bg-white">
+    <div class="w-full flex flex-col gap-3 md:flex-row items-start md:items-center">
+      <label class="flex-1 flex items-center rounded-lg p-2 text-sm bg-slate-100 w-full">
         <i class="uil uil-search-alt pr-3"></i>
         <input type="search" v-model.lazy="search" placeholder="search programs or events"
           class="bg-transparent outline-none" />
@@ -18,24 +18,29 @@
 
       <!-- filter by date -->
       <!-- month -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
-        month:
-      </span>
-      <SelectTag type="month" :filterFn="filterBy" :value="filterMonth" :filterArray="filterMonths" />
-      <!-- year -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
-        year:
-      </span>
-      <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears" />
+      <div class="flex-1 flex items-center">
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
+          month:
+        </span>
+        <SelectTag type="month" :filterFn="filterBy" :value="filterMonth" :filterArray="filterMonths"
+          added-class="!w-[300px]" />
+        <!-- year -->
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
+          year:
+        </span>
+        <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears"
+          added-class="!w-[200px]" />
 
-      <!-- filter the deleted data -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
-      <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
+        <!-- filter the deleted data -->
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
+        <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']"
+          added-class="!w-[200px]" />
+      </div>
     </div>
 
     <!-- empty: this will display when there is no data to display -->
-    <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
-      <i class="uil uil-folder-times text-5xl"></i>
+    <h5 v-if="isEmpty" class="font-bold text-xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
+      <i class="uil uil-folder-times text-3xl"></i>
       Empty Collection
     </h5>
     <div v-if="isLoading" class="flex items-center justify-center">

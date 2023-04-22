@@ -11,7 +11,7 @@
     </div>
     <!-- dropdown -->
     <div :class="addedClass" id="dd-select"
-      class="backdrop-blur-lg flex flex-col gap-2 rounded-md absolute top-full bg-white/50 z-50 mt-1 shadow-lg scale-0 duration-75 overflow-hidden origin-top w-full md:w-auto">
+      class="backdrop-blur-lg flex flex-col gap-2 rounded-md absolute top-full bg-white/50 z-50 mt-1 shadow-lg h-0 duration-75 overflow-y-scroll origin-top w-full md:w-auto scrollbar">
       <span @click="handleSelect" v-for="filter, idx in filterArray" :id="filter" :key="idx"
         class="cursor-pointer hover:bg-blue-600 hover:text-white text-black px-3 capitalize">{{ filter }}</span>
     </div>
@@ -25,16 +25,14 @@ const selectDiv = ref(null);
 function toggleDropdown(e) {
   document.querySelectorAll("#dd-select").forEach(el => {
     // remove other opened select dropdowns with their corresponding styles
-    if (el.classList.contains("!scale-100") && el !== e.target.nextElementSibling) {
-      el.classList.remove("!scale-100");
+    if (el.classList.contains("!h-[200px]") && el !== e.target.nextElementSibling) {
+      el.classList.remove("!h-[200px]");
       el.previousElementSibling.classList.toggle("bg-blue-600");
-      el.previousElementSibling.classList.toggle("text-white");
     }
     // add opened select dropdowns with their corresponding styles
     if (el === e.target.nextElementSibling) {
       e.currentTarget.classList.toggle("bg-blue-600");
-      e.currentTarget.classList.toggle("text-white");
-      el.classList.toggle("!scale-100");
+      el.classList.toggle("!h-[200px]");
     }
   });
 }

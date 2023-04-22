@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative overflow-hidden flex flex-col md:flex-row shadow-md bg-white border border-r-0 border-y-0 border-l-[5px] border-l-blue-600">
+    class="relative overflow-hidden flex flex-col md:flex-row shadow-md bg-white border border-r-0 border-y-0 border-l-[5px] border-l-blue-600 md:h-[300px]">
 
     <!-- restore button -->
     <div v-if="data.deleted_at" @click="showRestoreModal"
@@ -21,11 +21,11 @@
       :handle-delete="handleDelete" :id="data.id" />
 
     <!-- image -->
-    <div :style="{ backgroundImage: `url(${imgSrc})` }"
-      class="bg-no-repeat bg-cover bg-center h-[350px] max-h-[400px] w-full md:w-[300px] lg:w-[500px] relative after:h-[50px] after:bottom-0 after:w-full after:bg-gradient-to-t after:from-black/30 after:to-white/10 after:absolute after:blur-sm after:block md:after:hidden">
+    <div class="w-full md:w-[200px] lg:w-[500px] overflow-hidden">
+      <img :src="imgSrc" alt="this is the thumbnail of this news" class="object-cover md:w-full h-full">
     </div>
     <!-- content -->
-    <div class="flex-1 flex flex-col px-5 justify-between">
+    <div class="flex-1 flex flex-col px-5 justify-between gap-3 overflow-hidden">
       <div>
         <p class="text-gray-500 text-sm">
           <span class="font-bold text-blue-600">
@@ -34,13 +34,15 @@
           </span>
           {{ data.date }}
         </p>
-        <h5 class="font-bold mt-2 capitalize line-clamp-3">{{ data.title }}</h5>
+        <div>
+          <h5 class="font-bold mt-2 capitalize line-clamp-3">{{ data.title }}</h5>
 
-        <p class="mb-3 text-sm font-[500] capitalize">
-          {{ data.location }}
-        </p>
+          <p class="mb-3 text-sm font-[500] capitalize">
+            {{ data.location }}
+          </p>
+        </div>
       </div>
-      <div v-bind:innerHTML="description" class="text-sm text-gray-700 h-[100px] overflow-hidden line-clamp-5"></div>
+      <div v-bind:innerHTML="description" class="text-xs whitespace-pre-wrap line-clamp-5"></div>
       <button @click="showPreviewModal(data)"
         class="active:-translate-y-[1px] mb-2 bg-blue-600 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end mt-5 uppercase rounded-md">
         view

@@ -4,11 +4,14 @@
   <WrapperContent>
     <h1 class="text-xl font-bold capitalize">Current officials of pililla rizal</h1>
     <!-- empty: this will display when there is no data to display -->
-    <h5 v-if="isEmpty" class="font-bold text-2xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
-      <i class="uil uil-folder-times text-5xl"></i>
+    <h5 v-if="isEmpty" class="font-bold text-xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
+      <i class="uil uil-folder-times text-3xl"></i>
       Empty Collection
     </h5>
-    <Loading class="w-14 h-14 mx-auto" v-if="isLoading" />
+    <div v-if="isLoading" class="flex items-center justify-center">
+      <Loading class="w-8 h-8" />
+      <p>Loading...</p>
+    </div>
 
     <!-- cards -->
     <div class="flex items-center flex-wrap gap-3 mt-5">

@@ -5,23 +5,28 @@
     <Notifcation :msg="resMsg" class="z-[1000]" />
 
     <!-- filter -->
-    <div class="w-full flex flex-col md:flex-row md:items-center">
-      <label class="flex items-center rounded-lg p-2 text-sm bg-white">
+    <div class="w-full flex flex-col gap-3 md:flex-row md:items-center">
+      <label class="flex-1 flex items-center rounded-lg p-2 text-sm bg-slate-100">
         <i class="uil uil-search-alt pr-3"></i>
         <input type="search" v-model.lazy="search" placeholder="search news" class="bg-transparent outline-none" />
       </label>
 
-      <!-- filter by date -->
-      <!-- month -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> month: </span>
-      <SelectTag type="month" :filterFn="filterBy" :value="filterMonth" :filterArray="filterMonths" />
-      <!-- year -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> year: </span>
-      <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears" />
+      <div class="flex-1 flex items-center">
+        <!-- filter by date -->
+        <!-- month -->
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> month: </span>
+        <SelectTag type="month" :filterFn="filterBy" :value="filterMonth" :filterArray="filterMonths"
+          added-class="!w-[300px]" />
+        <!-- year -->
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> year: </span>
+        <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears"
+          added-class="!w-[200px]" />
 
-      <!-- filter the deleted data -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
-      <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
+        <!-- filter the deleted data -->
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
+        <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']"
+          added-class="!w-[200px]" />
+      </div>
 
     </div>
 
