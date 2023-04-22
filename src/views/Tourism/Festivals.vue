@@ -14,17 +14,17 @@ import Carousel from '../../components/Carousel/CarouselImgCard.vue'
     <div>
       <div class="sm:flex justify-end">
     <div
-      class="items-center  bg-no-repeat bg-center contrast-150 h-[600px] rounded-none sm:rounded-bl-full sm:w-3/5 "
+      class="items-center hover:rounded-none hover:w-full duration-200 bg-no-repeat bg-center contrast-150 h-[600px] rounded-none sm:rounded-bl-full sm:w-3/5 "
       style="background-image: url(https://scontent.fmnl25-5.fna.fbcdn.net/v/t39.30808-6/294631385_168890845630966_4287727958245532156_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeG69spQ2qYT5NS83eS9rxGhXaCR1tnWinddoJHW2daKd19K-Ogt0U_AHA_KODqkdmkPbclnSJX-H9SxP1XceQ7U&_nc_ohc=ZfpKpkn2qlYAX-i20sa&_nc_ht=scontent.fmnl25-5.fna&oh=00_AfAZ8-IU2unkhRHguG4HtA75nCd0fVBJPauxJemJdKdI-w&oe=644961DF)"
     >
     </div>
   </div>
     <p class="pl-20 text-7xl md:text-7xl lg:text-8xl font-bold text-white sm:text-dark dark:text-bggray absolute top-60 drop-shadow-md">
-        Pililla Rizal<span class="block font-['display'] italic text-red-600">Festival</span>
+        Pililla Rizal<span class="block font-['display'] italic text-white sm:text-red-600">Festival</span>
       </p>
     </div>
     <WrapperContainer>
-    <div class="sm:flex drop-shadow-md h-auto pb-5">
+    <div class="sm:flex drop-shadow-md h-auto pb-5 pt-20">
         <div class="sm:w-1/2 drop-shadow-lg">
           <carousel></carousel>
         </div>
@@ -39,7 +39,7 @@ import Carousel from '../../components/Carousel/CarouselImgCard.vue'
   </WrapperContainer>
   <div style="background-color: #f5f5f5;">
     <WrapperContainer>
-      <div class="h-[600px] w-full pt-12">
+      <div class="h-[600px] w-full pt-28">
         <div class="sm:flex justify-evenly drop-shadow-md gap-5">
           <div>
             <h2 class="text-3xl sm:text-5xl font-semibold text-dark dark:text-bggray">Magsolangtan Festival</h2>
