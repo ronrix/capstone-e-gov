@@ -69,23 +69,20 @@ class FilesController extends Controller
                     $files->filetype = "application form"; // save the filetype of this file
 
                     # create a folder if not exists before saving the image
-                    $folder = "uploads/files/application-form/";
-                    if (!file_exists($folder)) {
-                        mkdir($folder, 0777, true);
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777, true);
                     }
                 } else { # for full disclosure reports
                     $path = "uploads/files/full-disclosure/";
                     $files->filetype = "full disclosure report"; // save the filetype of this file
 
                     # create a folder if not exists before saving the image
-                    $folder = "uploads/files/full-disclosure";
-                    if (!file_exists($folder)) {
-                        mkdir($folder, 0777, true);
+                    if (!file_exists($path)) {
+                        mkdir($path, 0777, true);
                     }
-
-                    $file->move(public_path($path), $filename); // move the file to the $path
-                    $files->filepath = $path; // save the path after uploading or saving the file to the directory
                 }
+                $file->move(public_path($path), $filename); // move the file to the $path
+                $files->filepath = $path . $filename; // save the path after uploading or saving the file to the directory
                 $files->save(); // save all the columns to the DB
             }
 
