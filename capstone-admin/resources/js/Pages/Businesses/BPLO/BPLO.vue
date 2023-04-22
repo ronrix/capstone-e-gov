@@ -4,15 +4,29 @@
         <!-- response message -->
         <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
 
+        <!-- delete -->
+        <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
+            :handle-delete="handleDelete" :id="null" />
+
         <!--For File-->
         <div class="flex flex-cols items-center">
             <span class="font-bold text-lg sm:text-2xl text-gray-500 mr-5">Application Form</span>
-            <div class="flex-1 border"></div>
+
         </div>
         <div class="flex flex-col">
-            <a class="inline-block mt-3 text-sm sm:text-base text-blue-600 mr-2 font-semibold p-1">
-                application_form.pdf
-            </a>
+            <h4 v-if="!applicationForms.length" class="text-xl font-bold mt-5 text-primary-dark">
+                <i class="uil uil-file-times"></i>
+                No files uploaded yet!
+            </h4>
+            <div v-else v-for="file in applicationForms" :key="file.id">
+                <a :href="`${be_url}/file/download/${file.filepath.split('/')[2] + '_' + file.filename}`"
+                    class="inline-block mt-3 text-sm sm:text-base text-blue-600 mr-2 font-semibold p-1">
+                    {{ file.filename }}
+                </a>
+                <!-- delete button -->
+                <i @click="showDeleteVerificationModal(file.id, 'af')" title="delete"
+                    class="uil uil-trash-alt text-red-600 text-base ml-3 cursor-pointer"></i>
+            </div>
             <div class="flex flex-row self-end">
                 <button
                     class="w-[100px] bg-blue-600 rounded-md mb-2 ml-2 md:ml-2 hover:bg-blue-500 px-3 py-2 text-white font-bold text-xs self-end uppercase mt-5"
@@ -42,7 +56,7 @@
         <!-- add permit modal -->
         <AddPermit v-if="isPermitModal" :showPermitModal="showPermitModal" :handleSubmit="handleAddNewPermit" />
         <!-- add pdf file modal -->
-        <AddPDF v-if="isAddPDF" :closeAddPDF="showAddPDF" />
+        <AddPDF v-if="isAddPDF" :closeAddPDF="showAddPDF" filetype="af" :handle-upload-file="handleUploadFile" />
 
     </WrapperContent>
 </template>
@@ -55,11 +69,22 @@ import { ref, onMounted } from 'vue';
 import axios from "axios";
 import { be_url } from "../../../config/config";
 import Notifcation from '../../../Components/Notifcation.vue';
+import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
 
+const applicationForms = ref([]);
 const dataRequirements = ref([]);
 const isPermitModal = ref(false);
 const isAddPDF = ref(false);
 const resMsg = ref();
+
+const isVerificationModal = ref(false);
+// function to handle the delete 
+const deleteData = ref({ id: null, filetype: null });
+function showDeleteVerificationModal(id, filetype) {
+    isVerificationModal.value = !isVerificationModal.value;
+    deleteData.value.id = id;
+    deleteData.value.filetype = filetype;
+}
 
 function showPermitModal() {
     isPermitModal.value = !isPermitModal.value;
@@ -277,8 +302,83 @@ async function handleAddNewPermit(formData) {
         });
 }
 
+// upload an application form file
+async function handleUploadFile(formData) {
+    return await axios.post(be_url + "/upload-file", {
+        filename: formData.filename,
+        filetype: formData.filetype,
+        file: formData.file,
+    }, {
+        headers: { "Content-Type": "multipart/form-data" }
+    }).then(({ data }) => {
+
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+
+        applicationForms.value = data.application_forms;
+
+        return data;
+    }).catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+        return;
+    });
+}
+
+// handle delete of the file
+function handleDelete() {
+    deleteFile(deleteData.value.id, deleteData.value.filetype);
+}
+
+function deleteFile(id, filetype) {
+    axios.post(be_url + "/file/delete", {
+        id,
+        filetype
+    })
+        .then(({ data }) => {
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            isVerificationModal.value = false;
+            applicationForms.value = data.application_forms;
+        }).catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
+}
+
+
 // get all the permits from the server
 onMounted(() => {
+    // get all the application forms
+    axios.get(be_url + "/application-forms")
+        .then(({ data }) => {
+            applicationForms.value = data.application_forms;
+        }).catch(err => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+        });
+    // get all the permits
     axios.get(be_url + "/permits")
         .then(({ data }) => {
             dataRequirements.value = data.permits;

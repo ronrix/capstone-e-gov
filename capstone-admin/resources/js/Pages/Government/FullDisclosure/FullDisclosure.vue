@@ -29,7 +29,7 @@
           <a :href="`${be_url}/file/download/${file.filepath.split('/')[2] + '_' + file.filename}`">
             <i title="download" class="uil uil-download-alt text-blue-600 text-lg cursor-pointer"></i>
           </a>
-          <i @click="showDeleteVerificationModal(file.id, file.filetype)" title="delete"
+          <i @click="showDeleteVerificationModal(file.id, 'fdr')" title="delete"
             class="uil uil-trash-alt text-red-600 text-base ml-3 cursor-pointer"></i>
         </div>
       </div>
