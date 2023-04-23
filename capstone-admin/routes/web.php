@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\PostRequestNotification;
 use App\Http\Controllers\About\AboutController;
 use App\Http\Controllers\Business\BusinessesController;
 use Illuminate\Support\Facades\Route;
@@ -15,6 +16,7 @@ use App\Http\Controllers\FilesController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,8 +59,20 @@ Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureRe
 Route::get("/application-forms", [FilesController::class, "getApplicationForms"]);
 Route::get("/file/download/{file}", [FilesController::class, "download"]);
 
+// Broadcasting events
+Route::get("/event", function (Request $request) {
+    // TODO: get the form value and send it to the event
+    event(new PostRequestNotification('This is our first broadcasting'));
+});
+
 // government
 Route::middleware(["auth"])->group(function () {
+
+    // Broadcasting events
+    // Route::get("/listen", function () {
+    //     return inertia("Main");
+    // });
+
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
 
     // change password
