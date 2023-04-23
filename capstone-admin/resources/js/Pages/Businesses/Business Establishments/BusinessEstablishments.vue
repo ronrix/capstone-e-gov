@@ -9,13 +9,16 @@
         <!-- filter -->
 
         <div class="w-full flex flex-col md:flex-row md:self-center items-center">
-            <SearchInput placeholder="search" class="mr-2 w-auto" @searchFn="searchFn" />
-            <SelectTag type="category" :value="filterValue" :filterFn="filterBy" :filterArray="filterBusiness"
-                addedClass="max-h-[300px] !w-[300px] overflow-y-scroll scrollbar" />
+            <SearchInput placeholder="search" class="flex-1 mr-2 w-auto" @searchFn="searchFn" />
+            <div class="flex-1 flex items-center">
+                <SelectTag type="category" :value="filterValue" :filterFn="filterBy" :filterArray="filterBusiness"
+                    addedClass="max-h-[300px] !w-[300px] overflow-y-scroll scrollbar" />
 
-            <!-- filter the deleted data -->
-            <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
-            <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
+                <!-- filter the deleted data -->
+                <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
+                <SelectTag type="active" :filterFn="filterDelete" :value="activeData"
+                    :filterArray="['active', 'deleted']" />
+            </div>
         </div>
 
         <!-- empty: this will display when there is no data to display -->

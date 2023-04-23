@@ -7,11 +7,13 @@
     <!--Remember to add filter for both type and title-->
     <!-- search filter and select filtering -->
     <div class="w-full flex flex-col md:flex-row md:self-center items-center mb-5">
-      <SearchInput class="w-1/2 mr-3" @searchFn="searchFn" placeholder="Search for apartments" />
+      <SearchInput class="flex-1 w-1/2 mr-3" @searchFn="searchFn" placeholder="Search for apartments" />
 
-      <!-- filter the deleted data -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
-      <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
+      <div class="flex-1 flex items-center">
+        <!-- filter the deleted data -->
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
+        <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
+      </div>
     </div>
 
     <!-- empty: this will display when there is no data to display -->

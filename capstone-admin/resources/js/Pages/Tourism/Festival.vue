@@ -7,11 +7,13 @@
 
     <!-- search filter -->
     <div class="w-full flex flex-col md:flex-row md:items-center">
-      <SearchInput placeholder="search a festival" class="mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn" />
+      <SearchInput placeholder="search a festival" class="flex-1 mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn" />
 
       <!-- filter the deleted data -->
-      <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
-      <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
+      <div class="flex-1 flex itms-center">
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
+        <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
+      </div>
     </div>
 
     <!-- empty: this will display when there is no data to display -->
