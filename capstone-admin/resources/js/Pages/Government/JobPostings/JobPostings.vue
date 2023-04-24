@@ -1,4 +1,5 @@
 <template>
+  <HeadTitle title="Job Opportunities"></HeadTitle>
   <WrapperContent>
     <div class="mt-5">
       <!-- response message -->

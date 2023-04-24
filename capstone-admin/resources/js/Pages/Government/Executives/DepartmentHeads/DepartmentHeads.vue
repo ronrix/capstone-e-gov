@@ -1,5 +1,5 @@
 <template>
-  <HeadTitle title="Former Officials"></HeadTitle>
+  <HeadTitle title="Department Heads"></HeadTitle>
   <WrapperContent>
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
     <h1 class="text-xl font-bold capitalize">Department heads in pililla rizal</h1>
