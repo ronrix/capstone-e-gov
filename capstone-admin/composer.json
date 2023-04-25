@@ -6,11 +6,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
+        "illuminate/validation": "*",
         "inertiajs/inertia-laravel": "^0.6.9",
         "intervention/image": "^2.7",
         "laravel/framework": "^9.19",
-        "laravel/sanctum": "^3.0",
+        "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.7",
         "pusher/pusher-php-server": "^7.2",
         "tightenco/ziggy": "^1.5"
