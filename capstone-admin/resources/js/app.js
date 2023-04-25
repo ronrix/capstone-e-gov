@@ -1,5 +1,6 @@
 import { createApp, h } from 'vue';
 import { createInertiaApp } from '@inertiajs/inertia-vue3';
+import { createPinia } from 'pinia';
 
 import '../css/app.css';
 import Wrapper from "./Components/Wrapper.vue";
@@ -23,6 +24,7 @@ createInertiaApp({
         app.component("HeadTitle", Head);
         app.use(router);
         app.use(plugin);
+        app.use(createPinia());
         app.mount(el);
         
     },
