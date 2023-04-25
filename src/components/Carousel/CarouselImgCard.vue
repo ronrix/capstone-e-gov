@@ -5,12 +5,13 @@ import { Carousel, Pagination, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
 export default defineComponent({
-  name: 'Autoplay',
+
   components: {
     Carousel,
     Slide,
     Pagination,
     Navigation,
+    
   },
   data() {
     return {
@@ -36,45 +37,7 @@ export default defineComponent({
   </Carousel>
 </template>
 
-<style scoped>
-.carousel__track {
-    margin: 0 !important;
+<style>
 
-}
-.carousel__slide {
-  padding: 5px;
-}
-.carousel__track {
-  transform-style: preserve-3d;
-  width: 50% !important;
-}
-
-.carousel__slide--sliding {
-  transition: 0.5s;
-}
-
-.carousel__slide {
-  opacity: 0.9;
-  transform: rotateY(-20deg) scale(0.9);
-}
-
-.carousel__slide--active ~ .carousel__slide {
-  transform: rotateY(20deg) scale(0.9);
-}
-
-.carousel__slide--prev {
-  opacity: 1;
-  transform: rotateY(-10deg) scale(0.95);
-}
-
-.carousel__slide--next {
-  opacity: 1;
-  transform: rotateY(10deg) scale(0.95);
-}
-
-.carousel__slide--active {
-  opacity: 1;
-  transform: rotateY(0) scale(1.1);
-}
 
 </style>
