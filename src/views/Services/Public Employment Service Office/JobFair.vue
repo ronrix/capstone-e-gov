@@ -9,16 +9,15 @@ import Hero from '../Services Components/Hero.vue'
 
 const mayor = [{
   name:'job fair',
-  imgSrc:'/images/mayor.jpg'
+  description:'is an employment facilitation strategy aimed to fast-track the meeting of jobseekers and employers/overseas recruitment agencies in one venue at a specific date to reduce cost, time and effort particularly on the part of the applicants.'
 }]
 </script>
 
 <template>
   <HeaderSection />
+  <WrapperContainer>
   <!-- hero section -->
   <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
-
-  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -34,7 +33,7 @@ const mayor = [{
 
     <!-- table -->
     <TableSteps />
-  </div>
+  </WrapperContainer>
 
   <FooterSection />
 </template>

@@ -129,10 +129,10 @@ export default createRouter({
       name: "Job Opportunities",
       component: () => import("../views/JobOp/JobOp.vue")
     },
-    // {
-    //   path: "/programs-events",
-    //   name: "Programs and Events",
-    //   component: () => import("../views/ProgEvents/ProgEvents.vue")
-    // }
+    {
+      path: "/programs-events",
+      name: "Programs and Events",
+      component: () => import("../views/ProgEvents/ProgEvents.vue")
+    }
   ]
 })

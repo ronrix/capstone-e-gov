@@ -10,17 +10,16 @@ import Hero from '../../Services Components/Hero.vue'
 const civil = [
   {
     name: 'civil wedding program',
-    imgSrc: '/images/wedding.jpg'
+    description: 'a non-religious, legal marriage ceremony presided over by a legal officiant.'
   }
 ]
 </script>
 
 <template>
   <HeaderSection />
+  <WrapperContainer>
   <!-- hero section -->
-
   <Hero v-for="(data, id) in civil" :key="id" :data="data" />
-  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -35,7 +34,7 @@ const civil = [
 
     <!-- table -->
     <TableSteps />
-  </div>
+  </WrapperContainer>
 
   <FooterSection />
 </template>

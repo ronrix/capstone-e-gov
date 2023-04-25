@@ -9,16 +9,16 @@ import Hero from '../Services Components/Hero.vue'
 
 const mayor = [{
   name:'Capacity Building Enhancement Training',
-  imgSrc:'/images/mayor.jpg'
+  description:'Capacity enhancement implies the enhancement of capabilities of people and institutions in a sustainable manner to improve their competence and problem solving capacities.'
 }]
 </script>
 
 <template>
   <HeaderSection />
+  <WrapperContainer>
   <!-- hero section -->
   <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
 
-  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -34,8 +34,7 @@ const mayor = [{
 
     <!-- table -->
     <TableSteps />
-  </div>
-
+  </WrapperContainer>
   <FooterSection />
 </template>
 
