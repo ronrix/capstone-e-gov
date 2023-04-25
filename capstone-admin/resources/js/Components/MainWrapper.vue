@@ -26,7 +26,7 @@
     <div class="flex-1 relative">
       <!-- header -->
       <Topbar :showChildSubNavs="showChildSubNavs" :currentRoute="currentRoute" :showSubNavs="showSubNavs" :page="page"
-        class="sticky top-0 p-5 z-20" />
+        :show-create-service="showCreateService" :service-types="serviceTypes" class="sticky top-0 p-5 z-20" />
       <div class="md:px-8 -z-10">
         <slot></slot>
       </div>

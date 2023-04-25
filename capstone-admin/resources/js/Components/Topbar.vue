@@ -10,8 +10,9 @@
       :handle-change-password="handleChangePassword" />
 
     <Navs :showChildSubNavs="showChildSubNavs" :isChildSubNavs="isChildSubNavs" :showSubNavs="showSubNavs"
-      v-show="isMobileNavsVisible" :isWholeSidebar="true"
-      class="w-screen fixed top-0 left-0 right-0 bottom-0 z-80 h-screen bg-white text-black sm:hidden" />
+      v-if="isMobileNavsVisible" :isWholeSidebar="true" :page="page" :show-create-service="showCreateService"
+      :service-types="serviceTypes"
+      class="w-screen fixed top-0 left-0 right-0 bottom-0 z-80 h-screen bg-white text-black overflow-y-scroll sm:hidden" />
     <div class="flex flex-col items-start sm:pt-0">
       <div class="m-0 p-0 sm:hidden">
         <i :class="{ 'block': !isMobileNavsVisible, 'hidden': isMobileNavsVisible }" @click="showMovileNavs"
@@ -127,5 +128,8 @@ defineProps({
   showSubNavs: Function,
   isChildSubNavs: Boolean,
   showChildSubNavs: Function,
+  showCreateService: Function,
+  serviceTypes: Object,
+  page: String
 })
 </script>
