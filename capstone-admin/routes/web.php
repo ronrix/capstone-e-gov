@@ -1,6 +1,5 @@
 <?php
 
-use App\Events\PostRequestNotification;
 use App\Http\Controllers\About\AboutController;
 use App\Http\Controllers\Business\BusinessesController;
 use Illuminate\Support\Facades\Route;
@@ -13,6 +12,7 @@ use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\Business\PermitController;
 use App\Http\Controllers\FilesController;
+use App\Http\Controllers\RequestNotificationController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
@@ -35,45 +35,75 @@ Route::get("/", function () {
 Route::get('/login', [LoginController::class, "index"])->name("login.index");
 Route::get('/logout', [LoginController::class, "logout"]);
 
+// set an api token for SPA
+Route::get('/csrf-token', function () {
+    return response()->json(['token' => csrf_token()]);
+})->middleware("cors");
+
+
 // public get methods
 // get news json response data
-Route::get("/news", [NewsController::class, "getNews"]);
-Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
-Route::get("/current-officials", [ExecutivesController::class, "index"]);
-Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
-Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
-Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
-Route::get("/job-postings", [JobPostingController::class, "index"]);
-Route::get("/hotlines", [HotlinesController::class, "index"]);
-Route::get("/populations", [PopulationController::class, "index"]);
-Route::get("/tourist-attractions", [TourismController::class, "index"]);
-Route::get("/festivals", [FestivalsController::class, "index"]);
-Route::get("/businesses", [BusinessesController::class, "index"]);
-Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
-Route::get("/permits", [PermitController::class, "index"]);
-Route::get("/services/{service}", [ServicesController::class, "get"]);
-Route::get("/official-seal", [AboutController::class, "getOfficialSeal"]);
-Route::get("/contacts", [AboutController::class, "getContacts"]);
+Route::get("/news", [NewsController::class, "getNews"])->middleware("cors");
+Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"])->middleware("cors");
+Route::get("/current-officials", [ExecutivesController::class, "index"])->middleware("cors");
+Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"])->middleware("cors");
+Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"])->middleware("cors");
+Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"])->middleware("cors");
+Route::get("/job-postings", [JobPostingController::class, "index"])->middleware("cors");
+Route::get("/hotlines", [HotlinesController::class, "index"])->middleware("cors");
+Route::get("/populations", [PopulationController::class, "index"])->middleware("cors");
+Route::get("/tourist-attractions", [TourismController::class, "index"])->middleware("cors");
+Route::get("/festivals", [FestivalsController::class, "index"])->middleware("cors");
+Route::get("/businesses", [BusinessesController::class, "index"])->middleware("cors");
+Route::get("/apartments", [BusinessesController::class, "getAllApartments"])->middleware("cors");
+Route::get("/permits", [PermitController::class, "index"])->middleware("cors");
+Route::get("/services/{service}", [ServicesController::class, "get"])->middleware("cors");
+Route::get("/official-seal", [AboutController::class, "getOfficialSeal"])->middleware("cors");
+Route::get("/contacts", [AboutController::class, "getContacts"])->middleware("cors");
 // GET Files
-Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"]);
-Route::get("/application-forms", [FilesController::class, "getApplicationForms"]);
-Route::get("/file/download/{file}", [FilesController::class, "download"]);
+Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"])->middleware("cors");
+Route::get("/application-forms", [FilesController::class, "getApplicationForms"])->middleware("cors");
+Route::get("/file/download/{file}", [FilesController::class, "download"])->middleware("cors");
 
 // Broadcasting events
-Route::get("/event", function (Request $request) {
-    // TODO: get the form value and send it to the event
-    event(new PostRequestNotification('This is our first broadcasting'));
-});
+Route::post("/event", [RequestNotificationController::class, 'eventHandler'])->middleware("cors");
+// Route::middleware(['auth:sanctum', 'cors'])->group(function () {
+//     // Route::get("/news", [NewsController::class, "getNews"]);
+//     // Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
+//     // Route::get("/current-officials", [ExecutivesController::class, "index"]);
+//     // Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
+//     // Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
+//     // Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
+//     // Route::get("/job-postings", [JobPostingController::class, "index"]);
+//     // Route::get("/hotlines", [HotlinesController::class, "index"]);
+//     // Route::get("/populations", [PopulationController::class, "index"]);
+//     // Route::get("/tourist-attractions", [TourismController::class, "index"]);
+//     // Route::get("/festivals", [FestivalsController::class, "index"]);
+//     // Route::get("/businesses", [BusinessesController::class, "index"]);
+//     // Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
+//     // Route::get("/permits", [PermitController::class, "index"]);
+//     // Route::get("/services/{service}", [ServicesController::class, "get"]);
+//     // Route::get("/official-seal", [AboutController::class, "getOfficialSeal"]);
+//     // Route::get("/contacts", [AboutController::class, "getContacts"]);
+//     // // GET Files
+//     // Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"]);
+//     // Route::get("/application-forms", [FilesController::class, "getApplicationForms"]);
+//     // Route::get("/file/download/{file}", [FilesController::class, "download"]);
+
+//     // // Broadcasting events
+//     // Route::post("/event", [RequestNotificationController::class, 'eventHandler']);
+//     // Your protected routes go here...
+// });
 
 // government
 Route::middleware(["auth"])->group(function () {
-
-    // Broadcasting events
-    // Route::get("/listen", function () {
-    //     return inertia("Main");
-    // });
-
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
+
+    # notifications
+    Route::get("/notifications", [RequestNotificationController::class, 'getNotifications']); # get all the notifications
+    Route::get("/notify-status/{id}", [RequestNotificationController::class, 'notifyStatus']);
+    Route::get("/post-request/decline/{id}", [RequestNotificationController::class, 'declineRequest']);
+    Route::get("/post-request/accept/{id}", [RequestNotificationController::class, 'acceptRequest']);
 
     // change password
     Route::post('/change-password', [LoginController::class, "changePassword"]);
