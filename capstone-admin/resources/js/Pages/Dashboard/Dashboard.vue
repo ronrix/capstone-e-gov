@@ -131,12 +131,26 @@ async function declineRequest(id) {
 // accepting the request will add all the form data to the specific request
 // if job posting, the form data that client sent will be stored in the db
 function acceptRequest(id) {
-    axios.get('/post-request/accept')
+    axios.get('/post-request/accept/' + id)
         .then(({ data }) => {
-            console.log(data);
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+
+            notifications.value = data.notifications.sort((a, b) => a.created_at < b.created_at);
+            return;
         })
         .catch(err => {
-            console.log(err);
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+            return
         });
 }
 
