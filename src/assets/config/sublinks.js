@@ -47,7 +47,7 @@ export const services = [
 
 export const business = [
   {
-    link: '/establishments',
+    link: '/business-establishment',
     title: 'business establishments',
     desc: 'Acknowledge the busines establishments in pillla'
   },

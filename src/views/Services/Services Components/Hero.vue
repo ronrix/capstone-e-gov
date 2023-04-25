@@ -5,7 +5,7 @@ defineProps({
 </script>
 <template>
   <div
-    class="flex flex-col w-full gap-7 md:gap-10 mt-20 py-5 px-1 border border-x-0 border-t-0 pb-20"
+    class="flex flex-col w-full gap-3 md:gap-7 mt-20 py-5 px-1 border border-x-0 border-t-0 pb-10 md:pb-20"
   >
     <div class="w-1/2">
       <h1

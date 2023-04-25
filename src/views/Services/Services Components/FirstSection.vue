@@ -4,7 +4,7 @@ defineProps({
 })
 </script>
 <template>
-    <div class="flex flex-col items-start py-4 pt-5 lg:pb-10 justify-center mt-10 mx-1">
+    <div class="flex flex-col items-start py-4 pt-5 lg:pb-10 justify-center mt-5 mx-1">
       <div class="mb-3 ml-4">
         <h1
         class="text-dark dark:text-white font-bold mr-10 text-2xl md:text-3xl"
