@@ -9,16 +9,15 @@ import Hero from '../Services Components/Hero.vue'
 
 const mayor = [{
   name:'Distributions of Assorted Seeds or Seedling',
-  imgSrc:'/images/mayor.jpg'
+  description:' production process such as land, labour, implements, seed, mechanization (tractors) fertilizer, pesticides. Outputs are the things that are produced like harvested crops, milk, meat, eggs.'
 }]
 </script>
 
 <template>
   <HeaderSection />
+  <WrapperContainer>
   <!-- hero section -->
   <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
-
-  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -34,7 +33,7 @@ const mayor = [{
 
     <!-- table -->
     <TableSteps />
-  </div>
+  </WrapperContainer>
 
   <FooterSection />
 </template>

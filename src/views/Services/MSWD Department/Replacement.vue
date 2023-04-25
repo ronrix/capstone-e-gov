@@ -9,16 +9,15 @@ import Hero from '../Services Components/Hero.vue'
 
 const mayor = [{
   name:'Replacement of Senior Citizen',
-  imgSrc:'/images/mayor.jpg'
+ description:'the service helps the Senior Citizen to update their Senior Citizen ID'
 }]
 </script>
 
 <template>
   <HeaderSection />
+  <WrapperContainer>
   <!-- hero section -->
   <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
-
-  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -34,7 +33,7 @@ const mayor = [{
 
     <!-- table -->
     <TableSteps />
-  </div>
+  </WrapperContainer>
 
   <FooterSection />
 </template>

@@ -52,5 +52,5 @@ export const business = [
     desc: 'Acknowledge the busines establishments in pillla'
   },
   { link: '/apartments', title: 'apartments', desc: 'Looking for nice apartment?' },
-  { link: '/bplo', title: 'BPLO', desc: 'Get business permit and licensing office requirements' }
+  { link: '/business-permit-and-licensing-office', title: 'Business Permit and Licensing Office', desc: 'Get business permit and licensing office requirements' }
 ]

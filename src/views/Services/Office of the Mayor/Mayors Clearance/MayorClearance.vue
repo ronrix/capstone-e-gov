@@ -9,16 +9,15 @@ import Hero from '../../Services Components/Hero.vue'
 
 const mayor = [{
   name:'Mayors Clearance',
-  imgSrc:'/images/mayor.jpg'
+  description:'is a document that is usually issued to individuals who need for foreign/local employment, for business , operators/drivers of motorized tricycle for hire, firearms license and other legal purposes.'
 }]
 </script>
 
 <template>
   <HeaderSection />
+  <WrapperContainer>
   <!-- hero section -->
   <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
-
-  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -31,10 +30,9 @@ const mayor = [{
         <SecondSection name="Example requirements" />
    </RequirementsWrapper>
        
-
     <!-- table -->
     <TableSteps />
-  </div>
+  </WrapperContainer>
 
   <FooterSection />
 </template>

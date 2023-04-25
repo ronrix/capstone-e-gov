@@ -9,16 +9,15 @@ import Hero from '../Services Components/Hero.vue'
 
 const mayor = [{
   name:'Special Program Employment for Students',
-  imgSrc:'/images/mayor.jpg'
+  description:' is DOLE’s youth employment-bridging program which aims to provide temporary employment to poor but deserving students, out-of-school youth, and dependents of displaced or would-be displaced workers during summer and/or Christmas vacation or any time of the year to augment the family’s income to help ensure that beneficiaries are able to pursue their education.'
 }]
 </script>
 
 <template>
   <HeaderSection />
+  <WrapperContainer>
   <!-- hero section -->
   <Hero v-for="(data, id) in mayor" :key="id" :data="data"/>
-
-  <div class="sm:mx-2 md:mx-10">
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -31,10 +30,9 @@ const mayor = [{
         <SecondSection name="Example requirements" />
    </RequirementsWrapper>
        
-
     <!-- table -->
     <TableSteps />
-  </div>
+    </WrapperContainer>
 
   <FooterSection />
 </template>

@@ -11,7 +11,7 @@ import Hero from '../../Services Components/Hero.vue'
 
 const scholar = [{
   name:'educational assistance for students',
-  imgSrc:'./images/scholar.jpg'
+  description: 'Educational Assistance Program is a government-provided social protection program that helps students in crisis. The program provides financial assistance to students in elementary, high school, senior high school, and vocational/college levels'
 }]
 </script>
 
@@ -23,9 +23,11 @@ const scholar = [{
   <HeaderSection />
   <!-- hero section -->
 
-  <!-- <HeroScholar /> -->
+ 
+  <WrapperContainer>
+     <!-- <HeroScholar /> -->
   <Hero v-for="(data, index) in scholar" :key="index" :data="data"/>
-  <div class="sm:mx-2 md:mx-10">
+  
     <!-- content -->
     <!-- first section -->
     <FirstSection name="Office of the Mayor" />
@@ -41,7 +43,7 @@ const scholar = [{
 
       <!-- table -->
     <TableSteps />
-  </div>
+  </WrapperContainer>
 
   <FooterSection />
 </template>
