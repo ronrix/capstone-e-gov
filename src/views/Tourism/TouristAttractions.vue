@@ -2,27 +2,30 @@
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import Carousel from '../../components/Carousel/Carousel.vue'
+import { contentCard } from '../../assets/config/touristAttraction';
+// const sample_card = [
+//   {
+//     title: 'Lorem Ipsum',
+//     imgSrc:
+//       'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
+//     description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
+//   },
+//   {
+//     title: 'Lorem Ipsum',
+//     imgSrc:
+//       'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
+//     description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
+//   },
+//   {
+//     title: 'Lorem Ipsum',
+//     imgSrc:
+//       'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
+//     description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
+//   }
+// ]
 
-const sample_card = [
-  {
-    title: 'Lorem Ipsum',
-    imgSrc:
-      'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
-    description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
-  },
-  {
-    title: 'Lorem Ipsum',
-    imgSrc:
-      'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
-    description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
-  },
-  {
-    title: 'Lorem Ipsum',
-    imgSrc:
-      'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
-    description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
-  }
-]
+
+
 </script>
 <template >
   <head>
@@ -48,7 +51,7 @@ const sample_card = [
         >
           <img
             class="h-full object-cover"
-            src="https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg"
+            src="https://scontent.fmnl25-2.fna.fbcdn.net/v/t39.30808-6/201437546_985391575640120_8866290925325394471_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=zZDp4nRbV8sAX85yDg5&_nc_ht=scontent.fmnl25-2.fna&oh=00_AfBUUpKmEG5c71awn2WUofzZA78HwgkQQ8T9TGgprsyj-Q&oe=644BF928"
             alt=""
           />
         </div>
@@ -57,7 +60,7 @@ const sample_card = [
         >
           <img
             class="h-full object-cover"
-            src="https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg"
+            src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t39.30808-6/228257555_985391735640104_8375891350015040293_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=PYlTN27sWyIAX8rJIBI&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfAqTy32UOLOlGMEt12G2Nsa5VM7RCrYo6hcCzKToxOT7g&oe=644D843B"
             alt=""
           />
         </div>
@@ -65,7 +68,7 @@ const sample_card = [
     </div>
   </WrapperContainer>
   <div
-    class="h-[400px] bg-dark w-full bg-auto bg-no-repeat bg-center flex flex-1 items-center mb-5 sm:mb-20"
+    class="h-[400px] bg-dark w-full bg-auto bg-no-repeat bg-center flex flex-1 items-center mb-5 sm:mb-20 border-t-2 border-dark dark:border-t-bggray"
   >
     <img
       class="w-1/2 translate-y-44 sm:translate-y-28 translate-x-24 sm:translate-x-0"
@@ -83,13 +86,31 @@ const sample_card = [
       </p>
     </div>
   </div>
-  <carousel></carousel>
+  <carousel :content-card="contentCard" class="block sm:hidden"></carousel>
   <WrapperContainer>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5 rounded-lg">
+    <div v-for="(data, index) in contentCard" :key="index" class="hidden  sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5">
+      <div class="-order-first sm:-order-last">
+        <h2 class="text-5xl lg:text-6xl font-semibold pt-5 text-dark dark:text-bggray">
+          {{ data.title }}
+        </h2>
+        <p class="font-normal text-sm mt-3 w-3/4 text-dark dark:text-bggray">
+          {{ data.content }}
+          </p>
+      </div>
+      <img
+        class="w-full sm:w-1/2 order-first sm:order-last"
+        :src="data.imgSrc"
+        alt=""
+      />
+    </div>
+  
+  </WrapperContainer>
+  <!-- <WrapperContainer>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5 rounded-lg ">
       <div
         v-for="(data, idx) in sample_card"
         :key="idx"
-        class="cards flex flex-col dark:bg-dark rounded-lg"
+        class="cards flex flex-col dark:bg-white rounded-lg"
         style="border: 1px solid #d8d8d8"
       >
         <img class="object-cover h-[250px] w-full" :src="data.imgSrc" alt="" />
@@ -101,7 +122,7 @@ const sample_card = [
         </div>
       </div>
     </div>
-  </WrapperContainer>
+  </WrapperContainer> -->
 
   <FooterSection></FooterSection>
 </template>
