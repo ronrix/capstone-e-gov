@@ -10,7 +10,7 @@ import ThirdSectionBusiness from "./ThirdSectionBusiness.vue";
 
 <template>
     <HeaderSection />
-     <div class="w-full mt-5 ">
+    <WrapperContainer>
         <!-- hero section -->
         <HeroBusinessVue />
         <!-- first section -->
@@ -19,7 +19,8 @@ import ThirdSectionBusiness from "./ThirdSectionBusiness.vue";
          <SecondSectionBusiness />
          <!-- third section -->
          <ThirdSectionBusiness />
-    </div>
+    </WrapperContainer>
+    
     <FooterSection />
 </template>
 
