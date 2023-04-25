@@ -45,44 +45,43 @@ const sample_data = [
   </head>
 
   <HeaderSection></HeaderSection>
-
+<WrapperContainer>
   <div class="grid place-items-center mt-10 justify-center">
-    <div class="text-center w-1/2">
-      <p class="text-5xl font-semibold font-['display'] text-dark dark:text-bggray">
+    <div class="text-center max-w-2xl">
+      <p class="text-2xl sm:text-3xl md:text-5xl font-semibold font-['display'] text-dark dark:text-bggray">
         <span class="text-primary">Travel</span> Around the beautiful places in Pililla
       </p>
     </div>
-    <div class="flex relative">
-      <div class="mt-6">
-        <div
-          class="w-96 h-96 rounded-full opacity-[12%]"
-          style="background-color: rgb(185, 43, 39)"
-        />
-        <div
-          class="w-72 h-72 absolute left-12 top-16 rounded-full opacity-[34%]"
-          style="background-color: rgb(185, 43, 39)"
-        />
-      </div>
+  </div>
+    <div class="flex justify-center relative">
+      <img class=" w-[600px] absolute  bg-center" src="../../../public/images/Tourismbg-Circle.png">
+    <div 
+    class="flex pt-5"
+    >
       <img
-        class="w-[210px] absolute right-44 top-3"
+        class="sm:w-[210px] w-[160px] z-10"
         src="https://www.pngaaa.com/api-download/1853846"
         alt=""
       />
       <img
-        class="w-[200px] absolute left-32"
+        class="sm:w-[200px] w-[100px] -translate-x-14"
         src="https://i.postimg.cc/63XWfN0Z/kisspng-travel-package-tour-woman-japan-vacation-rameshwaram-devbhoomi-5b3ab8e2ee6588-22845129153057.png"
         alt=""
       />
     </div>
+  </div>
+
+   
+  </WrapperContainer>
     <div
-      class="flex justify-between h-auto w-full absolute top-[480px] sm:top-[380px] text-white bg-primary items-center p-5"
+      class="flex justify-between h-auto w-full  text-white bg-primary items-center p-5 -translate-y-5 sm:-translate-y-0"
     >
       <div class="text-center flex-1 px-3">
         <p class="pt-2 text-xs lg:text-sm">
           Travel around Pililla to the beauty of nature easily and safely.
         </p>
       </div>
-      <div class="lg:text-2xl font-['display'] text-center border-2 border-y-0 flex-1">
+      <div class="lg:text-2xl font-['display'] text-center border-2 border-y-0 flex-1 z-10">
         <p>Better Pililla</p>
         <p>A better community</p>
         <p>A better Home</p>
@@ -91,12 +90,12 @@ const sample_data = [
         <p class="pt-2 text-xs lg:text-sm">“ Pamunuang mapagmahal at mapagkalinga ”</p>
       </div>
     </div>
-  </div>
+ 
 
   <!-- banner -->
-  <div class="relative bottom-20 md:bottom-10 w-full">
+  <div class="w-full sm:pt-10 pb-10 ">
     <img
-      class="w-full object-cover"
+      class="w-full object-cover z-10"
       src="https://pilillarizal.gov.ph/wp-content/uploads/2022/10/pililla_painting-1024x326.png"
       alt=""
     />
@@ -113,7 +112,7 @@ const sample_data = [
         <p class="text-xs pb-1 text-secondary">We have more destination you can</p>
         <div class="relative">
           <input
-            class="h-10 w-80 pl-10 drop-shadow-lg rounded-3xl outline-cyan-300 text-[12px] bg-gray-100"
+            class="h-10 w-60 sm:w-80 pl-10 drop-shadow-lg rounded-3xl outline-cyan-300 text-[12px] bg-gray-100"
             type="text"
             placeholder="Search destinations"
           />
@@ -126,13 +125,15 @@ const sample_data = [
         </div>
       </div>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-5">
+  </WrapperContainer>
+  <WrapperContainer>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5">
       <div
         v-for="(data, idx) in sample_data"
         :key="idx"
-        class="flex flex-col drop-shadow-lg bg-white"
+        class="flex flex-col drop-shadow-lg bg-white  "
       >
-        <img class="object-cover h-[150px] w-full" :src="data.imgSrc" alt="" />
+        <img class="object-cover h-[250px] w-full" :src="data.imgSrc" alt="" />
         <div class="py-5 px-3">
           <p class="font-semibold">
             {{ data.placeName }}
@@ -147,5 +148,12 @@ const sample_data = [
       </div>
     </div>
   </WrapperContainer>
+  <div class="w-full sm:pt-10 pb-10 ">
+    <img
+      class="w-full object-cover "
+      src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t1.6435-9/191386880_938732806972664_5846277956740923314_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_ohc=QayRsvU0LScAX9gCBHW&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfA99OLmudJoWqDWC_sOSNecGTqHnIS-s2T6WE2LBHQApg&oe=646F6BF9"
+      alt=""
+    >
+</div>
   <FooterSection></FooterSection>
 </template>
