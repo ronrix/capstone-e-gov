@@ -2,9 +2,8 @@
 import { defineComponent } from 'vue'
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
-import { contentCard } from '../../assets/config/touristAttraction'
+
 export default defineComponent({
-  name: 'Autoplay',
   components: {
     Carousel,
     Slide,
@@ -20,9 +19,15 @@ export default defineComponent({
   //   ]}
   // }
 
-  setup() {
-    return { contentCard }
-  }
+  // setup() {
+  //   return { contentCard }
+  // }
+    props: {
+      contentCard:{
+        type: Object,
+        required: true,
+      }
+    }
 })
 </script>
 <template>
@@ -34,7 +39,7 @@ export default defineComponent({
     img-width="1024"
     img-height="480"
   >
-    <Carousel v-bind="settings" :breakpoints="breakpoints">
+    <Carousel :breakpoints="breakpoints" :transition="900">
       <Slide v-for="(card, index) in contentCard" :key="index">
         <div
           class="sm:flex sm:justify-evenly md:flex drop-shadow-md rounded-md bg-white h-auto cursor-grab"
@@ -68,7 +73,7 @@ export default defineComponent({
 </template>
 
 
-<style scoped>
+<style>
 * {
   text-shadow: none;
   /* transition-timing-function: ease-in-out !important;
@@ -78,8 +83,7 @@ export default defineComponent({
     display: flex;
     padding: 0 !important;
     position: relative;
-    transition-timing-function: ease-in-out !important;
-  transition-duration: 0.5s !important;
+    
 }
 .carousel__next--disabled,
 .carousel__prev--disabled {
@@ -96,7 +100,7 @@ export default defineComponent({
   /* background-color: var(--vc-pgn-background-color); */
 }
 .carousel__icon {
-  background: #b92b27;
+  background: #b92b27 !important;
   border-radius: 50%;
   width: 150px;
   height: 30px;
