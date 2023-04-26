@@ -6,39 +6,28 @@ import Place from './Place/Place.vue'
 import Hotlines from '../../components/Hotlines.vue'
 import Hero from './Hero.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
+import { onMounted, ref } from 'vue'
+import { be_url } from '../../assets/config/config'
+import { axiosInstance } from '../../utils/axios-instance'
+import { useTourism } from '../../stores/tourisms-store'
 
-const places = [
-  {
-    title: 'Pililla Wind Farm',
-    imgSrc: '/images/top-3-places/place-1.png',
-    location: 'bugarin',
-    qoute: `
-        “Relaxation.
-        Take in the breathtaking views
-        from our wind farms. ”
-    `
-  },
-  {
-    title: 'Malaking Bato',
-    imgSrc: '/images/top-3-places/place-2.png',
-    location: 'living water',
-    qoute: `
-      "Escape the hustle and bustle of
-      city life and immerse yourself 
-      in the natural beauty 
-      of Pililla”
-    `
-  },
-  {
-    title: 'Bulawan Floating Restaurant',
-    imgSrc: '/images/top-3-places/place-3.png',
-    location: 'halayhayin',
-    qoute: `
-        “Experience the best of both 
-        worlds in Pililla”
-    `
-  }
-]
+const store = useTourism()
+const places = ref()
+
+const axiosTourisms = () => {
+  axiosInstance()
+    .get(be_url + '/tourist-attractions', { withCredentials: true })
+    .then(({ data }) => {
+      places.value = data.tourism.slice(0, 3)
+      store.setTourism(data.tourism)
+      localStorage.setItem('tourisms', JSON.stringify(data.tourism))
+    })
+    .catch((err) => console.log(err))
+}
+
+onMounted(() => {
+  axiosTourisms()
+})
 </script>
 
 <template>
@@ -63,8 +52,8 @@ const places = [
     <!-- top places -->
     <section class="mt-20 flex flex-col gap-5">
       <h4 class="font-['display'] text-5xl sm:w-3/4 text-center mx-auto dark:text-bggray">
-        Top <span class="bg-primary px-3 text-white">3</span> places you want to come and visit in
-        Pililla
+        Highlights of <span class="bg-primary px-3 text-white">3</span> places you want to come and
+        visit in Pililla
       </h4>
 
       <div class="relative mt-5 bg-gradient-to-l from-dark to-darkgray rounded-md text-white py-5">
@@ -96,7 +85,7 @@ const places = [
             Find more interesting places and destination to go to in Pililla.
           </p>
           <RouterLink
-            to="/tourist-spots"
+            to="/tourism"
             class="text-sm px-3 py-1 text-white bg-primary rounded-md capitalize"
           >
             Go places
@@ -108,13 +97,16 @@ const places = [
 
     <!-- map location -->
     <section>
-      <h4 class="font-['display'] text-4xl mt-10 font-bold text-dark dark:text-bggray">
+      <h4 class="font-['display'] text-5xl mt-10 font-bold text-dark dark:text-bggray">
         Here's the map of Pililla
       </h4>
       <p class="text-lg sm:textsm font-bold text-dark dark:text-bggray">Welcome to pililla!</p>
       <p class="text-sm sm:textsm text-dark dark:text-bggray">
         You can navigate the whole pililla using this
-        <a href="/google-map" class="text-primarylight ml-2">
+        <a
+          href="https://www.google.com/maps/place/Pililla,+Rizal/@14.4469448,121.2951419,13z/data=!3m1!4b1!4m6!3m5!1s0x3397e93c8543c67f:0xc3ddaed3ef5026a0!8m2!3d14.4439278!4d121.3427262!16zL20vMDZrdGd5"
+          class="text-primarylight ml-2"
+        >
           <i class="uil uil-link" />
           google map
         </a>

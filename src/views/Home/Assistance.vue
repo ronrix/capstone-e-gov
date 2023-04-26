@@ -24,11 +24,6 @@
       >
         Apply for Benefits
       </button>
-      <button
-        class="text-sm sm:text-base px-3 py-2 bg-white font-bold rounded-md hover:bg-gray-200"
-      >
-        Am I Eligible?
-      </button>
     </div>
   </div>
 </template>
