@@ -7,8 +7,12 @@ export const useNotification = defineStore('notification', () => {
 
   // functions
   function appendNewNotification(notif) {
-    notifications.value.push(notif);
+    notifications.value.unshift(notif);
   }
 
-  return { notifications, appendNewNotification };
+  function removeOne(id) {
+    notifications.value = notifications.value.filter(not => not.id !== id);
+  }
+
+  return { notifications, appendNewNotification, removeOne };
 });

@@ -23,7 +23,28 @@
       <h3 class="font-bold text-sm hidden sm:block"> you are in <span class="text-blue-600">{{ currentRoute }}</span></h3>
     </div>
 
-    <div class="flex items-end md:items-center justify-center">
+    <div class="flex items-end md:items-center justify-center gap-3">
+      <!-- notification icon -->
+      <i @click="toggleNewNotifications" class="uil uil-bell text-xl relative cursor-pointer">
+        <span :class="{ 'hidden': !store.notifications[0] }" class="flex h-3 w-3 absolute top-0">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+        </span>
+
+        <!-- notification dropdown modal - will display the notifications that are new -->
+        <div v-if="isNewNotification"
+          class="absolute right-1/2 -bottom-[100px] w-[200px] h-[100px] max-h-[500px] overflow-y-scroll scrollbar bg-white shadow-md">
+          <p v-if="!store.notifications.length" class="font-[500] text-xs py-2 px-2 text-center">
+            <i class="uil uil-bell-slash"></i>
+            No new notification
+          </p>
+          <h5 v-else v-for="notif in store.notifications" :key="notif.id" @click="showDisplayRequestModal(notif)"
+            class="font-[500] text-xs py-2  border border-x-0 px-2 mb-2">Request to post
+            on the
+            {{ notif?.type_of_request?.toLowerCase() !== "business" ? "job opportunities" : "business" }}
+          </h5>
+        </div>
+      </i>
       <!-- avatar -->
       <div @click="showAvatarDropDown" class="relative cursor-pointer flex items-center">
         <div class="w-[30px] h-[30px] rounded-full bg-primary-dark flex items-center justify-center overflow-hidden">
@@ -50,12 +71,19 @@ import ChangePasswordModal from './ChangePasswordModal.vue';
 import axios from 'axios';
 import { be_url } from '../config/config';
 import Notifcation from './Notifcation.vue';
+import { useNotification } from '../stores/state-notification';
 
+const store = useNotification();
 const isBlur = ref(false);
 const isMobileNavsVisible = ref(false);
 const isAvatarDropDown = ref(false);
 const isShowChangePassword = ref(false);
 const resMsg = ref();
+const isNewNotification = ref(false);
+
+function toggleNewNotifications() {
+  isNewNotification.value = !isNewNotification.value;
+}
 
 function showAvatarDropDown() {
   isAvatarDropDown.value = !isAvatarDropDown.value;

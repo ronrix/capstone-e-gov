@@ -90,7 +90,7 @@
 import { dateFormat } from "../../utils/dateFormat";
 import { ref, onMounted } from "vue";
 import NotificationCard from "./NotificationCard.vue";
-import DisplayRequestModal from "./DisplayRequestModal.vue";
+import DisplayRequestModal from "../../Components/DisplayRequestModal.vue";
 import { useNotification } from "../../stores/state-notification";
 import axios from "axios";
 import { be_url } from "../../config/config";
@@ -115,6 +115,7 @@ async function declineRequest(id) {
             }, 3000);
 
             notifications.value = data.notifications.sort((a, b) => a.created_at < b.created_at);
+            store.removeOne(id);
             return;
         })
         .catch(err => {
@@ -130,8 +131,8 @@ async function declineRequest(id) {
 
 // accepting the request will add all the form data to the specific request
 // if job posting, the form data that client sent will be stored in the db
-function acceptRequest(id) {
-    axios.get('/post-request/accept/' + id)
+async function acceptRequest(id) {
+    return await axios.get('/post-request/accept/' + id)
         .then(({ data }) => {
             // set the response msg
             resMsg.value = data.res;
@@ -141,6 +142,7 @@ function acceptRequest(id) {
             }, 3000);
 
             notifications.value = data.notifications.sort((a, b) => a.created_at < b.created_at);
+            store.removeOne(id);
             return;
         })
         .catch(err => {
