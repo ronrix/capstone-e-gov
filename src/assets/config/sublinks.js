@@ -11,7 +11,7 @@ export const government = [
     title: 'demographic profile',
     desc: 'You can see the population growth in pillla'
   },
-  { link: '/hotlines', title: 'emergency hotlines', desc: 'Call for help/inquiries' },
+  { link: '/emergency-hotlines', title: 'emergency hotlines', desc: 'Call for help/inquiries' },
   {
     link: '/full-disclosure-report',
     title: 'full disclosure reports',
