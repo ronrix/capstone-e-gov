@@ -16,17 +16,13 @@
     </div>
     <!-- filter by -->
     <select
-      class="w-full md:w-auto outline-none py-1 items-center border border-gray-400 bg-white dark:bg-dark rounded-lg relative text-sm text-dark dark:text-white">
+      class="w-full md:w-auto outline-none px-2 py-1 items-center border border-gray-400 bg-white dark:bg-dark rounded-lg relative text-sm text-dark dark:text-white">
         <option value="" selected>All</option>
-        <option value="hulo">Hulo</option>
-        <option value="takungan">Takungan</option>
-        <option value="imatong">Imatong</option>
-        <option value="bagumbayan">Bagumbayan</option>
-        <option value="wawa">Wawa</option>
-        <option value="halayhayin">Halayhayin</option>
-        <option value="quisao">Quisao</option>
-        <option value="malaya">Malaya</option>
-        <option value="niogan">Niogan</option>
+        <option value="">Restaurant</option>
+        <option value="">Department Store</option>
+        <option value="">Gas Station</option>
+        <option value="">Pharmacy</option>
+        <option value="">Bank</option>
     </select>
   </div>
 </template>

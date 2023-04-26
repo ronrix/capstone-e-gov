@@ -43,7 +43,7 @@ const businesses = [{
     <!-- search and filter by -->
     <SearchAndFilter />
     <!-- businesses card -->
-    <div class="w-full grid grid-cols-1 md:grid-cols-2  gap-3 mt-7">
+    <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-3 mt-7">
       <Businesses v-for="(data, index) in businesses" :key="index" :data="data"  />
     </div>
    
