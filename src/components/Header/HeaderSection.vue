@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import SubNavs from './SubNavs.vue'
 import SearchContainer from './SearchContainer.vue'
-import { government, business, services, tourism } from '../../assets/config/sublinks'
+import { government, business, services, tourism, about } from '../../assets/config/sublinks'
 import MobileNav from '../MobileNav/MobileNav.vue'
 
 // show the search input
@@ -39,6 +39,10 @@ function setSubLinkOnHover(e) {
   }
   if (e.target.id === 'tourism') {
     selectedSubLinks.value = tourism
+    return
+  }
+  if (e.target.id === 'about') {
+    selectedSubLinks.value = about
     return
   }
 
@@ -206,11 +210,14 @@ onMounted(() => {
       </RouterLink>
 
       <RouterLink
+        id="about"
         to="/about"
         active-class="!text-primarylight"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
+        @mouseover="setSubLinkOnHover"
       >
         about
+        <i class="uil uil-angle-down" />
       </RouterLink>
 
       <!-- theme emode  -->

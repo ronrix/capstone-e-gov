@@ -46,6 +46,32 @@ onMounted(() => {
           <a href="">Departments</a>
           <a href="">Tourism</a>
           <a href="">Job Opportunities</a>
+          <div class="flex items-center gap-3">
+            <a
+              href="https://web.facebook.com/profile.php?id=100064848094892"
+              target="_blank"
+              class="hover:text-primarylight"
+              ><i class="uil uil-facebook text-lg"></i
+            ></a>
+            <a
+              href="https://web.facebook.com/profile.php?id=100064848094892"
+              target="_blank"
+              class="hover:text-primarylight"
+              ><i class="uil uil-instagram text-lg"></i
+            ></a>
+            <a
+              href="https://web.facebook.com/profile.php?id=100064848094892"
+              target="_blank"
+              class="hover:text-primarylight"
+              ><i class="uil uil-twitter text-lg"></i
+            ></a>
+            <a
+              href="https://web.facebook.com/profile.php?id=100064848094892"
+              target="_blank"
+              class="hover:text-primarylight"
+              ><i class="uil uil-youtube text-lg"></i
+            ></a>
+          </div>
         </div>
         <!-- government links -->
         <div class="flex flex-col items-start">

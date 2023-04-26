@@ -25,14 +25,14 @@ onMounted(() => {
   <HeaderSection />
   <!-- content -->
   <WrapperContainer class="mt-10">
-    <h3 class="font-bold text-2xl mb-2">Emergency Hotlines</h3>
-    <p class="mb-5">
+    <h3 class="font-bold text-2xl mb-2 text-dark dark:text-bggray">Emergency Hotlines</h3>
+    <p class="mb-5 text-secondary dark:text-bggray">
       To use the emergency hotlines, simply dial the appropriate number and provide the necessary
       information to the operator. Make sure to stay calm and provide as much information as
       possible to help emergency responders quickly assess the situation and provide the necessary
       assistance.
     </p>
-    <ul class="w-full border">
+    <ul class="w-full border text-dark dark:text-bggray">
       <li class="flex font-bold">
         <p class="border border-y-0 flex-1 p-2">Department</p>
         <p class="border border-y-0 flex-1 p-2">Smart</p>
