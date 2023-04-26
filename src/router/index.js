@@ -122,8 +122,13 @@ export default createRouter({
       name: "Business",
       component: () => import("../views/Business/Landing page/Business.vue")
     },
+    {
+      path: "/business-establishment",
+      name: "Business Establishment",
+      component: () => import("../views/Business/Business Esablsihment/BusinessEstablishment.vue")
+    },
 
-    //business page starts
+    //business page end
     {
       path: "/job-op",
       name: "Job Opportunities",
