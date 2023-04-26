@@ -148,12 +148,12 @@ class RequestNotificationController extends Controller
                     unlink($image_path);
                 }
             }
-            foreach ($data->proofFiles as $file) { # pdf files
-                $file_path = public_path($file);
-                if (file_exists($file_path)) {
-                    unlink($file_path);
-                }
+            // foreach ($data->proofFiles as $file) { # pdf files
+            $file_path = public_path($data->proofFiles);
+            if (file_exists($file_path)) {
+                unlink($file_path);
             }
+            // }
             // delete the row
             $notification->delete();
             return response()->json(["notifications" => RequestNotification::all(), "res" => ["msg" => "successfully declining the request", "status" => 200]], 200);
@@ -175,7 +175,7 @@ class RequestNotificationController extends Controller
                 $business = new Business;
                 $business->title = $data->companyName;
                 $business->authors = $notification->author;
-                $business->description = $data->desciprtion;
+                $business->description = $data->description;
                 $business->category = $data->category;
                 $business->location = $data->location;
                 $business->img_link = implode(", ", ($data->imgs));
@@ -185,9 +185,9 @@ class RequestNotificationController extends Controller
                 $job->job_title = strtolower($data->title);
                 $job->job_location = strtolower($data->location);
                 $job->job_type = strtolower($data->type);
-                $job->job_description = $data->description;
+                $job->job_description = strtolower($data->description);
                 $job->job_salary = $data->salary;
-                $job->job_schedule = $data->schedule;
+                $job->job_schedule = strtolower($data->schedule);
                 $job->save();
             }
 
