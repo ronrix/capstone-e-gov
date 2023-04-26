@@ -14,7 +14,7 @@ export default createRouter({
       component: () => import("../views/News/News.vue")
     },
     {
-      path: "/news/:title",
+      path: "/news/:title(.*)",
       name: "NewsSubPage",
       component: () => import("../views/News/NewsSubPage/NewsSubPage.vue")
     },
