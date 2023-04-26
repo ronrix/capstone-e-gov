@@ -102,7 +102,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav>
+  <nav class="sticky top-0 z-[500] bg-white dark:bg-dark duration-200">
     <!-- mobile nav view -->
     <div class="flex sm:hidden items-center justify-end gap-3">
       <!-- theme emode  -->
@@ -164,16 +164,15 @@ onMounted(() => {
         home
       </RouterLink>
 
-      <RouterLink
+      <div
         id="government"
         active-class="!text-primarylight"
-        to="/government"
         class="capitalize text-dark dark:text-bggray dark:hover:text-white hover:text-primary text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
       >
         government
         <i class="uil uil-angle-down" />
-      </RouterLink>
+      </div>
       <RouterLink
         id="tourism"
         active-class="!text-primarylight"

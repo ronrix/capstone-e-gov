@@ -1,27 +1,26 @@
 <script setup>
 import moment from 'moment'
-defineProps({
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
+
+const description = DOMPurify.sanitize(marked.parse(props.news.description))
+const props = defineProps({
   news: { type: Object, required: true }
 })
 </script>
 <template>
-  <a
-    :href="'/news/' + news.title"
+  <RouterLink
+    :to="'/news/' + news.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()"
     class="flex flex-col items-start border border-x-0 border-t-0 py-3 gap-2 group cursor-pointer border-secondary"
   >
-    <p
-      class="flex items-center text-xs text-secondary dark:group-hover:text-white group-hover:text-primarylight"
-    >
+    <p class="flex items-center text-xs text-dark dark:text-bggray">
       <i class="uil uil-clock-five"></i>
-      <span>{{ moment().endOf('day').fromNow() }}</span>
+      <span>{{ moment(news.created_at).fromNow() }}</span>
     </p>
-    <h3 class="font-bold text-xl text-dark dark:text-bggray">{{ news.title }}</h3>
+    <h3 class="font-bold text-xl text-dark dark:text-bggray capitalize">{{ news.title }}</h3>
     <p
-      class="text-xs text-secondary line-clamp-3 dark:group-hover:text-white group-hover:text-primarylight"
-    >
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias quos aspernatur ab,
-      voluptate porro nam cupiditate fuga id debitis culpa nobis. Deserunt est pariatur, ducimus
-      aperiam dolorum cum soluta dicta?
-    </p>
-  </a>
+      class="text-xs text-dark dark:text-bggray line-clamp-3 group-hover:text-primarylight"
+      :innerHTML="description"
+    ></p>
+  </RouterLink>
 </template>
