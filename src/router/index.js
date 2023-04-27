@@ -144,5 +144,15 @@ export default createRouter({
       name: "HotlinesPage",
       component: () => import("../views/Government/Hotlines/HotlinesPage.vue")
     },
+    {
+      path: "/current-officials",
+      name: "CurrentOfficials",
+      component: () => import("../views/Government/CurrentOfficials/CurrentOfficials.vue")
+    },
+    {
+      path: "/former-officials",
+      name: "FormerOfficials",
+      component: () => import("../views/Government/FormerOfficials/FormerOfficials.vue")
+    },
   ]
 })

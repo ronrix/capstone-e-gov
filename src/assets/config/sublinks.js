@@ -26,6 +26,11 @@ export const government = [
     link: '/full-disclosure-report',
     title: 'full disclosure reports',
     desc: 'Transparency for disclosing of the budget of pililla'
+  },
+  {
+    link: '/official-seal',
+    title: 'Official Seal',
+    desc: 'Photographs and symbolisms of component of pililla logo'
   }
 ]
 
@@ -69,4 +74,5 @@ export const about = [
   { link: '/about/contacts', title: 'Contacts', desc: 'More about contact information of Pililla Rizal' },
   { link: '/about/history', title: 'History', desc: 'Read the history of pililla' },
   { link: '/about/mission-and-vision', title: 'Mission and Vision', desc: 'Our mission and vision' },
+  { link: '/about/FAQ', title: 'FAQs', desc: 'Frequently Asked Questions' },
 ]
