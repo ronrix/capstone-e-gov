@@ -11,7 +11,7 @@ function showFilter() {
 
 <template>
   <div class="w-full flex flex-col">
-    <p class="text-xs text-secondary dark:text-gray-100 font-light ml-3 mt-2 mb-1">
+    <p class="text-xs text-secondary dark:text-gray-100 font-light ml-3 mt-0 mb-1">
       filter by different barangay
     </p>
     <div
