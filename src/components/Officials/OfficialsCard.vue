@@ -1,4 +1,7 @@
 <script setup>
+defineProps({
+  official: { type: Object, required: false }
+})
 </script>
 <template>
   <div
@@ -8,12 +11,14 @@
       class="w-[100px] h-[100px] rounded-full overflow-hidden absolute -top-1/2 left-1/2 -translate-x-1/2 bg-white dark:bg-dark p-2"
     >
       <img
-        src="https://pilillarizal.gov.ph/wp-content/uploads/2022/12/hon-dan-v-masinsin_2.jpg"
+        :src="official?.img_link"
         alt="this is an image of the mayor of pililla rizal"
         class="rounded-full object-cover"
       />
     </div>
-    <h3 class="font-bold text-xl text-dark dark:text-bggray mt-5">Dan V. Masinsin</h3>
-    <h5 class="text-primary dark:text-primarylight">Mayor</h5>
+    <h3 class="font-bold text-xl text-dark dark:text-bggray mt-5">
+      {{ official?.executive_name }}
+    </h3>
+    <h5 class="text-primary dark:text-primarylight">{{ official?.position }}</h5>
   </div>
 </template>
