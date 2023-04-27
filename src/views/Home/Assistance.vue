@@ -20,7 +20,7 @@
     <!-- buttons -->
     <div class="flex items-center gap-5 mt-5">
       <button
-        class="text-sm sm:text-base px-3 py-2 bg-primary font-bold hover:bg-primarylight text-white rounded-md"
+        class="text-sm sm:text-base px-3 py-2 bg-primary font-bold hover:bg-primarylight text-white rounded-md shadow-lg shadow-primarylight/50"
       >
         Apply for Benefits
       </button>

@@ -7,10 +7,12 @@ import { ref, onMounted } from 'vue'
 import { axiosInstance } from '../../utils/axios-instance'
 import { useNewsStore } from '../../stores/news-store'
 import { be_url } from '../../assets/config/config'
+import Loading from '../../components/Loading.vue'
 
 const store = useNewsStore()
 const newsHeadlines = ref([])
 const loading = ref(true)
+const isError = ref()
 
 const axiosCall = () => {
   axiosInstance()
@@ -21,7 +23,12 @@ const axiosCall = () => {
       localStorage.setItem('hnd', JSON.stringify(newsHeadlines.value))
       loading.value = false // set the loading to false
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      loading.value = false
+      // display soomething is error
+      isError.value = err.response?.data?.res?.err?.msg
+    })
 }
 
 onMounted(() => {
@@ -36,11 +43,16 @@ onMounted(() => {
   </head>
 
   <HeaderSection />
-  <!-- content -->
-  <WrapperContainer class="mt-10">
-    <!-- skeleton loading animation -->
-    <div v-if="loading" class="h-[300px] w-full animate-pulse bg-slate-200"></div>
+  <!-- error occured -->
+  <WrapperContainer v-if="isError">
+    <h4 class="font-bold text-3xl text-center">{{ isError.msg }}</h4>
+    <p class="text-lg text-center">Error has occured.</p>
+  </WrapperContainer>
 
+  <!-- content -->
+  <WrapperContainer class="mt-10" v-else>
+    <!-- loading animation -->
+    <Loading v-if="loading" class="w-10 h-10 mx-auto" />
     <CurrentNews v-else :hotnews="newsHeadlines.slice(0, 3)" />
     <!-- all news -->
     <div class="mt-10 flex flex-col gap-8">
@@ -49,12 +61,9 @@ onMounted(() => {
         <div class="flex-1 h-[2px] bg-secondary"></div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-        <div v-if="loading" class="h-[200px] animate-pulse bg-slate-200"></div>
-        <div v-if="loading" class="h-[200px] animate-pulse bg-slate-200"></div>
-        <div v-if="loading" class="h-[200px] animate-pulse bg-slate-200"></div>
-        <div v-if="loading" class="h-[200px] animate-pulse bg-slate-200"></div>
-        <NewsCard v-for="news in newsHeadlines.slice(3)" v-else :key="news.id" :news="news" />
+      <Loading v-if="loading" class="w-10 h-10 mx-auto" />
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
+        <NewsCard v-for="news in newsHeadlines.slice(3)" :key="news.id" :news="news" />
       </div>
     </div>
   </WrapperContainer>
