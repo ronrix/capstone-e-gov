@@ -9,6 +9,7 @@ defineProps({
 
 function showServices(e) {
   document.querySelectorAll('.dropdown').forEach((el) => {
+    console.log(e.target.nextElementSibling);
     if (e.target.nextElementSibling === el) {
       return
     }
