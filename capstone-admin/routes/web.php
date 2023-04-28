@@ -35,16 +35,9 @@ Route::get("/", function () {
 Route::get('/login', [LoginController::class, "index"])->name("login.index");
 Route::get('/logout', [LoginController::class, "logout"]);
 
-// set an api token for SPA
-Route::get('/csrf-token', function () {
-    return response()->json(['token' => csrf_token()]);
-})->middleware("cors");
-
-
-// public get methods
-// get news json response data
+// get requests
 Route::get("/news", [NewsController::class, "getNews"])->middleware("cors");
-Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"])->middleware("cors");
+Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
 Route::get("/current-officials", [ExecutivesController::class, "index"])->middleware("cors");
 Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"])->middleware("cors");
 Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"])->middleware("cors");
@@ -64,36 +57,6 @@ Route::get("/contacts", [AboutController::class, "getContacts"])->middleware("co
 Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"])->middleware("cors");
 Route::get("/application-forms", [FilesController::class, "getApplicationForms"])->middleware("cors");
 Route::get("/file/download/{file}", [FilesController::class, "download"])->middleware("cors");
-
-// Broadcasting events
-Route::post("/event", [RequestNotificationController::class, 'eventHandler'])->middleware("cors");
-// Route::middleware(['auth:sanctum', 'cors'])->group(function () {
-//     // Route::get("/news", [NewsController::class, "getNews"]);
-//     // Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
-//     // Route::get("/current-officials", [ExecutivesController::class, "index"]);
-//     // Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"]);
-//     // Route::get("/barangay-officials", [ExecutivesController::class, "getBarangayOfficials"]);
-//     // Route::get("/department-heads", [ExecutivesController::class, "getDepartmentHeads"]);
-//     // Route::get("/job-postings", [JobPostingController::class, "index"]);
-//     // Route::get("/hotlines", [HotlinesController::class, "index"]);
-//     // Route::get("/populations", [PopulationController::class, "index"]);
-//     // Route::get("/tourist-attractions", [TourismController::class, "index"]);
-//     // Route::get("/festivals", [FestivalsController::class, "index"]);
-//     // Route::get("/businesses", [BusinessesController::class, "index"]);
-//     // Route::get("/apartments", [BusinessesController::class, "getAllApartments"]);
-//     // Route::get("/permits", [PermitController::class, "index"]);
-//     // Route::get("/services/{service}", [ServicesController::class, "get"]);
-//     // Route::get("/official-seal", [AboutController::class, "getOfficialSeal"]);
-//     // Route::get("/contacts", [AboutController::class, "getContacts"]);
-//     // // GET Files
-//     // Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"]);
-//     // Route::get("/application-forms", [FilesController::class, "getApplicationForms"]);
-//     // Route::get("/file/download/{file}", [FilesController::class, "download"]);
-
-//     // // Broadcasting events
-//     // Route::post("/event", [RequestNotificationController::class, 'eventHandler']);
-//     // Your protected routes go here...
-// });
 
 // government
 Route::middleware(["auth"])->group(function () {
