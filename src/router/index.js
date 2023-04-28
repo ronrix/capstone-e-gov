@@ -175,5 +175,11 @@ export default createRouter({
       component: () => import("../views/Government/DemographicProfile/DemographicProfile.vue")
 
     },
+    {
+      path: "/about/mission-and-vision",
+      name: "mission-and-vission",
+      component: () => import("../../src/views/About/Mission&Vission.vue")
+
+    },
   ]
 })
