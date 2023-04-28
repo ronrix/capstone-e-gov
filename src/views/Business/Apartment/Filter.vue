@@ -18,8 +18,8 @@ function showFilter() {
       class="cursor-pointer w-full sm:w-[50%] md:w-[15%] rounded-md border border-gray-300 ml-2 py-1 px-2 flex items-center justify-between gap-3 relative mb-3"
       @click="showFilter"
     >
-      <h1 class="text-sm lg:text-lg text-dark dark:text-white">Filter by</h1>
-      <i class="uil uil-filter text-lg lg:text-2xl text-dark dark:text-white"></i>
+      <h1 class="text-sm lg:text-lg text-gray-600 dark:text-white">Filter by</h1>
+      <i class="uil uil-filter text-lg lg:text-2xl text-gray-600 dark:text-white"></i>
       <!-- dropdown -->
       <div
         class="w-full hidden left-0 top-10 rounded-b-md dropdown absolute border bg-white dark:bg-dark border-gray-300"

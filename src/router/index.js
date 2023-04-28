@@ -132,6 +132,11 @@ export default createRouter({
       name: "Aparment",
       component: () => import("../views/Business/Apartment/ApartmentPage.vue")
     },
+    {
+    path: "/business-permit-and-licensing-office",
+    name: "Business Permit and Licensing Office",
+    component: () => import("../views/Business/BPLO/Bplo.vue")
+  },
 
     //business page end
     {
