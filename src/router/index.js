@@ -133,6 +133,11 @@ export default createRouter({
       path: "/programs-events",
       name: "Programs and Events",
       component: () => import("../views/ProgEvents/ProgEvents.vue")
-    }
+    },
+    {
+      path: "/about",
+      name: "About",
+      component: () => import("../../src/views/About/About.vue")
+    },
   ]
 })
