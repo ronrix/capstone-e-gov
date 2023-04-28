@@ -137,8 +137,14 @@ export default createRouter({
     name: "Business Permit and Licensing Office",
     component: () => import("../views/Business/BPLO/Bplo.vue")
   },
-
     //business page end
+
+    //about page
+    {
+      path: "/about/contacts",
+      name: "Contacts",
+      component: () => import("../views/About/Contacts/Contacts.vue")
+    },
     {
       path: "/job-op",
       name: "Job Opportunities",

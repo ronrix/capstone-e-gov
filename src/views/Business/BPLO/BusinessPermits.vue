@@ -27,7 +27,7 @@ function showPermitModal(){
             class="uil uil-angle-right-b text-gray-500 hover:text-gray-600 text-lg md:text-xl font-bold"
           ></i>
         </button>
-      </div>
+      </div>''
       <!-- business permit modal -->
       <BploModal v-if="isPermitModal" :show-permit-modal="showPermitModal" />
 </template>
