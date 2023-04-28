@@ -145,6 +145,11 @@ export default createRouter({
       component: () => import("../views/ProgEvents/ProgEvents.vue")
     },
     {
+      path: "/programs-events/:title(.*)",
+      name: "ProgramsEventsSubpage",
+      component: () => import("../views/ProgEvents/ProgEventsSubPage.vue")
+    },
+    {
       path: "/emergency-hotlines",
       name: "HotlinesPage",
       component: () => import("../views/Government/Hotlines/HotlinesPage.vue")

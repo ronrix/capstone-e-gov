@@ -1,40 +1,36 @@
 <script setup>
-import FooterSection from '../../../components/FooterSection/FooterSection.vue'
-import HeaderSection from '../../../components/Header/HeaderSection.vue'
-import SuggestionCard from './Suggestions/SuggestionCard.vue'
+import FooterSection from '../../components/FooterSection/FooterSection.vue'
+import HeaderSection from '../../components/Header/HeaderSection.vue'
 
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import moment from 'moment'
-import { useNewsStore } from '../../../stores/news-store'
-import { formatImgs } from '../../../utils/imgFormat'
+import { formatImgs } from '../../utils/imgFormat'
+import { useProgEventsStore } from '../../stores/prog-events-store'
 
-const store = useNewsStore()
+const store = useProgEventsStore()
 const useCustomStyles = ref(true) // Set to true if you want to apply custom styles, false otherwise
 
 // paremeter :title
 const route = useRoute()
-const newsTitle = computed(() => route.params.title.replace(/-/g, ' '))
-const news = ref()
+const pogEventsTitle = computed(() => route.params.title.replace(/-/g, ' '))
+const progEvents = ref()
 const description = ref('')
 const imgURL = ref()
-const suggestionNews = ref()
 
 const loadNews = () => {
-  if (store.getNews()) {
-    news.value = store.getOneNews(newsTitle.value)
-    suggestionNews.value = store.getNews().slice(0, 3)
+  if (store.getProgEvents()) {
+    progEvents.value = store.getOneProgEvents(pogEventsTitle.value)
   } else {
-    store.setNews(JSON.parse(localStorage.getItem('hnd')))
-    const newsData = JSON.parse(localStorage.getItem('hnd'))
-    news.value = newsData.find((n) => n.title.toLowerCase() == newsTitle.value)
-    suggestionNews.value = newsData.slice(0, 3)
+    store.setProgEvents(JSON.parse(localStorage.getItem('proge')))
+    const newsData = JSON.parse(localStorage.getItem('proge'))
+    progEvents.value = newsData.find((n) => n.title.toLowerCase() == pogEventsTitle.value)
   }
 
-  description.value = DOMPurify.sanitize(marked.parse(news.value.description))
-  imgURL.value = formatImgs(news.value.img_link.split(','))[0]
+  description.value = DOMPurify.sanitize(marked(progEvents.value.description))
+  imgURL.value = formatImgs(progEvents.value.img_link.split(','))[0]
 }
 
 onMounted(() => {
@@ -62,10 +58,10 @@ onMounted(() => {
       <div v-else class="flex flex-col gap-3 items-start flex-[3]">
         <p class="flex items-center text-xs text-secondary">
           <i class="uil uil-clock-five mr-2"></i>
-          <span>{{ moment(news?.created_at).fromNow() }}</span>
+          <span>{{ moment(progEvents?.created_at).fromNow() }}</span>
         </p>
         <h3 class="font-bold text-2xl text-dark dark:text-bggray sm:w-1/2 capitalize">
-          {{ news?.title }}
+          {{ progEvents?.title }}
         </h3>
 
         <img class="w-full" :src="imgURL" alt="" />
@@ -75,12 +71,6 @@ onMounted(() => {
           :class="{ markdown: useCustomStyles }"
           :innerHTML="description"
         ></div>
-      </div>
-
-      <!-- suggestions -->
-      <div class="flex-1">
-        <h4 class="font-bold text-sm text-dark dark:text-bggray mb-5">Suggestions</h4>
-        <SuggestionCard v-for="a in suggestionNews" :key="a.id" :news="a" />
       </div>
     </div>
   </WrapperContainer>
