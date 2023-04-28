@@ -12,9 +12,14 @@ export const useTourism = defineStore('tourism', () => {
     tourism.value = data;
   }
 
+  function getOneTourism(title) {
+    const temp = tourism.value.find(n => n.title.toLowerCase() == title);
+    return temp;
+  }
+
   function getTopThreeTourism() {
     return tourism.value.slice(0, 3);
   }
 
-  return { tourism, setTourism, getTourism, getTopThreeTourism }
+  return { tourism, setTourism, getTourism, getTopThreeTourism, getOneTourism }
 })

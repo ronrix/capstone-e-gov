@@ -169,5 +169,10 @@ export default createRouter({
       name: "demographicProfile",
       component: () => import("../views/Government/DemographicProfile/DemographicProfile.vue")
     },
+    {
+      path: "/tourist-attractions/:title(.*)",
+      name: "TouristAttractionsSubPage",
+      component: () => import("../views/Tourism/TourismSubpage/TourismSubpage.vue")
+    },
   ]
 })

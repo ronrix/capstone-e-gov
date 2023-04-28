@@ -1,43 +1,13 @@
 <script setup>
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
+import { onMounted, ref } from 'vue'
+import { formatImgs } from '../../utils/imgFormat'
 
-const sample_data = [
-  {
-    placeName: 'Pililla Wind Farm',
-    address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-    imgSrc:
-      'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1000&h=-1&s=1'
-  },
-  {
-    placeName: 'Pililla Wind Farm',
-    address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-    imgSrc:
-      'https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/274579439_2419634788171057_6700194066240640258_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeHUaaI-kyM3lhpYUkNDvkobeTkfTFeFN5F5OR9MV4U3kV80MePrW1SKq06pbp3sW46NZSuH74c8GFQv_JGBw2PG&_nc_ohc=-BS42dF_KM8AX-pnn5m&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfADlapiutu3bBB5gJvkeC6s2ZiZuVJ6Rf_l2O8AxoadSA&oe=643B06E0'
-  },
-  {
-    placeName: 'Pililla Wind Farm',
-    address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-    imgSrc: 'https://boyplakwatsa.files.wordpress.com/2014/04/rizal-tour-march-15-2014-orig-011.jpg'
-  },
-  {
-    placeName: 'Pililla Wind Farm',
-    address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-    imgSrc: 'https://boyplakwatsa.files.wordpress.com/2014/04/rizal-tour-march-15-2014-orig-016.jpg'
-  },
-  {
-    placeName: 'Pililla Wind Farm',
-    address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-    imgSrc:
-      'http://www.wewander.ph/wp-content/uploads/2019/06/Screen-Shot-2019-06-30-at-9.24.59-AM-17-1024x573.jpg'
-  },
-  {
-    placeName: 'Pililla Wind Farm',
-    address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
-    imgSrc:
-      'https://scontent.fmnl25-3.fna.fbcdn.net/v/t1.18169-9/21463264_723063031236582_3787492010373736874_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeGIY4L9pBdoV6owxxaM3qz6AUhNlLooBokBSE2UuigGieTTzmdJs4wfiRbjiH7XiZmN7auhOamha3T1YTU0_xEu&_nc_ohc=u57Q0U-NgL0AX8nCIig&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfDP9Ut1WmQ8Vh-6CpAy-3Ve-YGIjxJd1Aiqs31yKaQWng&oe=645DB68E'
-  }
-]
+const tourism = ref()
+onMounted(() => {
+  tourism.value = JSON.parse(localStorage.getItem('tourisms'))
+})
 </script>
 <template>
   <head>
@@ -45,55 +15,53 @@ const sample_data = [
   </head>
 
   <HeaderSection></HeaderSection>
-<WrapperContainer>
-  <div class="grid place-items-center mt-10 justify-center">
-    <div class="text-center max-w-2xl">
-      <p class="text-2xl sm:text-3xl md:text-5xl font-semibold font-['display'] text-dark dark:text-bggray">
-        <span class="text-primary">Travel</span> Around the beautiful places in Pililla
-      </p>
-    </div>
-  </div>
-    <div class="flex justify-center relative">
-      <img class=" w-[600px] absolute  bg-center" src="../../../public/images/Tourismbg-Circle.png">
-    <div 
-    class="flex pt-5"
-    >
-      <img
-        class="sm:w-[210px] w-[160px] z-10"
-        src="https://www.pngaaa.com/api-download/1853846"
-        alt=""
-      />
-      <img
-        class="sm:w-[200px] w-[100px] -translate-x-14"
-        src="https://i.postimg.cc/63XWfN0Z/kisspng-travel-package-tour-woman-japan-vacation-rameshwaram-devbhoomi-5b3ab8e2ee6588-22845129153057.png"
-        alt=""
-      />
-    </div>
-  </div>
-
-   
-  </WrapperContainer>
-    <div
-      class="flex justify-between h-auto w-full  text-white bg-primary items-center p-5 -translate-y-5 sm:-translate-y-0"
-    >
-      <div class="text-center flex-1 px-3">
-        <p class="pt-2 text-xs lg:text-sm">
-          Travel around Pililla to the beauty of nature easily and safely.
+  <WrapperContainer>
+    <div class="grid place-items-center mt-10 justify-center">
+      <div class="text-center max-w-2xl">
+        <p class="text-4xl md:text-7xl font-semibold font-['display'] text-dark dark:text-bggray">
+          <span class="text-primary">Travel</span> Around the beautiful places in Pililla
         </p>
       </div>
-      <div class="lg:text-2xl font-['display'] text-center border-2 border-y-0 flex-1 z-10">
-        <p>Better Pililla</p>
-        <p>A better community</p>
-        <p>A better Home</p>
-      </div>
-      <div class="flex-1 text-center px-3">
-        <p class="pt-2 text-xs lg:text-sm">“ Pamunuang mapagmahal at mapagkalinga ”</p>
+    </div>
+    <div class="flex justify-center relative">
+      <img
+        class="w-[600px] absolute bg-center object-cover"
+        src="../../../public/images/Tourismbg-Circle.png"
+      />
+      <div class="flex pt-5">
+        <img
+          class="sm:w-[210px] w-[160px] z-10 object-cover"
+          src="https://www.pngaaa.com/api-download/1853846"
+          alt=""
+        />
+        <img
+          class="sm:w-[200px] w-[100px] -translate-x-14 object-cover"
+          src="https://i.postimg.cc/63XWfN0Z/kisspng-travel-package-tour-woman-japan-vacation-rameshwaram-devbhoomi-5b3ab8e2ee6588-22845129153057.png"
+          alt=""
+        />
       </div>
     </div>
- 
+  </WrapperContainer>
+  <div
+    class="flex justify-between h-auto w-full text-white bg-primary items-center p-5 -translate-y-5 sm:-translate-y-0"
+  >
+    <div class="text-center flex-1 px-3">
+      <p class="pt-2 text-xs lg:text-sm">
+        Travel around Pililla to the beauty of nature easily and safely.
+      </p>
+    </div>
+    <div class="lg:text-2xl font-['display'] text-center border-2 border-y-0 flex-1 z-10">
+      <p>Better Pililla</p>
+      <p>A better community</p>
+      <p>A better Home</p>
+    </div>
+    <div class="flex-1 text-center px-3">
+      <p class="pt-2 text-xs lg:text-sm">“ Pamunuang mapagmahal at mapagkalinga ”</p>
+    </div>
+  </div>
 
   <!-- banner -->
-  <div class="w-full sm:pt-10 pb-10 ">
+  <div class="w-full sm:pt-10 pb-10">
     <img
       class="w-full object-cover z-10"
       src="https://pilillarizal.gov.ph/wp-content/uploads/2022/10/pililla_painting-1024x326.png"
@@ -102,58 +70,64 @@ const sample_data = [
   </div>
 
   <WrapperContainer>
-    <div class="flex justify-between">
-      <p
-        class="font-['display'] text-sm lg:text-4xl font-semibold w-1/4 text-dark dark:text-bggray"
-      >
+    <div class="flex justify-between items-center">
+      <p class="font-['display'] text-3xl font-semibold w-1/2 text-dark dark:text-bggray">
         Find your best destination.
       </p>
       <div>
         <p class="text-xs pb-1 text-secondary">We have more destination you can</p>
-        <div class="relative">
+        <div
+          class="relative flex items-center justify-center drop-shadow-lg rounded-3xl text-sm bg-gray-100 text-dark px-3 py-2"
+        >
+          <i class="uil uil-map-marker text-base text-dark mr-2" />
           <input
-            class="h-10 w-60 sm:w-80 pl-10 drop-shadow-lg rounded-3xl outline-cyan-300 text-[12px] bg-gray-100"
+            class="bg-transparent w-full outline-none"
             type="text"
             placeholder="Search destinations"
           />
-          <i class="uil uil-search absolute right-[20px] top-[8px] z-50 text-white" />
-          <div
-            class="rounded-full h-[30px] w-[30px] absolute right-[12px] top-[6px] flex items-center justify-center"
-            style="background-color: rgb(185, 43, 39)"
-          />
-          <i class="uil uil-map-marker text-gray-400 absolute left-[12px] top-[10px]" />
-        </div>
-      </div>
-    </div>
-  </WrapperContainer>
-  <WrapperContainer>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5">
-      <div
-        v-for="(data, idx) in sample_data"
-        :key="idx"
-        class="flex flex-col drop-shadow-lg bg-white  "
-      >
-        <img class="object-cover h-[250px] w-full" :src="data.imgSrc" alt="" />
-        <div class="py-5 px-3">
-          <p class="font-semibold">
-            {{ data.placeName }}
-          </p>
-          <div class="flex">
-            <i class="uil uil-map-marker text-cyan-300 relative bottom-[2px]" />
-            <p class="text-[12px] ml-1">
-              {{ data.address }}
-            </p>
+          <div class="w-12 h-10 rounded-full bg-primarylight flex items-center justify-center">
+            <i class="uil uil-search text-white text-base" />
           </div>
         </div>
       </div>
     </div>
   </WrapperContainer>
-  <div class="w-full sm:pt-10 pb-10 ">
+  <WrapperContainer>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 gap-5">
+      <RouterLink
+        v-for="data in tourism"
+        :key="data.id"
+        :to="
+          '/tourist-attractions/' +
+          data.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()
+        "
+        class="flex flex-col border hover:drop-shadow-lg bg-white dark:bg-dark"
+      >
+        <img
+          class="object-cover h-[250px] w-full"
+          :src="formatImgs(data.img_link.split(','))"
+          alt=""
+        />
+        <div class="py-5 px-3">
+          <p class="font-semibold text-dark dark:text-bggray">
+            {{ data.title }}
+          </p>
+          <div class="flex text-dark dark:text-bggray">
+            <i class="uil uil-map-marker text-cyan-300 relative bottom-[2px]" />
+            <p class="text-[12px] ml-1">
+              {{ data.location }}
+            </p>
+          </div>
+        </div>
+      </RouterLink>
+    </div>
+  </WrapperContainer>
+  <div class="w-full sm:pt-10 pb-10">
     <img
-      class="w-full object-cover "
+      class="w-full object-cover"
       src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t1.6435-9/191386880_938732806972664_5846277956740923314_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_ohc=QayRsvU0LScAX9gCBHW&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfA99OLmudJoWqDWC_sOSNecGTqHnIS-s2T6WE2LBHQApg&oe=646F6BF9"
       alt=""
-    >
-</div>
+    />
+  </div>
   <FooterSection></FooterSection>
 </template>
