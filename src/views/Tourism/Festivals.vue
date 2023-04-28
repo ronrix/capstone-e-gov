@@ -36,7 +36,7 @@ function hoverout(){
     </div>
   </div>
     <p :class="{'!text-white' :texthover, 'text-white  sm:!text-dark dark:!text-bggray' :!texthover}" class=" drop-shadow-md sm:pl-10 text-7xl md:text-7xl lg:text-8xl font-bold  absolute sm:top-60 -bottom-48 ">
-        Pililla Rizal<span class="block font-['display'] italic text-bggray sm:text-red-600">Festival</span>
+        Pililla Rizal<span :class="{'!text-white' :texthover, 'text-white  sm:text-red-600 dark:!text-bggray' :!texthover}" class="block font-['display'] italic text-bggray sm:text-red-600">Festival</span>
       </p>
     </div>
     <WrapperContainer>
