@@ -271,7 +271,7 @@ Pililla Wind Farm is a renewable energy project developed by Alternergy Philippi
             "authors" => "Martin Arce",
             "category" => "Biking Trail",
             "description" => trim('
-## Biking Through Nature has Best
+## Biking Through Nature\'s Best
 The Tanay-Pililla Bike Trail is a breathtaking adventure that takes you through some of the most beautiful natural landscapes in the Philippines. The trail starts from the town of Tanay and winds its way through the scenic countryside towards Pililla. As you pedal along, you will be treated to stunning views of majestic mountains, crystal-clear rivers, and lush green forests.
 
 The trail is suitable for all levels of riders, from beginners to experienced cyclists. It offers a mix of flat and hilly terrain, making it both challenging and fun. Along the way, you will encounter friendly locals and get a taste of rural life in the Philippines.
@@ -287,7 +287,7 @@ The Tanay-Pililla Bike Trail is a perfect getaway from the hustle and bustle of 
             "authors" => "Martin Arce",
             "category" => "Park",
             "description" => trim('
-## The Haven of Nature
+## Nature\'s Haven
 Pililla Eco Park is a lush green paradise tucked away in the heart of Rizal, Philippines. This serene oasis is the perfect escape from the chaos of city life, offering a peaceful and relaxing environment for visitors. The park features a swimming pool, picnic areas, and a playground for kids, making it an ideal destination for families.
 
 Surrounded by verdant hills and trees, the park offers a picturesque view of the town of Pililla. The air is fresh and clean, and the sound of birds chirping and leaves rustling is a soothing melody that will calm your soul.
@@ -355,7 +355,7 @@ It is a 2nd class urban municipality in the province of Rizal, Philippines.  Acc
 Pililla is just few kilometers away from Tanay, Rizal. It is surrounded by farms, small mountains, planes and trees. Its nearby provinces are Laguna and Quezon. 
 Pililla is a great place to experience the true culture of a province. It has preserved some religious and non-religious tradition such as the Santa Cruzan or Flores de Mayo, wherein beautiful men and women walk all over town on their gowns. Town Fiesta during the month of July is being visited by people from the city to experience great celebrations especially the amateur shows at night. Like other towns, Pililla holds basketball league competitions for youth during summer. Pililla is also a favorite destination of road cyclists because of its asphalted road specifically in Sitio Bugarin in Barangay Halayhayin. 
             '),
-            "img_link" => "https://www.rizalprovince.ph/tourism/rizal%20major%20tourist%20destination%20and%20festivals/baras/tromba%20festival/tromba%20(1).jpg"
+            "img_link" => "https://www.rizalprovince.ph/tourism/rizal%20major%20tourist%20destination%20and%20festivals/baras/tromba%20festival/tromba%20(1).jpg",
         ]);
         Festival::factory()->create([
             'title' => "Magsolangtan Festival",
@@ -374,7 +374,7 @@ Pililla is a great place to experience the true culture of a province. It has pr
             
             Overall, the Magsolangtan Festival is a fantastic way to experience the local culture and traditions of Pililla, Rizal while enjoying an exciting and lively celebration. 
             '),
-            "img_link" => "https://www.localguidesconnect.com/t5/image/serverpage/image-id/901602i9309756AF08A07CA/image-size/large?v=v2&px=999"
+            "img_link" => "https://www.localguidesconnect.com/t5/image/serverpage/image-id/901602i9309756AF08A07CA/image-size/large?v=v2&px=999",
         ]);
 
         # BUSINESSES
