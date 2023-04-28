@@ -1,17 +1,22 @@
 <script setup>
 import moment from 'moment'
+import { RouterLink } from 'vue-router'
+import { formatImgs } from '../../utils/imgFormat'
 
-defineProps({
+const imgURL = formatImgs(props.news.img_link.split(','))
+
+const props = defineProps({
   news: { type: Object, required: true }
 })
 </script>
 
 <template>
-  <div
-    class="flex items-center justify-center hover:shadow-lg hover:scale-[1.010] cursor-pointer gap-x-3 p-3"
+  <RouterLink
+    :to="'/news/' + news.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()"
+    class="flex items-center justify-center hover:shadow-lg cursor-pointer gap-x-5"
   >
     <!-- left -->
-    <div class="flex-1 flex flex-col items-start justify-between h-full gap-2">
+    <div class="flex-1 flex flex-col items-start justify-start h-full gap-5">
       <div>
         <h5 class="text-xs sm:text-base font-bold text-dark dark:text-bggray capitalize">
           By {{ news.authors }}
@@ -21,19 +26,14 @@ defineProps({
           <span>{{ moment().endOf('day').fromNow() }}</span>
         </p>
       </div>
-      <h3 class="font-bold text-base lg:text-2xl text-dark dark:text-bggray">{{ news.title }}</h3>
-      <a
-        :href="'/news/' + news.title"
-        type="button"
-        class="text-dark capitalize text-sm hover:text-primarylight dark:text-bggray"
-      >
-        read more
-      </a>
+      <h3 class="font-bold text-base lg:text-2xl text-dark dark:text-bggray capitalize">
+        {{ news.title }}
+      </h3>
     </div>
 
     <!-- right -->
     <div class="flex-1 overflow-hidden">
-      <img class="w-full object-cover" :src="news.thumbnail" alt="" />
+      <img class="w-full object-cover" :src="imgURL" alt="" />
     </div>
-  </div>
+  </RouterLink>
 </template>

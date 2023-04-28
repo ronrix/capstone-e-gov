@@ -1,6 +1,10 @@
 <script setup>
 import { RouterLink } from 'vue-router'
-import { headlines } from '../../assets/data/news'
+import { formatImgs } from '../../utils/imgFormat'
+
+defineProps({
+  hotnews: { type: Array, required: true }
+})
 </script>
 <template>
   <div class="flex flex-col items-center justify-center">
@@ -12,17 +16,17 @@ import { headlines } from '../../assets/data/news'
 
     <div class="flex flex-col sm:flex-row items-center">
       <div
-        v-for="n in headlines.slice(0, 3)"
+        v-for="n in hotnews"
         :key="n.id"
         class="p-5 flex flex-col justify-end mt-5 h-[500px] w-full bg-no-repeat bg-cover group overflow-hidden"
-        :style="{ backgroundImage: 'url(' + n.thumbnail + ')' }"
+        :style="{ backgroundImage: 'url(' + formatImgs(n.img_link.split(','))[0] + ')' }"
       >
         <div
           class="duration-500 translate-y-10 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 flex flex-col items-start"
         >
-          <h3 class="font-bold text-xl md:text-3xl text-white w-3/4">{{ n.title }}</h3>
+          <h3 class="font-bold text-xl md:text-3xl text-white w-3/4 capitalize">{{ n.title }}</h3>
           <RouterLink
-            :to="'/news/' + n.title"
+            :to="'/news/' + n.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()"
             type="button"
             class="bg-white px-3 py-1 font-bold text-dark capitalize rounded-md flex items-center active:-translate-y-1 mt-5"
           >

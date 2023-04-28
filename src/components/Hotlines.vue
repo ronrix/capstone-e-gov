@@ -1,33 +1,24 @@
 <script setup>
-const hotlines = [
-  {
-    id: 1,
-    dep: 'Beureau of Fire Protection',
-    nums: [
-      { name: 'smart', num: '098091283209' },
-      { name: 'globe', num: '098091283209' },
-      { name: 'landline', num: '0980912' }
-    ]
-  },
-  {
-    id: 1,
-    dep: 'Police departmment',
-    nums: [
-      { name: 'smart', num: '098091283209' },
-      { name: 'globe', num: '098091283209' },
-      { name: 'landline', num: '0980912' }
-    ]
-  },
-  {
-    id: 1,
-    dep: 'Ambulance number',
-    nums: [
-      { name: 'smart', num: '098091283209' },
-      { name: 'globe', num: '098091283209' },
-      { name: 'landline', num: '0980912' }
-    ]
-  }
-]
+import { onMounted, ref } from 'vue'
+import { fetchData } from '../utils/axios-instance'
+import { useHotlineStore } from '../stores/hotlines-store'
+
+const store = useHotlineStore()
+const hotlines = ref()
+
+const axiosTourisms = () => {
+  fetchData('/hotlines')
+    .then((data) => {
+      hotlines.value = data.hotlines
+      store.setHotlines(data.hotlines)
+      localStorage.setItem('hotlines', JSON.stringify(data.hotlines))
+    })
+    .catch((err) => console.log(err))
+}
+
+onMounted(() => {
+  axiosTourisms()
+})
 </script>
 
 <template>
@@ -44,17 +35,13 @@ const hotlines = [
     </div>
     <WrapperContainer class="grid grid-cols-2 items-center w-full">
       <div v-for="n in hotlines" :key="n.id" class="p-3">
-        <h6 class="sm:text-base flex-1 font-bold text-dark dark:text-bggray !text-3xl">
-          {{ n.dep }}
+        <h6 class="sm:text-base flex-1 font-bold text-dark dark:text-bggray !text-2xl capitalize">
+          {{ n.department }}
         </h6>
         <div class="flex-1">
-          <p
-            v-for="(num, id) in n.nums"
-            :key="id"
-            class="text-sm sm:text-base rounded-lg text-dark dark:text-bggray"
-          >
-            0909112908312 ({{ num.name }})
-          </p>
+          <p class="text-sm sm:text-base rounded-lg text-dark dark:text-bggray">{{ n.smart }}</p>
+          <p class="text-sm sm:text-base rounded-lg text-dark dark:text-bggray">{{ n.globe }}</p>
+          <p class="text-sm sm:text-base rounded-lg text-dark dark:text-bggray">{{ n.landline }}</p>
         </div>
       </div>
     </WrapperContainer>

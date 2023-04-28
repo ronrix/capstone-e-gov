@@ -14,7 +14,7 @@ export default createRouter({
       component: () => import("../views/News/News.vue")
     },
     {
-      path: "/news/:title",
+      path: "/news/:title(.*)",
       name: "NewsSubPage",
       component: () => import("../views/News/NewsSubPage/NewsSubPage.vue")
     },
@@ -122,8 +122,23 @@ export default createRouter({
       name: "Business",
       component: () => import("../views/Business/Landing page/Business.vue")
     },
+    {
+      path: "/business-establishment",
+      name: "Business Establishment",
+      component: () => import("../views/Business/Business Esablsihment/BusinessEstablishment.vue")
+    },
+    {
+      path: "/apartments",
+      name: "Aparment",
+      component: () => import("../views/Business/Apartment/ApartmentPage.vue")
+    },
+    {
+    path: "/business-permit-and-licensing-office",
+    name: "Business Permit and Licensing Office",
+    component: () => import("../views/Business/BPLO/Bplo.vue")
+  },
 
-    //business page starts
+    //business page end
     {
       path: "/job-op",
       name: "Job Opportunities",
@@ -135,9 +150,30 @@ export default createRouter({
       component: () => import("../views/ProgEvents/ProgEvents.vue")
     },
     {
-      path: "/about",
-      name: "About",
-      component: () => import("../../src/views/About/About.vue")
+      path: "/programs-events/:title(.*)",
+      name: "ProgramsEventsSubpage",
+      component: () => import("../views/ProgEvents/ProgEventsSubPage.vue")
+    },
+    {
+      path: "/emergency-hotlines",
+      name: "HotlinesPage",
+      component: () => import("../views/Government/Hotlines/HotlinesPage.vue")
+    },
+    {
+      path: "/current-officials",
+      name: "CurrentOfficials",
+      component: () => import("../views/Government/CurrentOfficials/CurrentOfficials.vue")
+    },
+    {
+      path: "/former-officials",
+      name: "FormerOfficials",
+      component: () => import("../views/Government/FormerOfficials/FormerOfficials.vue")
+    },
+    {
+      path: "/demographic-profile",
+      name: "demographicProfile",
+      component: () => import("../views/Government/DemographicProfile/DemographicProfile.vue")
+
     },
   ]
 })

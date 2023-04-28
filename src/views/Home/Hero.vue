@@ -1,5 +1,23 @@
 <script setup>
+import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { fetchData } from '../../utils/axios-instance'
+import { ref } from 'vue'
+import moment from 'moment'
+
+const time = ref()
+
+const axiosRequestTime = () => {
+  fetchData('/server-time')
+    .then((data) => {
+      time.value = data?.time?.date
+    })
+    .catch((err) => console.log(err))
+}
+
+onMounted(() => {
+  axiosRequestTime()
+})
 </script>
 
 <template>
@@ -31,7 +49,7 @@ import { RouterLink } from 'vue-router'
         Get to know the places in pililla
       </h3>
       <RouterLink
-        to="/tourism"
+        to="/tourist-attractions"
         class="text-sm sm:text-base capitalize bg-primary rounded-md text-white px-3 py-1 cursor-pointer hover:bg-primarylight font-bold"
       >
         <i class="uil uil-map-marker-question mr-2" />
@@ -39,8 +57,10 @@ import { RouterLink } from 'vue-router'
       </RouterLink>
 
       <!-- datetime -->
-      <p class="text-sm sm:text-base font-bold text-dark dark:text-bggray">
-        {{ new Date() }}
+      <p
+        class="text-base sm:text-lg font-bold text-dark dark:text-bggray absolute bottom-2 left-10"
+      >
+        {{ moment(time).format('dddd, MMMM Do YYYY, h:mm:ss a') }}
       </p>
     </WrapperContainer>
   </div>
