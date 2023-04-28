@@ -183,8 +183,8 @@ export default createRouter({
     },
     {
       path: "/about/mission-and-vision",
-      name: "mission-and-vission",
-      component: () => import("../../src/views/About/Mission&Vission.vue")
+      name: "mission-and-vision",
+      component: () => import("../../src/views/About/Mission&Vision.vue")
 
     },
   ]

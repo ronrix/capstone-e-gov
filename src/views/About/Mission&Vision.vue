@@ -5,7 +5,7 @@ import HeaderSection from '../../components/Header/HeaderSection.vue'
 
 <template>
   <head>
-    <title>Mission & Vission</title>
+    <title>Mission & Vision</title>
   </head>
   <HeaderSection></HeaderSection>
   <WrapperContainer>
