@@ -3,8 +3,7 @@ import { onMounted, ref } from 'vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import OfficialsCard from '../../../components/Officials/OfficialsCard.vue'
-import { axiosInstance } from '../../../utils/axios-instance'
-import { be_url } from '../../../assets/config/config'
+import { fetchData } from '../../../utils/axios-instance'
 import Loading from '../../../components/Loading.vue'
 
 const loading = ref(true)
@@ -13,9 +12,8 @@ const viceMayor = ref()
 const officials = ref([])
 
 const axiosCall = () => {
-  axiosInstance()
-    .get(be_url + '/current-officials', { withCredentials: true })
-    .then(({ data }) => {
+  fetchData('/current-officials')
+    .then((data) => {
       officials.value = data.currentOfficials.filter(
         (official) => !official.position.includes('mayor')
       )

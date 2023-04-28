@@ -4,9 +4,8 @@ import HeaderSection from '../../components/Header/HeaderSection.vue'
 import CurrentNews from './CurrentNews.vue'
 import NewsCard from './NewsCard.vue'
 import { ref, onMounted } from 'vue'
-import { axiosInstance } from '../../utils/axios-instance'
+import { fetchData } from '../../utils/axios-instance'
 import { useNewsStore } from '../../stores/news-store'
-import { be_url } from '../../assets/config/config'
 import Loading from '../../components/Loading.vue'
 
 const store = useNewsStore()
@@ -15,9 +14,8 @@ const loading = ref(true)
 const isError = ref()
 
 const axiosCall = () => {
-  axiosInstance()
-    .get(be_url + '/news', { withCredentials: true })
-    .then(({ data }) => {
+  fetchData('/news')
+    .then((data) => {
       newsHeadlines.value = data.news
       store.setNews(data.news)
       localStorage.setItem('hnd', JSON.stringify(newsHeadlines.value))
@@ -50,7 +48,7 @@ onMounted(() => {
   </WrapperContainer>
 
   <!-- content -->
-  <WrapperContainer class="mt-10" v-else>
+  <WrapperContainer v-else class="mt-10">
     <!-- loading animation -->
     <Loading v-if="loading" class="w-10 h-10 mx-auto" />
     <CurrentNews v-else :hotnews="newsHeadlines.slice(0, 3)" />

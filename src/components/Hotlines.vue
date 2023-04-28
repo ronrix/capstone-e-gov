@@ -1,17 +1,14 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { be_url } from '../assets/config/config'
-import { axiosInstance } from '../utils/axios-instance'
+import { fetchData } from '../utils/axios-instance'
 import { useHotlineStore } from '../stores/hotlines-store'
 
 const store = useHotlineStore()
 const hotlines = ref()
 
 const axiosTourisms = () => {
-  axiosInstance()
-    .get(be_url + '/hotlines', { withCredentials: true })
-    .then(({ data }) => {
-      console.log(data)
+  fetchData('/hotlines')
+    .then((data) => {
       hotlines.value = data.hotlines
       store.setHotlines(data.hotlines)
       localStorage.setItem('hotlines', JSON.stringify(data.hotlines))

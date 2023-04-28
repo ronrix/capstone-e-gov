@@ -7,17 +7,15 @@ import Hotlines from '../../components/Hotlines.vue'
 import Hero from './Hero.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import { onMounted, ref } from 'vue'
-import { be_url } from '../../assets/config/config'
-import { axiosInstance } from '../../utils/axios-instance'
+import { fetchData } from '../../utils/axios-instance'
 import { useTourism } from '../../stores/tourisms-store'
 
 const store = useTourism()
 const places = ref()
 
 const axiosTourisms = () => {
-  axiosInstance()
-    .get(be_url + '/tourist-attractions', { withCredentials: true })
-    .then(({ data }) => {
+  fetchData('/tourist-attractions')
+    .then((data) => {
       places.value = data.tourism.slice(0, 3)
       store.setTourism(data.tourism)
       localStorage.setItem('tourisms', JSON.stringify(data.tourism))

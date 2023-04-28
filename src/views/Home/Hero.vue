@@ -1,17 +1,15 @@
 <script setup>
 import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
-import { axiosInstance } from '../../utils/axios-instance'
+import { fetchData } from '../../utils/axios-instance'
 import { ref } from 'vue'
 import moment from 'moment'
-import { be_url } from '../../assets/config/config'
 
 const time = ref()
 
 const axiosRequestTime = () => {
-  axiosInstance()
-    .get(be_url + '/server-time', { withCredentials: true })
-    .then(({ data }) => {
+  fetchData('/server-time')
+    .then((data) => {
       time.value = data?.time?.date
     })
     .catch((err) => console.log(err))
