@@ -34,9 +34,11 @@ const props = defineProps({
 })
 </script>
 <template>
-  <ul class="w-full border text-bggray">
+  <ul class="w-full border dark:border-dark text-bggray">
     <li class="flex items-center bg-primarylight">
-      <p class="flex-1 border border-y-0 border-l-0 border-bggray font-bold p-3">Barangays</p>
+      <p class="flex-1 border border-y-0 border-l-0 border-bggray dark:border-dark font-bold p-3">
+        Barangays
+      </p>
       <p class="flex-1 font-bold p-3">
         {{ tableType === 'census' ? `Population (Census ${population.census_year})` : 'Household' }}
       </p>
@@ -44,11 +46,13 @@ const props = defineProps({
     <li
       v-for="(pop, id) in barangays"
       :key="pop?.barangay"
-      class="text-dark flex items-center"
-      :class="{ 'bg-slate-100': id % 2, 'bg-white': !(id % 2) }"
+      class="text-dark dark:text-bggray flex items-center"
+      :class="{ 'bg-slate-100 dark:bg-secondary': id % 2, 'bg-white dark:bg-dark': !(id % 2) }"
     >
-      <p class="flex-1 p-3 border border-l-0 border-t-0 capitalize">{{ pop?.barangay }}</p>
-      <p class="flex-1 p-3 border border-x-0 border-t-0">
+      <p class="flex-1 p-3 border border-l-0 border-t-0 dark:border-dark capitalize">
+        {{ pop?.barangay }}
+      </p>
+      <p class="flex-1 p-3 border border-x-0 border-t-0 dark:border-dark">
         {{
           tableType === 'census'
             ? new Intl.NumberFormat().format(pop?.population)
@@ -57,7 +61,7 @@ const props = defineProps({
       </p>
     </li>
     <li class="flex items-center bg-primarylight">
-      <p class="flex-1 border border-y-0 border-l-0 border-bggray font-bold p-3">Total</p>
+      <p class="flex-1 border border-y-0 border-l-0 dark:border-dark font-bold p-3">Total</p>
       <p class="flex-1 font-bold p-3">
         {{
           tableType === 'census'

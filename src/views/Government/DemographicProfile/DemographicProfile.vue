@@ -89,8 +89,10 @@ onMounted(() => {
   <WrapperContainer class="mt-14">
     <div class="flex flex-col gap-3">
       <h1 class="text-base font-bold text-primarylight">Demographics</h1>
-      <h3 class="text-5xl font-bold w-1/2">The Population of Pililla, Rizal</h3>
-      <p class="text-dark">
+      <h3 class="text-5xl font-bold w-1/2 text-dark dark:text-bggray">
+        The Population of Pililla, Rizal
+      </h3>
+      <p class="text-dark dark:text-bggray">
         The total population of Pililla has been rising and falling between 1995 and 2015. There was
         2.03 percent increase between 1995 and 2000 but there was also a steep drop of -3% between
         2007 and 2010. The simple average of the population figure shows a mere 0.23% increase over
@@ -114,13 +116,13 @@ onMounted(() => {
     <Loading v-if="loading" class="w-14 h-14 mx-auto" />
     <PopulationTable v-else :population="selectedCensus" table-type="census" />
     <!-- population size -->
-    <h4 class="font-bold text-2xl mt-14">The population size</h4>
-    <p class="mb-3">
+    <h4 class="font-bold text-2xl mt-14 text-dark dark:text-bggray">The population size</h4>
+    <p class="mb-3 text-dark dark:text-bggray">
       According to the latest PSA Census, Pililla had
       {{ new Intl.NumberFormat().format(selectedCensus?.total_population) }} inhabitants in
       {{ selectedCensus?.census_year }}.
     </p>
-    <ul class="list-disc ml-3">
+    <ul class="list-disc ml-3 text-dark dark:text-bggray">
       <li v-for="size in populationSize" :key="size.id">
         <span class="font-[600] capitalize">{{ size.barangay }}</span> accounted for
         <span class="font-[600] text-primarylight">{{ size.average.toFixed(2) }}%</span> of the
@@ -130,8 +132,8 @@ onMounted(() => {
 
     <!-- household -->
     <div class="mt-14">
-      <h4 class="font-bold text-2xl mb-2 text-dark">Household</h4>
-      <p v-if="householdSize" class="mb-2">
+      <h4 class="font-bold text-2xl mb-2 text-dark dark:text-bggray">Household</h4>
+      <p v-if="householdSize" class="mb-2 text-dark dark:text-bggray">
         In {{ selectedCensus?.census_year }},
         <span class="capitalize font-[600]">{{ householdSize[0]?.barangay }}</span> had the most
         number of households representing {{ householdSize[0].average.toFixed(2) }}% of the total,

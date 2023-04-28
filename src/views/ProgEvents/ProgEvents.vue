@@ -42,10 +42,10 @@ onMounted(() => {
   <div class="">
     <HeroEvents />
     <WrapperContainer class="mt-5">
-      <h4 class="text-sm font-bold mb-3">All programs and events</h4>
+      <h4 class="text-sm font-bold mb-3 text-dark dark:text-bggray">All programs and events</h4>
       <div v-if="isError && !loading">
-        <h4 class="font-bold text-3xl text-center">{{ isError.msg }}</h4>
-        <p class="text-lg text-center">Error has occured.</p>
+        <h4 class="font-bold text-3xl text-center text-dark dark:text-bggray">{{ isError.msg }}</h4>
+        <p class="text-lg text-center text-dark dark:text-bggray">Error has occured.</p>
       </div>
       <Loading v-if="loading" class="w-10 h-10 mx-auto" />
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">

@@ -19,11 +19,13 @@ defineProps({
       </span>
     </div>
     <div class="p-3">
-      <h3 class="font-bold text-lg md:text-xl lg:text-2xl">{{ event.title }}</h3>
-      <p class="text-xs md:text-sm">
+      <h3 class="font-bold text-lg md:text-xl lg:text-2xl text-dark dark:text-bggray">
+        {{ event.title }}
+      </h3>
+      <p class="text-xs md:text-sm text-dark dark:text-bggray">
         Hosted by <span class="text-primarylight">{{ event.author }}</span>
       </p>
-      <div class="flex items-center text-xs md:text-sm mt-3">
+      <div class="flex items-center text-xs md:text-sm mt-3 text-dark dark:text-bggray">
         <i class="uil uil-location-point text-primarylight"></i>
         <span class="capitalize">{{ event.location }}</span>
       </div>
