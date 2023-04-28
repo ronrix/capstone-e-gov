@@ -13,7 +13,7 @@ const sample_data = [
     placeName: 'Pililla Wind Farm',
     address: 'F8CX+VJW, Manila E Rd, Pililla, Rizal',
     imgSrc:
-      'https://scontent.fmnl25-3.fna.fbcdn.net/v/t39.30808-6/274579439_2419634788171057_6700194066240640258_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=e3f864&_nc_eui2=AeHUaaI-kyM3lhpYUkNDvkobeTkfTFeFN5F5OR9MV4U3kV80MePrW1SKq06pbp3sW46NZSuH74c8GFQv_JGBw2PG&_nc_ohc=-BS42dF_KM8AX-pnn5m&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfADlapiutu3bBB5gJvkeC6s2ZiZuVJ6Rf_l2O8AxoadSA&oe=643B06E0'
+      'https://scontent.fmnl25-1.fna.fbcdn.net/v/t39.30808-6/302202310_1246108252901783_8648760984143166109_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeFqzQUd4VuM7B0nBeZnTNg2XP9zK23Psu9c_3Mrbc-y77Wa_DSN9iMyBU-SxDOn3gGkbN6q0LowHTRJ4fkXxbMH&_nc_ohc=F32TcITuqf4AX-if6fn&_nc_ht=scontent.fmnl25-1.fna&oh=00_AfBcxUn14Yyw_EgnS4rf0hko5PDQ78ZFyR5GtLIvVz-JPw&oe=64504E3A'
   },
   {
     placeName: 'Pililla Wind Farm',
@@ -148,12 +148,6 @@ const sample_data = [
       </div>
     </div>
   </WrapperContainer>
-  <div class="w-full sm:pt-10 pb-10 ">
-    <img
-      class="w-full object-cover "
-      src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t1.6435-9/191386880_938732806972664_5846277956740923314_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_ohc=QayRsvU0LScAX9gCBHW&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfA99OLmudJoWqDWC_sOSNecGTqHnIS-s2T6WE2LBHQApg&oe=646F6BF9"
-      alt=""
-    >
-</div>
+  
   <FooterSection></FooterSection>
 </template>
