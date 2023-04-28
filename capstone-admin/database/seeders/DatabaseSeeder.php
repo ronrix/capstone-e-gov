@@ -253,16 +253,97 @@ From 1851 to 1937 several priests were assigned as pastors of Pililla from the F
         ]);
         Tourism::factory()->create([
             "title" => "Pililla Lyger Opening",
-            "authors" => "angelo ternate",
-            "category" => "churches",
+            "authors" => "Martin Arce",
+            "category" => "Windfarm",
             "description" => trim('
-## Our Animal Welfare Policy
-Many tourism attractions around the world feature live animals in some way, whether in the wild or in captivity. At Tripadvisor, we believe every attraction has a responsibility to ensure that any animals in its care are treated humanely.
-We know that most attraction operators act responsibly, and agree with the basic precept of treating animals humanely. But we also know that worldwide, the standards of care that animals receive can vary depending on local laws.
-As an online platform used by millions, we recognize the role Tripadvisor can play in driving improvements in animal welfare standards across the tourism industry. As a result, we are proud to have introduced a set of industry-leading animal welfare guidelines that every bookable experience sold on our platform must comply with. 
+## The Wonderful Windfarm
+Pililla Wind Farm is a must-visit destination for nature enthusiasts and those looking for a unique experience. 
+The towering wind turbines provide an awe-inspiring sight against the backdrop of the rolling hills and mountains. 
+Visitors can take a stroll around the wind farm and marvel at the magnificent engineering feat that harnesses the power of the wind to generate clean energy. 
+The panoramic view of the Laguna Lake and the surrounding landscape from the wind farm is truly breathtaking and a perfect backdrop for photo opportunities.. 
+Pililla Wind Farm is a renewable energy project developed by Alternergy Philippine Holdings Corporation. It was inaugurated in 2015 and is currently the largest wind farm in the Philippines, with a total of 27 wind turbines. The wind farm has a capacity of 54 MW and can generate clean energy that can power around 66,000 households. The project was initiated to help address the growing demand for electricity in the Philippines and to promote the use of renewable energy sources.
             '),
-            "location" => "Matagbak Rd, Pililla, Rizal",
-            "img_link" => "https://pilillarizal.gov.ph/wp-content/uploads/2023/01/2CM08194-1024x576.jpg",
+            "location" => "Halayhayin, Pililla, Rizal",
+            "img_link" => "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1200&h=1200&s=1",
+        ]);
+        Tourism::factory()->create([
+            "title" => "Tanay-Pililla Bike Trail",
+            "authors" => "Martin Arce",
+            "category" => "Biking Trail",
+            "description" => trim('
+## Biking Through Nature has Best
+The Tanay-Pililla Bike Trail is a breathtaking adventure that takes you through some of the most beautiful natural landscapes in the Philippines. The trail starts from the town of Tanay and winds its way through the scenic countryside towards Pililla. As you pedal along, you will be treated to stunning views of majestic mountains, crystal-clear rivers, and lush green forests.
+
+The trail is suitable for all levels of riders, from beginners to experienced cyclists. It offers a mix of flat and hilly terrain, making it both challenging and fun. Along the way, you will encounter friendly locals and get a taste of rural life in the Philippines.
+
+One of the highlights of the trail is the breathtaking view of the Pililla Wind Farm, with its towering wind turbines set against the beautiful landscape. You will also get to explore quaint little villages and rural communities, where you can stop for refreshments and experience the local culture. 
+The Tanay-Pililla Bike Trail is a perfect getaway from the hustle and bustle of city life. It offers an immersive and unforgettable experience of the natural beauty of the Philippines, and is a must-visit for any adventure seeker or nature lover. So, hop on your bike and join us on this unforgettable journey through nature has best.
+            '),
+            "location" => "Tanay to Pililla, Rizal",
+            "img_link" => "https://cdn.shopify.com/s/files/1/0042/5204/1283/files/Pililla_Bike_Route_Ciclo_Cycling_Metro_Manila_600x600.jpg?v=1600315478",
+        ]);
+        Tourism::factory()->create([
+            "title" => "Pililla Eco Park",
+            "authors" => "Martin Arce",
+            "category" => "Park",
+            "description" => trim('
+## The Haven of Nature
+Pililla Eco Park is a lush green paradise tucked away in the heart of Rizal, Philippines. This serene oasis is the perfect escape from the chaos of city life, offering a peaceful and relaxing environment for visitors. The park features a swimming pool, picnic areas, and a playground for kids, making it an ideal destination for families.
+
+Surrounded by verdant hills and trees, the park offers a picturesque view of the town of Pililla. The air is fresh and clean, and the sound of birds chirping and leaves rustling is a soothing melody that will calm your soul.
+
+The park is home to a variety of flora and fauna, making it an excellent spot for nature lovers. You can take a leisurely stroll along the nature trail, breathe in the fresh air, and appreciate the beauty of the natural world.
+
+Pililla Eco Park is also a perfect venue for events such as weddings, team building activities, and other outdoor activities. The park provides a serene and peaceful environment that will make any event unforgettable.
+
+The park management also prioritizes sustainability and eco-friendliness. They have implemented measures to conserve water, energy, and other natural resources, making the park an excellent example of responsible tourism.
+
+Visiting Pililla Eco Park is a must-do when in Rizal, Philippines. It is a perfect getaway for those seeking refuge from the stress of city life and for anyone who loves nature. So come and immerse yourself in this green haven, and let nature soothe your soul. 
+            '),
+            "location" => "Pililla, Rizal",
+            "img_link" => "https://scontent.fmnl25-3.fna.fbcdn.net/v/t1.18169-9/21463264_723063031236582_3787492010373736874_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=8bfeb9&_nc_eui2=AeGIY4L9pBdoV6owxxaM3qz6AUhNlLooBokBSE2UuigGieTTzmdJs4wfiRbjiH7XiZmN7auhOamha3T1YTU0_xEu&_nc_ohc=u57Q0U-NgL0AX8nCIig&_nc_ht=scontent.fmnl25-3.fna&oh=00_AfDP9Ut1WmQ8Vh-6CpAy-3Ve-YGIjxJd1Aiqs31yKaQWng&oe=645DB68E",
+        ]);
+        Tourism::factory()->create([
+            "title" => "Mt. Sembrano",
+            "authors" => "Martin Arce",
+            "category" => "Mountain",
+            "description" => trim('
+## A Natural Wonder
+Mt. Sembrano is a prominent mountain located in the town of Pililla, Rizal, Philippines, and is one of the most sought-after tourist destinations in the region. Standing at an elevation of 745 meters above sea level, the mountain boasts of unparalleled natural beauty and breathtaking views of the surrounding landscapes.
+
+The mountain is a popular destination among adventure enthusiasts and nature lovers, with a challenging trek that leads to the summit. The trail features a mix of rocky terrain, steep ascents, and lush forested paths that make for a thrilling and unforgettable experience.
+
+The trek to the summit takes around 2-3 hours, depending on your pace, and is a rewarding adventure that showcases the diverse flora and fauna of the area. The climb offers an opportunity to appreciate the natural beauty of Rizal, with the sounds of chirping birds and rustling leaves providing a soothing ambiance.
+
+At the summit, one can marvel at the panoramic views of Laguna de Bay and the surrounding towns, an experience that is both humbling and awe-inspiring. The cool mountain breeze and fresh air provide a refreshing break from the hustle and bustle of city life, making it an ideal getaway for those seeking tranquility.
+
+The climb to the summit of Mt. Sembrano requires proper planning and preparation, including hiring a licensed guide or joining a guided tour for a safe and hassle-free experience. However, the adventure and rewards that come with conquering the mountain are well worth the effort.
+
+Mt. Sembrano is a natural wonder that deserves a place on any lover of nature bucket list. It is a testament to the beauty of the Philippines, a place where nature thrives and inspires.
+            '),
+            "location" => "Malaya, Pililla, Rizal",
+            "img_link" => "http://www.wewander.ph/wp-content/uploads/2019/06/Screen-Shot-2019-06-30-at-9.24.59-AM-17-1024x573.jpg",
+        ]);
+        Tourism::factory()->create([
+            "title" => "The Historic Bahay na Bato",
+            "authors" => "Martin Arce",
+            "category" => "Historical House",
+            "description" => trim('
+## A Glimpse of the Past
+Bahay na Bato, located in the town of Pililla, Rizal, Philippines, is a historically significant house that serves as a living museum and a testament to the country its rich cultural heritage. The house is a prominent example of the traditional Filipino-Spanish architecture, showcasing a fusion of colonial and indigenous design elements.
+
+The house dates back to the 19th century and features intricate wooden carvings, large windows, and a spacious courtyard. The interior is furnished with antique furniture, including four-poster beds, wooden cabinets, and ornate chandeliers, which provides visitors with a glimpse of the lavish lifestyle of the time.
+
+Bahay na Bato is a must-visit destination for those interested in Philippine history and culture. The house is open to the public and offers guided tours that provide a comprehensive overview of the country its colonial past and the lifestyle of the affluent class during that time.
+
+The house also hosts cultural events, including traditional dance performances, music, and exhibitions that showcase local art and handicrafts. The courtyard is also a popular venue for outdoor activities, such as picnics and group events.
+
+Bahay na Bato serves as a reminder of the rich history and cultural diversity of the Philippines. It is a perfect destination for those seeking to immerse themselves in the country its heritage and experience the beauty of traditional Filipino-Spanish architecture.
+
+Visitors are advised to take note of the house its operating hours and book their guided tours in advance for a hassle-free experience. A visit to Bahay na Bato is a must for anyone interested in the Philippines many rich cultural heritage and architectural marvels. 
+            '),
+            "location" => "Hulo, Pililla, Rizal",
+            "img_link" => "https://boyplakwatsa.files.wordpress.com/2014/04/rizal-tour-march-15-2014-orig-016.jpg",
         ]);
 
         # FESTIVALS 
