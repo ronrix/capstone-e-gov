@@ -164,5 +164,10 @@ export default createRouter({
       name: "FormerOfficials",
       component: () => import("../views/Government/FormerOfficials/FormerOfficials.vue")
     },
+    {
+      path: "/demographic-profile",
+      name: "demographicProfile",
+      component: () => import("../views/Government/DemographicProfile/DemographicProfile.vue")
+    },
   ]
 })
