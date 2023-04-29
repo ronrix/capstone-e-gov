@@ -2,7 +2,7 @@
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import Carousel from '../../components/Carousel/Carousel.vue'
-import { contentCard } from '../../assets/config/touristAttraction';
+import { contentCard } from '../../assets/config/touristAttraction'
 // const sample_card = [
 //   {
 //     title: 'Lorem Ipsum',
@@ -23,9 +23,6 @@ import { contentCard } from '../../assets/config/touristAttraction';
 //     description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
 //   }
 // ]
-
-
-
 </script>
 <template >
   <head>
@@ -88,22 +85,32 @@ import { contentCard } from '../../assets/config/touristAttraction';
   </div>
   <carousel :content-card="contentCard" class="block sm:hidden"></carousel>
   <WrapperContainer>
-    <div v-for="(data, index) in contentCard" :key="index" class="hidden  sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5">
+    <div
+      v-for="(data, index) in contentCard"
+      :key="index"
+      class="data hidden sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5"
+      :class="{ reverse: index % 2 !== 0 }"
+    >
       <div class="-order-first sm:-order-last">
         <h2 class="text-5xl lg:text-6xl font-semibold pt-5 text-dark dark:text-bggray">
           {{ data.title }}
         </h2>
         <p class="font-normal text-sm mt-3 w-3/4 text-dark dark:text-bggray">
           {{ data.content }}
-          </p>
+        </p>
       </div>
       <img
-        class="w-full sm:w-1/2 order-first sm:order-last"
+        class="TAimg w-full sm:w-1/2 order-first sm:order-last"
         :src="data.imgSrc"
         alt=""
+        :style="{
+          'border-bottom-left-radius': index % 2 === 0 ? '9999px' : '0',
+          'border-bottom-left-radius': index % 2 === 0 ? '9999px' : '0',
+          'border-top-right-radius': index % 2 !== 0 ? '9999px' : '0',
+          'border-top-right-radius': index % 2 !== 0 ? '9999px' : '0'
+        }"
       />
     </div>
-  
   </WrapperContainer>
   <!-- <WrapperContainer>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5 rounded-lg ">
@@ -152,5 +159,11 @@ import { contentCard } from '../../assets/config/touristAttraction';
     width: 350px;
     margin-right: 0px;
   }
+}
+.data.reverse {
+  flex-direction: row-reverse; /* reverse the order of items */
+}
+.TAimg:hover {
+  border-radius: none;
 }
 </style>

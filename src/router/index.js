@@ -132,8 +132,19 @@ export default createRouter({
       name: "Aparment",
       component: () => import("../views/Business/Apartment/ApartmentPage.vue")
     },
-
+    {
+    path: "/business-permit-and-licensing-office",
+    name: "Business Permit and Licensing Office",
+    component: () => import("../views/Business/BPLO/Bplo.vue")
+  },
     //business page end
+
+    //about page
+    {
+      path: "/about/contacts",
+      name: "Contacts",
+      component: () => import("../views/About/Contacts/Contacts.vue")
+    },
     {
       path: "/job-op",
       name: "Job Opportunities",
@@ -168,6 +179,13 @@ export default createRouter({
       path: "/demographic-profile",
       name: "demographicProfile",
       component: () => import("../views/Government/DemographicProfile/DemographicProfile.vue")
+
+    },
+    {
+      path: "/about/mission-and-vision",
+      name: "mission-and-vision",
+      component: () => import("../../src/views/About/Mission&Vision.vue")
+
     },
     {
       path: "/tourist-attractions/:title(.*)",
