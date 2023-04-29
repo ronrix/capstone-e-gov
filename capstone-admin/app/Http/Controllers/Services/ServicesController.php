@@ -458,7 +458,7 @@ class ServicesController extends Controller
             }
             else {
                 # create new process
-                $service->service_process = $new_process;
+                $service->service_process = array($new_process);
             }
             $service->save();
 
