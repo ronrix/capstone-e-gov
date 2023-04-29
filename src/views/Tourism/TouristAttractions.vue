@@ -2,27 +2,18 @@
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import Carousel from '../../components/Carousel/Carousel.vue'
-import { contentCard } from '../../assets/config/touristAttraction'
-// const sample_card = [
-//   {
-//     title: 'Lorem Ipsum',
-//     imgSrc:
-//       'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
-//     description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
-//   },
-//   {
-//     title: 'Lorem Ipsum',
-//     imgSrc:
-//       'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
-//     description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
-//   },
-//   {
-//     title: 'Lorem Ipsum',
-//     imgSrc:
-//       'https://villagepipol.com/wp-content/uploads/2022/07/Pililla-Wind-Farm-Tanay-Rizal-FI-800x752.jpg',
-//     description: 'Lorem ipsum dolor sit amet, consectetur ut labore et dolore magna aliqua'
-//   }
-// ]
+import { ref, onMounted } from 'vue'
+import { formatImgs } from '../../utils/imgFormat'
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
+
+const tourism = ref()
+onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
+  tourism.value = JSON.parse(localStorage.getItem('tourisms'))
+})
 </script>
 <template >
   <head>
@@ -83,25 +74,37 @@ import { contentCard } from '../../assets/config/touristAttraction'
       </p>
     </div>
   </div>
-  <carousel :content-card="contentCard" class="block sm:hidden"></carousel>
+  <carousel :tourism="tourism" class="block sm:hidden"></carousel>
   <WrapperContainer>
     <div
-      v-for="(data, index) in contentCard"
+      v-for="(data, index) in tourism"
       :key="index"
-      class="data hidden sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5"
+      class="data hidden sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5 overflow-hidden mt-10"
       :class="{ reverse: index % 2 !== 0 }"
     >
       <div class="-order-first sm:-order-last">
-        <h2 class="text-5xl lg:text-6xl font-semibold pt-5 text-dark dark:text-bggray">
+        <h2 class="text-5xl lg:text-6xl font-semibold pt-5 text-dark dark:text-bggray capitalize">
           {{ data.title }}
         </h2>
-        <p class="font-normal text-sm mt-3 w-3/4 text-dark dark:text-bggray">
-          {{ data.content }}
-        </p>
+        <div
+          class=":text-dark dark:text-bgLightyBlue leading-loose markdown line-clamp-5"
+          :innerHTML="DOMPurify.sanitize(marked(data.description))"
+        ></div>
+        <div class="group flex w-fit">
+          <RouterLink
+            :to="
+              '/tourist-attractions/' +
+              data.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
+            "
+            class="cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primary pr-2"
+            >Read more</RouterLink
+          >
+          <i class="group-hover:-translate-x-1 duration-75 uil uil-arrow-right text-primary"></i>
+        </div>
       </div>
       <img
-        class="TAimg w-full sm:w-1/2 order-first sm:order-last"
-        :src="data.imgSrc"
+        class="TAimg w-[300px] md:w-[500px] order-first sm:order-last object-cover"
+        :src="formatImgs(data.img_link.split(','))[0]"
         alt=""
         :style="{
           'border-bottom-left-radius': index % 2 === 0 ? '9999px' : '0',
@@ -112,25 +115,6 @@ import { contentCard } from '../../assets/config/touristAttraction'
       />
     </div>
   </WrapperContainer>
-  <!-- <WrapperContainer>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-5 rounded-lg ">
-      <div
-        v-for="(data, idx) in sample_card"
-        :key="idx"
-        class="cards flex flex-col dark:bg-white rounded-lg"
-        style="border: 1px solid #d8d8d8"
-      >
-        <img class="object-cover h-[250px] w-full" :src="data.imgSrc" alt="" />
-        <div class="py-5 px-3">
-          <p class="font-bold text-3xl pb-4">
-            {{ data.title }}
-          </p>
-          <p class="text-md">{{ data.description }}</p>
-        </div>
-      </div>
-    </div>
-  </WrapperContainer> -->
-
   <FooterSection></FooterSection>
 </template>
 
@@ -165,5 +149,22 @@ import { contentCard } from '../../assets/config/touristAttraction'
 }
 .TAimg:hover {
   border-radius: none;
+}
+</style>
+
+<style>
+.markdown p {
+  margin-top: 0.5em;
+  font-size: 1em;
+}
+.markdown h2 {
+  font-size: 1.7em;
+  margin-top: 0.5em;
+  font-weight: bold;
+}
+.markdown h3 {
+  font-size: 1.5em;
+  margin-top: 0.5em;
+  font-weight: bold;
 }
 </style>

@@ -6,6 +6,9 @@ import { formatImgs } from '../../utils/imgFormat'
 
 const tourism = ref()
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
   tourism.value = JSON.parse(localStorage.getItem('tourisms'))
 })
 </script>
@@ -99,7 +102,7 @@ onMounted(() => {
         :key="data.id"
         :to="
           '/tourist-attractions/' +
-          data.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()
+          data.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
         "
         class="flex flex-col border hover:drop-shadow-lg bg-white dark:bg-dark"
       >
@@ -109,7 +112,7 @@ onMounted(() => {
           alt=""
         />
         <div class="py-5 px-3">
-          <p class="font-semibold text-dark dark:text-bggray">
+          <p class="font-semibold text-dark dark:text-bggray capitalize">
             {{ data.title }}
           </p>
           <div class="flex text-dark dark:text-bggray">

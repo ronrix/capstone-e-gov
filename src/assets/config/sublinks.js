@@ -1,3 +1,5 @@
+import { fetchData } from "../../utils/axios-instance";
+
 export const government = [
   { link: '/news', title: 'news', desc: 'Current news happening around pililla' },
   {
@@ -47,18 +49,7 @@ export const tourism = [
   }
 ]
 
-export const services = [
-  {
-    link: '/scholarship rpogram',
-    title: 'scholarship ',
-    desc: 'get to know the process and requirements for getting a scholarship'
-  },
-  {
-    link: '/services-programs-events',
-    title: 'services programs and events',
-    desc: 'Updated programs and events in pililla'
-  },
-]
+export let services = []
 
 export const business = [
   {
@@ -76,3 +67,14 @@ export const about = [
   { link: '/about/mission-and-vision', title: 'Mission and Vision', desc: 'Our mission and vision' },
   { link: '/about/FAQ', title: 'FAQs', desc: 'Frequently Asked Questions' },
 ]
+
+fetchData("/service-types").then(data => {
+  const mergedServices = Object.values(data.service_types).flat()
+  services = mergedServices.map(a => {
+    return {
+      link: "/" + a.replace(" ", "-"),
+      title: a,
+      desc: ""
+    }
+  })
+}).catch(err => console.log(err))

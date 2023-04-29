@@ -2,6 +2,9 @@
 import { defineComponent } from 'vue'
 import { Carousel, Navigation, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
+import { formatImgs } from '../../utils/imgFormat'
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
 
 export default defineComponent({
   components: {
@@ -10,24 +13,19 @@ export default defineComponent({
     Pagination,
     Navigation
   },
-  // data: function(){
-  //   return {
-  //       imgslide: [
-  //   "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1200&h=1200&s=1",
-  //   "http://www.wewander.ph/wp-content/uploads/2019/06/Screen-Shot-2019-06-30-at-9.24.59-AM-17-1024x573.jpg",
-  //   "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/cd/67/c8/vast-view-of-the-windmills.jpg?w=1200&h=1200&s=1",
-  //   ]}
-  // }
-
-  // setup() {
-  //   return { contentCard }
-  // }
-    props: {
-      contentCard:{
-        type: Object,
-        required: true,
-      }
+  props: {
+    tourism: {
+      type: Object,
+      required: true
     }
+  },
+  setup() {
+    return {
+      formatImgs,
+      marked,
+      DOMPurify
+    }
+  }
 })
 </script>
 <template>
@@ -40,21 +38,29 @@ export default defineComponent({
     img-height="480"
   >
     <Carousel :breakpoints="breakpoints" :transition="900">
-      <Slide v-for="(card, index) in contentCard" :key="index">
+      <Slide v-for="(card, index) in tourism" :key="index">
         <div
           class="sm:flex sm:justify-evenly md:flex drop-shadow-md rounded-md bg-white h-auto cursor-grab"
         >
           <img
-            :src="card.imgSrc"
+            :src="formatImgs(card.img_link.split(','))[0]"
             alt=""
             class="w-full sm:w-1/2 h-[400px] object-cover rounded-l-lg"
           />
           <div class="flex flex-col gap-4 text-left self-start pt-10 pl-6 pr-6 text-dark">
             <h1 class="!text-4xl !font-semibold">{{ card.title }}</h1>
-            <p class="">{{ card.content }}</p>
+            <div
+              class=":text-dark dark:text-bgLightyBlue leading-loose markdown line-clamp-5"
+              :innerHTML="DOMPurify.sanitize(marked(card.description))"
+            ></div>
             <div class="group flex w-fit">
-              <a class="cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primary pr-2"
-                >Read more</a
+              <RouterLink
+                :to="
+                  '/tourist-attractions/' +
+                  card.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
+                "
+                class="cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primary pr-2"
+                >Read more</RouterLink
               >
               <i
                 class="group-hover:-translate-x-1 duration-75 uil uil-arrow-right text-primary"
@@ -80,10 +86,9 @@ export default defineComponent({
   transition-duration: 0.5s !important; */
 }
 .carousel__track {
-    display: flex;
-    padding: 0 !important;
-    position: relative;
-    
+  display: flex;
+  padding: 0 !important;
+  position: relative;
 }
 .carousel__next--disabled,
 .carousel__prev--disabled {
@@ -118,7 +123,6 @@ export default defineComponent({
 .carousel__next {
   color: white;
   transform: translateY(-30px);
-  
 }
 @media (max-width: 467px), (max-width: 620px), (max-width: 637px) {
   .carousel__prev,
