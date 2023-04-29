@@ -8,7 +8,7 @@
     <AddModal v-if="addModal" :showAddModal="showAddModal" />
 
     <!-- this will render other pages (news, job postings, etc) -->
-    <RouterView />
+    <RouterView :key="$route.fullPath" />
   </MainWrapper>
 </template>
 
