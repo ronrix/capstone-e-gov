@@ -12,11 +12,10 @@ import { useNewsStore } from '../../../stores/news-store'
 import { formatImgs } from '../../../utils/imgFormat'
 
 const store = useNewsStore()
-const useCustomStyles = ref(true) // Set to true if you want to apply custom styles, false otherwise
 
 // paremeter :title
 const route = useRoute()
-const newsTitle = computed(() => route.params.title.replace(/-/g, ' '))
+const newsTitle = computed(() => route.params.title.replace(/_/g, ' ').toLowerCase())
 const news = ref()
 const description = ref('')
 const imgURL = ref()
@@ -38,6 +37,9 @@ const loadNews = () => {
 }
 
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
   loadNews()
 })
 </script>
@@ -51,7 +53,7 @@ onMounted(() => {
   <WrapperContainer>
     <div class="mt-10 flex flex-col md:flex-row gap-5">
       <!-- 404 not found -->
-      <div v-if="is404" class="flex-1 text-center">
+      <div v-if="!news" class="flex-1 text-center">
         <h4 class="font-bold text-5xl capitalize">404 not found</h4>
         <h5 class="text-2xl mb-3">News can't be found</h5>
         <RouterLink to="/news" class="text-bggray bg-primarylight px-3 py-1 rounded-md"
@@ -71,8 +73,7 @@ onMounted(() => {
         <img class="w-full" :src="imgURL" alt="" />
 
         <div
-          class=":text-dark dark:text-bgLightyBlue text-justify leading-loose"
-          :class="{ markdown: useCustomStyles }"
+          class=":text-dark dark:text-bgLightyBlue text-justify leading-loose mardown"
           :innerHTML="description"
         ></div>
       </div>

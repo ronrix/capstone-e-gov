@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <RouterLink
-    :to="'/news/' + news.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()"
+    :to="'/news/' + news.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()"
     class="flex items-center justify-center hover:shadow-lg cursor-pointer gap-x-5"
   >
     <!-- left -->

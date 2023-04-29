@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full sm:mt-5 h-[300px] sm:h-[400px] relative overflow-x-hidden">
+  <div class="w-full h-[300px] sm:h-[400px] relative overflow-x-hidden">
     <!-- img -->
     <img
       src="/images/hero.png"

@@ -98,8 +98,7 @@ onMounted(() => {
       <h4 class="font-['display'] text-5xl mt-10 font-bold text-dark dark:text-bggray">
         Here's the map of Pililla
       </h4>
-      <p class="text-lg sm:textsm font-bold text-dark dark:text-bggray">Welcome to pililla!</p>
-      <p class="text-sm sm:textsm text-dark dark:text-bggray">
+      <p class="text-sm sm:textsm text-dark dark:text-bggray mt-2">
         You can navigate the whole pililla using this
         <a
           href="https://www.google.com/maps/place/Pililla,+Rizal/@14.4469448,121.2951419,13z/data=!3m1!4b1!4m6!3m5!1s0x3397e93c8543c67f:0xc3ddaed3ef5026a0!8m2!3d14.4439278!4d121.3427262!16zL20vMDZrdGd5"

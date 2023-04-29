@@ -10,13 +10,15 @@ import Loading from '../../components/Loading.vue'
 
 const store = useNewsStore()
 const newsHeadlines = ref([])
+const otherNews = ref([])
 const loading = ref(true)
 const isError = ref()
 
 const axiosCall = () => {
   fetchData('/news')
     .then((data) => {
-      newsHeadlines.value = data.news
+      newsHeadlines.value = data.news.slice(0, 3)
+      otherNews.value = data.news.slice(3)
       store.setNews(data.news)
       localStorage.setItem('hnd', JSON.stringify(newsHeadlines.value))
       loading.value = false // set the loading to false
@@ -30,6 +32,9 @@ const axiosCall = () => {
 }
 
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
   axiosCall()
 })
 </script>
@@ -51,7 +56,7 @@ onMounted(() => {
   <WrapperContainer v-else class="mt-10">
     <!-- loading animation -->
     <Loading v-if="loading" class="w-10 h-10 mx-auto" />
-    <CurrentNews v-else :hotnews="newsHeadlines.slice(0, 3)" />
+    <CurrentNews v-else :hotnews="newsHeadlines" />
     <!-- all news -->
     <div class="mt-10 flex flex-col gap-8">
       <div class="flex items-center gap-2">
@@ -60,8 +65,11 @@ onMounted(() => {
       </div>
 
       <Loading v-if="loading" class="w-10 h-10 mx-auto" />
+      <h4 v-if="!otherNews.length && !loading" class="font-bold text-2xl text-center">
+        No other news found!
+      </h4>
       <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
-        <NewsCard v-for="news in newsHeadlines.slice(3)" :key="news.id" :news="news" />
+        <NewsCard v-for="news in otherNews" :key="news.id" :news="news" />
       </div>
     </div>
   </WrapperContainer>

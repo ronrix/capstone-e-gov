@@ -33,7 +33,13 @@ const props = defineProps({
         class="font-['display'] text-sm sm:text-3xl mb-5 line-clamp-4"
         :innerHTML="description"
       ></h4>
-      <RouterLink to="/" class="text-sm px-2 py-1 text-white bg-primary rounded-md capitalize">
+      <RouterLink
+        :to="
+          '/tourist-attractions/' +
+          place.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()
+        "
+        class="text-sm px-2 py-1 text-white bg-primary rounded-md capitalize"
+      >
         see more
         <i class="uil uil-angle-right" />
       </RouterLink>
