@@ -1,7 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
-import { fetchData } from '../utils/axios-instance'
-import { useHotlineStore } from '../stores/hotlines-store'
+import { fetchData } from '../../utils/axios-instance'
+import { useHotlineStore } from '../../stores/hotlines-store'
+import HotlinesTable from './HotlinesTable.vue'
 
 const store = useHotlineStore()
 const hotlines = ref()
@@ -33,17 +34,8 @@ onMounted(() => {
         </h5>
       </WrapperContainer>
     </div>
-    <WrapperContainer class="grid grid-cols-2 items-center w-full">
-      <div v-for="n in hotlines" :key="n.id" class="p-3">
-        <h6 class="sm:text-base flex-1 font-bold text-dark dark:text-bggray !text-2xl capitalize">
-          {{ n.department }}
-        </h6>
-        <div class="flex-1">
-          <p class="text-sm sm:text-base rounded-lg text-dark dark:text-bggray">{{ n.smart }}</p>
-          <p class="text-sm sm:text-base rounded-lg text-dark dark:text-bggray">{{ n.globe }}</p>
-          <p class="text-sm sm:text-base rounded-lg text-dark dark:text-bggray">{{ n.landline }}</p>
-        </div>
-      </div>
+    <WrapperContainer>
+      <HotlinesTable :hotlines="hotlines" />
     </WrapperContainer>
   </div>
 </template>
