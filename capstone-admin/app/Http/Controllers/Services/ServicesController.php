@@ -236,8 +236,15 @@ class ServicesController extends Controller
             $service_requirements = json_decode($service->service_requirements, true);
 
             # appending the new requiremnts
-            $merged_array = $service_requirements + array_combine($request->input("newRequirement"), $request->input("newWhereToGo"));;
-            $service->service_requirements = json_encode($merged_array);
+            # check if $service_requirements is empty
+            $merged_array = [];
+            if($service_requirements) {
+                $merged_array = $service_requirements + array_combine($request->input("newRequirement"), $request->input("newWhereToGo"));
+                $service->service_requirements = json_encode($merged_array);
+            }
+            else {
+                $service->service_requirements = array_combine($request->input("newRequirement"), $request->input("newWhereToGo"));
+            }
             $service->save();
 
             return response()->json([
@@ -444,8 +451,15 @@ class ServicesController extends Controller
                 "process_time" => $request->input("process_time"),
                 "person_responsible" => $request->input("person_responsible"),
             ];
-            array_push($service_process, $new_process); # append the new process
-            $service->service_process = $service_process;
+            # check if $service_process is empty
+            if($service_process) {
+                array_push($service_process, $new_process); # append the new process
+                $service->service_process = $service_process;
+            }
+            else {
+                # create new process
+                $service->service_process = $new_process;
+            }
             $service->save();
 
             return response()->json([
