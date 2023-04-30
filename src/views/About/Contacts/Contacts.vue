@@ -10,11 +10,11 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
       <h1 class="self-center text-4xl md:text-5xl text-gray-700 dark:text-gray-100 font-bold mb-1">
         Contact us!
       </h1>
-      <p class="self-center text-lg text-secondary dark:text-gray-400">
+      <p class="self-center text-lg text-secondary dark:text-gray-400 mb-3">
         let us help to assist you wiht your concerns.
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 mt-5 p-5 px-2">
+      <div class="flex flex-col  md:flex-row justify-between mt-5 px-10">
         <div class="flex flex-col">
             <!-- contacts -->
           <div class="flex items-center gap-1 mb-2">

@@ -146,6 +146,13 @@ export default createRouter({
       component: () => import("../views/About/Contacts/Contacts.vue")
     },
     {
+      path: "/about/mission-and-vision",
+      name: "Mission and Vision",
+      component: () => import("../../src/views/About/Mission and vision/MissionAndVision.vue")
+
+    },
+    // aabout page end
+    {
       path: "/job-op",
       name: "Job Opportunities",
       component: () => import("../views/JobOp/JobOp.vue")
@@ -179,12 +186,6 @@ export default createRouter({
       path: "/demographic-profile",
       name: "demographicProfile",
       component: () => import("../views/Government/DemographicProfile/DemographicProfile.vue")
-
-    },
-    {
-      path: "/about/mission-and-vision",
-      name: "mission-and-vision",
-      component: () => import("../../src/views/About/Mission&Vision.vue")
 
     },
     {
