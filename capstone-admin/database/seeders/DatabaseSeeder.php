@@ -361,18 +361,18 @@ Pililla is a great place to experience the true culture of a province. It has pr
             'title' => "Magsolangtan Festival",
             "authors" => "Martin Arce",
             "description" => trim('
-            Pililla, a town in the province of Rizal in the Philippines, celebrates the annual Magsolangtan Festival, a vibrant celebration of culture and faith. The festival is held in honor of the town\'s patron saint, San Isidro Labrador, and showcases a variety of activities that attract both locals and tourists.
-            The festivities kick off with a street dance competition that features colorful costumes, lively music, and energetic dancers. Spectators can witness the performances and experience the contagious energy of the dancers as they parade through the town\'s streets.
+Pililla, a town in the province of Rizal in the Philippines, celebrates the annual Magsolangtan Festival, a vibrant celebration of culture and faith. The festival is held in honor of the town\'s patron saint, San Isidro Labrador, and showcases a variety of activities that attract both locals and tourists.
+The festivities kick off with a street dance competition that features colorful costumes, lively music, and energetic dancers. Spectators can witness the performances and experience the contagious energy of the dancers as they parade through the town\'s streets.
 
-            Another highlight of the festival is the food fair, which offers a taste of the town\'s local cuisine. Visitors can sample traditional dishes and delicacies prepared by local vendors and experience the unique flavors and spices of the region.
+Another highlight of the festival is the food fair, which offers a taste of the town\'s local cuisine. Visitors can sample traditional dishes and delicacies prepared by local vendors and experience the unique flavors and spices of the region.
 
-            The festival also includes a procession, where a statue of San Isidro Labrador is carried around the town accompanied by devotees and followers. The procession is a display of the town\'s deep-rooted faith and devotion to their patron saint.
-            
-            Throughout the festival, visitors can immerse themselves in the local culture by exploring the town\'s historical landmarks, museums, and art exhibits. They can also engage with the locals and learn about their traditions, customs, and way of life.
-            
-            The Magsolangtan Festival is a must-see event that offers a vibrant and exciting glimpse into the culture and traditions of Pililla, Rizal. Don\'t miss the opportunity to experience this unique celebration of culture and faith, and create lasting memories in one of the Philippines\' most picturesque towns.
-            
-            Overall, the Magsolangtan Festival is a fantastic way to experience the local culture and traditions of Pililla, Rizal while enjoying an exciting and lively celebration. 
+The festival also includes a procession, where a statue of San Isidro Labrador is carried around the town accompanied by devotees and followers. The procession is a display of the town\'s deep-rooted faith and devotion to their patron saint.
+
+Throughout the festival, visitors can immerse themselves in the local culture by exploring the town\'s historical landmarks, museums, and art exhibits. They can also engage with the locals and learn about their traditions, customs, and way of life.
+
+The Magsolangtan Festival is a must-see event that offers a vibrant and exciting glimpse into the culture and traditions of Pililla, Rizal. Don\'t miss the opportunity to experience this unique celebration of culture and faith, and create lasting memories in one of the Philippines\' most picturesque towns.
+
+Overall, the Magsolangtan Festival is a fantastic way to experience the local culture and traditions of Pililla, Rizal while enjoying an exciting and lively celebration. 
             '),
             "img_link" => "https://www.localguidesconnect.com/t5/image/serverpage/image-id/901602i9309756AF08A07CA/image-size/large?v=v2&px=999",
         ]);
