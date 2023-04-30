@@ -23,7 +23,7 @@ defineProps({
         <div class="grid grid-cols-1 md:grid-cols-2">
           <div class="flex items-center mb-1">
             <i class="uil uil-check mr-2 text-green-600 dark:text-green-400 text-xl"></i>
-            <span class="text-sm sm:text-lg text-gray-800 dark:text-gray-200">{{ data }}</span>
+            <span class="text-sm sm:text-lg text-gray-800 dark:text-gray-200">{{ data.name }}</span>
           </div>
         </div>
       </div>
@@ -33,9 +33,9 @@ defineProps({
           Client steps
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2">
-          <div class="flex items-center mb-1">
+          <div v-for="req in data.requirements" :key="req" class="flex items-center mb-1">
             <i class="uil uil-check mr-2 text-green-600 text-xl"></i>
-            <span class="text-sm sm:text-lg text-gray-800 dark:text-gray-200">Example steps</span>
+            <span class="text-sm sm:text-lg text-gray-800 dark:text-gray-200">{{ req }}</span>
           </div>
         </div>
       </div>

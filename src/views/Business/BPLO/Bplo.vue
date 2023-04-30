@@ -6,6 +6,9 @@ import BusinessPermits from './BusinessPermits.vue'
 const permits = [
   {
      name: 'issuance of business permit',
+     requirements: [
+      "test", "Test"
+     ]
   },
   {
      name: 'issuance of occupation permit'
