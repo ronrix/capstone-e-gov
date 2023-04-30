@@ -192,5 +192,10 @@ export default createRouter({
       name: "TouristAttractionsSubPage",
       component: () => import("../views/Tourism/TourismSubpage/TourismSubpage.vue")
     },
+    {
+      path: "/festivals/:title(.*)",
+      name: "FestivalsSubPage",
+      component: () => import("../views/Tourism/TourismSubpage/TourismSubpage.vue")
+    },
   ]
 })

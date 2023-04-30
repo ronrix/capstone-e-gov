@@ -1,8 +1,43 @@
 <script setup>
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
-import Carousel from '../../components/Carousel/CarouselImgCard.vue'
-import { ref } from 'vue'
+import { marked } from 'marked'
+import DOMPurify from 'dompurify'
+import { ref, onMounted } from 'vue'
+import { fetchData } from '../../utils/axios-instance'
+import Loading from '../../components/Loading.vue'
+import { useFestivalStore } from '../../stores/festival-store'
+import { formatImgs } from '../../utils/imgFormat'
+import { Carousel, Slide, Navigation } from 'vue3-carousel'
+import 'vue3-carousel/dist/carousel.css'
+
+const store = useFestivalStore()
+const festivals = ref()
+const loading = ref(true)
+const isError = ref()
+
+const axiosCall = () => {
+  fetchData('/festivals')
+    .then((data) => {
+      store.setFestivals(data.festivals)
+      festivals.value = data.festivals.slice(0, 3)
+      localStorage.setItem('fest', JSON.stringify(festivals.value))
+      loading.value = false // set the loading to false
+    })
+    .catch((err) => {
+      console.log(err)
+      loading.value = false
+      // display soomething is error
+      isError.value = err.response?.data?.res?.err?.msg
+    })
+}
+
+onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
+  axiosCall()
+})
 const texthover = ref(false)
 function hoverover() {
   texthover.value = true
@@ -18,85 +53,88 @@ function hoverout() {
 
   <HeaderSection></HeaderSection>
 
-  <div>
-    <div class="sm:flex justify-end">
-      <div
-        class="group items-center text-bggray text-7xl hover:rounded-none hover:w-full duration-500 bg-no-repeat bg-center contrast-150 h-[600px] rounded-none sm:rounded-bl-full sm:w-3/5"
-        style="
-          background-image: url(https://scontent.fmnl25-5.fna.fbcdn.net/v/t39.30808-6/294631385_168890845630966_4287727958245532156_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeG69spQ2qYT5NS83eS9rxGhXaCR1tnWinddoJHW2daKd19K-Ogt0U_AHA_KODqkdmkPbclnSJX-H9SxP1XceQ7U&_nc_ohc=ZfpKpkn2qlYAX-i20sa&_nc_ht=scontent.fmnl25-5.fna&oh=00_AfAZ8-IU2unkhRHguG4HtA75nCd0fVBJPauxJemJdKdI-w&oe=644961DF);
-        "
-        @mouseover="hoverover"
-        @mouseout="hoverout"
-      >
-        <!-- <h1 class="invisible group-hover:visible sm:invisible">Magsalongtan Festival</h1> -->
-      </div>
-    </div>
-    <p
-      :class="{
-        '!text-white': texthover,
-        'text-white  sm:!text-dark dark:!text-bggray': !texthover
-      }"
-      class="drop-shadow-md sm:pl-10 text-7xl md:text-7xl lg:text-8xl font-bold absolute sm:top-60 -bottom-48"
-    >
-      Pililla Rizal<span class="block font-['display'] italic text-bggray sm:text-red-600"
-        >Festival</span
-      >
-    </p>
+  <div class="sm:flex justify-end items-center h-[600px]">
+    <div
+      class="group items-center hover:rounded-none hover:w-full duration-500 contrast-150 h-full rounded-none sm:rounded-bl-full sm:w-3/5 object-cover bg-no-repeat bg-cover"
+      style="background-image: url('/images/magsolangtan-festival.jpg')"
+      @mouseover="hoverover"
+      @mouseout="hoverout"
+    ></div>
   </div>
   <p
-    :class="{ '!text-white': texthover, 'text-white  sm:!text-dark dark:!text-bggray': !texthover }"
-    class="drop-shadow-md sm:pl-10 text-7xl md:text-7xl lg:text-8xl font-bold absolute sm:top-60 -bottom-48"
+    :class="{
+      '!text-white': texthover,
+      'text-white  sm:!text-dark dark:!text-bggray': !texthover
+    }"
+    class="drop-shadow-md sm:pl-10 text-7xl md:text-7xl lg:text-8xl font-bold absolute top-52 sm:top-60 -bottom-48"
   >
-    Pililla Rizal<span
+    Pililla Rizal
+    <span
+      class="block font-['display'] italic"
       :class="{
         '!text-white': texthover,
-        'text-white  sm:text-red-600 dark:!text-bggray': !texthover
+        'text-white  sm:!text-primarylight dark:!text-bggray': !texthover
       }"
-      class="block font-['display'] italic text-bggray sm:text-red-600"
       >Festival</span
     >
   </p>
-  <WrapperContainer>
-    <div class="sm:flex drop-shadow-md h-auto pb-5 pt-20">
-      <div class="sm:w-1/2 drop-shadow-lg">
-        <carousel></carousel>
-      </div>
-      <p class="sm:pl-10 self-center text-dark dark:text-bggray text-sm md:text-sm">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
-    </div>
-  </WrapperContainer>
-  <div style="background-color: #f5f5f5">
-    <WrapperContainer>
-      <div class="h-[600px] w-full sm:pt-28">
-        <div class="flex flex-col md:flex-row justify-evenly drop-shadow-md gap-5">
-          <div>
-            <h2 class="text-3xl sm:text-5xl font-semibold text-dark dark:text-dark">
-              Magsolangtan Festival
-            </h2>
-            <p class="blockfont-normal text-sm mt-3 text-dark dark:text-dark">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
-          </div>
-          <img
-            class="sm:w-[50%] order-first sm:order-last"
-            src="https://scontent.fmnl25-5.fna.fbcdn.net/v/t39.30808-6/294828742_168890512297666_6697916517948535727_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=0debeb&_nc_eui2=AeFoC5JY1hBsjZRujCcVlI2pTeiYwEcQAQ9N6JjARxABD5qrfjHGyCzYZgNgaWmUfuiiIK-aArSqAWR-RRLO7sYo&_nc_ohc=5OOT-XjVIx0AX_UObQT&_nc_ht=scontent.fmnl25-5.fna&oh=00_AfB_J6wgBfqG-6qrIZfBR4fU3WGB7YGxejcicBajXprp_g&oe=6449767C"
-            alt=""
-          />
+  <WrapperContainer class="mt-20">
+    <h5 class="font-bold text-4xl text-dark dark:text-bggray">
+      Festivals that we celebrate in Pililla
+    </h5>
+    <div class="w-full h-[2px] bg-dark dark:bg-secondary mt-5"></div>
+    <Loading v-if="laoding" />
+    <div
+      v-for="fest in festivals"
+      v-else
+      :key="fest.id"
+      class="flex flex-col md:flex-row justify-evenly gap-5 mt-10"
+    >
+      <div class="flex-1 flex flex-col justify-evenly">
+        <h2 class="text-3xl font-semibold text-dark dark:text-bggray mb-3">
+          {{ fest.title }}
+        </h2>
+        <div
+          class=":text-dark dark:text-bgLightyBlue leading-loose mardown line-clamp-5"
+          :innerHTML="DOMPurify.sanitize(marked.parse(fest.description))"
+        ></div>
+
+        <div class="group flex w-fit">
+          <RouterLink
+            :to="'/festivals/' + fest.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()"
+            class="cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primarylight pr-2"
+            >Read more
+          </RouterLink>
+          <i
+            class="group-hover:-translate-x-1 duration-75 uil uil-arrow-right text-primarylight"
+          ></i>
         </div>
       </div>
-    </WrapperContainer>
-  </div>
+      <Carousel class="overflow-hidden flex-1">
+        <Slide
+          v-for="slide in formatImgs(fest.img_link.split(','))"
+          :key="slide"
+          class="flex items-center overflow-hidden min-h-[400px] max-h-[400px] w-full justify-center carousel_item"
+        >
+          <img
+            :src="slide"
+            :alt="'this is an image of ' + fest.title + ' fiesta'"
+            class="w-full h-full object-cover"
+          />
+        </Slide>
+        <template #addons>
+          <Navigation />
+        </template>
+      </Carousel>
+    </div>
+  </WrapperContainer>
   <FooterSection></FooterSection>
 </template>
-<style >
+
+<style>
+.markdown h3 {
+  font-size: 1.5em;
+  margin-top: 0.5em;
+  font-weight: bold;
+}
 </style>

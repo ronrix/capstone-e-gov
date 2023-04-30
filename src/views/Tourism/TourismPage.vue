@@ -125,12 +125,5 @@ onMounted(() => {
       </RouterLink>
     </div>
   </WrapperContainer>
-  <div class="w-full sm:pt-10 pb-10">
-    <img
-      class="w-full object-cover"
-      src="https://scontent.fmnl25-4.fna.fbcdn.net/v/t1.6435-9/191386880_938732806972664_5846277956740923314_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=730e14&_nc_ohc=QayRsvU0LScAX9gCBHW&_nc_ht=scontent.fmnl25-4.fna&oh=00_AfA99OLmudJoWqDWC_sOSNecGTqHnIS-s2T6WE2LBHQApg&oe=646F6BF9"
-      alt=""
-    />
-  </div>
   <FooterSection></FooterSection>
 </template>

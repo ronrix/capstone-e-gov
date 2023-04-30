@@ -5,13 +5,14 @@ import DOMPurify from 'dompurify'
 
 const description = DOMPurify.sanitize(marked.parse(props.tourist.description))
 const props = defineProps({
-  tourist: { type: Object, required: true }
+  tourist: { type: Object, required: true },
+  typeOfData: { type: String, required: true }
 })
 </script>
 <template>
   <RouterLink
     :to="
-      '/tourist-attractions/' + tourist.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
+      '/' + typeOfData + '/' + tourist.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
     "
     class="flex flex-col items-start border border-x-0 border-t-0 py-3 gap-2 group cursor-pointer border-secondary"
   >

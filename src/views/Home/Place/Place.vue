@@ -36,7 +36,7 @@ const props = defineProps({
       <RouterLink
         :to="
           '/tourist-attractions/' +
-          place.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()
+          place.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
         "
         class="text-sm px-2 py-1 text-white bg-primary rounded-md capitalize"
       >
