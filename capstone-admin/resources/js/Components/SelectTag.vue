@@ -11,7 +11,7 @@
     </div>
     <!-- dropdown -->
     <div :class="addedClass" id="dd-select"
-      class="backdrop-blur-lg flex flex-col gap-2 rounded-md absolute top-full bg-white/50 z-50 mt-1 shadow-lg h-0 duration-75 overflow-y-scroll origin-top w-full md:w-auto scrollbar">
+      class="backdrop-blur-lg flex flex-col gap-2 rounded-lg absolute top-full bg-white/50 z-50 mt-1 shadow-lg h-0 duration-75 overflow-y-auto origin-top w-full md:w-auto scrollbar">
       <span @click="handleSelect" v-for="filter, idx in filterArray" :id="filter" :key="idx"
         class="cursor-pointer hover:bg-blue-600 hover:text-white text-black px-3 capitalize">{{ filter }}</span>
     </div>

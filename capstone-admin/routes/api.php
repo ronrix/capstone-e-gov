@@ -62,6 +62,7 @@ Route::get("/contacts", [AboutController::class, "getContacts"])->middleware("co
 Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"])->middleware("cors");
 Route::get("/application-forms", [FilesController::class, "getApplicationForms"])->middleware("cors");
 Route::get("/file/download/{file}", [FilesController::class, "download"])->middleware("cors");
+Route::get("/service-types", [ServicesController::class, "getAllServiceTypes"])->middleware("cors");
 
 // Broadcasting events
 Route::post("/event", [RequestNotificationController::class, 'eventHandler'])->middleware("cors");
