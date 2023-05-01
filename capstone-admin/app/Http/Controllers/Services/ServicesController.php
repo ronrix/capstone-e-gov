@@ -18,7 +18,8 @@ class ServicesController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "department" => "required",
-            "intendedFor" => "required",
+            "title" => "required",
+            "description" => "required",
             "serviceType" => "required",
         ]);
         /*
@@ -38,7 +39,8 @@ class ServicesController extends Controller
 
             $service = new Service;
             $service->service_department = $request->input("department");
-            $service->intended_for = json_encode(explode(", ", $request->input("intendedFor")));
+            $service->title = $request->input("title");
+            $service->description = $request->input("description");
             $service->service_type = $request->input("serviceType");
             $service->save(); #save the new service
 
@@ -102,12 +104,13 @@ class ServicesController extends Controller
     * office of the mayor
     * update one requirement
     */
-    public function updateIntendedFor(Request $request)
+    public function updateTitleDescription(Request $request)
     {
         // validate
         $validator = Validator::make($request->all(), [
             "id" => "required",
             "newValue" => "required",
+            "type" => "required",
         ]);
         /*
         * customizing the validation response
@@ -129,7 +132,11 @@ class ServicesController extends Controller
             $newValue = $request->input("newValue");
 
             $service = Service::findOrFail($id);
-            $service->intended_for = json_encode(explode(", ", $newValue));
+            if ($request->input("type") === "title") {
+                $service->title =  $newValue;
+            } else {
+                $service->description =  $newValue;
+            }
             $service->save();
 
             return response()->json([
@@ -238,11 +245,10 @@ class ServicesController extends Controller
             # appending the new requiremnts
             # check if $service_requirements is empty
             $merged_array = [];
-            if($service_requirements) {
+            if ($service_requirements) {
                 $merged_array = $service_requirements + array_combine($request->input("newRequirement"), $request->input("newWhereToGo"));
                 $service->service_requirements = json_encode($merged_array);
-            }
-            else {
+            } else {
                 $service->service_requirements = array_combine($request->input("newRequirement"), $request->input("newWhereToGo"));
             }
             $service->save();
@@ -452,11 +458,10 @@ class ServicesController extends Controller
                 "person_responsible" => $request->input("person_responsible"),
             ];
             # check if $service_process is empty
-            if($service_process) {
+            if ($service_process) {
                 array_push($service_process, $new_process); # append the new process
                 $service->service_process = $service_process;
-            }
-            else {
+            } else {
                 # create new process
                 $service->service_process = array($new_process);
             }

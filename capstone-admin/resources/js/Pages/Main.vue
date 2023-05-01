@@ -52,7 +52,8 @@ onMounted(() => {
 async function handleCreateService(formData) {
   return await axios.post(be_url + "/service/create", {
     department: formData.department,
-    intendedFor: formData.intendedFor,
+    title: formData.title,
+    description: formData.description,
     serviceType: formData.serviceType,
   })
     .then(({ data }) => {

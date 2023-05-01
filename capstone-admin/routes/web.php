@@ -104,7 +104,7 @@ Route::middleware(["auth"])->group(function () {
     /* services */
     Route::post("/services/requirement/edit", [ServicesController::class, "updateRequirement"]);
     Route::post("/services/process/edit", [ServicesController::class, "updateProcess"]);
-    Route::post("/services/intended-for/edit", [ServicesController::class, "updateIntendedFor"]);
+    Route::post("/services/title-description/edit", [ServicesController::class, "updateTitleDescription"]);
 
     /* official seal */
     Route::post("/official-seal/edit", [AboutController::class, "updateOfficialSeal"]);

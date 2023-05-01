@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->text("title");
+            $table->longText("description");
             $table->string("service_department");
-            $table->json("intended_for");
             $table->string("service_type");
             $table->json("service_requirements")->nullable()->default(null);
             $table->json("service_process")->nullable()->default(null);
