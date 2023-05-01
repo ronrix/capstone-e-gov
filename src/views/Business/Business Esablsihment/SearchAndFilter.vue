@@ -1,4 +1,9 @@
 <script setup>
+defineProps({
+  categories: { type: Array, required: true },
+  searchFilter: { type: Function, required: true },
+  categoryFilter: { type: Function, required: true }
+})
 </script>
 
 <template>
@@ -9,20 +14,21 @@
     >
       <i class="uil uil-search text-lg text-dark dark:text-white"></i>
       <input
-        class="w-full border-none outline-none bg-white dark:bg-dark text-sm text-dark dark:text-white placeholder:dark:text-white"
-        type="text"
-        placeholder="search business"
+        class="w-full outline-none bg-white dark:bg-dark text-sm text-dark dark:text-white placeholder:dark:text-white"
+        type="search"
+        placeholder="Search business"
+        @change.capture="searchFilter"
       />
     </div>
     <!-- filter by -->
     <select
-      class="w-full md:w-auto outline-none px-2 py-1 md:py-2 items-center border border-gray-400 bg-white dark:bg-dark rounded-lg relative text-lg text-dark dark:text-white">
-        <option value="" selected>All</option>
-        <option value="">Restaurant</option>
-        <option value="">Department Store</option>
-        <option value="">Gas Station</option>
-        <option value="">Pharmacy</option>
-        <option value="">Bank</option>
+      class="w-full md:w-auto outline-none px-2 py-1 md:py-2 items-center border border-gray-400 bg-white dark:bg-dark rounded-lg relative text-lg text-dark dark:text-white capitalize"
+      @change="categoryFilter"
+    >
+      <option value="" selected>All</option>
+      <option v-for="cat in new Set([...categories])" :key="cat" class="capitalize" :value="cat">
+        {{ cat }}
+      </option>
     </select>
   </div>
 </template>

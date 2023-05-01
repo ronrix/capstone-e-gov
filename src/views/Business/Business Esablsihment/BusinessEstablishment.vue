@@ -1,58 +1,83 @@
 <script setup>
-import HeaderSection from '../../../components/Header/HeaderSection.vue';
-import FooterSection from '../../../components/FooterSection/FooterSection.vue';
-import SearchAndFilter from './SearchAndFilter.vue';
-import Businesses from './Businesses.vue';
-import HeroBusinessEstablishment from './HeroBusinessEstablishment.vue';
+import HeaderSection from '../../../components/Header/HeaderSection.vue'
+import FooterSection from '../../../components/FooterSection/FooterSection.vue'
+import SearchAndFilter from './SearchAndFilter.vue'
+import BusinessesCard from '../BusinessesCard.vue'
+import HeroBusinessEstablishment from './HeroBusinessEstablishment.vue'
+import { ref, onMounted } from 'vue'
+import { fetchData } from '../../../utils/axios-instance'
+import DisplayModal from '../DisplayModal.vue'
 
-const businesses = [{
-  name: '7 eleven',
-  branch: 'Imatong Pililla, Rizal',
-  location: 'J.P. Rizal St, Pililla, Rizal',
-  imgSrc:'images/businesses/7-11.jpg'
-},
-{
-  name: 'BDO',
-  branch: 'Bagumbayan Pililla, Rizal',
-  location: 'A. Paz Street, Pililla, Rizal',
-  imgSrc:'images/businesses/bdo.jpg'
-},
-{
-  name: 'Bulawan floating restaurant',
-  branch: 'Halayhayin Pililla, Rizal',
-  location: 'Km. 59 National Highway, Pililla, 1910 Rizal',
-  imgSrc:'images/businesses/bulawan.jpg'
-},
-{
-  name: 'Generika',
-  branch: 'Takungan Pililla, Rizal',
-  location: 'J.P. Rizal St, Pililla, Rizal',
-  imgSrc:'images/businesses/generika.jpg'
-},
-{
-  name: 'raskies kainan',
-  branch: 'Bagumbayan Pililla, Rizal',
-  location: 'A. Paz Street, Pililla, Rizal',
-  imgSrc:'images/businesses/raskies.jpg'
-},
-]
+const UNMODIFIABLE_BUSINESSES = ref([])
+const businesses = ref([])
+const categories = ref([])
+const selectedData = ref()
+
+// search filtering
+function searchFilter(e) {
+  businesses.value = UNMODIFIABLE_BUSINESSES.value.filter((b) => b.title.includes(e.target.value))
+}
+
+// category filtering
+function categoryFilter(e) {
+  businesses.value = UNMODIFIABLE_BUSINESSES.value.filter((b) =>
+    b.category.includes(e.target.value)
+  )
+}
+
+const isShowDisplay = ref(false)
+function showDisplayModal(data) {
+  isShowDisplay.value = !isShowDisplay.value
+  selectedData.value = data
+}
+
+const axiosCall = () => {
+  fetchData('/businesses')
+    .then((data) => {
+      businesses.value = data.businesses
+      UNMODIFIABLE_BUSINESSES.value = data.businesses
+      categories.value = data.businesses.map((d) => d.category)
+    })
+    .catch((err) => console.log(err))
+}
+
+onMounted(() => {
+  axiosCall()
+})
 </script>
 
 <template>
-    <HeaderSection />
+  <!-- add tab title -->
+  <head>
+    <title>Business Establishment | Pililla Rizal</title>
+  </head>
+
+  <HeaderSection />
+  <DisplayModal
+    :class="{ 'translate-y-[110%]': !isShowDisplay, 'translate-y-0': isShowDisplay }"
+    :close-modal="showDisplayModal"
+    :selected-data="selectedData"
+  />
   <WrapperContainer>
     <!-- search and filter by -->
     <HeroBusinessEstablishment />
-    <SearchAndFilter />
+    <SearchAndFilter
+      :categories="categories"
+      :search-filter="searchFilter"
+      :category-filter="categoryFilter"
+    />
     <!-- businesses card -->
-    <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-3 mt-7">
-      <Businesses v-for="(data, index) in businesses" :key="index" :data="data"  />
+    <h5 v-if="!businesses.length" class="font-bold text-2xl text-center mt-7">
+      No businesses found!
+    </h5>
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-7">
+      <BusinessesCard
+        v-for="(data, index) in businesses"
+        :key="index"
+        :data="data"
+        :show-display-modal="showDisplayModal"
+      />
     </div>
-   
   </WrapperContainer>
-    <FooterSection />
+  <FooterSection />
 </template>
-
-<style lang="scss" scoped>
-
-</style>

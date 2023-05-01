@@ -1,12 +1,13 @@
 <script setup>
-
 function showFilter() {
-    const dropdown = document.querySelector('.dropdown')
-    // console.log(e.target);
-    dropdown.classList.toggle('hidden');
-
-    // e.target.nextElementSibling.classList.toggle('hidden')
+  const dropdown = document.querySelector('.dropdown')
+  dropdown.classList.toggle('hidden')
 }
+
+defineProps({
+  barangayFilter: { type: Function, required: true },
+  barangays: { type: Array, required: true }
+})
 </script>
 
 <template>
@@ -25,17 +26,15 @@ function showFilter() {
         class="w-full hidden left-0 top-10 rounded-b-md dropdown absolute border bg-white dark:bg-dark border-gray-300"
       >
         <div class="flex flex-col">
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">
-            Hulo
+          <div
+            v-for="barangay in new Set([...barangays])"
+            :id="barangay"
+            :key="barangay"
+            class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400 capitalize"
+            @click="barangayFilter"
+          >
+            {{ barangay }}
           </div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Takungan</div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Imatong</div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Wawa</div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Bagumbayan</div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Halayhayin</div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Quisao</div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Malaya</div>
-          <div class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400">Niogan</div>
         </div>
       </div>
     </div>

@@ -3,39 +3,67 @@ import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSectionVue from '../../../components/FooterSection/FooterSection.vue'
 import HeroApartment from './HeroApartment.vue'
 import Filter from './Filter.vue'
-import Apartments from './Apartments.vue'
+import { ref, onMounted } from 'vue'
+import { fetchData } from '../../../utils/axios-instance'
+import BusinessesCard from '../BusinessesCard.vue'
+import DisplayModal from '../DisplayModal.vue'
 
-const house = [{
- barangay: 'Bagumbayan Pililla Rizal',
- address: 'M.A. ROxas St. Bagumbayan',
- imgSrc: 'images/apartment-1.png'
-},
-{
- barangay: 'Halayahayin Pililla, Rizal',
- address: 'A. Paz St. Bonifacio ',
- imgSrc: 'images/apartment-2.png'
-},
-{
- barangay: 'Quisao Pililla, RIzal',
- address: 'San Antonio St.',
- imgSrc: 'images/apartment-3.jpg'
-},
-]
+const UNMODIFIABLE_APARTMENTS = ref([])
+const apartments = ref([])
+const barangays = ref([])
+const selectedData = ref()
+
+// category filtering
+function barangayFilter(e) {
+  apartments.value = UNMODIFIABLE_APARTMENTS.value.filter((b) => b.location.includes(e.target.id))
+}
+
+const isShowDisplay = ref(false)
+function showDisplayModal(data) {
+  isShowDisplay.value = !isShowDisplay.value
+  selectedData.value = data
+}
+
+const axiosCall = () => {
+  fetchData('/apartments')
+    .then((data) => {
+      apartments.value = data.apartments
+      UNMODIFIABLE_APARTMENTS.value = data.apartments
+      barangays.value = data.apartments.map((d) => d.location)
+    })
+    .catch((err) => console.log(err))
+}
+
+onMounted(() => {
+  axiosCall()
+})
 </script>
 
 <template>
+  <!-- add tab title -->
+  <head>
+    <title>Apartments | Pililla Rizal</title>
+  </head>
   <HeaderSection />
   <!-- hero section -->
   <HeroApartment />
+
+  <DisplayModal
+    :class="{ 'translate-y-[110%]': !isShowDisplay, 'translate-y-0': isShowDisplay }"
+    :close-modal="showDisplayModal"
+    :selected-data="selectedData"
+  />
   <WrapperContainer>
     <!-- filter by -->
-    <Filter />
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-      <Apartments v-for="(data, idx) in house" :key="idx" :data="data"/>
+    <Filter :barangay-filter="barangayFilter" :barangays="barangays" />
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+      <BusinessesCard
+        v-for="data in apartments"
+        :key="data.id"
+        :data="data"
+        :show-display-modal="showDisplayModal"
+      />
     </div>
   </WrapperContainer>
   <FooterSectionVue />
 </template>
-
-<style lang="scss" scoped>
-</style>
