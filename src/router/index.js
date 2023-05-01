@@ -151,6 +151,18 @@ export default createRouter({
       component: () => import("../../src/views/About/Mission and vision/MissionAndVision.vue")
 
     },
+    {
+      path: "/about/history",
+      name: "History",
+      component: () => import("../../src/views/About/History/History.vue")
+
+    },
+    {
+      path: "/about/FAQ",
+      name: "FAQs",
+      component: () => import("../../src/views/About/Faqs/Faqs.vue")
+
+    },
     // aabout page end
     {
       path: "/job-op",
@@ -181,6 +193,12 @@ export default createRouter({
       path: "/former-officials",
       name: "FormerOfficials",
       component: () => import("../views/Government/FormerOfficials/FormerOfficials.vue")
+    },
+    {
+      path: "//official-seal",
+      name: "OfficialSeal",
+      component: () => import("../views/Government/OfficialSeal/OfficialSeal.vue")
+
     },
     {
       path: "/demographic-profile",
