@@ -36,7 +36,7 @@ onMounted(() => {
     />
 
     <WrapperContainer class="flex flex-col gap-3 items-center">
-      <h1 class="text-5xl sm:text-8xl text-primary font-bold capitalize font-['display']">
+      <h1 class="text-5xl sm:text-8xl font-bold capitalize font-['display'] text-primarylight">
         better pililla
       </h1>
       <h2

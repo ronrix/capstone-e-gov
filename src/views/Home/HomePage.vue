@@ -9,6 +9,7 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import { onMounted, ref } from 'vue'
 import { fetchData } from '../../utils/axios-instance'
 import { useTourism } from '../../stores/tourisms-store'
+import Loading from '../../components/Loading.vue'
 
 const store = useTourism()
 const places = ref()
@@ -66,6 +67,7 @@ onMounted(() => {
         <div class="h-20 w-2 bg-white dark:bg-dark mx-auto"></div>
 
         <!-- places -->
+        <Loading v-if="!places" class="w-14 h-14 mx-auto" />
         <div v-for="(place, idx) in places" :key="idx">
           <!-- connected lines -->
           <div v-if="idx !== 0" class="h-20 w-2 bg-white dark:bg-dark mx-auto relative my-5">
