@@ -1,0 +1,134 @@
+<script setup>
+import HeaderSection from '../../../components/Header/HeaderSection.vue'
+import FooterSection from '../../../components/FooterSection/FooterSection.vue'
+import TablesRows from './TablesRows.vue'
+import CardOfficialSealVue from './CardOfficialSeal.vue'
+
+const colors = [
+  {
+    name: 'BLUE',
+    desc: 'It represents the abundance of water resources and the Productivity of Pililla as a town. It is dependent upon livelihood and natural resources.'
+  },
+  {
+    name: 'RED',
+    desc: 'Entails active involvement in community transformation and Development towards global competitiveness.'
+  },
+  {
+    name: 'GREEN',
+    desc: 'Implies the protection and preservation of environment as a  key factor for achieving quality life of the residents through sustainable, massive campaign in crops and animal production.'
+  },
+  {
+    name: 'YELLOW',
+    desc: 'Indicates zealousness.'
+  },
+  {
+    name: 'SKY BLUE',
+    desc: 'Symbolizes peace and unity.'
+  }
+]
+
+const symbols = [
+  {
+    name: 'Holy sacrament',
+    desc: 'represents that he residents of Pililla are pro-God and pro-people as the first core value.'
+  },
+  {
+    name: 'Gable and balance scaled',
+    desc: 'symbolizes dynamic leadership in Governance and fiscal reforms by being just.'
+  },
+  {
+    name: 'Sun and three stars',
+    desc: 'symbolize agriculture and industries.'
+  },
+  {
+    name: 'Torch, Book and Caduceus',
+    desc: 'represents education and health'
+  },
+  {
+    name: 'Hands',
+    desc: 'entails peace and prosperity can attained Through collaborative efforts.'
+  },
+  {
+    name: 'Shield',
+    desc: 'derived from provincial seal of Rizal where the municipality belongs.'
+  },
+  {
+    name: '1583',
+    desc: 'the year that Pililla was founded as an independent Municipality'
+  }
+]
+
+const seal =[{
+    logo: 'logo',
+    name: 'better pililla',
+    desc: '“BETTER PILILLA” the home of 54 MW Windfarm  our tagline which anchors our governance that leads to the fulfillment of all its Strategic Goals massive tax campaign, health, special and educational services, human development through skills and development training, increased economic opportunities through business-friendly policies, and infrastructure development which result in attaining the DILG-Seal of Good Local Governance (SGLG) in one year of its first term of public service. (source: LGPMS Profile)',
+    imgSrc: '/images/better-pililla-black.png'
+},
+{
+    logo: 'logo',
+    name: 'araw ng pililla',
+    desc: 'Ang hugis ng logo na animo araw ay sumisimbulo sa panahon ng tag-init o panahon ng pag-aani kung kailan din ipinagdiriwang ang Araw ng Pililla. Ito ay ginawang makulay na sumasagisag sa ating pagiging likas na masayahin. Ito ay napapalibutan ng siyam na hugis ng tao na nagmistulang sinag na kumakatawan sa siyam na nagkakaisang Barangay at mga mamamayan nito. Ang logo ay makikitaan din ng mga simbulong sumasagisag sa mga lugar at produktong tanyag sa Bayan ng Pililla.',
+    imgSrc: '/images/araw-ng-pililla-logo.png'
+}]
+</script>
+
+<template>
+  <HeaderSection />
+  <WrapperContainer>
+    <div class="w-full flex flex-col mt-10 mb-10">
+      <h1
+        class="self-center text-center text-xl sm:text-2xl lg:text-3xl text-primary dark:text-primarylight font-bold mb-5 lg:mb-10 uppercase"
+      >
+        photographs and symbolism of <span class="block">component of pililla logo</span>
+      </h1>
+      <img
+        class="self-center xs:w-full sm:w-[500px] md:w-[600px] h-300 md:h-[390px] lg:h-[400px] rounded-md"
+        src="/images/official-seal.jpg"
+        alt=""
+      />
+      <!-- tables -->
+      <div class="flex flex-col md:flex-row gap-5 mt-20 mx-2 md:mx-5 lg:mx-24">
+        <div class="flex-1">
+          <h2 class="text-center font-bold bg-primary text-white text-sm md:text-lg p-2">
+            Color Representation
+          </h2>
+          <table class="table-auto">
+            <thead class="text-sm md:text-lg text-gray-700">
+              <tr>
+                <th class="bg-blue-100 font-bold">Color</th>
+                <th class="bg-blue-50 font-bold">Description</th>
+              </tr>
+            </thead>
+            <!-- table body 1 -->
+            <TablesRows v-for="(data, idx) in colors" :key="idx" :idx="idx" :data="data" />
+          </table>
+        </div>
+
+        <div class="flex-1">
+          <h2 class="text-center font-bold bg-primary text-white text-lg p-2">
+            Symbol Representation
+          </h2>
+          <table class="table-auto">
+            <thead class="text-sm md:text-lg text-gray-700">
+              <tr>
+                <th class="bg-blue-100 font-bold">Symbol</th>
+                <th class="bg-blue-50 font-bold">Description</th>
+              </tr>
+            </thead>
+            <!-- table body 2 -->
+            <TablesRows v-for="(data, idx) in symbols" :key="idx" :idx="idx" :data="data" />
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- card -->
+        <CardOfficialSealVue v-for="(data, idx) in seal" :key="idx" :idx="idx" :data="data" />
+  </WrapperContainer>
+  <FooterSection />
+</template>
+
+<style scoped>
+th {
+  padding: 0.5em 2em;
+}
+</style>
