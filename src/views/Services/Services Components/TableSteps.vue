@@ -7,7 +7,7 @@ defineProps({
   <h1 class="text-xl md:text-2xl font-bold text-dark dark:text-bggray mt-14">
     What's the process?
   </h1>
-  <table class="border table-auto mt-2 mb-10">
+  <table class="border table-auto mt-2 mb-10 w-full">
     <thead>
       <tr class="text-sm sm:text-base text-left text-bggray font-semibold bg-secondary">
         <th>Client Steps</th>
@@ -32,11 +32,13 @@ defineProps({
 <style scoped>
 td,
 th {
-  border: 1px solid #cfcfcf;
+  border: 1px solid;
 }
+
 th {
   padding: 5px;
 }
+
 td {
   padding: 10px;
   text-align: left;

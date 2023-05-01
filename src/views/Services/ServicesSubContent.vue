@@ -34,10 +34,7 @@ onMounted(() => {
 
   <WrapperContainer>
     <!-- <HeroScholar /> -->
-    <Hero
-      title="educational assistance for students"
-      description="Educational Assistance Program is a government-provided social protection program that helps students in crisis. The program provides financial assistance to students in elementary, high school, senior high school, and vocational/college levels"
-    />
+    <Hero :title="services?.title" :description="services?.description" />
 
     <!-- content -->
     <!-- first section -->
@@ -52,5 +49,4 @@ onMounted(() => {
   <FooterSection />
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
