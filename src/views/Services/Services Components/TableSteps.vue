@@ -1,45 +1,29 @@
-<script setup></script>
-
+<script setup>
+defineProps({
+  processes: { type: Array, required: true }
+})
+</script>
 <template>
-   <h1 class="text-xl md:text-2xl font-bold text-dark dark:text-white ml-5 mt-10 mb-0">
-        What's the process?
-      </h1>
-  <table class="border table-auto mt-2 mb-10">
+  <h1 class="text-xl md:text-2xl font-bold text-dark dark:text-bggray mt-14">
+    What's the process?
+  </h1>
+  <table class="border table-auto mt-2 mb-10 w-full">
     <thead>
-      <tr class="text-sm lg:text-lg text-left text-dark font-semibold bg-gray-50 dark:bg-gray-50">
+      <tr class="text-sm sm:text-base text-left text-bggray font-semibold bg-secondary">
         <th>Client Steps</th>
         <th>Agency Steps</th>
         <th>Fees to Paid</th>
         <th>Processing Time</th>
+        <th>Person Responsible</th>
       </tr>
     </thead>
-    <tbody class=" text-dark dark:text-white text-xs md:text-sm">
-      <tr>
-        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, sit!</td>
-        <td>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis commodi rerum tempore
-          delectus! Sapiente, nisi?
-        </td>
-        <td></td>
-        <td>5 mins.</td>
-      </tr>
-      <tr>
-        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, sit!</td>
-        <td>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis commodi rerum tempore
-          delectus! Sapiente, nisi?
-        </td>
-        <td></td>
-        <td>5 mins.</td>
-      </tr>
-      <tr>
-        <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea, sit!</td>
-        <td>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nobis commodi rerum tempore
-          delectus! Sapiente, nisi?
-        </td>
-        <td></td>
-        <td>5 mins.</td>
+    <tbody v-if="processes" class="text-dark dark:text-white">
+      <tr v-for="(process, idx) in JSON.parse(processes)" :key="idx" class="text-sm sm:text-base">
+        <td>{{ process.client_steps }}</td>
+        <td>{{ process.agency_steps }}</td>
+        <td>{{ process.fees }}</td>
+        <td>{{ process.process_time }}</td>
+        <td>{{ process.person_responsible }}</td>
       </tr>
     </tbody>
     <!-- <div class="absolute w-[320px] h-[320px] bg-[#B92B27] -top-16 -left-32 opacity-10  rounded-full"></div> -->
@@ -48,11 +32,13 @@
 <style scoped>
 td,
 th {
-  border: 1px solid #cfcfcf;
+  border: 1px solid;
 }
+
 th {
   padding: 5px;
 }
+
 td {
   padding: 10px;
   text-align: left;

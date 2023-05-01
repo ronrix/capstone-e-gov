@@ -3,7 +3,24 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import { onMounted, ref } from 'vue'
 import { formatImgs } from '../../utils/imgFormat'
+import Loading from '../../components/Loading.vue'
 
+function handleSearch() {
+  loading.value = true
+  tourism.value = JSON.parse(localStorage.getItem('tourisms')).filter((t) => {
+    if (
+      t.title.includes(searchInput.value) ||
+      t.description.includes(searchInput.value) ||
+      t.location.includes(searchInput.value)
+    ) {
+      loading.value = false
+      return t
+    }
+  })
+}
+
+const loading = ref(false)
+const searchInput = ref('')
 const tourism = ref()
 onMounted(() => {
   // scroll on top when this component rendered
@@ -74,28 +91,34 @@ onMounted(() => {
 
   <WrapperContainer>
     <div class="flex justify-between items-center">
-      <p class="font-['display'] text-3xl font-semibold w-1/2 text-dark dark:text-bggray">
-        Find your best destination.
+      <p class="text-3xl font-semibold w-1/2 text-dark dark:text-bggray capitalize">
+        Find your Best Destination.
       </p>
       <div>
         <p class="text-xs pb-1 text-secondary">We have more destination you can</p>
-        <div
+        <form
           class="relative flex items-center justify-center drop-shadow-lg rounded-3xl text-sm bg-gray-100 text-dark px-3 py-2"
+          @submit.prevent="handleSearch"
         >
           <i class="uil uil-map-marker text-base text-dark mr-2" />
           <input
+            v-model="searchInput"
             class="bg-transparent w-full outline-none"
             type="text"
             placeholder="Search destinations"
           />
-          <div class="w-12 h-10 rounded-full bg-primarylight flex items-center justify-center">
+          <button
+            type="submit"
+            class="w-12 h-10 rounded-full bg-primarylight flex items-center justify-center hover:bg-primary"
+          >
             <i class="uil uil-search text-white text-base" />
-          </div>
-        </div>
+          </button>
+        </form>
       </div>
     </div>
   </WrapperContainer>
   <WrapperContainer>
+    <Loading v-if="loading" class="w-10 h-10 mx-auto" />
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 gap-5">
       <RouterLink
         v-for="data in tourism"
@@ -117,7 +140,7 @@ onMounted(() => {
           </p>
           <div class="flex text-dark dark:text-bggray">
             <i class="uil uil-map-marker text-cyan-300 relative bottom-[2px]" />
-            <p class="text-[12px] ml-1">
+            <p class="text-sm ml-1 capitalize">
               {{ data.location }}
             </p>
           </div>
