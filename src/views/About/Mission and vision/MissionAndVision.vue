@@ -6,8 +6,8 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 
 <template>
     <HeaderSection />
-        <div class="w-full mt-16 flex flex-col  items-center mb-20 ">
-            <h1 class="flex-1 text-gray-800 dark:text-gray-400 font-bold text-4xl md:text-5xl mb-5 md:mb-10">Our <span class="text-dark dark:text-white"> Mission </span><span class="block ml-0 md:ml-3 mt-1"><span class="text-dark dark:text-white">&</span> Vision</span></h1>
+        <div class="w-full mt-10 flex flex-col  items-center mb-20 ">
+            <h1 class="text-center text-gray-800 dark:text-gray-400 font-bold text-4xl md:text-5xl mb-5 md:mb-10">Our <span class="text-dark dark:text-white"> Mission </span><span class="block"><span class="text-dark dark:text-white">&</span> Vision</span></h1>
           <div class="flex flex-col mx-16 md:mx-32 lg:mx-44 gap-5">
             <div class="flex flex-col">
                 <h2 class="text-primary dark:text-primarylight text-xl sm:text-2xl md:text-3xl font-bold mb-2 md:mb-3 font-display">Mission</h2>
