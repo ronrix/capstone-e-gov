@@ -6,7 +6,7 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 <template>
   <HeaderSection />
   <WrapperContainer>
-    <div class="w-full flex flex-col mt-10">
+    <div class="w-full flex flex-col mt-10 mb-20">
       <h1 class="self-center text-4xl md:text-5xl text-gray-700 dark:text-gray-100 font-bold mb-1">
         Contact us!
       </h1>
@@ -25,11 +25,11 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
           </div>
           <div class="flex flex-col mb-3">
             <p class="text-lg md:text-sm text-dark dark:text-white">+63-944-765-3637</p>
-            <p class="text-lg md:text-sm text-dark">+63-296-321-456</p>
+            <p class="text-lg md:text-sm text-dark dark:text-white">+63-296-321-456</p>
           </div>
           <div class="flex flex-col">
-            <p class="text-lg md:text-sm text-dark">8123-4567</p>
-            <p class="text-lg md:text-sm text-dark">02-8123-4567</p>
+            <p class="text-lg md:text-sm text-dark dark:text-white">8123-4567</p>
+            <p class="text-lg md:text-sm text-dark dark:text-white">02-8123-4567</p>
           </div>
         </div>
              <!-- social media -->
@@ -38,12 +38,14 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
               Social Media
             </h2>
             <div class="flex items-center gap-2 mb-3 cursor-pointer">
-                <i class="uil uil-facebook-f text-xl text-blue-500"></i>
-                <p class="text-lg md:text-sm text-dark dark:text-white">facebook.com/BetterPililla</p>
+                <a href="https://www.facebook.com/BetterPililla" class="text-lg md:text-sm hover:text-gray-700 dark:hover:text-gray-500 text-dark dark:text-white">
+                  <i class="uil uil-facebook-f text-xl text-blue-500"></i>
+                  facebook.com/BetterPililla</a>
             </div>
             <div class="flex items-center gap-2 mb-3 cursor-pointer">
-                <i class="uil uil-envelope text-xl text-primary"></i>
-                <p class="text-lg md:text-sm text-dark dark:text-white">better_pililla@gmail.com</p>
+                <a href="" class="text-lg md:text-sm text-dark hover:text-gray-700 dark:hover:text-gray-500 dark:text-white">
+                  <i class="uil uil-envelope text-xl text-primary"></i>
+                  better_pililla@gmail.com</a>
             </div>
           </div>
             <!-- business hours -->
