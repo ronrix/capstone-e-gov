@@ -209,16 +209,15 @@ onMounted(() => {
         <i class="uil uil-angle-down" />
       </RouterLink>
 
-      <RouterLink
+      <div
         id="about"
-        to="/about"
         active-class="!text-primarylight"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
         @mouseover="setSubLinkOnHover"
       >
         about
         <i class="uil uil-angle-down" />
-      </RouterLink>
+      </div>
 
       <!-- theme emode  -->
       <abbr title="theme">
