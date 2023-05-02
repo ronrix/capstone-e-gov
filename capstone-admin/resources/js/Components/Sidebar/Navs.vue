@@ -28,7 +28,7 @@
       </div>
       <div class="hidden child-sub-navs w-full">
         <div
-          class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0">
+          class="flex mt-2 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 gap-1">
           <NavLink name="Current Officials of Pililla Rizal" to="/government/executives/current-officials" />
           <NavLink name="former officials" to="/government/executives/former-officials" />
           <NavLink name="sanggunian barangay officials" to="/government/executives/barangay-officials" />
@@ -90,7 +90,7 @@
         </div>
         <div class="hidden child-sub-navs w-full">
           <div
-            class="flex mt-2 pl-4 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full">
+            class="flex mt-2 flex-col items-start justify-start border border-l-4 ml-5 border-r-0 border-b-0 border-t-0 w-full gap-1">
             <NavLink v-for="service, id in services" :key="id" :name="service"
               :to="`/services/${key.toLowerCase().replace(/ /g, '-')}/${service.toLowerCase().replace(/ /g, '-')}`" />
           </div>

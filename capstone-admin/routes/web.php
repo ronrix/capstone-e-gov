@@ -162,6 +162,7 @@ Route::middleware(["auth"])->group(function () {
     /* services */
     Route::post("/services/{service}/requirement/delete", [ServicesController::class, "deleteRequirement"]);
     Route::post("/services/{service}/process/delete", [ServicesController::class, "deleteProcess"]);
+    Route::post("/services/delete", [ServicesController::class, "deleteService"]);
 
     /* official seal */
     Route::post("/official-seal/delete", [AboutController::class, "deleteOfficialSeal"]);

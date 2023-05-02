@@ -5,9 +5,21 @@
     <EditVerification :close-modal="closeEditVerificationModal" v-if="isEditVerification" :data="editedInput"
         :handle-edit="handleUpdateTitleDescription" />
 
+    <!-- delete one service -->
+    <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
+        :handle-delete="handleDeleteService" :id="dataServices.id" />
+
     <WrapperContent>
         <!-- response message -->
         <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
+
+        <!-- delete btn - deleting this whole service -->
+        <button title="delete this whole service"
+            class="px-3 py-1 bg-red-600 text-white hover:bg-red-700 rounded-lg ml-auto mr-0 mb-3 block"
+            @click="showDeleteVerificationModal">
+            <i class="uil uil-times-circle"></i>
+            delete
+        </button>
 
         <h3 class="font-bold text-xl text-gray-800">Title</h3>
         <textarea @change="(e) => showEditVerification(e.target.value, 'title')"
@@ -68,12 +80,20 @@ import { be_url } from "../../config/config";
 import Notifcation from "../../Components/Notifcation.vue";
 import { useRoute } from "vue-router";
 import EditVerification from "../../Components/EditVerification.vue";
+import DeleteVerificationModal from "../../Components/DeleteVerificationModal.vue";
+import { router } from "../../router/";
 
 const dataServices = ref([]);
 const processes = ref([]);
 const requirements = ref([]);
 const resMsg = ref();
 const routes = useRoute();
+const isVerificationModal = ref(false);
+
+// function to verifify the deleting of the service
+function showDeleteVerificationModal() {
+    isVerificationModal.value = !isVerificationModal.value;
+}
 
 // function to update one list of requirement with change.capture event.
 // will update the data as soon as the user change the list and blur out of the input
@@ -340,6 +360,36 @@ function handleUpdateTitleDescription(value) {
             return;
         });
 }
+
+// function to delete the service
+async function handleDeleteService(id) {
+    return await axios
+        .post(be_url + "/services/delete", {
+            id
+        })
+        .then(({ data }) => {
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+            isVerificationModal.value = false; // close the edit verification modal
+            router.go(-1) // go back last route after successfull delete of service
+
+            return data;
+        })
+        .catch((err) => {
+            // set the response msg
+            resMsg.value = err.response.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+            return;
+        });
+}
+
 
 // string to capitalize the first letter of the word
 function toCapitalize(str) {

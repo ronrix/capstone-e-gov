@@ -1,6 +1,6 @@
 <template>
   <RouterLink @click.passive="handleClick" ref="link" activeClass="bg-blue-600 text-white" :to="to"
-    class="hover:bg-blue-600 hover:text-white cursor-pointer w-full p-2 capitalize">
+    class="hover:bg-blue-600 hover:text-white cursor-pointer w-full p-2 capitalize whitespace-pre-wrap">
     {{ name }}
   </RouterLink>
 </template>
