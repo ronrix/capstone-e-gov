@@ -3,9 +3,14 @@
 </script>
 
 <template>
+     <div class="w-full flex flex-col gap-3 items-center pb-10 bg-bggray dark:bg-darkgray">
+        <h1 class="text-center font-['display'] text-4xl md:text-5xl text-darkgray mt-5 dark:text-bggray">Do you want to feature <span class="block">your business?</span> </h1>
+        <p class="text-sm text-dark dark:text-white">Let us help you to promote your business</p>
+        <RouterLink to="/apply-your-business" class="text-sm sm:text-base px-3 py-2 mt-5 bg-primary font-bold hover:bg-primarylight text-white rounded-md shadow-lg shadow-primarylight/50">Apply your business
+            <i class="uil uil-angle-right"></i></RouterLink>
+    </div>
     <div class="flex items-center mt-16 justify-between w-full py-5 relative">
         <h1 class="text-5xl ml-16 text-dark dark:text-white font-[display]">Businesses that<span class="block"> partnership  with </span><span class="block">Pililla, Rizal</span></h1>
-
         <div class="grid grid-cols-3 gap-3 mr-16">
             <!-- single item -->
         <a href="" class="flex flex-col items-center mb-5">

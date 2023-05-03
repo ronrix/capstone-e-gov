@@ -3,8 +3,8 @@
 
 <template>
   <div class="flex flex-col">
-    <div class="flex flex-row items-center justify-between gap-8">
-      <div class="flex-1 flex flex-col gap-10">
+    <div class="flex flex-row items-center justify-between gap-8 ">
+      <div class="flex-1 flex flex-col gap-10 ml-10">
         <h1 class="text-4xl text-dark dark:text-white font-bold">
           Businesses<span class="block mt-1">in Pililla, Rizal</span>
         </h1>
