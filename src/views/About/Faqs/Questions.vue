@@ -8,7 +8,14 @@ defineProps({
 
 const iconDown = ref(false)
 function showAnswer(e) {
+  console.log(e.target.nextElementSibling)
   const lastElement = e.target.lastElementChild
+  document.querySelectorAll('.answer').forEach((el) => {
+    if (lastElement === el) {
+      return
+    }
+    el.classList.remove('h-auto')
+  })
   lastElement.classList.toggle('h-auto')
 
   // change icon
@@ -31,7 +38,7 @@ function showAnswer(e) {
         :class="{ 'uil-angle-down': !iconDown, 'uil-angle-up': iconDown }"
       ></i>
     </div>
-    <div class="h-0 overflow-hidden duration-500">
+    <div class="answer h-0 overflow-hidden duration-500">
       <p class="w-[85%] text-secondary dark:text-gray-300 font-normal text-sm mt-2">
         {{ data?.ans }}
       </p>
