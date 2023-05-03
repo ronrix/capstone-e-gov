@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue"
+import { ref } from 'vue'
 
 defineProps({
   data: { type: Object, required: true },
@@ -9,7 +9,7 @@ defineProps({
 const iconDown = ref(false)
 function showAnswer(e) {
   const lastElement = e.target.lastElementChild
-  lastElement.classList.toggle("h-auto")
+  lastElement.classList.toggle('h-auto')
 
   // change icon
   iconDown.value = !iconDown.value
@@ -17,12 +17,19 @@ function showAnswer(e) {
 </script>
 
 <template>
-  <div class=" flex flex-col mt-5 cursor-pointer" @click="showAnswer">
+  <div
+    class="flex flex-col mt-5 cursor-pointer border border-x-0 border-t-0 border-b-gray-500 pb-5"
+    @click="showAnswer"
+  >
     <div class="flex items-center justify-between pointer-events-none">
       <h2 class="text-normal text-dark font-medium dark:text-white">
         {{ data?.question }}
       </h2>
-      <i ref="icon" class="uil text-2xl" :class="{ 'uil-angle-down': !iconDown, 'uil-angle-up': iconDown }"></i>
+      <i
+        ref="icon"
+        class="uil text-2xl"
+        :class="{ 'uil-angle-down': !iconDown, 'uil-angle-up': iconDown }"
+      ></i>
     </div>
     <div class="h-0 overflow-hidden duration-500">
       <p class="w-[85%] text-secondary dark:text-gray-300 font-normal text-sm mt-2">
