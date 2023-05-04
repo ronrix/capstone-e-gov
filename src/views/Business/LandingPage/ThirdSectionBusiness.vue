@@ -18,14 +18,14 @@ const permits = [
 
 <template>
   <div class="w-full bg-gray-700 dark:bg-gray-500 h-28 mt-10 flex items-center px-5 gap-2 mb-5">
-    <h1 class="text-2xl text-white font-bold capitalize">Businesses permit</h1>
-    <i class="uil uil-file-check-alt text-4xl text-white"></i>
+    <h1 class="text-xl md:text-2xl text-white font-bold capitalize">Businesses permit</h1>
+    <i class="uil uil-file-check-alt text-3xl md:text-4xl text-white"></i>
   </div>
   <WrapperContainer>
     <!-- business permits -->
     <Permit v-for="(data, id) in permits" :id="id" :key="id" :data="data" />
     <button
-      class="bg-primary hover:bg-primarylight text-sm rounded-md text-white ml-16 mt-10 py-3 px-5 mb-10"
+      class="bg-primary hover:bg-primarylight text-sm rounded-md text-white ml-2 lg:ml-16 mt-10 py-3 px-2 md:px-5 mb-10"
     >
       View all businesses permits
       <i class="uil uil-angle-right ml-2"></i>
