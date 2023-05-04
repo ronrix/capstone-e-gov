@@ -1,5 +1,5 @@
 <template>
-  <div class="flex items-center justify-center flex-col gap-2">
+  <div class="flex items-center justify-center flex-col gap-2 relative">
     <RouterLink
       to="/news"
       class="flex items-center px-3 rounded-full bg-primary py-1 text-white font-bold text-xs"
@@ -21,13 +21,22 @@
     <div class="flex items-center gap-5 mt-5">
       <button
         class="text-sm sm:text-base px-3 py-2 bg-primary font-bold hover:bg-primarylight text-white rounded-md shadow-lg shadow-primarylight/50"
+        @click="showBenefit"
       >
         Apply for Benefits
       </button>
     </div>
   </div>
+  <AssistanceModal v-if="isBenefitModal" :show-benefit="showBenefit" />
 </template>
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import AssistanceModal from './AssistanceModal.vue'
+import { ref } from 'vue'
+
+const isBenefitModal = ref(false)
+function showBenefit() {
+  isBenefitModal.value = !isBenefitModal.value
+}
 </script>
