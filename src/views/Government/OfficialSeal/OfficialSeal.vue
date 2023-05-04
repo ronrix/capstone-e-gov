@@ -2,17 +2,23 @@
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import TablesRows from './TablesRows.vue'
-import CardOfficialSealVue from './CardOfficialSeal.vue'
+import CardOfficialSeal from './CardOfficialSeal.vue'
 import { fetchData } from '../../../utils/axios-instance'
 import { onMounted } from 'vue'
 import { ref } from 'vue'
+import Loading from '../../../components/Loading.vue'
 
 const seal = ref([])
+const loading = ref(true)
 const axiosCall = () => {
-  fetchData('/official-seal').then((data) => {
-    console.log(data)
-    seal.value = data.official_seal[0]
-  })
+  fetchData('/official-seal')
+    .then((data) => {
+      seal.value = data.official_seal[0]
+      loading.value = false
+    })
+    .catch((err) => {
+      console.log(err)
+    })
 }
 
 onMounted(() => {
@@ -126,14 +132,16 @@ const symbols = [
         </div>
       </div>
     </div>
-    <!-- card -->
 
-    <CardOfficialSealVue
-      v-for="(data, idx) in JSON.parse(seal?.logo)"
-      :key="idx"
-      :idx="idx"
-      :data="data"
-    />
+    <Loading v-if="loading" class="w-10 h-10 mx-auto" />
+    <div v-else>
+      <CardOfficialSeal
+        v-for="(data, idx) in JSON.parse(seal?.logo)"
+        :key="idx"
+        :idx="idx"
+        :data="data"
+      />
+    </div>
   </WrapperContainer>
   <FooterSection />
 </template>

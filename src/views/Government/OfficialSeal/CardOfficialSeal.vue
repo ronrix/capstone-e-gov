@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <div
-    class="flex flex-col mt-2 rounded-md bg-white border border-gray-50 dark:bg-dark px-3 lg:px-5 py-7"
+    class="flex flex-col mt-2 rounded-md bg-white border border-secondary dark:bg-dark px-3 lg:px-5 py-7"
   >
     <div class="flex flex-col md:flex-row items-center mx-2 lg:mx-10 gap-10">
       <div
