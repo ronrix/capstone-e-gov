@@ -93,9 +93,9 @@ export const router = createRouter({
     },
     // about
     {
-      path: "/about/official-seal",
+      path: "/government/official-seal",
       name: "OfficialSeal",
-      component: () => import("../Pages/About/OfficialSeal/OfficialSeal.vue")
+      component: () => import("../Pages/Government/OfficialSeal/OfficialSeal.vue")
     },
     {
       path: "/about/contacts",

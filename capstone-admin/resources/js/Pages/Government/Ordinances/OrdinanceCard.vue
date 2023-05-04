@@ -8,7 +8,7 @@
             class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
             delete</div>
 
-        <h4 class="text-2xl font-bold my-3">{{ ordinance.title }}</h4>
+        <h4 class="text-2xl font-bold my-3 capitalize">{{ ordinance.title }}</h4>
         <button type="button" @click="showPDF" class="font-bold text-sm self-start text-blue-600">
             {{ !isShowPdf ? 'view pdf' : 'hide pdf' }}
         </button>
