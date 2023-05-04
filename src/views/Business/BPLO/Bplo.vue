@@ -2,16 +2,40 @@
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import BusinessPermits from './BusinessPermits.vue'
+import { fetchData } from '../../../utils/axios-instance'
+import { onMounted } from 'vue'
+import { ref } from 'vue'
+import Loading from '../../../components/Loading.vue'
 
-const permits = [
-  {
-    name: 'issuance of business permit',
-    location: 'office of the mayor',
-    req: 'Lorem ipsum dolor sit amet.',
-    goTo: 'Lorem ipsum dolor sit amet.',
-    steps: ['test1', 'test2', 'test3']
-  }
-]
+const permits = ref([])
+const originalPermits = ref([])
+const loading = ref(true)
+const axiosCall = () => {
+  fetchData('/permits')
+    .then((data) => {
+      permits.value = data.permits
+      originalPermits.value = data.permits
+      localStorage.setItem('bplo', JSON.stringify(data.permits))
+      loading.value = false
+    })
+    .catch((err) => {
+      loading.value = false
+      console.log(err)
+    })
+}
+
+function handleSearchPermits(e) {
+  permits.value = originalPermits.value.filter((o) =>
+    o.title.toLowerCase().includes(e.target.value.toLowerCase())
+  )
+}
+
+onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
+  axiosCall()
+})
 </script>
 
 <template>
@@ -37,8 +61,9 @@ const permits = [
         <i class="uil uil-search text-lg text-dark dark:text-white"></i>
         <input
           class="w-full border-none outline-none bg-white dark:bg-dark text-sm text-dark dark:text-white placeholder:dark:text-white"
-          type="text"
+          type="search"
           placeholder="search business permit"
+          @change.capture="handleSearchPermits"
         />
       </div>
     </div>
@@ -46,11 +71,10 @@ const permits = [
     <h2 class="w-full mt-10 text-sm font-bold text-dark dark:text-white">All businesses permits</h2>
     <!-- permits -->
     <div class="w-full mt-5">
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+      <Loading v-if="loading" class="w-10 h-10 mx-auto" />
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
         <BusinessPermits v-for="(data, id) in permits" :key="id" :data="data" />
       </div>
-      <!-- pass the data in bplo -->
-      <!-- <BploModal v-for="(req, id) in permits" :key="id" :req="req" /> -->
     </div>
   </WrapperContainer>
   <FooterSection />

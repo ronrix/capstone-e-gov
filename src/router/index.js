@@ -73,6 +73,11 @@ export default createRouter({
       component: () => import('../views/Business/BPLO/Bplo.vue')
     },
     {
+      path: '/business-permit-and-licensing-office/:id(.*)',
+      name: 'BPLOReq',
+      component: () => import('../views/Business/BPLO/BPLOSubPage.vue')
+    },
+    {
       path: '/apply-your-business',
       name: 'form',
       component: () => import('../views/Business/LandingPage/FormBusiness.vue')
