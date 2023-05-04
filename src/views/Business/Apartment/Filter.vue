@@ -16,7 +16,7 @@ defineProps({
       filter by different barangay
     </p>
     <div
-      class="cursor-pointer w-full sm:w-[50%] md:w-[15%] rounded-md border border-gray-300 ml-2 py-1 px-2 flex items-center justify-between gap-3 relative mb-3"
+      class="cursor-pointer w-full md:w-[35%] rounded-md border border-gray-300 ml-2 py-1 px-2 flex items-center justify-between gap-3 relative mb-3"
       @click="showFilter"
     >
       <h1 class="text-sm lg:text-lg text-gray-600 dark:text-white">Filter by</h1>
@@ -30,7 +30,7 @@ defineProps({
             v-for="barangay in new Set([...barangays])"
             :id="barangay"
             :key="barangay"
-            class="text-sm md:text-lg text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400 capitalize"
+            class="text-sm md:text-base text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400 capitalize"
             @click="barangayFilter"
           >
             {{ barangay }}

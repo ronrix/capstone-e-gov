@@ -43,7 +43,7 @@ defineProps({
           <!-- where to go -->
           <div>
             <h2 class="text-gray-800 dark:text-white font-semibold text-sm sm:text-lg mb-1">
-              Where to go?
+              Where to get?
             </h2>
             <div class="flex items-center mb-1">
               <span class="text-sm sm:text-lg text-gray-800 dark:text-gray-200">{{
