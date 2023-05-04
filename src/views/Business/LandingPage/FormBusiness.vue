@@ -29,8 +29,8 @@ function showInputFilePdf() {
       <h1 class="text-center text-4xl font-bold text-dark dark:text-white mb-10">
         Apply your business here
       </h1>
-      <form class="mx-3 lg:mx-10" action="submit">
-        <div class="flex flex-col gap-1">
+      <form class="mx-3 lg:mx-20" action="submit">
+        <div class="flex flex-col md:flex-row gap-1">
           <label class="text-base md:text-lg text-darkgray dark:text-bggray flex-1 w-full"
             >Name
             <p class="text-secondary text-sm font-normal">enter your full name here</p>
@@ -76,32 +76,34 @@ function showInputFilePdf() {
           ></textarea>
         </label>
         <!-- input file pdf -->
-        <div class="flex items-center gap-20 mb-5 mt-3">
+        <div
+          class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-20 mb-5 mt-3"
+        >
           <div>
             <h2 class="text-sm md:text-lg text-darkgray dark:text-bggray">Business permit</h2>
             <p class="text-secondary text-sm font-normal">
               upload pdf file of your business permit
             </p>
           </div>
-          <div class="flex items-center gap-4">
-            <div class="text-sm md:text-normal">Upload file</div>
-            <i
-              class="uil uil-plus-circle text-dark hover:text-blue-600 text-xl :text-2xl cursor-pointer"
-              @click="showInputFilePdf"
-            ></i>
+          <div
+            class="bg-blue-600 dark:bg-blue-700 hover:bg-blue-500 dark:hover:bg-blue-600 px-3 py-2 md:px-5 md:py-3 ml-0 sm:ml-32 md:ml-16 text-xs text-white rounded-3xl cursor-pointer"
+            @click="showInputFilePdf"
+          >
+            Upload file
+            <i class="uil uil-plus text-white"></i>
             <input ref="inputFileForPdf" type="file" class="hidden" />
           </div>
         </div>
         <!-- input image -->
-        <div class="flex flex-col sm:flex-row md:items-center gap-4 mt-5">
-          <div class="flex-1">
+        <div class="flex flex-col sm:flex-row items-start md:items-center gap-4 mt-5">
+          <div>
             <h2 class="text-sm md:text-xl text-darkgray dark:text-bggray">Upload an image</h2>
             <p class="text-secondary text-sm font-normal">
               upload images of your business(maximum 3 images)
             </p>
           </div>
           <div
-            class="bg-blue-600 dark:bg-blue-700 hover:bg-blue-500 dark:hover:bg-blue-600 px-3 py-2 md:px-5 md:py-3 text-xs text-white rounded-3xl cursor-pointer"
+            class="text-center bg-blue-600 dark:bg-blue-700 hover:bg-blue-500 dark:hover:bg-blue-600 px-3 py-2 md:px-4 md:py-3 text-xs text-white rounded-3xl ml-0 sm:ml-20 md:ml-5 cursor-pointer"
             @click="showInputFileImage"
           >
             Add images
