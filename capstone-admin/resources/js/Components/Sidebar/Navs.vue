@@ -49,14 +49,6 @@
             name="former officials"
             to="/government/executives/former-officials"
           />
-          <NavLink
-            name="sanggunian barangay officials"
-            to="/government/executives/barangay-officials"
-          />
-          <NavLink
-            name="municipal department heads"
-            to="/government/executives/department-heads"
-          />
         </div>
       </div>
       <NavLink to="/government/job-postings" name="job postings" />
@@ -108,7 +100,10 @@
         name="business establishments"
       />
       <NavLink to="/businesses/apartments" name="apartments" />
-      <NavLink to="/businesses/BPLO" name="BPLO" />
+      <NavLink
+        to="/businesses/business-permit-license-office"
+        name="Business Permit and Licensing Office"
+      />
     </SubNavs>
 
     <!-- services -->
