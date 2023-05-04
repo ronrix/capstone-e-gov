@@ -28,6 +28,7 @@
         "laravel-echo": "^1.15.0",
         "marked": "^4.3.0",
         "moment": "^2.29.4",
+        "pdf-viewer-vue": "^0.2.7",
         "pinia": "^2.0.35",
         "pusher-js": "^8.0.2",
         "turndown": "^7.1.1",
