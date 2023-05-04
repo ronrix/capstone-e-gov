@@ -2,7 +2,15 @@
   <HeadTitle title="Former Officials"></HeadTitle>
   <WrapperContent>
     <Notifcation :msg="resMsg" :isMounted="resMsg" class="z-[1000]" />
-    <h1 class="text-xl font-bold capitalize">Former officials of pililla rizal</h1>
+    <div class="flex items-center gap-3">
+      <h1 class="text-xl font-bold capitalize">Former officials of pililla rizal</h1>
+
+      <div class="flex items-center gap-2">
+        <span>year:</span>
+        <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears"
+          added-class="!w-[200px]" />
+      </div>
+    </div>
 
     <!-- empty: this will display when there is no data to display -->
     <h5 v-if="isEmpty" class="font-bold text-xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
@@ -15,7 +23,7 @@
     </div>
 
     <!-- cards -->
-    <div class="flex items-center flex-wrap gap-3 mt-5">
+    <div class="flex items-start flex-wrap gap-5 mt-5">
       <CardOfficial v-for="official in dataFormerOfficials" :key="official.id" :official="official"
         :handleDelete="handleDelete" />
     </div>
@@ -38,8 +46,10 @@ import Notifcation from '../../../../Components/Notifcation.vue';
 import { be_url } from '../../../../config/config';
 import CardOfficial from '../CardOfficial.vue';
 import OfficialModal from '../OfficialModal.vue';
+import SelectTag from '../../../../Components/SelectTag.vue';
 
 const dataFormerOfficials = ref([]);
+const originalDataFormerOfficials = ref([]);
 const resMsg = ref();
 const isEmpty = ref(false);
 const isLoading = ref(true);
@@ -47,6 +57,16 @@ const isLoading = ref(true);
 const isModalShow = ref(false);
 function toggleShowModal() {
   isModalShow.value = !isModalShow.value;
+}
+
+const filterYear = ref();
+const filterYears = ref();
+
+function filterBy(type, value) {
+  filterYear.value = value;
+  // filter by year
+  // and set the new value to dataNews to re-render the filtered news
+  dataFormerOfficials.value = originalDataFormerOfficials.value = data.formerOfficials.filter(o => new Date(o.end_term).getFullYear() === filterYear.value);
 }
 
 // this is for adding new data
@@ -61,9 +81,12 @@ async function handleSubmit(formData) {
       }, 3000);
 
       // this will update the state variable of the officials, if theres officialData response
-      console.log(data);
-      if (data.officialData) {
-        dataFormerOfficials.value = data.officialData;
+      if (data.formerOfficials) {
+        // get the all the end years for filtering
+        filterYears.value = [...new Set([...data.formerOfficials.map(d => new Date(d.end_term).getFullYear())])];
+        filterYear.value = filterYears.value[0];
+        dataFormerOfficials.value = data.formerOfficials.filter(o => new Date(o.end_term).getFullYear() === filterYear.value);
+        originalDataFormerOfficials.value = data.formerOfficials;
       }
 
       return data; // for promise response, we can use this data for validation on the method that calls it
@@ -93,9 +116,12 @@ function handleDelete(id, deleteRef) {
     }, 3000);
 
     // this will update the state variable of the officials, if theres officialData response
-    console.log(data);
-    if (data.officialData) {
-      dataFormerOfficials.value = data.officialData;
+    if (data.formerOfficials) {
+      // get the all the end years for filtering
+      filterYears.value = [...new Set([...data.formerOfficials.map(d => new Date(d.end_term).getFullYear())])];
+      filterYear.value = filterYears.value[0];
+      dataFormerOfficials.value = data.formerOfficials.filter(o => new Date(o.end_term).getFullYear() === filterYear.value);
+      originalDataFormerOfficials.value = data.formerOfficials;
     }
   });
 }
@@ -105,7 +131,12 @@ function handleDelete(id, deleteRef) {
 onMounted(() => {
   axios.get(be_url + "/former-officials")
     .then(({ data }) => {
-      dataFormerOfficials.value = data.formerOfficials
+      // get the all the end years for filtering
+      filterYears.value = [...new Set([...data.formerOfficials.map(d => new Date(d.end_term).getFullYear())])];
+      filterYear.value = filterYears.value[0];
+      dataFormerOfficials.value = data.formerOfficials.filter(o => new Date(o.end_term).getFullYear() === filterYear.value);
+      originalDataFormerOfficials.value = data.formerOfficials;
+
       if (!dataFormerOfficials.value.length) isEmpty.value = true;
       isLoading.value = false;
     })

@@ -14,7 +14,7 @@
     </div>
 
     <!-- cards -->
-    <div class="flex items-center flex-wrap gap-3 mt-5">
+    <div class="flex items-start flex-wrap gap-5 mt-5">
       <CardOfficial v-for="official in dataCurrentOfficials" :key="official.id" :official="official"
         :handleDelete="handleDelete" />
     </div>

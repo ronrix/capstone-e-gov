@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col bg-white rounded-md p-3 shadow-md relative overflow-hidden">
+  <div class="flex flex-col bg-white rounded-md p-3 shadow-md relative overflow-hidden w-[250px] h-[300px]">
 
     <!-- delete button -->
     <div @click="showDeleteVerificationModal"
@@ -10,10 +10,11 @@
     <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
       :handle-delete="handleDelete" :id="official.id" />
 
-    <div class="overflow-hidden">
-      <img class="w-[250px] mx-auto rounded-md object-cover" :src="imgSrc" :alt="official.name">
+    <div class="overflow-hidden h-full flex-1">
+      <img class="w-[250px] h-full mx-auto rounded-md object-cover" :src="imgSrc" :alt="official.name">
     </div>
-    <h5 class="text-gray-500 text-sm sm:text-base font-bold uppercase mt-3">{{ official.position }}</h5>
+    <h5 class="text-gray-500 text-sm font-bold uppercase mt-3 whitespace-pre-wrap">{{ official.position }}
+    </h5>
 
     <p class="text-gray-600 text-xs font-[500] capitalize">
       term

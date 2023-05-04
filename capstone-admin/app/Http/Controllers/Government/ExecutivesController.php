@@ -26,8 +26,8 @@ class ExecutivesController extends Controller
     public function index()
     {
         //
-        $officials = Executives::whereDate('start_term', '<=', $this->date_now)
-            ->whereDate('end_term', '>=', $this->date_now)
+        $officials = Executives::whereDate('start_term', '<=', date_format($this->date_now, "Y-m-d H:i:s"))
+            ->whereDate('end_term', '>=', date_format($this->date_now, "Y-m-d H:i:s"))
             ->orderBy("end_term", "desc")
             ->get();
 
@@ -37,7 +37,7 @@ class ExecutivesController extends Controller
     public function getFormerOfficials()
     {
         //
-        $officials = Executives::whereDate('end_term', '<=', $this->date_now)->orderBy("end_term", "desc")->get();
+        $officials = Executives::whereDate('end_term', '<=', date_format($this->date_now, "Y-m-d H:i:s"))->orderBy("end_term", "desc")->get();
 
         return response()->json(['formerOfficials' => $officials]);
     }
@@ -163,7 +163,7 @@ class ExecutivesController extends Controller
             "position" => "required",
             "startTerm" => "required|date",
             "endTerm" => "required|date",
-            "imgFile" => "image|mimes:jpeg,png,jpg,gif,svg", # 2mb is the max 
+            "imgFile" => "image|mimes:jpeg,png,jpg|max:5120", # 5mb is the max 
         ]);
 
         /*
@@ -176,7 +176,7 @@ class ExecutivesController extends Controller
                     "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
                     "status" => 400,
                 ]
-            ]);
+            ], 400);
         }
 
         try {
@@ -214,10 +214,10 @@ class ExecutivesController extends Controller
                     "msg" => "Successfully created official",
                     "status" => 200
                 ]
-            ]);
+            ], 200);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
     }
 
@@ -242,7 +242,7 @@ class ExecutivesController extends Controller
                     "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
                     "status" => 400,
                 ]
-            ]);
+            ], 400);
         }
 
         try {
@@ -250,7 +250,13 @@ class ExecutivesController extends Controller
                 $file = $request->file("imgFile");
                 // save all the images
                 $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" . $filename;
+                $path = "uploads/executives/" . $filename;
+
+                # create a folder if not exists before saving the image
+                $folder = "uploads/executives/";
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
                 Image::make($file)->save(public_path($path)); // save the file image
 
                 $exec = new Executives;
@@ -272,10 +278,10 @@ class ExecutivesController extends Controller
                     "msg" => "Successfully created official",
                     "status" => 200
                 ]
-            ]);
+            ], 200);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
     }
 
@@ -300,7 +306,7 @@ class ExecutivesController extends Controller
                     "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
                     "status" => 400,
                 ]
-            ]);
+            ], 400);
         }
 
         try {
@@ -308,7 +314,13 @@ class ExecutivesController extends Controller
                 $file = $request->file("imgFile");
                 // save all the images
                 $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" . $filename;
+                $path = "uploads/executives/" . $filename;
+
+                # create a folder if not exists before saving the image
+                $folder = "uploads/executives/";
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
                 Image::make($file)->save(public_path($path)); // save the file image
 
                 $exec = new Executives;
@@ -330,10 +342,10 @@ class ExecutivesController extends Controller
                     "msg" => "Successfully created official",
                     "status" => 200
                 ]
-            ]);
+            ], 200);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
     }
 
@@ -358,7 +370,7 @@ class ExecutivesController extends Controller
                     "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
                     "status" => 400,
                 ]
-            ]);
+            ], 400);
         }
 
         try {
@@ -366,7 +378,13 @@ class ExecutivesController extends Controller
                 $file = $request->file("imgFile");
                 // save all the images
                 $filename = uniqid() . "." . $file->getClientOriginalExtension();
-                $path = "uploads/" . $filename;
+                $path = "uploads/executives/" . $filename;
+
+                # create a folder if not exists before saving the image
+                $folder = "uploads/executives/";
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
                 Image::make($file)->save(public_path($path)); // save the file image
 
                 $exec = new Executives;
@@ -391,67 +409,10 @@ class ExecutivesController extends Controller
                     "msg" => "Successfully created official",
                     "status" => 200
                 ]
-            ]);
+            ], 200);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Executives  $executives
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Executives $executives)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Executives  $executives
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Executives $executives)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Executives  $executives
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Executives $executives)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Executives  $executives
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Executives $executives)
-    {
-        //
     }
 }

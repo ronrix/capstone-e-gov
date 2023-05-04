@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('executives', function (Blueprint $table) {
             $table->id();
-            $table->string("executive_name");
-            $table->string("position");
+            $table->longText("executive_name");
+            $table->text("position");
             $table->text("img_link")->nullable();
             $table->timestamp("start_term");
             $table->timestamp("end_term");

@@ -20,12 +20,6 @@
       <span class="text-sm font-bold capitalize mb-2">Position</span>
       <SelectTag type="position" :value="position" :filterArray="positions" class="text-base" addedClass="!w-full"
         :filterFn="selectFn" />
-      <!-- if barangay officials then show this input to add position for barangay official -->
-      <label v-if="isOptional" class="flex flex-col mt-4">
-        <span class="text-xs font-bold capitalize mb-2">optional</span>
-        <input v-model="formData.optionalPosition" name="title" type="text" placeholder="Type optional position..."
-          class="rounded-md mb-5 p-2 focus:outline-blue-600">
-      </label>
 
       <!-- term inputs -->
       <span class="text-sm font-bold mb-2 mt-3">Start term <span class="text-blue-400 font-normal">(year)</span></span>
@@ -85,7 +79,7 @@ const rules = computed(() => ({
   imgFile: { required: helpers.withMessage("The image is required", required) },
 }));
 
-const positions = ["mayor", "vice mayor", "barangay official", "department head", "honorable"];
+const positions = ["mayor", "vice mayor", "sangguaniang bayan members"];
 const position = ref("Mayor");
 const isSubmitting = ref(false);
 const isError = ref(false);
@@ -106,11 +100,8 @@ const formData = useForm({
 const v$ = useVuelidate(rules, formData);
 
 function selectFn(type, value) {
-  if (type === "position") {
-    position.value = value;
-    formData.position = value;
-    isOptional.value = position.value.toLowerCase() === 'barangay official' || position.value.toLowerCase() === 'department head';
-  }
+  position.value = value;
+  formData.position = value;
 }
 
 function showImgSelection() {
@@ -118,8 +109,14 @@ function showImgSelection() {
 }
 
 function handleSelectImgToUpload(e) {
-  formData.imgFile = e.target.files[0];
   selectedImg.value = e.target.files[0]?.name;
+
+  const selectedFile = e.target.files[0];
+  if (selectedFile) {
+    const newName = 'official.jpg'; // replace with your desired new file name
+    const modifiedFile = new File([selectedFile], newName, { type: selectedFile.type });
+    formData.imgFile = modifiedFile;
+  }
 }
 
 function removeSelectedImg(e) {
@@ -136,11 +133,6 @@ async function onSubmit() {
     return;
   }
 
-  // add comma if barangay or department position
-  if (formData.position.toLowerCase() === "barangay official" || formData.position.toLocaleLowerCase() === 'department head') {
-    formData.position += ", " + formData.optionalPosition;
-  }
-
   isSubmitting.value = true;
   if (isError.value) isError.value = false; // remove the error message from displaying when validation passed
   handleSubmit(formData).then((data) => {
@@ -150,8 +142,10 @@ async function onSubmit() {
       return;
     }
     isSubmitting.value = false;
+    selectedImg.value = "";
     isOptional.value = false;
-    formData.reset();
+    formData.fullName = "";
+    formData.imgFile = null;
   });
 }
 
