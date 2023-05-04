@@ -1,10 +1,33 @@
 <script setup>
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import JobCard from './JobCard.vue'
-import { jobs } from '../../assets/data/jobs'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
+import { onMounted, ref } from 'vue'
+import { fetchData } from '../../utils/axios-instance'
+import Loading from '../../components/Loading.vue'
+
+const jobs = ref([])
+const loading = ref(true)
+const axiosCall = () => {
+  fetchData('/job-postings')
+    .then((data) => {
+      jobs.value = data.jobs
+      loading.value = false
+    })
+    .catch((err) => {
+      console.log(err)
+      loading.value = false
+    })
+}
+
+onMounted(() => {
+  axiosCall()
+})
 </script>
 <template>
+  <head>
+    <title>Job Opportunities | Pililla Rizal</title>
+  </head>
   <HeaderSection />
 
   <WrapperContainer class="mt-10">
@@ -22,13 +45,13 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
     <h5 class="text-xl text-secondary text-center mt-5">Open jobs. people hiring.</h5>
     <div class="flex justify-center mt-5">
       <div>
-        <p class="text-sm font-[500]">Submit a request to post Job opportunity</p>
         <RouterLink
           to="/job-forms"
           class="bg-primary rounded-full w-fit text-center mx-auto py-2 block text-white px-3 hover:opacity-80"
         >
           Post your job
         </RouterLink>
+        <p class="text-sm text-secondary">Submit a request to post Job opportunity</p>
       </div>
     </div>
     <!-- search input -->
@@ -50,6 +73,7 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
       <h5 class="text-sm font-bold text-dark dark:text-secondary">All jobs</h5>
 
       <!-- card jobs -->
+      <Loading v-if="loading" class="w-10 h-10 mx-auto" />
       <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
         <JobCard v-for="job in jobs" :key="job.id" :job="job" />
       </div>

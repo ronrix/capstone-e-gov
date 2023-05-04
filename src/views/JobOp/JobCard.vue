@@ -2,6 +2,7 @@
 import moment from 'moment'
 import JobOpModal from './JobOpModal.vue'
 import { ref } from 'vue'
+import { formatImgs } from '../../utils/imgFormat'
 
 const isShowJobModal = ref(false)
 function handleShowJobModal() {
@@ -18,16 +19,16 @@ defineProps({
     @click="handleShowJobModal"
   >
     <!-- logo -->
-    <section class="flex items-center gap-2 pointer-events-none">
-      <div class="w-14 h-14 rounded-full overflow-hidden bg-white border p-2">
-        <img :src="job.logo" alt="company logo" class="object-cover" />
+    <section class="gap-2 pointer-events-none">
+      <div class="w-[40px] h-[40px] rounded-full overflow-hidden bg-white border p-2">
+        <img :src="formatImgs(job?.logo.split(','))[0]" alt="company logo" class="object-cover" />
       </div>
-      <h3 class="font-bold text-base capitalize text-dar dark:text-bggray">{{ job.title }}</h3>
+      <h3 class="font-bold text-base capitalize text-dar dark:text-bggray">{{ job.job_title }}</h3>
     </section>
 
     <!-- description -->
     <section class="line-clamp-3 text-secondary pointer-events-none">
-      <p>{{ job.description }}</p>
+      <p>{{ job.job_description }}</p>
     </section>
 
     <!-- footer -->
@@ -36,7 +37,7 @@ defineProps({
     >
       <div class="flex items-center gap-2 flex-wrap">
         <h6
-          v-for="(type, id) in job.types"
+          v-for="(type, id) in job.job_schedule.split(',')"
           :key="id"
           class="capitalize font-bold text-xs dark:text-bggray"
         >
@@ -45,7 +46,7 @@ defineProps({
       </div>
       <h6 class="text-xs text-dark dark:text-bggray">
         <i class="uil uil-clock-three mr-2"></i>
-        <span>{{ moment().endOf('day').fromNow() }}</span>
+        <span>{{ moment(job.created_at).endOf('day').fromNow() }}</span>
       </h6>
     </section>
   </div>

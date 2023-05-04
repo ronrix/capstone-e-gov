@@ -86,11 +86,11 @@ function showInputFilePdf() {
             </p>
           </div>
           <div
-            class="bg-blue-600 dark:bg-blue-700 hover:bg-blue-500 dark:hover:bg-blue-600 px-3 py-2 md:px-5 md:py-3 ml-0 sm:ml-32 md:ml-16 text-xs text-white rounded-3xl cursor-pointer"
+            class="text-center border font-[600] border-primarylight px-3 py-2 md:px-4 md:py-3 text-xs text-primary hover:bg-primarylight hover:text-bggray rounded-3xl ml-0 sm:ml-20 md:ml-5 cursor-pointer duration-100"
             @click="showInputFilePdf"
           >
             Upload file
-            <i class="uil uil-plus text-white"></i>
+            <i class="uil uil-plus"></i>
             <input ref="inputFileForPdf" type="file" class="hidden" />
           </div>
         </div>
@@ -103,14 +103,21 @@ function showInputFilePdf() {
             </p>
           </div>
           <div
-            class="text-center bg-blue-600 dark:bg-blue-700 hover:bg-blue-500 dark:hover:bg-blue-600 px-3 py-2 md:px-4 md:py-3 text-xs text-white rounded-3xl ml-0 sm:ml-20 md:ml-5 cursor-pointer"
+            class="text-center border font-[600] border-primarylight px-3 py-2 md:px-4 md:py-3 text-xs text-primary hover:bg-primarylight hover:text-bggray rounded-3xl ml-0 sm:ml-20 md:ml-5 cursor-pointer duration-100"
             @click="showInputFileImage"
           >
             Add images
-            <i class="uil uil-plus text-white"></i>
+            <i class="uil uil-plus"></i>
           </div>
           <input ref="inputFileForImage" type="file" class="hidden" />
         </div>
+
+        <button
+          type="submit"
+          class="px-3 py-1 bg-primary text-white hover:bg-primarylight w-full rounded-md mt-5"
+        >
+          Submit
+        </button>
       </form>
     </div>
   </WrapperContainer>
