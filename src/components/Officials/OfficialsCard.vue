@@ -1,17 +1,19 @@
 <script setup>
+import { formatImgs } from '../../utils/imgFormat'
+
 defineProps({
   official: { type: Object, required: false }
 })
 </script>
 <template>
   <div
-    class="border border-dark dark:border-bggray p-5 w-full sm:w-[400px] flex flex-col items-center mx-auto dark:bg-dark duration-200 rounded-lg shadow-lg shadow-primarylight/20 relative"
+    class="border border-dark dark:border-bggray p-5 w-full sm:w-[400px] flex flex-col items-center mx-auto dark:bg-dark duration-200 rounded-lg shadow-lg relative"
   >
     <div
       class="w-[100px] h-[100px] rounded-full overflow-hidden absolute -top-1/2 left-1/2 -translate-x-1/2 bg-white dark:bg-dark p-2"
     >
       <img
-        :src="official?.img_link"
+        :src="formatImgs(official?.img_link.split(','))[0]"
         alt="this is an image of the mayor of pililla rizal"
         class="rounded-full object-cover"
       />

@@ -10,13 +10,22 @@ const loading = ref(true)
 const mayor = ref()
 const viceMayor = ref()
 const officials = ref([])
+const originalOfficials = ref([])
+const getYears = ref([])
 
 const axiosCall = () => {
   fetchData('/former-officials')
     .then((data) => {
+      getYears.value = new Set([
+        ...data.formerOfficials.map((a) => new Date(a.end_term).getFullYear())
+      ])
+
       officials.value = data.formerOfficials.filter(
-        (official) => !official.position.includes('mayor')
+        (a) => new Date(a.end_term).getFullYear() == getYears.value[0]
       )
+      console.log(officials.value)
+      // .filter((official) => !official.position.includes('mayor'))
+      originalOfficials.value = data.formerOfficials
       //   find the mayor and vice mayor
       mayor.value = data.formerOfficials.find(
         (official) => official.position.toLowerCase() === 'mayor'
@@ -47,15 +56,18 @@ onMounted(() => {
       Former Municipal Elected Officials
     </h3>
 
+    <!-- select year -->
+    <p class="text-sm text-secondary font-bold text-center">Select a year</p>
+    <select class="px-4 mx-auto block border border-secondary mb-3">
+      <option v-for="year in getYears" :key="year" :value="year">{{ year }}</option>
+    </select>
+
     <section class="flex flex-col justify-center items-center w-full gap-y-16">
       <h4 v-if="!loading && !officials.length" class="text-3xl text-center">No data found</h4>
       <!-- loading animation -->
       <Loading v-if="loading" class="w-14 h-14 mx-auto" />
       <!-- no data found -->
-      <section
-        v-if="!loading && officials && mayor && viceMayor"
-        class="flex flex-col justify-center items-center w-full gap-y-16"
-      >
+      <section v-if="!loading" class="flex flex-col justify-center items-center w-full gap-y-16">
         <!-- mayor -->
         <OfficialsCard :official="mayor" />
 

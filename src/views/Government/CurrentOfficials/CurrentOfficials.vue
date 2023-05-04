@@ -51,15 +51,12 @@ onMounted(() => {
     <!-- loading animation -->
     <Loading v-if="loading" class="w-14 h-14 mx-auto" />
     <!-- no data found -->
-    <section
-      v-if="!loading && officials && mayor && viceMayor"
-      class="flex flex-col justify-center items-center w-full gap-y-16"
-    >
+    <section v-if="!loading" class="flex flex-col justify-center items-center w-full gap-y-16">
       <!-- mayor -->
-      <OfficialsCard :official="mayor" />
+      <OfficialsCard v-if="mayor" :official="mayor" />
 
       <!-- vice mayor -->
-      <OfficialsCard :official="viceMayor" />
+      <OfficialsCard v-if="viceMayor" :official="viceMayor" />
 
       <!-- subodinates -->
       <div class="flex flex-wrap gap-y-16">

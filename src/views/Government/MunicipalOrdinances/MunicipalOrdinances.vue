@@ -12,7 +12,7 @@ import PDFViewer from 'pdf-viewer-vue'
     </div>
     <div class="flex flex-col sm:flex-row gap-5">
       <PDFViewer class="!h-[800px]" source="/sample.pdf" @download="handleDownload" />
-      <div class="flex flex-col w-full sm:w-[200px]">
+      <div class="flex flex-col w-full sm:w-[400px]">
         <h2
           class="text-xl md:text-2xl font-bold border-b-2 border-black dark:border-bggray pb-2 dark:text-bggray"
         >
@@ -37,6 +37,21 @@ import PDFViewer from 'pdf-viewer-vue'
   </WrapperContainer>
   <FooterSection />
 </template>
-
 <style>
+.pdf-viewer {
+  --iron-icon-height: 20px;
+  --iron-icon-width: 20px;
+  --viewer-icon-ink-color: rgb(189, 189, 189);
+  --viewer-pdf-toolbar-background-color: rgb(50, 54, 57);
+  --viewer-text-input-selection-color: rgba(255, 255, 255, 0.3);
+  --viewer-pdf-toolbar-height: 56px;
+  background-color: #ccc;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 50% !important;
+  z-index: 1;
+}
 </style>
