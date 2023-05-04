@@ -6,6 +6,7 @@ use App\Models\Government\JobPosting;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Image;
 
 class JobPostingController extends Controller
 {
@@ -30,13 +31,14 @@ class JobPostingController extends Controller
     {
         // validate
         $validator = Validator::make($request->all(), [
-            "job_title" => "required", 
-            "job_type" => "required", 
-            "job_location" => "required", 
-            "job_description" => "required", 
-            "job_salary" => "required", 
-            "job_schedule" => "required", 
-        ]); 
+            "job_title" => "required",
+            "job_type" => "required",
+            "job_location" => "required",
+            "job_description" => "required",
+            "job_salary" => "required",
+            "job_schedule" => "required",
+            "logo" => "image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000", # 2mb is the max 
+        ]);
 
         /*
         * customizing the validation response
@@ -48,14 +50,27 @@ class JobPostingController extends Controller
                     "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
                     "status" => 400,
                 ]
-            ]);
+            ], 400);
         }
-
-        $id = $request->input("id");
 
         try {
             //code...
             $jobs = new JobPosting;
+            if ($request->file("logo")) {
+                $file = $request->file("logo");
+                $filename = uniqid() . "." . $file->getClientOriginalExtension();
+                $path = "uploads/job-posting/" . $filename;
+
+                # create a folder if not exists before saving the image
+                $folder = "uploads/job-posting/";
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+
+                Image::make($file)->save(public_path($path)); // save the file image
+                $jobs->logo = $path;
+            }
+
             $jobs->job_title = strtolower($request->input("job_title"));
             $jobs->job_location = strtolower($request->input("job_location"));
             $jobs->job_type = strtolower($request->input("job_type"));
@@ -70,7 +85,7 @@ class JobPostingController extends Controller
                     "msg" => "Successfully create new job",
                     "status" => 200
                 ]
-            ]);
+            ], 200);
         } catch (\Throwable $err) {
             //throw $th;
             return response()->json([
@@ -78,7 +93,7 @@ class JobPostingController extends Controller
                     "msg" => $err->getMessage(),
                     "status" => 400
                 ]
-            ]);
+            ], 400);
         }
     }
 
@@ -126,14 +141,14 @@ class JobPostingController extends Controller
     {
         // validate
         $validator = Validator::make($request->all(), [
-            "id" => "required", 
-            "job_title" => "required", 
-            "job_location" => "required", 
-            "job_type" => "required", 
-            "job_description" => "required", 
-            "job_salary" => "required", 
-            "job_schedule" => "required", 
-        ]); 
+            "id" => "required",
+            "job_title" => "required",
+            "job_location" => "required",
+            "job_type" => "required",
+            "job_description" => "required",
+            "job_salary" => "required",
+            "job_schedule" => "required",
+        ]);
 
         /*
         * customizing the validation response
@@ -179,9 +194,10 @@ class JobPostingController extends Controller
         }
     }
 
-    public function deleteOne(Request $request) {
-         // validate
-        $validator = Validator::make($request->all(), [ "id" => "required" ]); 
+    public function deleteOne(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), ["id" => "required"]);
 
         /*
         * customizing the validation response
@@ -201,10 +217,10 @@ class JobPostingController extends Controller
         try {
             //code...
             JobPosting::findOrFail($id)->delete();
-            return response()->json([ "jobs" => JobPosting::all(), "res" => [ "msg" => "Successfully deleted a job post", "status" => 200 ]]);
+            return response()->json(["jobs" => JobPosting::all(), "res" => ["msg" => "Successfully deleted a job post", "status" => 200]]);
         } catch (\Throwable $err) {
             //throw $th;
-            return response()->json([ "res" => ["msg" => $err->getMessage(), "status" => 400 ]]);
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]]);
         }
     }
 

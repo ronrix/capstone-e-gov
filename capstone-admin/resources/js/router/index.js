@@ -40,16 +40,6 @@ export const router = createRouter({
       component: () => import("../Pages/Government/Executives/FormerOfficials/FormerOfficials.vue")
     },
     {
-      path: "/government/executives/barangay-officials",
-      name: "BarangayOfficials",
-      component: () => import("../Pages/Government/Executives/BarangayOfficials/BarangayOfficials.vue")
-    },
-    {
-      path: "/government/executives/department-heads",
-      name: "DepartmentHeads",
-      component: () => import("../Pages/Government/Executives/DepartmentHeads/DepartmentHeads.vue")
-    },
-    {
       path: "/government/hotlines",
       name: "Hotlines",
       component: () => import("../Pages/Government/Hotlines/Hotlines.vue")
@@ -87,7 +77,7 @@ export const router = createRouter({
       component: () => import("../Pages/Businesses/Apartments/Apartments.vue")
     },
     {
-      path: "/businesses/BPLO",
+      path: "/businesses/business-permit-license-office",
       name: "BPLO",
       component: () => import("../Pages/Businesses/BPLO/BPLO.vue")
     },

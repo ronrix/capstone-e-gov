@@ -3,7 +3,7 @@
     <!--top  -->
     <div class="flex items-center justify-between mb-5 relative">
       <!-- circle -->
-      <div :style="{ backgroundColor: `${bgColor.bgColor || '#f2f2f2'}` }" class="w-14 h-14 rounded-full"></div>
+      <img :src="formatImgs(data?.logo.split(','))[0]" alt="" class="w-[50px] h-[50px] rounded-full object-cover">
       <span class="font-bold text-gray-400 text-xs">{{ new Date(data.created_at).toLocaleDateString("en-PH", {
         month:
           "long", day: "numeric"
@@ -26,9 +26,9 @@
       <div class="flex items-center gap-2 mt-3 overflow-x-scroll">
         <div v-for="jt in workTypes" :key="jt"
           class="px-2 py-1 text-[10px] rounded-full capitalize font-[500] whitespace-nowrap" :style="{
-              backgroundColor: (colors.find(col => col.type === jt.trim()))?.bgColor,
-              color: (colors.find(col => col.type === jt.trim()))?.textColor,
-            }">
+            backgroundColor: (colors.find(col => col.type === jt.trim()))?.bgColor,
+            color: (colors.find(col => col.type === jt.trim()))?.textColor,
+          }">
           {{ jt }}
         </div>
       </div>
@@ -53,6 +53,7 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
+import { formatImgs } from "../../../utils/formatImgs";
 
 const workTypes = ref(data.job_schedule.split(","));
 const bgColor = ref("");

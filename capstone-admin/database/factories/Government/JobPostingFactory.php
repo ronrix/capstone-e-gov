@@ -23,9 +23,12 @@ class JobPostingFactory extends Factory
             "helper",
             "welder",
         ];
-        $job_schedules = [ "remote", "temporary", "contractual", "fixed term", "full time", "part time", "internship" ];
+        $job_schedules = ["remote", "temporary", "contractual", "fixed term", "full time", "part time", "internship"];
 
         return [
+            "logo" => "https://s3.amazonaws.com/cdn.designcrowd.com/blog/100-Famous-Brand%20Logos-From-The-Most-Valuable-Companies-of-2020/apple-logo.png",
+            "email" => "company@company.com",
+            "company_name" => "Apple Inc.",
             "job_title" => fake()->jobTitle(),
             "job_location" => fake()->streetAddress(),
             "job_description" => fake()->paragraph(5),

@@ -4,7 +4,8 @@
       class="backdrop-blur-xl bg-white/70 sm:w-[500px] p-5 rounded-lg flex flex-col border gap-2">
 
       <!-- close modal btn -->
-      <i @click="closeModal" class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
+      <i @click="closeModal"
+        class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
       <div>
         <h3 class="font-bold text-xl text-gray-900 capitalize">Add new Job</h3>
@@ -12,49 +13,59 @@
       </div>
 
       <!-- inputs  -->
-      <div class="overflow-y-scroll h-[400px] scrollbar">
+      <div class="overflow-y-auto h-[400px] scrollbar flex flex-col gap-3">
         <label class="flex flex-col">
-          <span class="text-sm font-bold mb-2 text-gray-600">Tell us what is position of the job is this</span>
+          <span class="text-sm font-bold text-gray-600">What is job position</span>
+          <input name="logo" type="file" @change="handleSelectLogo" class="rounded-md p-2 focus:outline-blue-600 text-sm">
+          <p v-if="v$.logo.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.logo.$errors[0].$message
+          }} </p>
+        </label>
+        <label class="flex flex-col">
+          <span class="text-sm font-bold text-gray-600">What is job position</span>
           <input v-model="formData.job_title" name="title" type="text" placeholder="Type the job title here..."
             class="rounded-md p-2 focus:outline-blue-600 text-sm">
-          <p v-if="v$.job_title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_title.$errors[0].$message }} </p>
+          <p v-if="v$.job_title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_title.$errors[0].$message
+          }} </p>
         </label>
         <label class="flex flex-col">
-          <span class="text-sm font-bold mb-2 text-gray-600">Tell us where is the job located</span>
+          <span class="text-sm font-bold text-gray-600">Where is the job located</span>
           <input v-model="formData.job_location" name="title" type="text" placeholder="Type the job location here..."
             class="rounded-md p-2 focus:outline-blue-600 text-sm">
-          <p v-if="v$.job_location.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_location.$errors[0].$message }}
+          <p v-if="v$.job_location.$error && isError" class="text-xs text-red-400 mb-2"> {{
+            v$.job_location.$errors[0].$message }}
           </p>
         </label>
         <label class="flex flex-col">
-          <span class="text-sm font-bold mb-2 text-gray-600">Tell us the job description</span>
+          <span class="text-sm font-bold text-gray-600">Job description</span>
           <textarea v-model="formData.job_description" name="description" placeholder="Type the content here..."
-            class="rounded-md p-2 h-[80px] sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto text-sm"></textarea>
-          <p v-if="v$.job_description.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_description.$errors[0].$message }}
+            class="rounded-md py-1 h-[80px] resize-none sm:max-h-[200px] focus:outline-blue-600 scrollbar touch-auto text-sm"></textarea>
+          <p v-if="v$.job_description.$error && isError" class="text-xs text-red-400 mb-2"> {{
+            v$.job_description.$errors[0].$message }}
           </p>
         </label>
-        <div class="flex items-center gap-2">
-          <label class="flex flex-col">
-            <span class="text-sm font-bold mb-2 text-gray-600">Type of this job?</span>
-            <input v-model="formData.job_type" name="title" type="text" placeholder="Type it here..."
-              class="rounded-md p-2 focus:outline-blue-600 text-sm">
-            <p v-if="v$.job_type.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_type.$errors[0].$message }}
-            </p>
-          </label>
-          <label class="flex flex-col">
-            <span class="text-sm font-bold mb-2 text-gray-600">Salary range</span>
-            <input v-model="formData.job_salary" name="title" type="text" placeholder="Type the salary range here..."
-              class="rounded-md p-2 focus:outline-blue-600 text-sm">
-            <p v-if="v$.job_salary.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_salary.$errors[0].$message }}
-            </p>
-          </label>
-        </div>
+        <label class="flex flex-col">
+          <span class="text-sm font-bold text-gray-600">Job position</span>
+          <input v-model="formData.job_type" name="title" type="text" placeholder="Type it here..."
+            class="rounded-md p-2 focus:outline-blue-600 text-sm">
+          <p v-if="v$.job_type.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_type.$errors[0].$message
+          }}
+          </p>
+        </label>
+        <label class="flex flex-col">
+          <span class="text-sm font-bold text-gray-600">Salary range</span>
+          <input v-model="formData.job_salary" name="title" type="text" placeholder="Type the salary range here..."
+            class="rounded-md p-2 focus:outline-blue-600 text-sm">
+          <p v-if="v$.job_salary.$error && isError" class="text-xs text-red-400 mb-2"> {{
+            v$.job_salary.$errors[0].$message }}
+          </p>
+        </label>
         <label class="flex flex-col">
           <span class="text-sm font-bold text-gray-600">Job schedules</span>
-          <span class="text-xs text-gray-500 mb-2">Add comma "," separated. e.g (remote, full time, part time)</span>
+          <span class="text-xs text-gray-500">Add comma "," separated. e.g (remote, full time, part time)</span>
           <input v-model="formData.job_schedule" name="title" type="text" placeholder="Type the schedules here..."
             class="rounded-md p-2 focus:outline-blue-600 text-sm">
-          <p v-if="v$.job_schedule.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.job_schedule.$errors[0].$message }}
+          <p v-if="v$.job_schedule.$error && isError" class="text-xs text-red-400 mb-2"> {{
+            v$.job_schedule.$errors[0].$message }}
           </p>
         </label>
       </div>
@@ -74,6 +85,7 @@ import { onMounted, onUnmounted, computed, ref } from 'vue';
 import useVuelidate from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators"
 import { useForm } from "@inertiajs/inertia-vue3";
+import Loading from '../../../Components/Loading.vue';
 
 const { handleCreate } = defineProps({
   closeModal: Function,
@@ -82,6 +94,7 @@ const { handleCreate } = defineProps({
 
 // adding rules for validation of the form
 const rules = computed(() => ({
+  logo: { required: helpers.withMessage("Logo is required", required) },
   job_title: { required: helpers.withMessage("The field job title is required", required) },
   job_location: { required: helpers.withMessage("The field job location is required", required) },
   job_description: { required: helpers.withMessage("The field job description is required", required) },
@@ -90,6 +103,7 @@ const rules = computed(() => ({
   job_schedule: { required: helpers.withMessage("The field job schedule is required", required) },
 }));
 const formData = useForm({
+  logo: "",
   job_title: "",
   job_type: "",
   job_location: "",
@@ -101,8 +115,12 @@ const v$ = useVuelidate(rules, formData);
 const isError = ref(false);
 const isSubmitting = ref(false);
 
+function handleSelectLogo(e) {
+  formData.logo = e.target.files[0];
+}
+
 async function onSubmit() {
-   // invoke validation
+  // invoke validation
   // return when not inputs are not valid
   const valid = await v$.value.$validate();
   if (!valid) {

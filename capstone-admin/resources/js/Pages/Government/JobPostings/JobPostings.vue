@@ -23,7 +23,7 @@
 
       <!-- filter by -->
       <p class="text-gray-600 text-sm font-[500] capitalize">schedule</p>
-      <div class="flex items-center flex-wrap gap-3 mb-8 sticky top-10 py-2 z-20">
+      <div class="flex items-center flex-wrap gap-3 mb-8 sticky top-10 py-2 z-10">
         <div class="bg-blur"></div>
         <label v-for="(item, idx) in filterItems" :key="idx"
           class="font-[500] text-sm flex items-center gap-2 capitalize">
@@ -176,13 +176,14 @@ async function handleDelete(id) {
 async function handleCreate(formData) {
   return await axios.post(be_url + "/job-posting/add",
     {
+      logo: formData.logo,
       job_title: formData.job_title,
       job_type: formData.job_type,
       job_description: formData.job_description,
       job_salary: formData.job_salary,
       job_location: formData.job_location,
       job_schedule: formData.job_schedule
-    })
+    }, { headers: { "Content-Type": "multipart/form-data" } })
     .then((response) => {
 
       // set the response msg
