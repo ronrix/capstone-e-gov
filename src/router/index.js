@@ -166,5 +166,15 @@ export default createRouter({
       name: "jobforms",
       component: () => import("../views/JobOp/JobForms.vue")
     },
+    {
+      path: "/municipal-ordinances",
+      name: "municipal ordinances",
+      component: () => import("../views/Government/MunicipalOrdinances/MunicipalOrdinances.vue")
+    },
+    {
+      path: "/municipal-ordinances/:title(.*)",
+      name: "Ordinance1",
+      component: () => import("../views/Government/MunicipalOrdinances/MunicipalOrdinances.vue")
+    },
   ]
 })

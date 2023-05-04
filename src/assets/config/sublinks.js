@@ -33,6 +33,11 @@ export const government = [
     link: '/official-seal',
     title: 'Official Seal',
     desc: 'Photographs and symbolisms of component of pililla logo'
+  },
+  {
+    link: '/municipal-ordinances',
+    title: 'municipal ordinances',
+    desc: 'The Municipal ordinances of Pililla Rizal'
   }
 ]
 
