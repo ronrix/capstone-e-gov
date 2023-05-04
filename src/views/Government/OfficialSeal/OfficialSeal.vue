@@ -3,6 +3,24 @@ import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import TablesRows from './TablesRows.vue'
 import CardOfficialSealVue from './CardOfficialSeal.vue'
+import { fetchData } from '../../../utils/axios-instance'
+import { onMounted } from 'vue'
+import { ref } from 'vue'
+
+const seal = ref([])
+const axiosCall = () => {
+  fetchData('/official-seal').then((data) => {
+    console.log(data)
+    seal.value = data.official_seal[0]
+  })
+}
+
+onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
+  axiosCall()
+})
 
 const colors = [
   {
@@ -57,19 +75,6 @@ const symbols = [
     desc: 'the year that Pililla was founded as an independent Municipality'
   }
 ]
-
-const seal =[{
-    logo: 'logo',
-    name: 'better pililla',
-    desc: '“BETTER PILILLA” the home of 54 MW Windfarm  our tagline which anchors our governance that leads to the fulfillment of all its Strategic Goals massive tax campaign, health, special and educational services, human development through skills and development training, increased economic opportunities through business-friendly policies, and infrastructure development which result in attaining the DILG-Seal of Good Local Governance (SGLG) in one year of its first term of public service. (source: LGPMS Profile)',
-    imgSrc: '/images/better-pililla-black.png'
-},
-{
-    logo: 'logo',
-    name: 'araw ng pililla',
-    desc: 'Ang hugis ng logo na animo araw ay sumisimbulo sa panahon ng tag-init o panahon ng pag-aani kung kailan din ipinagdiriwang ang Araw ng Pililla. Ito ay ginawang makulay na sumasagisag sa ating pagiging likas na masayahin. Ito ay napapalibutan ng siyam na hugis ng tao na nagmistulang sinag na kumakatawan sa siyam na nagkakaisang Barangay at mga mamamayan nito. Ang logo ay makikitaan din ng mga simbulong sumasagisag sa mga lugar at produktong tanyag sa Bayan ng Pililla.',
-    imgSrc: '/images/araw-ng-pililla-logo.png'
-}]
 </script>
 
 <template>
@@ -122,7 +127,13 @@ const seal =[{
       </div>
     </div>
     <!-- card -->
-        <CardOfficialSealVue v-for="(data, idx) in seal" :key="idx" :idx="idx" :data="data" />
+
+    <CardOfficialSealVue
+      v-for="(data, idx) in JSON.parse(seal?.logo)"
+      :key="idx"
+      :idx="idx"
+      :data="data"
+    />
   </WrapperContainer>
   <FooterSection />
 </template>
