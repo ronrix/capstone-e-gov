@@ -20,6 +20,11 @@ export const router = createRouter({
       component: () => import("../Pages/Government/JobPostings/JobPostings.vue"),
     },
     {
+      path: "/government/ordinances",
+      name: "Ordinances",
+      component: () => import("../Pages/Government/Ordinances/Ordinances.vue"),
+    },
+    {
       path: "/government/programs-and-events",
       name: "ProgramsEvents",
       component: () => import("../Pages/Government/ProgramsEvents/ProgramsEvents.vue")

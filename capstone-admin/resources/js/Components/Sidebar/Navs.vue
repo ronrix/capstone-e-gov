@@ -36,6 +36,7 @@
         </div>
       </div>
       <NavLink to="/government/job-postings" name="job postings" />
+      <NavLink to="/government/ordinances" name="ordinances" />
       <NavLink to="/government/full-disclosure-reports" name="full disclosure reports" />
       <NavLink to="/government/hotlines" name="hotlines" />
       <NavLink to="/government/demographic-profile" name="demographic profile" />

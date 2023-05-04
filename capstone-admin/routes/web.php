@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\About\AboutController;
+use App\Http\Controllers\Government\OrdinancesController;
 use App\Http\Controllers\Business\BusinessesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Government\NewsController;
@@ -37,6 +38,7 @@ Route::get('/logout', [LoginController::class, "logout"]);
 
 // get requests
 Route::get("/news", [NewsController::class, "getNews"])->middleware("cors");
+Route::get("/ordinances", [OrdinancesController::class, "getOrdinances"])->middleware("cors");
 Route::get("/programs-and-events/", [ProgramsEventsController::class, "index"]);
 Route::get("/current-officials", [ExecutivesController::class, "index"])->middleware("cors");
 Route::get("/former-officials", [ExecutivesController::class, "getFormerOfficials"])->middleware("cors");
@@ -78,6 +80,7 @@ Route::middleware(["auth"])->group(function () {
     Route::get('/festivals/deleted', [FestivalsController::class, 'getAllTrashed']);
     Route::get('/business-establishment/deleted', [BusinessesController::class, 'getAllTrashed']);
     Route::get('/apartments/deleted', [BusinessesController::class, 'getAllTrashedApartments']);
+    Route::get("/ordinances/deleted", [OrdinancesController::class, "getAllTrashedOrdinances"]);
 
     // routes to restore dat
     Route::post('/news/restore', [NewsController::class, 'restore']);
@@ -86,6 +89,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post('/festivals/restore', [FestivalsController::class, 'restore']);
     Route::post('/business-establishment/restore', [BusinessesController::class, 'restore']);
     Route::post('/apartment/restore', [BusinessesController::class, 'restoreApartment']);
+    Route::post("/ordinances/restore", [OrdinancesController::class, "restore"]);
 
     // government post requests
     // edit requests
@@ -100,6 +104,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/apartment/edit", [BusinessesController::class, "updateApartment"]);
     Route::post("/permit/edit", [PermitController::class, "update"]);
     Route::post("/permit/title/edit", [PermitController::class, "updatePermitTitle"]);
+    Route::post("/ordinances/edit", [OrdinancesController::class, "updateOrdinance"]);
 
     /* services */
     Route::post("/services/requirement/edit", [ServicesController::class, "updateRequirement"]);
@@ -131,6 +136,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/apartment/add", [BusinessesController::class, "createApartment"]);
     Route::post("/permit/add", [PermitController::class, "create"]);
     Route::post("/permit/add/requirement", [PermitController::class, "saveNewRequirement"]);
+    Route::post("/ordinances/add", [OrdinancesController::class, "addOrdinance"]);
     /* scholarship */
     Route::post("/services/{service}/requirement/add", [ServicesController::class, "createRequirement"]);
     Route::post("/services/{service}/process/add", [ServicesController::class, "createProcess"]);
@@ -158,6 +164,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-whole-permit", [PermitController::class, "deletePermit"]);
     Route::post("/delete-section-permit", [PermitController::class, "deleteSectionPermit"]);
     Route::post("/delete-permit-req", [PermitController::class, "deleteOneReq"]);
+    Route::post("/delete-ordinances", [OrdinancesController::class, "deleteOrdinance"]);
 
     /* services */
     Route::post("/services/{service}/requirement/delete", [ServicesController::class, "deleteRequirement"]);
