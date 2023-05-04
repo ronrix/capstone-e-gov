@@ -1,6 +1,5 @@
 <template>
-  <div
-    class="backdrop-blue-lg bg-white/50 rounded-md p-5 flex flex-col w-full sm:w-[300px] h-[350px] overflow-hidden relative">
+  <div class="backdrop-blue-lg bg-white/50 rounded-md p-5 flex flex-col w-full h-[350px] overflow-hidden relative">
     <!--top  -->
     <div class="flex items-center justify-between mb-5 relative">
       <!-- circle -->
@@ -38,7 +37,7 @@
     <!-- middle -->
     <div class="mt-8 overflow-hidden flex-1">
       <h5 class="font-bold text-gray-900">{{ new Intl.NumberFormat("en-US", {
-        style: "currency", currency: "USD"
+        style: "currency", currency: "php"
       }).format(data.job_salary) }}</h5>
       <h6 class="text-gray-600 font-bold text-sm">{{ data.job_location }}</h6>
     </div>

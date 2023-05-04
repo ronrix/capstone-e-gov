@@ -38,7 +38,7 @@
         :handleUpdate="handleUpdate" />
 
       <!-- cards section -->
-      <section class="flex items-start gap-2 flex-wrap mt-8">
+      <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2  mt-8">
         <JobPostingCard v-for="(job, idx) in data" :data="job" :key="idx" :showModal="showModal" :colors="colors"
           :handleDelete="handleDelete" />
       </section>

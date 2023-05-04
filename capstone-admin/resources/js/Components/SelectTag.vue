@@ -6,7 +6,7 @@
       <select :value="value" :id="type" class="hidden">
         <option v-for="filter, idx in filterArray" :key="idx" :value="filter">{{ filter }}</option>
       </select>
-      {{ value }}
+      {{ value ? value : 'none' }}
       <i class="uil uil-angle-down pointer-events-none"></i>
     </div>
     <!-- dropdown -->
