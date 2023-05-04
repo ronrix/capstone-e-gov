@@ -8,6 +8,7 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
   <HeaderSection />
 
   <WrapperContainer class="mt-10">
+    <div class="grid place-items-center mb-10"></div>
     <div class="flex items-center justify-center">
       <h5
         class="rounded-full px-3 py-1 text-bggray bg-dark dark:bg-bggray dark:text-dark capitalize text-xs font-bold"
@@ -19,7 +20,17 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
       Find the Right Jobs
     </h2>
     <h5 class="text-xl text-secondary text-center mt-5">Open jobs. people hiring.</h5>
-
+    <div class="flex justify-center mt-5">
+      <div>
+        <p class="text-sm font-[500]">Submit a request to post Job opportunity</p>
+        <RouterLink
+          to="/job-forms"
+          class="bg-primary rounded-full w-fit text-center mx-auto py-2 block text-white px-3 hover:opacity-80"
+        >
+          Post your job
+        </RouterLink>
+      </div>
+    </div>
     <!-- search input -->
     <form class="flex items-center justify-center mt-10 gap-2">
       <input
