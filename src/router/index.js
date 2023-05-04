@@ -147,9 +147,19 @@ export default createRouter({
       component: () => import('../views/Tourism/TourismSubpage/TourismSubpage.vue')
     },
     {
-      path: '/festivals/:title(.*)',
-      name: 'FestivalsSubPage',
-      component: () => import('../views/Tourism/TourismSubpage/TourismSubpage.vue')
-    }
+      path: "/festivals/:title(.*)",
+      name: "FestivalsSubPage",
+      component: () => import("../views/Tourism/TourismSubpage/TourismSubpage.vue")
+    },
+    {
+      path: "/full-disclosure-report",
+      name: "fulldisclosurereports",
+      component: () => import("../views/Government/FullDisclosureReports/FullDisclosureReports.vue")
+    },
+    {
+      path: "/job-forms",
+      name: "jobforms",
+      component: () => import("../views/JobOp/JobForms.vue")
+    },
   ]
 })

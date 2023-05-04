@@ -21,18 +21,22 @@ onMounted(() => {
   </head>
 
   <HeaderSection></HeaderSection>
-  <WrapperContainer class="mt-20">
-    <div class="flex flex-col lg:flex-row items-end justify-evenly pb-0 gap-2">
-      <div class="self-start">
-        <h1 class="text-5xl md:text-7xl font-semibold text-dark dark:text-bggray">
-          Tourist <span class="block ml-20 text-primary">Attraction</span>
+  <div
+    class="flex bg-no-repeat h-[600px] bg-cover bg-[url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/14/23/b1/pililla-wind-farm.jpg?w=1200&h=-1&s=1')]"
+  >
+    <WrapperContainer>
+      <div class="pt-36 pl-5">
+        <h1 class="text-5xl md:text-8xl font-semibold text-dark">
+          Tourist <span class="block sm:ml-20 text-primary">Attraction</span>
         </h1>
-        <p class="pt-12 w-full lg:w-1/2 italic text-dark dark:text-bggray">
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua"
+        <p class="pt-12 w-full sm:w-1/2 italic text-bggray text-2xl">
+          "A mind that stretched by a new experience can never go back to its old dimension"
+          <span class="text-base flex justify-end">-Oliver Wendell Holmes</span>
         </p>
       </div>
-      <div class="flex">
+    </WrapperContainer>
+  </div>
+  <!-- <div class="flex">
         <div
           class="topimage drop-shadow-lg h-[300px] sm:h-[400px] w-[200px] sm:w-[300px] bg-slate-300 bg-auto bg-no-repeat bg-center z-10 translate-y-36 sm:translate-y-32"
           style="background-image: url()"
@@ -52,25 +56,26 @@ onMounted(() => {
             alt=""
           />
         </div>
-      </div>
-    </div>
-  </WrapperContainer>
+      </div> -->
+
   <div
-    class="h-[400px] bg-dark w-full bg-auto bg-no-repeat bg-center flex flex-1 items-center mb-5 sm:mb-20 border-t-2 border-dark dark:border-t-bggray"
+    class="flex flex-col md:flex-row bg-dark w-full bg-center mb-5 sm:mb-20 border-t-2 border-dark dark:border-t-bggray pb-10"
   >
     <img
-      class="w-1/2 translate-y-44 sm:translate-y-28 translate-x-24 sm:translate-x-0"
+      class="w-full md:w-1/2"
       src="https://i.postimg.cc/nrGCXPV1/windmillnobg-VECTOR.png"
       alt=""
     />
-    <div class="bg-text text-white absolute right-2 z-20">
-      <p class="font-semibold pt-5 text-4xl">
-        Lorem ipsum
-        <span class="bg-description w-[400px] text-sm pt-4 block font-normal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-          ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        </span>
+    <div class="flex flex-col self-center text-white px-10 md:px-0 md:pr-20">
+      <h4 class="font-semibold pt-5 text-4xl">"Discovering the Charm and Beauty of Pililla"</h4>
+      <p class="bg-description text-sm pt-4 block font-normal">
+        Nestled in the heart of Rizal province, Pililla is a charming town that offers a unique
+        experience for tourists looking to escape the hustle and bustle of the city. Its picturesque
+        landscapes, highlighted by the breathtaking Pililla Wind Farm and the Pililla Hanging
+        Bridge, make it a paradise for nature lovers and adventure seekers alike. Meanwhile, those
+        interested in history and culture can explore the town's centuries-old Pililla Church and
+        its collection of historical artifacts and relics. With its warm and welcoming community,
+        Pililla, Rizal promises a memorable and enriching experience for every traveler.
       </p>
     </div>
   </div>
@@ -79,7 +84,7 @@ onMounted(() => {
     <div
       v-for="(data, index) in tourism"
       :key="index"
-      class="data hidden sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5 overflow-hidden mt-10"
+      class="data hidden sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5 overflow-hidden mt-32"
       :class="{ reverse: index % 2 !== 0 }"
     >
       <div class="-order-first sm:-order-last">

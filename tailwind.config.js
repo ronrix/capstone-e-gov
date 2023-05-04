@@ -20,6 +20,16 @@ export default {
         bgLightyBlue: "#DFEBF7",
         bgReddy: "#F3E8F2",
         bgGreeny: "#DAF1F0",
+      },
+      container: {
+        center: true,
+        padding: {
+          DEFAULT: '1rem',
+          sm: '2rem',
+          lg: '4rem',
+          xl: '5rem',
+          '2xl': '6rem',
+        },
       }
     },
   },
