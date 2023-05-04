@@ -11,6 +11,7 @@ function showAnswer(e) {
   console.log(e.target.nextElementSibling)
   const lastElement = e.target.lastElementChild
   document.querySelectorAll('.answer').forEach((el) => {
+    console.log(lastElement)
     if (lastElement === el) {
       return
     }
