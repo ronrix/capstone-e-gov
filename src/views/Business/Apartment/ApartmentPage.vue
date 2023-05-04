@@ -7,11 +7,13 @@ import { ref, onMounted } from 'vue'
 import { fetchData } from '../../../utils/axios-instance'
 import BusinessesCard from '../BusinessesCard.vue'
 import DisplayModal from '../DisplayModal.vue'
+import Loading from '../../../components/Loading.vue'
 
 const UNMODIFIABLE_APARTMENTS = ref([])
 const apartments = ref([])
 const barangays = ref([])
 const selectedData = ref()
+const loading = ref(true)
 
 // category filtering
 function barangayFilter(e) {
@@ -30,8 +32,12 @@ const axiosCall = () => {
       apartments.value = data.apartments
       UNMODIFIABLE_APARTMENTS.value = data.apartments
       barangays.value = data.apartments.map((d) => d.location)
+      loading.value = false
     })
-    .catch((err) => console.log(err))
+    .catch((err) => {
+      console.log(err)
+      loading.value = false
+    })
 }
 
 onMounted(() => {
@@ -56,7 +62,11 @@ onMounted(() => {
   <WrapperContainer>
     <!-- filter by -->
     <Filter :barangay-filter="barangayFilter" :barangays="barangays" />
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+    <h4 v-if="!apartments.length && !loading" class="text-3xl text-center font-bold mt-3">
+      No apartments yet!
+    </h4>
+    <Loading v-if="loading" class="w-10 h-10 mx-auto" />
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
       <BusinessesCard
         v-for="data in apartments"
         :key="data.id"

@@ -83,7 +83,7 @@ function hoverout() {
       Festivals that we celebrate in Pililla
     </h5>
     <div class="w-full h-[2px] bg-dark dark:bg-secondary mt-5"></div>
-    <Loading v-if="laoding" />
+    <Loading v-if="loading" class="w-10 h-10 mx-auto" />
     <div
       v-for="fest in festivals"
       v-else
