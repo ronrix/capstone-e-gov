@@ -45,7 +45,7 @@ onMounted(() => {
     </div>
     <div class="flex justify-center relative">
       <img
-        class="w-[600px] absolute bg-center object-cover"
+        class="w-[600px] absolute bg-center object-cover -z-10"
         src="../../../public/images/Tourismbg-Circle.png"
       />
       <div class="flex pt-5">
@@ -83,7 +83,7 @@ onMounted(() => {
   <!-- banner -->
   <div class="w-full sm:pt-10 pb-10">
     <img
-      class="w-full object-cover z-10"
+      class="w-full object-cover"
       src="https://pilillarizal.gov.ph/wp-content/uploads/2022/10/pililla_painting-1024x326.png"
       alt=""
     />
