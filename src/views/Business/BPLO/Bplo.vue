@@ -5,34 +5,17 @@ import BusinessPermits from './BusinessPermits.vue'
 
 const permits = [
   {
-     name: 'issuance of business permit',
-     requirements: [
-      "test", "Test"
-     ]
-  },
-  {
-     name: 'issuance of occupation permit'
-  },
-  {
-    name: 'Mayors Permit'
-  },
-  {
-    name: 'Mayors Clearance'
-  },
-  {
-    name: 'Business Registration' 
-  },
-  {
-    name: 'Business Renewal' 
-  },
-  {
-    name: 'Business Permit' 
-  },
+    name: 'issuance of business permit',
+    location: 'office of the mayor',
+    req: 'Lorem ipsum dolor sit amet.',
+    goTo: 'Lorem ipsum dolor sit amet.',
+    steps: ['test1', 'test2', 'test3']
+  }
 ]
 </script>
 
 <template>
-  <HeaderSection class="relative"/>
+  <HeaderSection class="relative" />
   <WrapperContainer>
     <div class="w-full flex flex-col gap-4 items-center mt-24">
       <div class="relative mt-10">
