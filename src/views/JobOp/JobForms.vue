@@ -1,8 +1,19 @@
 <script setup>
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
+import { ref } from 'vue'
+
+const inputFileForPdf = ref(null)
+
+function showInputFilePdf() {
+  // will click the hidden input file to show the file selection
+  inputFileForPdf.value.click()
+}
 </script>
 <template>
+  <head>
+    <title>Job Form</title>
+  </head>
   <HeaderSection />
   <WrapperContainer>
     <div class="grid place-items-center my-10">
@@ -46,17 +57,8 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
             />
           </label>
         </div>
-        <div>
-          <label class="text-sm md:text-lg text-darkgray dark:text-bggray w-full flex-1"
-            >Contact Number
-            <p class="text-secondary text-sm font-normal">enter your contact number here</p>
-            <input
-              class="flex-1 outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full"
-              type="text"
-            />
-          </label>
-        </div>
-        <div class="flex gap-3">
+        <div></div>
+        <div class="flex flex-col md:flex-row gap-3 sm:mb-2">
           <label class="text-sm md:text-lg text-darkgray dark:text-bggray w-full flex-1"
             >Salary
             <p class="text-secondary text-sm font-normal">enter your salary here</p>
@@ -67,14 +69,29 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
           </label>
           <label class="text-sm md:text-lg text-darkgray dark:text-bggray w-full flex-1"
             >Working Schedule
-            <div class="flex items-center mr-4 mb-2 gap-2">
-              <label class="text-secondary text-sm font-normal flex items-center">
+            <div class="grid grid-cols-2 gap-y-2">
+              <label class="text-secondary text-sm font-normal flex items-center gap-1">
                 <input type="checkbox" value="yes" />
                 Full time
               </label>
-              <label class="text-secondary text-sm font-normal flex items-center">
+              <label class="text-secondary text-sm font-normal flex items-center gap-1">
                 <input type="checkbox" value="yes" />
                 Part time
+              </label>
+
+              <label class="text-secondary text-sm font-normal flex items-center gap-1">
+                <input type="checkbox" value="yes" />
+                Contractual
+              </label>
+              <label class="text-secondary text-sm font-normal flex items-center gap-1">
+                <input type="checkbox" value="yes" />
+                Freelance
+              </label>
+
+              <!-- <div class="sm:flex items-center mr-4 sm:mb-2 gap-2"> -->
+              <label class="text-secondary text-sm font-normal flex items-center gap-1">
+                <input type="checkbox" value="yes" />
+                Fixed
               </label>
             </div>
           </label>
