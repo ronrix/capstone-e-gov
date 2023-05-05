@@ -9,21 +9,13 @@
 
       <div class="flex items-center gap-2">
         <span>year:</span>
-        <SelectTag
-          type="year"
-          :filterFn="filterBy"
-          :value="filterYear"
-          :filterArray="filterYears"
-          added-class="!w-[200px]"
-        />
+        <SelectTag type="year" :filterFn="filterBy" :value="filterYear" :filterArray="filterYears"
+          added-class="!w-[200px]" />
       </div>
     </div>
 
     <!-- empty: this will display when there is no data to display -->
-    <h5
-      v-if="isEmpty"
-      class="font-bold text-xl capitarize text-red-600 mt-5 border border-x-0 border-b-0"
-    >
+    <h5 v-if="isEmpty" class="font-bold text-xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
       <i class="uil uil-folder-times text-3xl"></i>
       Empty Collection
     </h5>
@@ -34,18 +26,10 @@
 
     <!-- cards -->
     <div class="flex items-start flex-wrap gap-5 mt-5">
-      <CardOfficial
-        v-for="official in dataFormerOfficials"
-        :key="official.id"
-        :official="official"
-        :handleDelete="handleDelete"
-      />
+      <CardOfficial v-for="official in dataFormerOfficials" :key="official.id" :official="official"
+        :handleDelete="handleDelete" />
     </div>
-    <OfficialModal
-      v-if="isModalShow"
-      :closeModal="toggleShowModal"
-      :handleSubmit="handleSubmit"
-    />
+    <OfficialModal v-if="isModalShow" :closeModal="toggleShowModal" :handleSubmit="handleSubmit" />
 
     <!-- add btn -->
     <AddBtn :showAddModal="toggleShowModal" />
@@ -94,7 +78,7 @@ async function handleSubmit(formData) {
       be_url + "/former-official/add",
       {
         fullName: formData.fullName,
-        position: formData.position + "," + formData.optionalPosition,
+        position: formData.position,
         startTerm: formData.startTerm,
         endTerm: formData.endTerm,
         imgFile: formData.imgFile,
