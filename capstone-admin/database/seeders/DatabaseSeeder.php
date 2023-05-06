@@ -406,7 +406,7 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Invest::factory(5)->create();
 
         # PERMITS
-        Permit::factory(5)->create();
+        Permit::factory(1)->create();
 
         /* services */
         /* office of the mayor */

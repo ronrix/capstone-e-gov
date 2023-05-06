@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('permits', function (Blueprint $table) {
             $table->id();
             $table->text("title");
-            $table->json("requirements");
+            $table->longText("description");
+            $table->longText("requirements");
             $table->softDeletes();
             $table->timestamps();
         });

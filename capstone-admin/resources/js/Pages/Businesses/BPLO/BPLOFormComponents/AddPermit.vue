@@ -4,25 +4,50 @@
             <!-- close btn -->
             <i @click="showPermitModal"
                 class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
-            <h4 class="font-bold text-xl text-gray-900 capitalize">Add new Permit</h4>
-            <p class="text-sm text-gray-500">Add new requirement for the permit</p>
+            <h4 class="font-bold text-xl text-gray-900 capitalize">
+                Add new Permit
+            </h4>
+            <p class="text-sm text-gray-500">
+                Add new requirement for the permit
+            </p>
             <!-- form -->
             <form @submit.prevent="submitFn" class="mt-3 w-full">
                 <label class="flex flex-col justify-start gap-1">
                     <span class="font-bold text-gray-500">Title</span>
-                    <p class="text-xs text-gray-500">add new requirement for the permit</p>
-                    <input type="text" v-model="formData.title" class="border p-2 rounded-lg focus:outline-blue-600">
-                    <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2"> {{ v$.title.$errors[0].$message
-                    }}</p>
+                    <p class="text-xs text-gray-500">
+                        Add new requirement for the permit
+                    </p>
+                    <input type="text" v-model="formData.title" class="border p-2 rounded-lg focus:outline-blue-600" />
+                    <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2">
+                        {{ v$.title.$errors[0].$message }}
+                    </p>
+                </label>
+                <label class="flex flex-col justify-start gap-1">
+                    <span class="font-bold text-gray-500">Description</span>
+                    <p class="text-xs text-gray-500">
+                        Add a description for this permit
+                    </p>
+                    <input type="text" v-model="formData.description"
+                        class="border p-2 rounded-lg focus:outline-blue-600" />
+                    <p v-if="v$.description.$error && isError" class="text-xs text-red-400 mb-2">
+                        {{ v$.description.$errors[0].$message }}
+                    </p>
                 </label>
 
-                <span class="font-bold text-gray-500">Requirements</span>
-                <p class="text-xs text-gray-500">
-                    Format the requirements correctly by copying the first { "title": "", "requirements": [] } and pasting
-                    it below with a comma separation
-                    it should look like this [ [ { "title": "", "requirements": [] }, { "title": "", "requirements": [] }] ]
-                </p>
-                <!-- requirements in JSONeditor format -->
+                <!-- requirements -->
+                <label class="flex flex-col justify-start gap-1">
+                    <span class="font-bold text-gray-500">Requirements</span>
+                    <p class="text-xs text-gray-500">
+                        Type the requirements using this format
+                        <a href="https://www.markdownguide.org/basic-syntax/" target="_blank"
+                            class="text-blue-500 underline">markedown</a>
+                    </p>
+                    <textarea type="text" v-model="formData.requirements"
+                        class="border p-2 rounded-lg focus:outline-blue-600 resize-none max-h-[200px]"></textarea>
+                    <p v-if="v$.requirements.$error && isError" class="text-xs text-red-400 mb-2">
+                        {{ v$.requirements.$errors[0].$message }}
+                    </p>
+                </label>
                 <div ref="reqContainer" class="w-full border mt-3 bg-slate-100 relative"></div>
 
                 <button :disabled="isSubmitting" type="submit" :class="{ 'bg-blue-500': isSubmitting }"
@@ -34,37 +59,31 @@
         </div>
     </div>
 </template>
-   
+
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue';
-import { useForm } from '@inertiajs/inertia-vue3';
+import { ref, onMounted, onUnmounted, computed } from "vue";
+import { useForm } from "@inertiajs/inertia-vue3";
 import Loading from "../../../../Components/Loading.vue";
 
 // validation
 import useVuelidate from "@vuelidate/core";
-import { required, helpers } from "@vuelidate/validators"
-import JSONEditor from "jsoneditor";
+import { required, helpers } from "@vuelidate/validators";
 
 // adding rules for validation of the form
 const rules = computed(() => ({
     title: { required: helpers.withMessage("The field title is required", required) },
+    description: { required: helpers.withMessage("The field descrption is required", required) },
+    requirements: { required: helpers.withMessage("The field requirements is required", required) },
 }));
 
 const formData = useForm({
     title: "",
-    requirements: {},
+    description: "",
+    requirements: "",
 });
 const isError = ref(false);
 const v$ = useVuelidate(rules, formData);
 const isSubmitting = ref(false);
-const reqContainer = ref(null);
-let editor;
-const json = [
-    {
-        title: "change of business name",
-        requirements: ["example 1", "example 2"]
-    },
-];
 
 async function submitFn(e) {
     // invoke validation
@@ -78,8 +97,6 @@ async function submitFn(e) {
     isSubmitting.value = true;
     if (isError.value) isError.value = false; // remove the error message from displaying when validation passed
 
-    // TODO: get all the value of the JSONeditor and store them to formData 
-    formData.requirements = editor.get();
     // then send a post request to the server
     handleSubmit(formData).then(() => {
         isSubmitting.value = false;
@@ -92,11 +109,6 @@ async function submitFn(e) {
 // add scroll hidden on mount
 onMounted(() => {
     document.body.classList.add("overflow-hidden");
-
-    const options = { mode: "text", mainMenuBar: false, statusBar: false, indentation: 4 }
-    editor = new JSONEditor(reqContainer.value, options, json);
-    // style the text editor
-    editor.textarea.className += "bg-slate-100 max-h-[300px] h-[200px] scrollbar w-full";
 });
 
 // remove scroll hidden on unmount
@@ -106,6 +118,6 @@ onUnmounted(() => {
 
 const { handleSubmit } = defineProps({
     showPermitModal: Function,
-    handleSubmit: Function
-})
+    handleSubmit: Function,
+});
 </script>

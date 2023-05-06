@@ -33,7 +33,7 @@
                 </div>
 
                 <label class="text-gray-800 mb-2 rounded-md">
-                    <span class="font-bold text-sm sm:text-base mb-1">E-mail or username</span>
+                    <span class="font-bold text-sm sm:text-base mb-1">E-mail</span>
                     <input v-model="formData.email" name="email" type="text" placeholder="Type your email or username"
                         class="outline-none w-full p-2 bg-white rounded-md text-sm sm:text-base shadow-inner focus:outline-blue-600"
                         :class="{ 'outline-red-400': v$.email.$error }" />

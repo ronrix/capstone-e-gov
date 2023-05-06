@@ -24,7 +24,6 @@
         "chart.js": "^4.2.1",
         "dompurify": "^3.0.1",
         "emailjs": "^4.0.1",
-        "jsoneditor": "^9.10.0",
         "laravel-echo": "^1.15.0",
         "marked": "^4.3.0",
         "moment": "^2.29.4",

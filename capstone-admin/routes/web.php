@@ -103,7 +103,6 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/businesses/edit", [BusinessesController::class, "update"]);
     Route::post("/apartment/edit", [BusinessesController::class, "updateApartment"]);
     Route::post("/permit/edit", [PermitController::class, "update"]);
-    Route::post("/permit/title/edit", [PermitController::class, "updatePermitTitle"]);
     Route::post("/ordinances/edit", [OrdinancesController::class, "updateOrdinance"]);
 
     /* services */
@@ -117,8 +116,6 @@ Route::middleware(["auth"])->group(function () {
 
     /* contacts */
     Route::post("/contacts/edit", [AboutController::class, "updateContacts"]);
-    /* add new section for the permit (BPLO) */
-    Route::post("/permit/add/section", [PermitController::class, "addNewSection"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -135,7 +132,6 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/businesses/add", [BusinessesController::class, "create"]);
     Route::post("/apartment/add", [BusinessesController::class, "createApartment"]);
     Route::post("/permit/add", [PermitController::class, "create"]);
-    Route::post("/permit/add/requirement", [PermitController::class, "saveNewRequirement"]);
     Route::post("/ordinances/add", [OrdinancesController::class, "addOrdinance"]);
     /* scholarship */
     Route::post("/services/{service}/requirement/add", [ServicesController::class, "createRequirement"]);
@@ -162,8 +158,6 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/delete-businesses", [BusinessesController::class, "delete"]);
     Route::post("/delete-apartment", [BusinessesController::class, "deleteApartment"]);
     Route::post("/delete-whole-permit", [PermitController::class, "deletePermit"]);
-    Route::post("/delete-section-permit", [PermitController::class, "deleteSectionPermit"]);
-    Route::post("/delete-permit-req", [PermitController::class, "deleteOneReq"]);
     Route::post("/delete-ordinances", [OrdinancesController::class, "deleteOrdinance"]);
 
     /* services */
