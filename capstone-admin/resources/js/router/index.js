@@ -92,6 +92,11 @@ export const router = createRouter({
       name: "Contacts",
       component: () => import("../Pages/About/Contacts/Contacts.vue")
     },
+    {
+      path: "/about/faq",
+      name: "FAQs",
+      component: () => import("../Pages/About/FAQ/FAQ.vue")
+    },
     
     //services
     {

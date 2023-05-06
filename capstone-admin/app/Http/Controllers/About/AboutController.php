@@ -4,6 +4,7 @@ namespace App\Http\Controllers\About;
 
 use App\Http\Controllers\Controller;
 use App\Models\About\Contact;
+use App\Models\About\FAQ;
 use App\Models\About\OfficialSeal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +12,130 @@ use Image;
 
 class AboutController extends Controller
 {
+    /*
+    * get faqs
+    */
+    public function getFAQs()
+    {
+        return response()->json(["faqs" => FAQ::all()]);
+    }
+
+    /*
+    * update one FAQ
+    */
+    public function updateFAQ(Request $request)
+    {
+        // get the passed parameter id
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "question" => "required",
+            "answer" => "required",
+        ]);
+
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        $id = $request->input("id");
+        try {
+            $faq = FAQ::findOrFail($id);
+            $faq->question = $request->input("question");
+            $faq->answer = $request->input("answer");
+            $faq->save();
+
+            # return all the trashed data
+            return response()->json(["faqs" => FAQ::all(), "res" => ["msg" => "successfully updated FAQ", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
+    * create new FAQ
+    */
+    public function createFAQ(Request $request)
+    {
+        // get the passed parameter id
+        // validate
+        $validator = Validator::make($request->all(), [
+            "question" => "required",
+            "answer" => "required",
+        ]);
+
+        /*
+    * customizing the validation response
+    */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        $id = $request->input("id");
+        try {
+            $faq = new FAQ;
+            $faq->question = $request->input("question");
+            $faq->answer = $request->input("answer");
+            $faq->save();
+
+            # return all the trashed data
+            return response()->json(["faqs" => FAQ::all(), "res" => ["msg" => "successfully created new FAQ", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
+    * delete FAQ
+    */
+    public function deleteFAQ(Request $request)
+    {
+        // get the passed parameter id
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+        ]);
+
+        /*
+    * customizing the validation response
+    */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        $id = $request->input("id");
+        try {
+            FAQ::findOrFail($id)->delete();
+            # return all the trashed data
+            return response()->json(["faqs" => FAQ::all(), "res" => ["msg" => "successfully delete an FAQ data", "status" => 200]], 200);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
     /*
     * get official seal
     */

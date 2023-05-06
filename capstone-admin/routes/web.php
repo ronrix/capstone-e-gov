@@ -55,6 +55,7 @@ Route::get("/permits", [PermitController::class, "index"])->middleware("cors");
 Route::get("/services/{service}", [ServicesController::class, "get"])->middleware("cors");
 Route::get("/official-seal", [AboutController::class, "getOfficialSeal"])->middleware("cors");
 Route::get("/contacts", [AboutController::class, "getContacts"])->middleware("cors");
+Route::get("/faq", [AboutController::class, "getFAQs"])->middleware("cors");
 // GET Files
 Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureReports"])->middleware("cors");
 Route::get("/application-forms", [FilesController::class, "getApplicationForms"])->middleware("cors");
@@ -116,6 +117,7 @@ Route::middleware(["auth"])->group(function () {
 
     /* contacts */
     Route::post("/contacts/edit", [AboutController::class, "updateContacts"]);
+    Route::post("/faq/edit", [AboutController::class, "updateFAQ"]);
 
     // create requests
     Route::post("/hotlines/create", [HotlinesController::class, "create"]);
@@ -141,6 +143,7 @@ Route::middleware(["auth"])->group(function () {
     /* contacts */
     Route::post("/contacts/add", [AboutController::class, "createContact"]);
     Route::post("/contacts/list/add", [AboutController::class, "addNewNumber"]);
+    Route::post("/faq/add", [AboutController::class, "createFAQ"]);
     Route::post("/socmed/add", [AboutController::class, "createNewSocialLink"]);
 
     // delete requests
@@ -169,6 +172,7 @@ Route::middleware(["auth"])->group(function () {
     Route::post("/official-seal/delete", [AboutController::class, "deleteOfficialSeal"]);
     /* contacts */
     Route::post("/contact/delete", [AboutController::class, "deleteContact"]);
+    Route::post("/faq/delete", [AboutController::class, "deleteFAQ"]);
 
     //  upload a file
     Route::post("/upload-file", [FilesController::class, "saveFile"]);

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\About\Contact;
+use App\Models\About\FAQ;
 use App\Models\About\OfficialSeal;
 use App\Models\Business\Business;
 use App\Models\Business\Invest;
@@ -617,6 +618,43 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
                 "twitter" => ["https://twitter.com"],
                 "gmail" => ["betterpillla@gmail.com"],
             ])
+        ]);
+
+        FAQ::factory()->create([
+            "question" => "What are the office hours of the Municipal Hall of Pililla?",
+            "answer" => "The Municipal Hall of Pililla is open from Monday to Friday, 8:00 AM to 5:00 PM, except on holidays."
+        ]);
+        FAQ::factory()->create([
+            "question" => "How can I register to vote in Pililla?",
+            "answer" => "
+To register to vote in Pililla, you need to be a Filipino citizen, at least 18 years old on or before election day, and a resident of Pililla for at least six months prior to the election. Here are the steps to register:
+1. Visit the Commission on Elections (COMELEC) office in Pililla, which is located at the Municipal Hall.
+2. Bring valid identification documents such as a passport, driver's license, or any government-issued ID that shows your name, address, and birthdate.
+3. Fill out the application form provided by COMELEC.
+4. Have your biometrics taken, which includes a photo, fingerprints, and signature.
+5 . Wait for the COMELEC officer to issue you a Voter's ID or Voter's Certificate.
+It is important to note that voter registration is open only during certain periods and deadlines set by COMELEC. Make sure to check the official website or social media accounts of COMELEC for updates and announcements.
+            "
+        ]);
+        FAQ::factory()->create([
+            "question" => "How can I volunteer for a community program in Pililla?",
+            "answer" => "
+To volunteer for a community program in Pililla, you can contact the Municipal Social Welfare and Development Office (MSWDO) or the barangay where the program is being implemented. They can provide information on available programs and how to volunteer for them. You can also check the municipality's website or social media pages for announcements on upcoming community programs and volunteer opportunities.
+            "
+        ]);
+        FAQ::factory()->create([
+            "question" => "What are the tourist destinations in Pililla?",
+            "answer" => "
+            Pililla has several tourist destinations that visitors can enjoy. Here are some of them:
+
+1. Wind Farm - Pililla's wind farm is one of the largest wind energy projects in the Philippines. Visitors can see the towering wind turbines and enjoy the scenic views of the nearby mountains and Laguna Lake.
+2. Bugarin Resort - This resort is located in the town's hilly area and offers a picturesque view of the scenic Laguna de Bay. Visitors can enjoy the natural spring pool and various outdoor activities.
+3. Tanay-Pililla Adventure Trail - This trail is perfect for outdoor enthusiasts looking for a challenging hiking experience. The trail offers stunning views of the surrounding mountains, forests, and waterfalls.
+4. Maysawa Falls - This hidden gem is located in the nearby town of Tanay and is a perfect destination for nature lovers. Visitors can enjoy a refreshing dip in the cool waters of the falls.
+5. Calinawan Cave - This natural wonder is located in the nearby town of Tanay and features stunning rock formations and underground rivers. Visitors can take a guided tour of the cave and explore its hidden wonders.
+These are just some of the tourist destinations that Pililla has to offer. Visitors can also explore the town's rich history and culture by visiting its various landmarks and historical sites.
+If yuou want to know more about tourism in pililla go [here](http://localhost:3000/tourisms)
+            "
         ]);
     }
 }
