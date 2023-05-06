@@ -6,11 +6,14 @@ import { fetchData } from '../../../utils/axios-instance'
 import { onMounted } from 'vue'
 import { ref } from 'vue'
 import Loading from '../../../components/Loading.vue'
+import { be_url } from '../../../assets/config/config'
 
+const applicationForm = ref()
 const permits = ref([])
 const originalPermits = ref([])
 const loading = ref(true)
 const axiosCall = () => {
+  // fetch permits data
   fetchData('/permits')
     .then((data) => {
       permits.value = data.permits
@@ -24,10 +27,16 @@ const axiosCall = () => {
     })
 }
 
-function handleSearchPermits(e) {
-  permits.value = originalPermits.value.filter((o) =>
-    o.title.toLowerCase().includes(e.target.value.toLowerCase())
-  )
+const getApplicationForm = () => {
+  // fetch application form
+  fetchData('/application-forms')
+    .then((data) => {
+      applicationForm.value = data.application_forms[0]
+    })
+    .catch((err) => {
+      console.log(err)
+      loading.value = false
+    })
 }
 
 onMounted(() => {
@@ -35,40 +44,45 @@ onMounted(() => {
   window.scrollTo(0, 0)
 
   axiosCall()
+  getApplicationForm()
 })
 </script>
 
 <template>
+  <head>
+    <title>Business Permit | Pililla Rizal</title>
+  </head>
+
   <HeaderSection class="relative" />
   <WrapperContainer>
     <div class="w-full flex flex-col gap-4 items-center mt-24">
       <div class="relative mt-10">
         <h1 class="text-dark dark:text-white font-bold text-4xl md:text-5xl">
-          <span class="text-primary dark:text-primarylight">Businesses permit</span> here.
+          <span class="text-primary dark:text-primarylight">Businesses Permit</span> here.
         </h1>
         <div class="bg-primary dark:bg-primarylight absolute w-[45%] -bottom-1 h-1"></div>
       </div>
-      <p class="text-base text-secondary dark:text-gray-100">
-        See every businesses in every department.
+      <p class="text-base text-secondary dark:text-gray-100 text-center">
+        The Municipality of Pilila Rizal requires every one who are planning to do business to have
+        a Business Permit. To be issued a Business Permit the applicant must submit an application
+        form with supporting documents
       </p>
     </div>
 
-    <!-- search  -->
-    <div class="w-full flex flex-col items-center mt-10">
-      <div
-        class="w-full md:w-[450px] flex flex-row gap-3 items-center bg-white dark:bg-dark border border-gray-400 rounded-lg p-1 md:p-2"
-      >
-        <i class="uil uil-search text-lg text-dark dark:text-white"></i>
-        <input
-          class="w-full border-none outline-none bg-white dark:bg-dark text-sm text-dark dark:text-white placeholder:dark:text-white"
-          type="search"
-          placeholder="search business permit"
-          @change.capture="handleSearchPermits"
-        />
-      </div>
+    <!-- application form  -->
+    <div class="w-full flex flex-col items-center mt-5">
+      <a
+        v-if="applicationForm"
+        :href="be_url + '/uploads/files/application-form/' + applicationForm?.filename"
+        target="_blank"
+        class="text-sm md:text-base px-3 py-2 bg-primary font-bold hover:bg-primarylight text-white rounded-md shadow-lg shadow-primarylight/50"
+        >Download the application form <i class="uil uil-angle-right"></i
+      ></a>
     </div>
     <!-- business permits -->
-    <h2 class="w-full mt-10 text-sm font-bold text-dark dark:text-white">All businesses permits</h2>
+    <h2 class="w-full mt-10 text-sm font-bold text-dark dark:text-white capitalize">
+      All business permits
+    </h2>
     <!-- permits -->
     <div class="w-full mt-5">
       <Loading v-if="loading" class="w-10 h-10 mx-auto" />
@@ -80,5 +94,4 @@ onMounted(() => {
   <FooterSection />
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>

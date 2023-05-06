@@ -10,14 +10,14 @@ defineProps({
 </script>
 <template>
   <div
-    class="fixed top-1/3 h-screen w-screen bg-white dark:bg-dark shadow-md z-20 duration-150 border border-b-0 border-x-0 border-secondary"
+    class="fixed bg-white/80 dark:bg-dark/50 bottom-0 left-0 w-full right-0 h-[70%] border rounded-tl-2xl rounded-tr-2xl duration-100 backdrop-blur-lg z-10"
   >
     <!-- close modal -->
     <div
-      class="absolute -top-5 left-1/2 -translate-x-1/2 px-3 bg-white dark:bg-dark rounded-full w-12 h-12 flex items-center justify-center cursor-pointer border border-b-0 border-x-0 border-secondary"
+      class="absolute -top-5 left-1/2 -translate-x-1/2 px-3 bg-white dark:bg-dark rounded-full w-14 h-14 flex items-center justify-center cursor-pointer border border-secondary text-dark dark:text-bggray"
       @click="closeModal"
     >
-      <i class="uil uil-angle-down text-2xl pointer-events-none text-dark dark:text-bggray"></i>
+      <i class="uil uil-times pointer-events-none"></i>
     </div>
     <h3 v-if="!selectedData" class="text-2xl font-bold">Sorry something went wrong!</h3>
     <WrapperContainer v-else class="mt-10 h-full overflow-y-auto">

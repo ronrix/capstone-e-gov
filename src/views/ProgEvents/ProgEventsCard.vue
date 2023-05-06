@@ -18,7 +18,7 @@ defineProps({
         >{{ moment(event.created_at).month(new Date(event.created_at).getMonth()).format('MMM') }}
       </span>
     </div>
-    <div class="p-3">
+    <div class="px-5 py-2">
       <h3 class="font-bold text-lg md:text-xl lg:text-2xl text-dark dark:text-bggray">
         {{ event.title }}
       </h3>
