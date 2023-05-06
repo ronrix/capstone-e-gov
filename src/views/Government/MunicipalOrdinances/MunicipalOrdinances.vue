@@ -8,7 +8,7 @@ import PDFViewer from 'pdf-viewer-vue'
   <WrapperContainer>
     <div class="flex items-center">
       <h1 class="text-2xl md:text-3xl py-10 font-bold dark:text-bggray">Municipal Ordinances</h1>
-      <div class="flex-1 border-t-2 border-black dark:border-bggray"></div>
+      <div class="flex-1 border-t-2 border-black dark:border-bggray ml-3"></div>
     </div>
     <div class="flex flex-col sm:flex-row gap-5">
       <PDFViewer class="!h-[800px]" source="/sample.pdf" @download="handleDownload" />
