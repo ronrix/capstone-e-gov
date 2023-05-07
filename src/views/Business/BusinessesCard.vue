@@ -12,22 +12,20 @@ defineProps({
     class="flex flex-col gap-3 md:gap-4 mt-3 bg-white dark:bg-dark px-0 pt-0 pb-3 border dark:border-gray-500 shadow-sm"
   >
     <img :src="formatImgs(data.img_link.split(','))[0]" alt="" class="h-[250px] object-cover" />
-    <div class="flex flex-col gap-2 p-2">
-      <div class="flex items-center gap-2">
-        <h1 class="text-sm sm:text-xl lg:text-lg text-dark dark:text-white font-bold capitalize">
-          {{ data?.title }}
-        </h1>
-        <div class="bg-dark flex-1 w-full h-0.5 dark:bg-white"></div>
-      </div>
-      <div class="flex items-center gap-1">
+    <div class="flex-1 flex flex-col gap-1">
+      <h1 class="text-sm sm:text-xl lg:text-lg text-dark dark:text-white font-bold ml-1 capitalize">
+        {{ data?.title }}
+      </h1>
+      <hr />
+      <div class="flex-1 flex items-center mt-2 ml-1">
         <i class="uil uil-map-marker text-base text-gray-700 dark:text-white"></i>
-        <span class="text-base text-dark dark:text-white font-semibold">Address: </span>
-        <p class="max-w-[200px] text-sm text-dark dark:text-white capitalize">
+        <span class="text-base text-dark dark:text-white font-semibold mr-2">Address: </span>
+        <p class="text-sm text-dark dark:text-white capitalize">
           {{ data?.location }}
         </p>
       </div>
       <button
-        class="w-full sm:w-fit px-3 text-sm text-white bg-primary dark:bg-primarylight hover:bg-primarylight dark:hover:bg-primary rounded-md py-2"
+        class="w-full sm:w-fit px-3 text-sm text-white ml-1 bg-primary dark:bg-primarylight hover:bg-primarylight dark:hover:bg-primary rounded-md py-2"
         @click="showDisplayModal(data)"
       >
         View
