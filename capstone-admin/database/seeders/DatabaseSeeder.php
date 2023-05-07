@@ -234,7 +234,7 @@ Pililla is a great place to experience the true culture of a province. It has pr
         Population::factory(1)->create();
 
         # JOB POSTINGS
-        JobPosting::factory(10)->create();
+        JobPosting::factory(5)->create();
 
         # TOURISM
         Tourism::factory()->create([

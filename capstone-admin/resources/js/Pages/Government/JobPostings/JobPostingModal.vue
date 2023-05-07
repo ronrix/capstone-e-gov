@@ -8,25 +8,42 @@
         class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
 
       <!--top  -->
-      <div class="flex items-center justify-between mb-5">
+      <div class="flex items-center justify-between mb-2">
         <span class="font-bold text-gray-400 text-xs">{{ new Date(selectedData.created_at).toLocaleDateString("en-PH", {
           month:
             "long", day: "numeric"
         }) }}</span>
       </div>
 
+      <div class="flex items-center">
+        <div class="w-10 h-10 rounded-full overflow-hidden bg-white">
+          <img :src="imgLogo" alt="this is the company logo" class="object-cover">
+        </div>
+        <input type="file" class="hidden" ref="inputLogo" @change="handleSelectLogo">
+        <button @click="() => inputLogo.click()" type="button"
+          class="border border-blue-500 text-blue-500 rounded-md px-2 text-xs ml-5">change</button>
+      </div>
+
       <!-- job type -->
       <div class="flex-1">
         <textarea v-model="formData.title"
-          class="rounded-md text-xl font-bold text-gray-800 bg-transparent w-full max-h-[30px] outline-blue-600"></textarea>
-        <input v-model="formData.type"
-          class="rounded-md text-sm font-bold text-gray-500 bg-transparent w-full outline-blue-600" />
+          class="rounded-sm text-xl font-bold text-gray-800 bg-transparent w-full max-h-[30px] outline-blue-600"></textarea>
+        <label class="flex flex-col text-sm">
+          <span>author:</span>
+          <input v-model="formData.author"
+            class="rounded-sm font-bold text-primary-dark bg-transparent w-full outline-blue-600" />
+        </label>
+        <label class="flex flex-col text-sm">
+          <span>email:</span>
+          <input v-model="formData.email"
+            class="rounded-sm font-bold text-primary-dark bg-transparent w-full outline-blue-600" />
+        </label>
         <div class="flex items-center gap-2 mt-3 flex-wrap">
           <div v-for="jt, idx in workTypes" :key="jt"
             class="px-2 py-1 text-[10px] rounded-full capitalize font-[500] relative" :style="{
-                backgroundColor: (colors.find(col => col.type === jt.trim()))?.bgColor,
-                color: (colors.find(col => col.type === jt.trim()))?.textColor,
-              }">
+              backgroundColor: (colors.find(col => col.type === jt.trim()))?.bgColor,
+              color: (colors.find(col => col.type === jt.trim()))?.textColor,
+            }">
             <!-- remove btn -->
             <div
               class="absolute -top-2 -right-1 cursor-pointer bg-red-400 rounded-full w-4 h-4 flex items-center justify-center hover:bg-red-300">
@@ -59,6 +76,9 @@
         <h6 class="text-gray-600 text-xs font-[500] mt-2 capitalize">address</h6>
         <input v-model="formData.location" type="text"
           class="text-gray-600 text-sm bg-transparent font-bold w-full mb-2 outline-blue-600">
+        <h6 class="text-gray-600 text-xs font-[500] mt-2 capitalize">company name</h6>
+        <input v-model="formData.companyName" type="text"
+          class="text-gray-600 text-sm bg-transparent font-bold w-full mb-2 outline-blue-600">
 
         <h6 class="text-gray-600 text-xs font-[500] mt-2 capitalize">description</h6>
         <textarea v-model="formData.description"
@@ -80,19 +100,30 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { useForm } from '@inertiajs/inertia-vue3';
 
 import Loading from "../../../Components/Loading.vue";
+import { formatImgs } from '../../../utils/formatImgs';
 
+const imgLogo = ref(formatImgs(selectedData.logo.split(','))[0])
+const inputLogo = ref(null);
 const isEditable = ref(false);
 const workTypes = ref(selectedData.job_schedule.split(","));
 const formattedCurrency = ref(new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(selectedData.job_salary));
 const formData = useForm({
   id: selectedData.id,
+  logo: null,
   title: selectedData.job_title,
-  type: selectedData.job_type,
+  companyName: selectedData.company_name,
+  author: selectedData.author,
+  email: selectedData.email,
   location: selectedData.job_location,
   salary: selectedData.job_salary,
   description: selectedData.job_description,
   schedule: workTypes.value
 });
+
+function handleSelectLogo(e) {
+  formData.logo = e.target.files[0];
+  imgLogo.value = URL.createObjectURL(e.target.files[0]);
+}
 
 const isSubmitting = ref(false);
 const bgColor = ref("");

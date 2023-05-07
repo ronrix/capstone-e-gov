@@ -132,13 +132,16 @@ async function handleUpdate(formData) {
   return await axios.post(be_url + "/job-posting/edit",
     {
       id: formData.id,
+      logo: formData.logo,
       job_title: formData.title,
-      job_type: formData.type,
+      company_name: formData.companyName,
+      author: formData.author,
+      email: formData.email,
       job_description: formData.description,
       job_salary: formData.salary,
       job_location: formData.location,
-      job_schedule: formData.schedule
-    })
+      job_schedule: formData.schedule.join(", ")
+    }, { headers: { "Content-Type": "multipart/form-data" } })
     .then((response) => {
       // set the response msg
       resMsg.value = response.data.res;
@@ -169,7 +172,14 @@ async function handleDelete(id) {
       originalData.value = response.data.jobs
       return data;
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // function to create the job posting data
@@ -178,11 +188,13 @@ async function handleCreate(formData) {
     {
       logo: formData.logo,
       job_title: formData.job_title,
-      job_type: formData.job_type,
+      company_name: formData.companyName,
+      author: formData.author,
+      email: formData.email,
       job_description: formData.job_description,
       job_salary: formData.job_salary,
       job_location: formData.job_location,
-      job_schedule: formData.job_schedule
+      job_schedule: formData.job_schedule.join(", ")
     }, { headers: { "Content-Type": "multipart/form-data" } })
     .then((response) => {
 
@@ -197,7 +209,15 @@ async function handleCreate(formData) {
       originalData.value = response.data.jobs
       return response.data;
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log(err)
+      // set the response msg
+      resMsg.value = { msg: err.response.data.message, status: 400 };
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 </script>

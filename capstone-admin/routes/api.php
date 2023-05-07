@@ -8,6 +8,7 @@ use App\Http\Controllers\Government\ExecutivesController;
 use App\Http\Controllers\Government\HotlinesController;
 use App\Http\Controllers\Government\JobPostingController;
 use App\Http\Controllers\Government\NewsController;
+use App\Http\Controllers\Government\OrdinancesController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\RequestNotificationController;
@@ -63,6 +64,8 @@ Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureRe
 Route::get("/application-forms", [FilesController::class, "getApplicationForms"])->middleware("cors");
 Route::get("/file/download/{file}", [FilesController::class, "download"])->middleware("cors");
 Route::get("/service-types", [ServicesController::class, "getAllServiceTypes"])->middleware("cors");
+Route::get("/faq", [AboutController::class, "getFAQs"])->middleware("cors");
+Route::get("/ordinances", [OrdinancesController::class, "getOrdinances"])->middleware("cors");
 
 // Broadcasting events
 Route::post("/event", [RequestNotificationController::class, 'eventHandler'])->middleware("cors");

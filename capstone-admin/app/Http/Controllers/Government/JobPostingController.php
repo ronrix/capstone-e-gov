@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Government;
 
 use App\Models\Government\JobPosting;
 use App\Http\Controllers\Controller;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Image;
@@ -32,7 +33,9 @@ class JobPostingController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "job_title" => "required",
-            "job_type" => "required",
+            "company_name" => "required",
+            "author" => "required",
+            "email" => "required|email",
             "job_location" => "required",
             "job_description" => "required",
             "job_salary" => "required",
@@ -48,6 +51,7 @@ class JobPostingController extends Controller
             return response()->json([
                 "res" => [
                     "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "msg_1" => $validator->messages()->all()[0] ?: $validator->messages()->all()[0],
                     "status" => 400,
                 ]
             ], 400);
@@ -73,10 +77,12 @@ class JobPostingController extends Controller
 
             $jobs->job_title = strtolower($request->input("job_title"));
             $jobs->job_location = strtolower($request->input("job_location"));
-            $jobs->job_type = strtolower($request->input("job_type"));
+            $jobs->company_name = strtolower($request->input("company_name"));
+            $jobs->author = strtolower($request->input("author"));
+            $jobs->email = strtolower($request->input("email"));
             $jobs->job_description = strtolower($request->input("job_description"));
             $jobs->job_salary = $request->input("job_salary");
-            $jobs->job_schedule = strtolower($request->input("job_schedule"));
+            $jobs->job_schedule = $request->input("job_schedule");
             $jobs->save();
 
             return response()->json([
@@ -98,39 +104,6 @@ class JobPostingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Government\JobPosting  $jobPosting
-     * @return \Illuminate\Http\Response
-     */
-    public function show(JobPosting $jobPosting)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Government\JobPosting  $jobPosting
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(JobPosting $jobPosting)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -141,13 +114,15 @@ class JobPostingController extends Controller
     {
         // validate
         $validator = Validator::make($request->all(), [
-            "id" => "required",
             "job_title" => "required",
+            "company_name" => "required",
+            "author" => "required",
+            "email" => "required|email",
             "job_location" => "required",
-            "job_type" => "required",
             "job_description" => "required",
             "job_salary" => "required",
             "job_schedule" => "required",
+            "logo" => "nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:5000", # 2mb is the max 
         ]);
 
         /*
@@ -168,12 +143,38 @@ class JobPostingController extends Controller
         try {
             //code...
             $jobs = JobPosting::findOrFail($id);
+
+            // update the logo if exists
+            if ($request->file("logo")) {
+                // delete the current img before updating it
+                $old_logo = $jobs->logo;
+                if (file_exists($old_logo)) {
+                    unlink($old_logo);
+                }
+
+                $file = $request->file("logo");
+                $filename = uniqid() . "." . $file->getClientOriginalExtension();
+                $path = "uploads/job-posting/" . $filename;
+
+                # create a folder if not exists before saving the image
+                $folder = "uploads/job-posting/";
+                if (!file_exists($folder)) {
+                    mkdir($folder, 0777, true);
+                }
+
+                Image::make($file)->save(public_path($path)); // save the file image
+                $jobs->logo = $path;
+            }
+
+
             $jobs->job_title = strtolower($request->input("job_title"));
             $jobs->job_location = strtolower($request->input("job_location"));
-            $jobs->job_type = strtolower($request->input("job_type"));
+            $jobs->company_name = strtolower($request->input("company_name"));
+            $jobs->author = strtolower($request->input("author"));
+            $jobs->email = strtolower($request->input("email"));
             $jobs->job_description = strtolower($request->input("job_description"));
             $jobs->job_salary = $request->input("job_salary");
-            $jobs->job_schedule = strtolower(implode(", ", $request->input("job_schedule")));
+            $jobs->job_schedule = $request->input("job_schedule");
             $jobs->save();
 
             return response()->json([

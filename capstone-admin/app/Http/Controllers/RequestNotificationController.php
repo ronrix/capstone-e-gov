@@ -128,7 +128,7 @@ class RequestNotificationController extends Controller
             $form["id"] = $request_post->id; # store the id of the row too to include on the response
             $form["status"] = true; # store the id of the row too to include on the response
             event(new PostRequestNotification($form));
-            return response()->json($form); // send the $forms;
+            return response()->json(["res" => ["msg" => "Successfully submitted a request", "status" => 200]], 200); // send the $forms;
         } catch (\Throwable $err) {
             return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }
@@ -182,12 +182,15 @@ class RequestNotificationController extends Controller
                 $business->save();
             } else {
                 $job = new JobPosting;
+                $job->logo = implode(",", $data->imgs);
+                $job->author = $notification->author;
+                $job->company_name = strtolower($data->companyName);
+                $job->email = $notification->email;
                 $job->job_title = strtolower($data->title);
                 $job->job_location = strtolower($data->location);
-                $job->job_type = strtolower($data->type);
                 $job->job_description = strtolower($data->description);
                 $job->job_salary = $data->salary;
-                $job->job_schedule = strtolower($data->schedule);
+                $job->job_schedule = implode(",", $data->schedules);
                 $job->save();
             }
 
