@@ -128,7 +128,7 @@ class RequestNotificationController extends Controller
             $form["id"] = $request_post->id; # store the id of the row too to include on the response
             $form["status"] = true; # store the id of the row too to include on the response
             event(new PostRequestNotification($form));
-            return response()->json(["res" => ["msg" => "Successfully submitted a request", "status" => 200]], 200); // send the $forms;
+            return response()->json(["res" => ["msg" => "Successfully submitted a request. Please wait for the response we will send to you on your email.", "status" => 200]], 200); // send the $forms;
         } catch (\Throwable $err) {
             return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
         }

@@ -79,7 +79,7 @@
           <div class="flex items-center w-full gap-2">
             <!-- TODO: add images here -->
             <div ref="assetDiv"
-              class="flex items-start flex-wrap gap-2 sm:h-[60px] overflow-y-scroll py-2 scrollbar w-full el-main">
+              class="flex items-start flex-wrap gap-2 sm:h-[60px] overflow-y-auto py-2 scrollbar w-full el-main">
               <div v-for="img, idx in toUploadImgs" :key="idx"
                 class="border border-gray-500 p-2 rounded-md w-[50px] h-[50px] relative cursor-pointer">
                 <!-- remove btn -->

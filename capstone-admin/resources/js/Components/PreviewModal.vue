@@ -83,9 +83,9 @@
           </span>
           <div>
             <div ref="descEl" v-bind:innerHTML="description"
-              class="text-sm marked-desc h-[200px] overflow-y-scroll scrollbar"></div>
+              class="text-sm marked-desc h-[200px] overflow-y-auto scrollbar"></div>
             <textarea ref="descText" @blur="stopEditing" v-model="formData.description"
-              class="hidden overflow-y-scroll scrollbar bg-transparent w-full h-full sm:h-[200px] text-sm"></textarea>
+              class="hidden overflow-y-auto scrollbar bg-transparent w-full h-full sm:h-[200px] text-sm"></textarea>
           </div>
         </div>
 
@@ -94,8 +94,8 @@
             you have to restore it before editing it
           </p>
           <button :disabled="isSubmitting || selectedData.deleted_at" type="submit" :class="{
-              'cursor-not-allowed': isSubmitting || selectedData.deleted_at,
-            }" class="px-4 bg-blue-600 ml-3 text-white rounded-md font-bold flex items-center">
+            'cursor-not-allowed': isSubmitting || selectedData.deleted_at,
+          }" class="px-4 bg-blue-600 ml-3 text-white rounded-md font-bold flex items-center">
             <Loading color="#fff" class="w-5 h-5 mr-2" v-if="isSubmitting" />
             <span v-if="!isSubmitting">save</span>
           </button>

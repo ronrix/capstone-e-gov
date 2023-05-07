@@ -123,7 +123,7 @@ async function declineRequest(id) {
         (a, b) => a.created_at < b.created_at
       );
       store.removeOne(id);
-      return;
+      return data;
     })
     .catch((err) => {
       // set the response msg
@@ -132,7 +132,7 @@ async function declineRequest(id) {
       setTimeout(() => {
         resMsg.value = null;
       }, 3000);
-      return;
+      return err.response.data.res;
     });
 }
 
@@ -153,7 +153,7 @@ async function acceptRequest(id) {
         (a, b) => a.created_at < b.created_at
       );
       store.removeOne(id);
-      return;
+      return data;
     })
     .catch((err) => {
       // set the response msg
@@ -162,7 +162,7 @@ async function acceptRequest(id) {
       setTimeout(() => {
         resMsg.value = null;
       }, 3000);
-      return;
+      return err.response.data.res;
     });
 }
 

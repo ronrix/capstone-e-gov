@@ -22,7 +22,7 @@
 
             <button @click="showPreviewModal(data)">
 
-                <div class="card1 flex flex-col w-[250px]">
+                <div class="flex flex-col w-[250px] bg-white">
                     <!---Image-->
                     <div :style="{ backgroundImage: `url(${imgSrc})` }"
                         class="rounded-tt-md bg-no-repeat bg-cover bg-center h-[150px] max-h-[150px] object-cover relative">

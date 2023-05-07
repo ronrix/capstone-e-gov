@@ -16,20 +16,27 @@
                     <h5 class="underline">{{ selectedData?.email }}</h5>
 
                     <p class="font-[500] text-xs mt-2">Company name: </p>
-                    <h5 class="underline capitalize">{{ JSON.parse(selectedData?.data)?.companyName }}</h5>
+                    <h5 class="underline capitalize">{{ selectedData?.data?.companyName ? selectedData?.data?.companyName :
+                        JSON.parse(selectedData?.data).companyName }}</h5>
 
                     <div v-if="selectedData?.type_of_request !== 'business'">
                         <p class="font-[500] text-xs mt-2">Salary:</p>
                         <h5 class="underline capitalize">
                             {{ new Intl.NumberFormat("en-US", {
                                 style: "currency", currency: "php"
-                            }).format(JSON.parse(selectedData?.data).salary) }}
+                            }).format(selectedData?.data.salary ? selectedData?.data.salary :
+                                JSON.parse(selectedData?.data).salary) }}
                         </h5>
                     </div>
 
                     <div v-if="selectedData?.type_of_request !== 'business'">
                         <p class="font-[500] text-xs mt-2">Schedules:</p>
-                        <div class="flex items-center gap-2">
+                        <div class="flex items-center gap-2" v-if="selectedData?.data">
+                            <h5 class="underline capitalize" v-for="(sche, id) in selectedData?.data.schedules" :key="id">
+                                {{ sche }},
+                            </h5>
+                        </div>
+                        <div class="flex items-center gap-2" v-else>
                             <h5 class="underline capitalize" v-for="(sche, id) in JSON.parse(selectedData?.data).schedules"
                                 :key="id">
                                 {{ sche }},
@@ -40,13 +47,15 @@
                     <p class="font-[500] text-xs mt-2">Description:</p>
                     <div class="line-clamp-2 h-[100px] max-h-[120px] overflow-y-auto scrollbar">
                         {{
+                            selectedData?.data?.description ? selectedData?.data?.description :
                             JSON.parse(selectedData?.data)?.description
                         }}
                     </div>
 
                     <p class="font-[500] text-xs mt-2">View pdf:</p>
-                    <a :href="be_url + '/' + JSON.parse(selectedData?.data)?.proofFiles" target="_blank"
-                        class="underline">{{
+                    <a :href="be_url + '/' + (selectedData?.data.proofFiles ? selectedData?.data.proofFiles : JSON.parse(selectedData?.data)?.proofFiles)"
+                        target="_blank" class="underline">{{
+                            selectedData?.data.proofFiles ? selectedData?.data.proofFiles :
                             JSON.parse(selectedData?.data)?.proofFiles
                         }}</a>
                 </div>
@@ -102,7 +111,7 @@ const selectedImg = ref("");
 const isPreviewImg = ref(false);
 const isAcceptSubmit = ref(false);
 const isDeclineSubmit = ref(false);
-const imgs = selectedData ? JSON.parse(selectedData?.data).imgs : [];
+const imgs = selectedData?.data.imgs ? selectedData?.data.imgs : JSON.parse(selectedData?.data)?.imgs;
 
 // sending email to the requester on the update of their request
 function sendEmail(msg, companyName) {
@@ -135,7 +144,7 @@ function onDecline(id) {
     isDeclineSubmit.value = true;
     declineRequest(id)
         .then((data) => {
-            if (data.res.status === 400) { // don't send the email if error occurs
+            if (data.res.status == 400) { // don't send the email if error occurs
                 isDeclineSubmit.value = false
                 return;
             }
@@ -159,7 +168,8 @@ function onAccept() {
     isAcceptSubmit.value = true;
     acceptRequest(selectedData.id)
         .then((data) => {
-            if (data.res.status === 400) { // don't send the email if error occurs
+            console.log(data)
+            if (data.res.status == 400) { // don't send the email if error occurs
                 isAcceptSubmit.value = false;
                 return;
             }
