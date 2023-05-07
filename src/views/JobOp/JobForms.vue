@@ -18,6 +18,7 @@ const form = ref({
   fullname: '',
   email: '',
   logo: '',
+  title: '',
   companyName: '',
   address: '',
   salary: '',
@@ -29,6 +30,7 @@ const form = ref({
 const rules = {
   fullname: { required: helpers.withMessage('Authors name is a required field', required) },
   email: { required: helpers.withMessage('Email is a required field', required, email) },
+  title: { required: helpers.withMessage('Job title is a required field', required) },
   logo: { required: helpers.withMessage('Company Logo is a required field', required) },
   companyName: { required: helpers.withMessage('Company name is a required field', required) },
   address: { required: helpers.withMessage('Address is a required field', required) },
@@ -79,12 +81,13 @@ async function onSubmit() {
       {
         author: form.value.fullname,
         email: form.value.email,
-        typeOfRequest: form.value.email,
+        typeOfRequest: 'job opportunity',
         data: {
+          title: form.value.title,
           logo: form.value.logo,
-          company_name: form.value.companyName,
-          description: form.value.description,
-          address: form.value.address,
+          companyName: form.value.companyName,
+          description: form.value.jobDescription,
+          location: form.value.address,
           salary: form.value.salary,
           schedules: form.value.schedules
         },
@@ -100,10 +103,14 @@ async function onSubmit() {
     )
     .then(({ data }) => {
       notification.value = data.res
+      setTimeout(() => {
+        notification.value = null
+      }, 5000)
       // reset the states
       form.value = {
         fullname: '',
         email: '',
+        title: '',
         logo: '',
         companyName: '',
         address: '',
@@ -151,10 +158,22 @@ async function onSubmit() {
             <input
               v-model="form.email"
               class="flex-1 outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full"
-              type="text"
+              type="email"
             />
             <p v-if="v$.email.$error && isError" class="text-xs text-red-400 mb-2">
               {{ v$.email.$errors[0].$message }}
+            </p>
+          </label>
+          <label class="text-sm md:text-lg text-darkgray dark:text-bggray flex-1"
+            >Job title
+            <p class="text-secondary text-sm font-normal">enter the job title or position</p>
+            <input
+              v-model="form.title"
+              class="flex-1 outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full"
+              type="text"
+            />
+            <p v-if="v$.title.$error && isError" class="text-xs text-red-400 mb-2">
+              {{ v$.title.$errors[0].$message }}
             </p>
           </label>
         </div>
@@ -234,6 +253,24 @@ async function onSubmit() {
                   name="schedules"
                 />
                 Freelance
+              </label>
+              <label class="text-secondary text-sm font-normal flex items-center gap-1">
+                <input
+                  v-model="form.schedules"
+                  type="checkbox"
+                  value="internship"
+                  name="job_schedule"
+                />
+                Internship
+              </label>
+              <label class="text-secondary text-sm font-normal flex items-center gap-1">
+                <input
+                  v-model="form.schedules"
+                  type="checkbox"
+                  value="remote"
+                  name="job_schedule"
+                />
+                Remote
               </label>
 
               <!-- <div class="sm:flex items-center mr-4 sm:mb-2 gap-2"> -->
