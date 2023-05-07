@@ -54,7 +54,9 @@ defineProps({
         class=":text-dark dark:text-bgLightyBlue text-justify leading-loose mardown mt-5"
         :innerHTML="DOMPurify.sanitize(marked(selectedJob?.job_description))"
       ></div>
-      <p class="font-[600] text-dark dark:text-bggray">For more information. Email us</p>
+      <p class="font-[600] text-dark dark:text-bggray">
+        For more information. you can email us @{{ selectedJob?.email }}
+      </p>
     </WrapperContainer>
   </div>
 </template>

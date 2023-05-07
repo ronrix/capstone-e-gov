@@ -1,3 +1,8 @@
+<script setup>
+defineProps({
+  stroke: { type: String }
+})
+</script>
 <template>
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +15,7 @@
       cx="50"
       cy="50"
       fill="none"
-      stroke="#464646"
+      :stroke="stroke || '#121212'"
       stroke-width="10"
       r="35"
       stroke-dasharray="164.93361431346415 56.97787143782138"
