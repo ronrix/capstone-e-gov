@@ -58,9 +58,9 @@ onMounted(() => {
     <div class="w-full flex flex-col gap-4 items-center mt-24">
       <div class="relative mt-10">
         <h1 class="text-dark dark:text-white font-bold text-4xl md:text-5xl">
-          <span class="text-primary dark:text-primarylight">Businesses Permit</span> here.
+          <span class="text-primary dark:text-primarylight">Business Permit</span> here.
         </h1>
-        <div class="bg-primary dark:bg-primarylight absolute w-[45%] -bottom-1 h-1"></div>
+        <div class="bg-primary dark:bg-primarylight absolute w-[35%] -bottom-1 h-1"></div>
       </div>
       <p class="text-base text-secondary dark:text-gray-100 text-center">
         The Municipality of Pilila Rizal requires every one who are planning to do business to have

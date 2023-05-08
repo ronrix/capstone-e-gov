@@ -1,36 +1,22 @@
 <script setup>
-import Permit from './Permit.vue'
-const permits = [
-  {
-    name: 'Business Registration',
-    department: 'Business Permit and Licensing Office'
-  },
-  {
-    name: 'Issuance of MOA certification',
-    department: 'Agriculture Department'
-  },
-  {
-    name: 'Mayors Clearance',
-    department: 'Office of the mayor'
-  }
-]
 </script>
-
 <template>
-  <div class="w-full bg-gray-700 dark:bg-gray-500 h-28 mt-10 flex items-center px-5 gap-2 mb-5">
-    <h1 class="text-xl md:text-2xl text-white font-bold capitalize">Businesses permit</h1>
-    <i class="uil uil-file-check-alt text-3xl md:text-4xl text-white"></i>
+  <!-- business permits -->
+  <div class="mt-10 bg-secondary p-5">
+    <WrapperContainer class="flex items-center justify-center flex-col">
+      <h4 class="text-2xl text-bggray font-bold">Want to Establish a Business here in Pililla</h4>
+      <h5 class="text-bggray text-xl">
+        Get to know the process and requirements and fill up the application form
+      </h5>
+      <RouterLink
+        to="/business-permit-and-licensing-office"
+        class="bg-primary hover:bg-primarylight rounded-md text-white mt-5 px-3"
+      >
+        Go here
+        <i class="uil uil-angle-right ml-2"></i>
+      </RouterLink>
+    </WrapperContainer>
   </div>
-  <WrapperContainer>
-    <!-- business permits -->
-    <Permit v-for="(data, id) in permits" :id="id" :key="id" :data="data" />
-    <button
-      class="bg-primary hover:bg-primarylight text-sm rounded-md text-white ml-2 lg:ml-16 mt-10 py-3 px-2 md:px-5 mb-10"
-    >
-      View all businesses permits
-      <i class="uil uil-angle-right ml-2"></i>
-    </button>
-  </WrapperContainer>
 </template>
 
 <style lang="scss" scoped>

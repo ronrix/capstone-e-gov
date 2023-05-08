@@ -22,8 +22,9 @@
     <h1
       class="text-center md:text-left text-3xl md:text-4xl lg:sm:text-5xl ml-0 lg:ml-16 mb-12 md:mb-0 md:text-dark dark:text-white font-[display]"
     >
-      Businesses that <span class="inline-block md:block"> partnership with</span>
-      <span class="block sm:inline-block md:block">Pililla, Rizal</span>
+      Businesses in
+      <span class="inline-block md:block"> <span class="text-primary">Partnership</span> with</span>
+      <span class="block sm:inline-block md:block">the Municipality of Pililla, Rizal</span>
     </h1>
     <div class="grid grid-cols-3 gap-0 lg:gap-3 mr-0 lg:mr-16">
       <!-- single item -->
