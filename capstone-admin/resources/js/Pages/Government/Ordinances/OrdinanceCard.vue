@@ -50,3 +50,8 @@ defineProps({
     ordinance: Object
 });
 </script>
+<style>
+.pdf-viewer__header {
+    z-index: 5;
+}
+</style>

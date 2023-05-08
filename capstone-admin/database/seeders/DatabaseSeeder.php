@@ -645,7 +645,7 @@ To volunteer for a community program in Pililla, you can contact the Municipal S
         FAQ::factory()->create([
             "question" => "What are the tourist destinations in Pililla?",
             "answer" => "
-            Pililla has several tourist destinations that visitors can enjoy. Here are some of them:
+Pililla has several tourist destinations that visitors can enjoy. Here are some of them:
 
 1. Wind Farm - Pililla's wind farm is one of the largest wind energy projects in the Philippines. Visitors can see the towering wind turbines and enjoy the scenic views of the nearby mountains and Laguna Lake.
 2. Bugarin Resort - This resort is located in the town's hilly area and offers a picturesque view of the scenic Laguna de Bay. Visitors can enjoy the natural spring pool and various outdoor activities.

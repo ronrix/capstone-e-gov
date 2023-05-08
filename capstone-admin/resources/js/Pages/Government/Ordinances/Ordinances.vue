@@ -13,7 +13,7 @@
 
         </div>
         <!-- empty: this will display when there is no data to display -->
-        <h5 v-if="isEmpty"
+        <h5 v-if="isEmpty && !loading"
             class="font-bold text-xl capitarize text-red-500 mt-5 border border-x-0 border-b-0 flex items-center">
             <i class="uil uil-folder-times text-3xl"></i>
             Empty Collection
@@ -22,7 +22,6 @@
             <Loading class="w-8 h-8" />
             <p>Loading...</p>
         </div>
-
         <OrdinanceCard v-else v-for="ordinance in dataOrdinances" :key="ordinance.id" :ordinance="ordinance"
             :handle-update-ordinance="handleUpdateOrdinance" :handle-delete-ordinance="handleDeleteOrdinance" />
 
@@ -43,7 +42,7 @@ import SelectTag from "../../../Components/SelectTag.vue";
 import OrdinanceCreateNew from "./OrdinanceCreateNew.vue";
 
 const activeData = ref("active");
-const isEmpty = ref(false);
+const isEmpty = ref(true);
 // filter delete
 // requesting for active and deleted data
 function filterDelete(type, value) {
@@ -81,12 +80,13 @@ function filterDelete(type, value) {
     axios.get(be_url + '/ordinances')
         .then(({ data }) => {
             isLoading.value = false;
-            isEmpty.value = false;
-            if (data.ordinances) {
+            if (data.ordinances.length) {
+                isEmpty.value = false;
                 dataOrdinances.value = data.ordinances;
                 originalDataOrdinances.value = data.ordinances;
                 return;
             }
+            isEmpty.value = true;
         })
         .catch(err => {
             // set the response msg
@@ -212,6 +212,9 @@ onMounted(() => {
     axios.get(be_url + "/ordinances")
         .then(({ data }) => {
             isLoading.value = false;
+            if (data.ordinances.length) {
+                isEmpty.value = false;
+            }
             dataOrdinances.value = data.ordinances;
             originalDataOrdinances.value = data.ordinances;
         })
