@@ -20,24 +20,36 @@
     </button>
 
     <!-- hotlines table -->
-    <div class="w-full flex flex-col gap-3">
-      <div v-for="a in hotlines" :key="a.id" class="bg-white p-3 rounded-md relative shadow-sm">
-        <textarea v-model="a.department" @change.capture="(e) => showEditVerification(e.target.value, a.id, 'department')"
-          class="focus:outline-blue-500 py-3 w-full font-bold overflow-scroll no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx] capitalize border"></textarea>
-        <div class="flex items-start sm:items-center flex-col sm:flex-row gap-5">
-          <NumberInput :id="a.id" :handleEdit="handleEdit" type="smart" :number="a.smart"
-            :show-edit-verification="showEditVerification" />
-          <NumberInput :id="a.id" :handleEdit="handleEdit" type="globe" :number="a.globe"
-            :show-edit-verification="showEditVerification" />
-          <NumberInput :id="a.id" :handleEdit="handleEdit" type="landline" :number="a.landline"
-            :show-edit-verification="showEditVerification" />
-        </div>
-
-        <button type="button" @click="showDelete(a.id)"
-          class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-2 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
-          delete</button>
-      </div>
-    </div>
+    <table class="bg-white border w-full rounded-md">
+      <thead>
+        <tr>
+          <th class="font-bold text-lg text-left">Department</th>
+          <th class="font-bold text-lg text-left">Mobile number</th>
+          <th class="font-bold text-lg text-left">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="a in  hotlines " :key="a.id">
+          <td>
+            <textarea v-model="a.department"
+              @change.capture="(e) => showEditVerification(e.target.value, a.id, 'department')"
+              class="focus:outline-blue-500 py-3 w-full overflow-auto no-scrollbar m-0 text-sm h-[40px] max-h-[40ppx] capitalize border resize-none"></textarea>
+          </td>
+          <td>
+            <input @change.capture="(e) => showEditVerification(e.target.value, a.id, 'mobile_number')"
+              :value="a.mobile_number"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              maxlength="11"
+              class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
+          </td>
+          <td class="">
+            <button type="button" @click="showDelete(a.id)"
+              class="bg-red-500 text-red-300 text-sm rounded-lg mx-auto px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer">
+              delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <!-- hotline modal -->
     <HotlineModal v-if="isHotlineModal" :showHotlineModal="showHotlineModal" :sample_data="sample_data"
@@ -50,7 +62,6 @@
 import HotlineModal from "./HotlineModal.vue";
 import { ref, onMounted } from 'vue';
 
-import NumberInput from "./NumberInput.vue";
 import DeleteVerificationModal from "../../../Components/DeleteVerificationModal.vue";
 import axios from "axios";
 import { be_url } from "../../../config/config";
@@ -119,8 +130,8 @@ function handleDelete() {
 }
 
 // update the data when input change
-function handleEdit(number, id, prov) {
-  axios.post(be_url + "/hotlines/edit", { id, number, provider: prov })
+function handleEdit(value, id, provider) {
+  axios.post(be_url + "/hotlines/edit", { id, value, provider })
     .then(({ data }) => {
       editedInput.value = { value: "", id: null, type: "" };
       isEditVerification.value = false;
@@ -132,6 +143,7 @@ function handleEdit(number, id, prov) {
         resMsg.value = null;
       }, 3000);
 
+      hotlines.value = data.hotlines;
     })
     .catch(err => {
       // set the response msg
@@ -145,7 +157,7 @@ function handleEdit(number, id, prov) {
 
 // handle add new hotline numbers
 async function handleSubmit(formData) {
-  return await axios.post(be_url + "/hotlines/create", { department: formData.department, smart: formData.smart, globe: formData.globe, landline: formData.landline })
+  return await axios.post(be_url + "/hotlines/create", { department: formData.department, mobile_number: formData.mobile_number })
     .then(({ data }) => {
       // set the response msg
       resMsg.value = data.res;
@@ -176,4 +188,12 @@ onMounted(() => {
 
 </script>
 
-<style scoped></style>
+<style scoped>
+table td {
+  padding: 1em;
+}
+
+table th {
+  padding: 1em 1em 0 1em;
+}
+</style>

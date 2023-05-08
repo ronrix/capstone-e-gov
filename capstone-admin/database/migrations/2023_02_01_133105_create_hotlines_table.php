@@ -16,9 +16,7 @@ return new class extends Migration
         Schema::create('hotlines', function (Blueprint $table) {
             $table->id();
             $table->string("department");
-            $table->string("smart");
-            $table->string("globe");
-            $table->string("landline");
+            $table->string("mobile_number");
             $table->timestamps();
         });
     }

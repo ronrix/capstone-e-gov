@@ -30,9 +30,7 @@ class HotlinesController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "department" => "required",
-            "smart" => "required",
-            "globe" => "required",
-            "landline" => "required",
+            "mobile_number" => "required",
         ]);
 
         /*
@@ -52,9 +50,7 @@ class HotlinesController extends Controller
             //code...
             $hotline = new Hotlines;
             $hotline->department = strtolower($request->input("department"));
-            $hotline->smart = $request->input("smart");
-            $hotline->globe = $request->input("globe");
-            $hotline->landline = $request->input("landline");
+            $hotline->mobile_number = $request->input("mobile_number");
             $hotline->save();
 
             return response()->json([
@@ -87,7 +83,7 @@ class HotlinesController extends Controller
         // validate
         $validator = Validator::make($request->all(), [
             "id" => "required",
-            "number" => "required",
+            "value" => "required",
             "provider" => "required",
         ]);
 
@@ -111,19 +107,16 @@ class HotlinesController extends Controller
             $hotline = Hotlines::findOrFail($id);
 
             // check what provider to update
-            if ($request->input("provider") === "smart") {
-                $hotline->smart = $request->input("number");
-            } else if ($request->input("provider") === "globe") {
-                $hotline->globe = $request->input("number");
-            } else if ($request->input("provider") === "landline") {
-                $hotline->landline = $request->input("number");
-            } else if ($request->input("provider") === "department") { # will update the title instead
-                $hotline->department = $request->input("number");
+            if ($request->input("provider") === "mobile_number") {
+                $hotline->mobile_number = $request->input("value");
+            } else { # will update the title instead
+                $hotline->department = $request->input("value");
             }
 
             $hotline->save();
 
             return response()->json([
+                "hotlines" => Hotlines::orderBy("id", "desc")->get(),
                 "res" => [
                     "msg" => "Successfully updated hotline number",
                     "status" => 200

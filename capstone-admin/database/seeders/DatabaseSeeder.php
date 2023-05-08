@@ -202,33 +202,23 @@ Pililla is a great place to experience the true culture of a province. It has pr
         # HOTLINES
         Hotlines::factory()->create([
             "department" => "pililla MDRRMO",
-            "smart" => "09169398558",
-            "globe" => "",
-            "landline" => "",
+            "mobile_number" => "09169398558",
         ]);
         Hotlines::factory()->create([
             "department" => "pililla ambulannce",
-            "smart" => "09153325455",
-            "globe" => "",
-            "landline" => "",
+            "mobile_number" => "09153325455",
         ]);
         Hotlines::factory()->create([
             "department" => "pililla MHO",
-            "smart" => "00175498147",
-            "globe" => "",
-            "landline" => "",
+            "mobile_number" => "00175498147",
         ]);
         Hotlines::factory()->create([
             "department" => "pililla MSWD",
-            "smart" => "09175498147",
-            "globe" => "",
-            "landline" => "",
+            "mobile_number" => "09175498147",
         ]);
         Hotlines::factory()->create([
             "department" => "Bureau  of Fire Protection",
-            "smart" => "09175222243",
-            "globe" => "",
-            "landline" => "",
+            "mobile_number" => "09175222243",
         ]);
         # POPULATIONS
         Population::factory(1)->create();
