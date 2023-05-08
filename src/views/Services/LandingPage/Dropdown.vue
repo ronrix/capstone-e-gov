@@ -13,7 +13,7 @@ function showServices(e) {
     if (e.target.nextElementSibling === el) {
       return
     }
-    el.classList.add('bg-blue-500')
+    el.classList.add('hidden')
   })
   e.target.nextElementSibling.classList.toggle('hidden')
 }
