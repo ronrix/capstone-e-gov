@@ -17,6 +17,12 @@ const loading = ref(true)
 
 // category filtering
 function barangayFilter(e) {
+  if (e.target.id === 'all') {
+    // return all the apartments
+    apartments.value = UNMODIFIABLE_APARTMENTS.value
+    return
+  }
+  // filter the apartments
   apartments.value = UNMODIFIABLE_APARTMENTS.value.filter((b) => b.location.includes(e.target.id))
 }
 
@@ -31,7 +37,7 @@ const axiosCall = () => {
     .then((data) => {
       apartments.value = data.apartments
       UNMODIFIABLE_APARTMENTS.value = data.apartments
-      barangays.value = data.apartments.map((d) => d.location)
+      barangays.value = data.apartments.map((d) => d.location).map((a) => a.split(',')[0])
       loading.value = false
     })
     .catch((err) => {
