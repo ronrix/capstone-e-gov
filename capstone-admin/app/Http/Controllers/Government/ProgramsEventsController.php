@@ -198,7 +198,7 @@ class ProgramsEventsController extends Controller
         try {
             $programsEvents = ProgramsEvents::findOrFail($id);
             $programsEvents->title = $request->input("title");
-            $programsEvents->auhors = $request->input("authors");
+            $programsEvents->authors = $request->input("authors");
             $programsEvents->description = $request->input("description");
             $programsEvents->location = $request->input("location");
 
