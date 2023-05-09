@@ -12,9 +12,9 @@
     <!-- delete verfication modal -->
     <DeleteVerificationModal v-if="isVerificationModal" :closeModal="showDeleteVerificiationModal" :id="filteredData.id"
       :handleDelete="handleDeleteCensus" />
-    <!-- edit verification modal -->
-    <EditVerification :close-modal="showEditVerification" v-if="isEditVerification" :data="editedInput"
-      :handle-edit="handleEdit" />
+
+    <DemographicProfileModalEdit v-if="isEditModal" :handle-edit="handleEdit" :data="filteredData"
+      :close-modal="showEditModal" />
 
     <!-- hotlines table -->
     <div class="w-full flex flex-col">
@@ -41,74 +41,63 @@
         <button @click="showModal" class="bg-blue-600 py-2 px-3 rounded-lg text-white font-bold capitalize">add
           census</button>
       </div>
-      <button @click="showDeleteVerificiationModal"
-        class="self-end px-3 bg-red-300 rounded-md text-red-600 mb-2 hover:bg-red-400 hover:text-red-200">
-        <i class="uil uil-times-circle"></i>
-        delete this census
-      </button>
 
-      <table class="text-left w-full">
-        <thead>
-          <tr class="bg-neutral-200 text-xs md:text-sm">
-            <th class="px-2 text-center"><i class="uil uil-list-ui-alt"></i></th>
-            <th class="pl-2 py-2 text-neutral-600">
-              Barangay
-              <i @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
-            </th>
-            <th class="pl-2 py-2 text-neutral-600">
-              Male
-              <i @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
-            </th>
-            <th class="pl-2 py-2 text-neutral-600">
-              Female
-              <i @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
-            </th>
-            <th class="pl-2 py-2 text-neutral-600">
-              Religion
-            </th>
-            <th class="pl-2 py-2 text-neutral-600">
-              Number of Household
-              <i @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
-            </th>
-          </tr>
-        </thead>
-        <tbody v-if="filteredData?.barangays">
-          <tr v-for="a, idx in JSON.parse(filteredData?.barangays)" :key="idx"
-            class="text-xs md:text-sm font-medium border">
-            <td class="bg-white text-center">{{ idx + 1 }}</td>
-            <td class="bg-white border pl-2 border-l-0">
-              <input v-model="a.barangay"
-                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|barangay', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-2 w-full m-0 text-sm capitalize scrollbar">
-            </td>
-            <td class="bg-white border pl-2 border-l-0">
-              <input v-model="a.male" type="number"
-                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|male', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-2 w-full overflow-scroll m-0 text-sm">
-            </td>
-            <td class="bg-white border pl-2 border-l-0">
-              <input v-model="a.female" type="number"
-                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|female', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-2 w-full overflow-scroll m-0 text-sm">
-            </td>
-            <td class="bg-white border pl-2 border-l-0">
-              <div class="overflow-y-scroll scrollbar h-[50px]">
-                <div v-for="rel, relId in JSON.parse(filteredData.religion)[idx]" :key="relId">
-                  <span class="capitalize font-semibold">{{ rel.religion }}</span>
-                  <input type="number" v-model="rel.count"
-                    @change.capture="(e) => showEditVerification(e.target.value, 'religion|' + rel.religion, filteredData.id, relId)"
-                    class="focus:outline-blue-500 overflow-scroll no-scrollbar m-0 text-sm w-full">
+      <h4 class="font-[600] text-xl" v-if="!originalData?.length">No census yet!</h4>
+      <div v-else>
+        <button @click="showEditModal"
+          class="px-3 bg-blue-300 rounded-md text-blue-600 mb-2 hover:bg-blue-600 hover:text-blue-400 mr-3 text-sm">edit</button>
+        <button @click="showDeleteVerificiationModal"
+          class="px-3 bg-red-300 rounded-md text-red-600 mb-2 hover:bg-red-400 hover:text-red-200 text-sm">
+          <i class="uil uil-times-circle"></i>
+          delete this census
+        </button>
+
+        <table class="text-left w-full">
+          <thead>
+            <tr class="bg-neutral-200 text-xs md:text-sm">
+              <th class="px-2 text-center"><i class="uil uil-list-ui-alt"></i></th>
+              <th class="pl-2 py-2 text-neutral-600">
+                Barangay
+                <i id="barangays" @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
+              </th>
+              <th class="pl-2 py-2 text-neutral-600">
+                Male
+                <i id="male" @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
+              </th>
+              <th class="pl-2 py-2 text-neutral-600">
+                Female
+                <i id="female" @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
+              </th>
+              <th class="pl-2 py-2 text-neutral-600">
+                Religion
+              </th>
+              <th class="pl-2 py-2 text-neutral-600">
+                Number of Household
+                <i id="household" @click="sortFn" class="uil uil-sorting cursor-pointer hover:text-blue-600 text-lg"></i>
+              </th>
+            </tr>
+          </thead>
+          <tbody v-if="filteredData?.barangays">
+            <tr v-for="a, idx in JSON.parse(filteredData?.barangays)" :key="idx"
+              class="text-xs md:text-sm font-medium border">
+              <td class="bg-white text-center">{{ idx + 1 }}</td>
+              <td class="bg-white border pl-2 border-l-0"> {{ a.barangay }} </td>
+              <td class="bg-white border pl-2 border-l-0"> {{ a.male }} </td>
+              <td class="bg-white border pl-2 border-l-0"> {{ a.female }} </td>
+              <td class="bg-white border pl-2 border-l-0">
+                <div class="scrollbar">
+                  <div v-for="rel, relId in JSON.parse(filteredData.religion)[idx]" :key="relId"
+                    class="flex items-center text-sm">
+                    <div class="capitalize font-semibold">{{ rel.religion }}: <span class="font-thin">{{ rel.count
+                    }}</span></div>
+                  </div>
                 </div>
-              </div>
-            </td>
-            <td class="bg-white border pl-2 border-l-0">
-              <input v-model="a.household" type="number"
-                @change.capture="(e) => showEditVerification(e.target.value, a.barangay + '|household', filteredData.id, idx)"
-                class="focus:outline-blue-500 py-2 w-full overflow-scroll m-0 text-sm">
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+              <td class="bg-white border pl-2 border-l-0">{{ a.household }} </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </WrapperContent>
 </template>
@@ -121,7 +110,7 @@ import SelectTag from '../../../Components/SelectTag.vue';
 import axios from 'axios';
 import { be_url } from '../../../config/config';
 import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
-import EditVerification from '../../../Components/EditVerification.vue';
+import DemographicProfileModalEdit from "./DemographicProfileModalEdit.vue";
 
 const isShowModal = ref(false);
 const selectedYear = ref();
@@ -142,29 +131,29 @@ function filterBy(type, value) {
   filteredData.value = originalData.value.filter(orig => parseInt(orig.census_year) === parseInt(value))[0];
 }
 
-// save verification on edit
-const isEditVerification = ref(false);
-const editedInput = ref({ value: "", id: null, type: "", idx: null });
-function showEditVerification(inputValue, type, id, idx) {
-  editedInput.value.value = inputValue;
-  editedInput.value.type = type;
-  editedInput.value.id = id;
-  editedInput.value.idx = idx;
-
-  isEditVerification.value = !isEditVerification.value;
+// function to show the edit modal
+const isEditModal = ref(false)
+function showEditModal() {
+  isEditModal.value = !isEditModal.value;
 }
+
 // function to update the population data on change.capture event
 // when done typing it will update the data automatically
-function handleEdit(value, id, type, idx) {
-  axios.post(be_url + "/populations/edit", {
+async function handleEdit(formData, id) {
+  // TODO: calculate the sum of the total population with male and female only
+  let total_population = 0;
+  formData.barangays.forEach(b => {
+    total_population += parseInt(b.male) + parseInt(b.female);
+  })
+
+  return await axios.post(be_url + "/populations/edit", {
     id,
-    type,
-    idx,
-    value
+    census_year: formData.census_year,
+    total_population: total_population,
+    barangays: formData.barangays,
+    religions: formData.religion,
   })
     .then(({ data }) => {
-      isEditVerification.value = false;
-
       // set the response msg
       resMsg.value = data.res;
       // hide the notification message in 3s
@@ -175,15 +164,19 @@ function handleEdit(value, id, type, idx) {
       filteredData.value = data.populations[0];
       originalData.value = data.populations;
       filteredData.value = originalData.value.filter(orig => parseInt(orig.census_year) === parseInt(selectedYear.value))[0];
+
+      return data
     })
     .catch(err => {
 
       // set the response msg
-      resMsg.value = err.response.data.res;
+      resMsg.value = err.data.res;
       // hide the notification message in 3s
       setTimeout(() => {
         resMsg.value = null;
       }, 3000);
+
+      return;
     });
 }
 
@@ -240,11 +233,18 @@ function handleDeleteCensus(id) {
     id
   })
     .then(({ data }) => {
-      filteredData.value = data.populations[0];
-      originalData.value = data.populations;
-
-      years.value = data.populations.map(a => a.census_year);
-      selectedYear.value = years.value[0];
+      if (!data.populations.length) {
+        filteredData.value = [];
+        originalData.value = data.populations;
+        years.value = [];
+        selectedYear.value = "";
+      }
+      else {
+        filteredData.value = data.populations[0];
+        originalData.value = data.populations;
+        years.value = data.populations.map(a => a.census_year);
+        selectedYear.value = years.value[0];
+      }
 
       // set the response msg
       resMsg.value = data.res;
@@ -266,17 +266,63 @@ function handleDeleteCensus(id) {
     });
 }
 
+// sort the barangays "increase" or "decrease"
+const sortMale = ref(false);
+const sortFemale = ref(false);
+const sortBarangay = ref(false);
+const sortHousehold = ref(false);
+function sortFn(e) {
+  const id = e.target.id;
+  if (id === 'male') {
+    sortMale.value = !sortMale.value;
+    filteredData.value.barangays = JSON.stringify(JSON.parse(filteredData.value.barangays).sort((a, b) => {
+      if (sortMale.value) {
+        return a.male < b.male;
+      }
+      return a.male > b.male;
+    }));
+  }
+  else if (id === 'female') {
+    sortFemale.value = !sortFemale.value;
+    filteredData.value.barangays = JSON.stringify(JSON.parse(filteredData.value.barangays).sort((a, b) => {
+      if (sortFemale.value) {
+        return a.female < b.female;
+      }
+      return a.female > b.female;
+    }));
+  }
+  else if (id === 'household') {
+    sortHousehold.value = !sortHousehold.value;
+    filteredData.value.barangays = JSON.stringify(JSON.parse(filteredData.value.barangays).sort((a, b) => {
+      if (sortHousehold.value) {
+        return a.household < b.household;
+      }
+      return a.household > b.household;
+    }));
+  }
+  else { // barangays
+    sortBarangay.value = !sortBarangay.value;
+    filteredData.value.barangays = JSON.stringify(JSON.parse(filteredData.value.barangays).sort((a, b) => {
+      if (sortBarangay.value) {
+        return a.barangay < b.barangay;
+      }
+      return a.barangay > b.barangay;
+    }));
+  }
+}
+
 // this function will get all the populations data from the server
 // and store that to originalData where all data will be kepts
 // and the filteredData will get the one data only, that will be used for filtering
 onMounted(() => {
   axios.get(be_url + "/populations")
     .then(({ data }) => {
-      filteredData.value = data.populations[0];
-      originalData.value = data.populations;
-
-      years.value = data.populations.map(a => a.census_year);
-      selectedYear.value = years.value[0];
+      if (data?.populations?.length) {
+        filteredData.value = data?.populations[0];
+        originalData.value = data?.populations;
+        years.value = data?.populations?.map(a => a.census_year);
+        selectedYear.value = years.value[0];
+      }
     })
     .catch(err => console.log(err));
 });

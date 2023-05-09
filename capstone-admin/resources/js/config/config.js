@@ -95,7 +95,7 @@ export const populationFormData = {
     },
     {
       census: {
-        barnagay: "imatong",
+        barangay: "imatong",
         male: 0,
         female: 0,
         household: 0,
