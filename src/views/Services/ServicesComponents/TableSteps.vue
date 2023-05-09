@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  processes: { type: Array, required: true }
+  processes: { type: String, required: true }
 })
 </script>
 <template>

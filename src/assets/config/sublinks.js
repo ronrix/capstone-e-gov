@@ -74,6 +74,7 @@ export const about = [
 ]
 
 fetchData("/service-types").then(data => {
+  localStorage.setItem("services", JSON.stringify(data.service_types))
   const mergedServices = Object.values(data.service_types).flat()
   services = mergedServices.map(a => {
     return {
