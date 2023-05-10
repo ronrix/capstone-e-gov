@@ -17,7 +17,7 @@ function showInputFilePdf() {
   <HeaderSection />
   <WrapperContainer>
     <div class="grid place-items-center my-10">
-      <h1 class="text-5xl text-center text-dark dark:text-bggray">
+      <h1 class="text-3xl md:text-5xl text-center text-dark dark:text-bggray">
         Submit a request to post Job opportunity
       </h1>
       <form class="mx-3 lg:mx-10 w-full md:w-[700px] p-5 mt-5" action="submit">
