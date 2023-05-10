@@ -41,11 +41,10 @@ onMounted(() => {
         <!-- website navs -->
         <div class="flex flex-col items-start">
           <h6 class="font-bold">Municipality of Pililla</h6>
-          <a href="">Mission an Vision</a>
-          <a href="">History</a>
-          <a href="">Departments</a>
-          <a href="">Tourism</a>
-          <a href="">Job Opportunities</a>
+          <RouterLink to="/about/mission-and-vision">Mission an Vision</RouterLink>
+          <RouterLink to="/about/history">History</RouterLink>
+          <RouterLink to="/tourism">Tourism</RouterLink>
+          <RouterLink to="/job-op">Job Opportunities</RouterLink>
           <div class="flex items-center gap-3">
             <a
               href="https://web.facebook.com/profile.php?id=100064848094892"
@@ -76,21 +75,21 @@ onMounted(() => {
         <!-- government links -->
         <div class="flex flex-col items-start">
           <h6 class="font-bold">Government Links</h6>
-          <a href="">Office of the President</a>
-          <a href="">Office of the Vice President</a>
-          <a href="">Senate of the Philippines</a>
-          <a href="">House of the Representative</a>
-          <a href="">Supreme Court</a>
-          <a href="">Court of the Appeals</a>
-          <a href="">Sandiganbayan</a>
-          <a href="">Office of the Ombudsman</a>
-          <a href="">Civil Services Commission</a>
-          <a href="">DILG</a>
-          <a href="">DBM</a>
-          <a href="">BLGF Region IV-A</a>
-          <a href="">Provincial Government of Rizal</a>
-          <a href="">ASEAN</a>
-          <a href="">United Nations</a>
+          <a target="_blank" href="https://op-proper.gov.ph/">Office of the President</a>
+          <a href="http://ovp.gov.ph/">Office of the Vice President</a>
+          <a href="http://legacy.senate.gov.ph/">Senate of the Philippines</a>
+          <a href="http://www.congress.gov.ph/">House of the Representative</a>
+          <a href="https://sc.judiciary.gov.ph/">Supreme Court</a>
+          <a href="https://ca2.judiciary.gov.ph/caws-war/">Court of the Appeals</a>
+          <a href="https://sb.judiciary.gov.ph/">Sandiganbayan</a>
+          <a href="https://www.ombudsman.gov.ph/">Office of the Ombudsman</a>
+          <a href="http://www.csc.gov.ph/">Civil Services Commission</a>
+          <a href="https://www.dilg.gov.ph/">DILG</a>
+          <a href="https://www.dbm.gov.ph/">DBM</a>
+          <a href="https://blgf.gov.ph/region-4a/">BLGF Region IV-A</a>
+          <a href="http://www.rizalprovince.ph/">Provincial Government of Rizal</a>
+          <a href="https://asean.org/">ASEAN</a>
+          <a href="https://www.un.org/en/">United Nations</a>
         </div>
         <!-- about GOVPH -->
         <div class="flex flex-col items-start">
