@@ -5,6 +5,7 @@ import FirstSection from './ServicesComponents/FirstSection.vue'
 import Requirements from './ServicesComponents/Requirements.vue'
 import TableSteps from './ServicesComponents/TableSteps.vue'
 import Hero from './ServicesComponents/Hero.vue'
+import ApplySection from './ServicesComponents/ApplySection.vue'
 import { ref, onMounted } from 'vue'
 import { fetchData } from '../../utils/axios-instance'
 import { useRoute } from 'vue-router'
@@ -44,6 +45,9 @@ onMounted(() => {
 
     <!-- table -->
     <TableSteps :processes="services?.service_process" />
+
+    <!-- application form -->
+    <ApplySection :service="services" />
   </WrapperContainer>
 
   <FooterSection />

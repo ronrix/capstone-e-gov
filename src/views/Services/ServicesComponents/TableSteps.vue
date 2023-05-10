@@ -4,9 +4,9 @@ defineProps({
 })
 </script>
 <template>
-  <h1 class="text-xl md:text-2xl font-bold text-dark dark:text-bggray mt-14">
+  <h4 class="text-xl md:text-2xl font-bold text-dark dark:text-bggray mt-14">
     What's the process?
-  </h1>
+  </h4>
   <table class="border table-auto mt-2 mb-10 w-full">
     <thead>
       <tr class="text-sm sm:text-base text-left text-bggray font-semibold bg-secondary">
