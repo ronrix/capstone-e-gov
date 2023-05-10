@@ -32,7 +32,7 @@ function showDeleteVerificiationModal() {
 }
 
 function closeEditVerificationModal() {
-    isVerificationModal.value = false;
+    isEditVerification.value = false;
     keyPropRef.value = keyProp;
     valueRef.value = value;
 }

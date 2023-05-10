@@ -5,6 +5,10 @@
     <EditVerification :close-modal="closeEditVerificationModal" v-if="isEditVerification" :data="editedInput"
         :handle-edit="handleUpdateTitleDescription" />
 
+    <!-- saving application form -->
+    <EditVerification :close-modal="closeVerificationApplicationForm" v-if="isEditApplicationForm" :data="application"
+        :handle-edit="handleApplicationFormSubmit" />
+
     <!-- delete one service -->
     <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
         :handle-delete="handleDeleteService" :id="dataServices.id" />
@@ -20,6 +24,19 @@
             <i class="uil uil-times-circle"></i>
             delete
         </button>
+
+        <h3 class="font-bold text-xl text-gray-800">Application Form</h3>
+        <div class="mb-3 flex items-center gap-3">
+            <a :href="be_url + '/' + applicationForm" class="underline" target="_blank">{{ applicationForm }}</a>
+            <div class="flex flex-col">
+                <p class="text-xs text-gray-500">Select new file to update the application form</p>
+                <input type="file" @change="handleUpdateApplicationForm">
+            </div>
+        </div>
+
+        <h3 class="font-bold text-xl text-gray-800">Email</h3>
+        <input @change="(e) => showEditVerification(e.target.value, 'email')"
+            class="w-full border mb-3 px-2 outline-blue-600" :value="email">
 
         <h3 class="font-bold text-xl text-gray-800">Title</h3>
         <textarea @change="(e) => showEditVerification(e.target.value, 'title')"
@@ -93,6 +110,51 @@ const isVerificationModal = ref(false);
 // function to verifify the deleting of the service
 function showDeleteVerificationModal() {
     isVerificationModal.value = !isVerificationModal.value;
+}
+
+// update the application form (file)
+const application = ref({ value: null });
+const isEditApplicationForm = ref(false);
+function handleUpdateApplicationForm(e) {
+    showVerificationForApplicationForm(e.target.files[0]);
+}
+function showVerificationForApplicationForm(inputValue) {
+    application.value.value = inputValue;
+
+    isEditApplicationForm.value = !isEditApplicationForm.value; // display the edit verification modal
+}
+
+// clsoe the verification modal for saving application form
+function closeVerificationApplicationForm() {
+    isEditApplicationForm.value = false;
+}
+
+// submitting the new application form
+function handleApplicationFormSubmit() {
+    axios
+        .post(be_url + "/services/application-form/edit", {
+            id: dataServices.value.id,
+            file: application.value.value
+        }, { headers: { "Content-Type": "multipart/form-data" } })
+        .then(({ data }) => {
+            // set the response msg
+            resMsg.value = data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+            isEditApplicationForm.value = false; // close the edit verification modal
+            return data;
+        })
+        .catch((err) => {
+            // set the response msg
+            resMsg.value = err.data.res;
+            // hide the notification message in 3s
+            setTimeout(() => {
+                resMsg.value = null;
+            }, 3000);
+            return;
+        });
 }
 
 // function to update one list of requirement with change.capture event.
@@ -315,8 +377,9 @@ async function handleCreateProcess(formData) {
 const isEditVerification = ref(false);
 const editedInput = ref({ value: "" });
 const type = ref("");
-function showEditVerification(inputValue, type) {
+function showEditVerification(inputValue, _type) {
     editedInput.value.value = inputValue;
+    type.value = _type;
 
     isEditVerification.value = !isEditVerification.value; // display the edit verification modal
 }
@@ -331,7 +394,7 @@ function handleUpdateTitleDescription(value) {
         .post(be_url + "/services/title-description/edit", {
             id: dataServices.value.id,
             newValue: value,
-            type
+            type: type.value
         })
         .then(({ data }) => {
             // set the response msg
@@ -341,8 +404,11 @@ function handleUpdateTitleDescription(value) {
                 resMsg.value = null;
             }, 3000);
             isEditVerification.value = false; // close the edit verification modal
-            if (type === 'title') {
+            if (type.value === 'title') {
                 title.value = value;
+            }
+            else if (type.value === 'email') {
+                email.value = value;
             }
             else {
                 description.value = value;
@@ -409,6 +475,8 @@ const service = ref("");
 const headTitle = ref("");
 const title = ref("");
 const description = ref("");
+const email = ref("");
+const applicationForm = ref("");
 onMounted(() => {
     service.value = routes.path.split("/")[3];
     // make the headTitle capitalize
@@ -420,6 +488,8 @@ onMounted(() => {
             // storing the whole data
             dataServices.value = data.services[0];
             title.value = dataServices.value.title;
+            email.value = dataServices.value.email;
+            applicationForm.value = dataServices.value.application_form;
             description.value = dataServices.value.description;
             // get all the services processes by looping through the data.services
             processes.value = JSON.parse(data.services[0].service_process);
@@ -449,6 +519,8 @@ watchEffect([routes], () => {
                 dataServices.value = data.services[0];
                 title.value = dataServices.value.title;
                 description.value = dataServices.value.description;
+                email.value = dataServices.value.email;
+                applicationForm.value = dataServices.value.application_form;
                 // get all the services processes by looping through the data.services
                 processes.value = [];
                 requirements.value = [];

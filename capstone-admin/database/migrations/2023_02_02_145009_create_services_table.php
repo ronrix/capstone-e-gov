@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->text("title");
+            $table->longText("email");
+            $table->longText("application_form");
             $table->longText("description");
             $table->string("service_department");
             $table->string("service_type");

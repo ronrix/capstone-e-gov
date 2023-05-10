@@ -150,6 +150,67 @@ class ServicesController extends Controller
     }
 
     /*
+    * update application form
+    */
+    public function updateApplicationForm(Request $request)
+    {
+        // validate
+        $validator = Validator::make($request->all(), [
+            "id" => "required",
+            "file" => "required|mimes:pdf,doc,docx|max:10000", # 10mb is the max 
+        ]);
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
+        try {
+
+            # store the request variables
+            $id = $request->input("id");
+
+            $service = Service::findOrFail($id);
+            // delete the existing file and save the new file
+            $path = $service->application_form;
+            if (file_exists($path)) {
+                unlink($path);
+            }
+            # create a folder if not exists before saving the image
+            $folder = "uploads/files/services/";
+            if (!file_exists($folder)) {
+                mkdir($folder, 0777, true);
+            }
+
+            if ($request->file("file")) {
+                // save the images
+                $file = $request->file("file");
+                $filename = str_replace(" ", "-", $request->input("filename")) . "." . strtolower($file->getClientOriginalExtension());
+                $file->move(public_path($folder), $filename); // move the file to the $path
+                $service->application_form = $folder . $filename;
+            }
+            $service->save();
+
+            return response()->json([
+                "res" => [
+                    "msg" => "Successfully updated the application form",
+                    "status" => 200
+                ]
+            ]);
+        } catch (\Throwable $err) {
+            //throw $th;
+            return response()->json(["res" => ["msg" => $err->getMessage(), "status" => 400]], 400);
+        }
+    }
+
+    /*
     * office of the mayor
     * update one requirement
     */
@@ -179,10 +240,13 @@ class ServicesController extends Controller
             # store the request variables
             $id = $request->input("id");
             $newValue = $request->input("newValue");
+            $type = $request->input("type");
 
             $service = Service::findOrFail($id);
-            if ($request->input("type") === "title") {
+            if ($type === "title") {
                 $service->title =  $newValue;
+            } else if ($type === "email") {
+                $service->email =  $newValue;
             } else {
                 $service->description =  $newValue;
             }
@@ -190,7 +254,7 @@ class ServicesController extends Controller
 
             return response()->json([
                 "res" => [
-                    "msg" => "Successfully updated intended for",
+                    "msg" => "Successfully updated the data",
                     "status" => 200
                 ]
             ]);

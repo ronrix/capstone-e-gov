@@ -404,6 +404,8 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Service::factory()->create([
             "service_department" => "office of the mayor",
             "title" => "educational assistance for students",
+            "email" => "tolayj5@gmail.com",
+            "application_form" => "uploadss/",
             "description" => "Educational Assistance Program is a government-provided social protection program that helps students in crisis. The program provides financial assistance to students in elementary, high school, senior high school, and vocational/college levels",
             "service_type" => "scholarship program",
             "service_requirements" => json_encode([
@@ -462,6 +464,8 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Service::factory()->create([
             "service_department" => "office of the mayor",
             "title" => "civil wedding program",
+            "email" => "tolayj5@gmail.com",
+            "application_form" => "uploadss/",
             "description" => "A non-religious, legal marriage ceremony presided over by a legal officiant.",
             "service_type" => "civil wedding schedule",
             "service_requirements" => json_encode([
@@ -505,6 +509,8 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Service::factory()->create([
             "service_department" => "office of the mayor",
             "title" => "mayor's clearance",
+            "email" => "tolayj5@gmail.com",
+            "application_form" => "uploadss/",
             "description" => "Is a document that is usually issued to individuals who need for foreign/local employment, for business , operators/drivers of motorized tricycle for hire, firearms license and other legal purposes.",
             "service_type" => "mayor clearance",
             "service_requirements" => json_encode([
@@ -543,6 +549,8 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Service::factory()->create([
             "service_department" => "public employment office",
             "title" => "special program employment for students",
+            "email" => "tolayj5@gmail.com",
+            "application_form" => "uploadss/",
             "description" => "Is DOLE’s youth employment-bridging program which aims to provide temporary employment to poor but deserving students, out-of-school youth, and dependents of displaced or would-be displaced workers during summer and/or Christmas vacation or any time of the year to augment the family’s income to help ensure that beneficiaries are able to pursue their education.",
             "service_type" => "application for special program for employment of students",
             "service_requirements" => json_encode([
@@ -561,6 +569,8 @@ In March 2016, John Gokongwei, Jr's son, Lance Gokongwei took over the leadershi
         Service::factory()->create([
             "service_department" => "public employment office",
             "title" => "job fair",
+            "email" => "tolayj5@gmail.com",
+            "application_form" => "uploadss/",
             "description" => "Is an employment facilitation strategy aimed to fast-track the meeting of jobseekers and employers/overseas recruitment agencies in one venue at a specific date to reduce cost, time and effort particularly on the part of the applicants.",
             "service_type" => "job fair",
             "service_requirements" => json_encode([
