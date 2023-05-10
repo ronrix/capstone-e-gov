@@ -26,6 +26,19 @@ const axiosTourisms = () => {
 
 onMounted(() => {
   axiosTourisms()
+
+  const map = L.map('map').setView([14.478705773206618, 121.3150200059879], 13)
+  L.marker([14.478705773206618, 121.3150200059879]).addTo(map)
+  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  }).addTo(map)
+  L.circle([14.478705773206618, 121.3150200059879], {
+    color: 'red',
+    fillColor: '#f03',
+    fillOpacity: 0.5,
+    radius: 2000
+  }).addTo(map)
 })
 </script>
 
@@ -103,7 +116,7 @@ onMounted(() => {
       <p class="text-sm sm:textsm text-dark dark:text-bggray mt-2">
         You can navigate the whole pililla using this
         <a
-          href="https://www.google.com/maps/place/Pililla,+Rizal/@14.4469448,121.2951419,13z/data=!3m1!4b1!4m6!3m5!1s0x3397e93c8543c67f:0xc3ddaed3ef5026a0!8m2!3d14.4439278!4d121.3427262!16zL20vMDZrdGd5"
+          href="https://www.google.com/maps/place/Pililla+Oval/@14.4752985,121.3040337,13z/data=!4m6!3m5!1s0x3397e97c34e117a3:0x239eb679e1f3d008!8m2!3d14.4762162!4d121.3153642!16s%2Fg%2F11b6hxcbxz"
           class="text-primarylight ml-2"
         >
           <i class="uil uil-link" />
@@ -111,14 +124,8 @@ onMounted(() => {
         </a>
       </p>
 
-      <div class="mt-5">
-        <iframe
-          frameborder="0"
-          class="w-full md:w-[800px] md:h-[400px]"
-          src="https://www.bing.com/maps/embed?h=500&w=800&cp=14.5990572649647~121.08147888433678&lvl=11&typ=d&sty=h&src=SHELL&FORM=MBEDV8"
-          scrolling="no"
-        />
-      </div>
+      <!-- map -->
+      <div id="map" class="mt-5 h-[500px]"></div>
     </section>
   </WrapperContainer>
   <!-- hotlines -->
