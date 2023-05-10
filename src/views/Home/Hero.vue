@@ -36,7 +36,9 @@ onMounted(() => {
     />
 
     <WrapperContainer class="flex flex-col gap-3 items-center">
-      <h1 class="text-5xl sm:text-8xl font-bold capitalize font-['display'] text-primarylight">
+      <h1
+        class="text-5xl sm:text-8xl font-bold capitalize font-['display'] bg-gradient-to-r from-[#A00000] to-[#C62128] text-transparent bg-clip-text"
+      >
         better pililla
       </h1>
       <h2
@@ -58,7 +60,7 @@ onMounted(() => {
 
       <!-- datetime -->
       <p
-        class="text-base sm:text-lg font-bold text-dark dark:text-bggray absolute bottom-2 left-10"
+        class="text-base sm:text-lg font-bold text-dark dark:text-bggray absolute bottom-2 left-1/4 -translate-x-1/4"
       >
         {{ moment(time).format('dddd, MMMM Do YYYY, h:mm:ss a') }}
       </p>

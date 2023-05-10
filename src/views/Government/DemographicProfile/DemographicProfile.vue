@@ -14,8 +14,8 @@ const censusYear = ref()
 const populations = ref([])
 
 function handleSelectCensusYear(e) {
-  selectedCensus.value = populations.value.find((p) => p.census_year === e.target.value)
-  populationSize.value = populations.value.barangays.map((a, id) => {
+  selectedCensus.value = populations.value.filter((p) => p.census_year == e.target.value)[0]
+  populationSize.value = JSON.parse(selectedCensus.value.barangays).map((a, id) => {
     const sum = a.male + a.female
     return {
       id,
@@ -23,7 +23,7 @@ function handleSelectCensusYear(e) {
       barangay: a.barangay
     }
   })
-  householdSize.value = populations.value.barangays.map((a, id) => {
+  householdSize.value = JSON.parse(selectedCensus.value.barangays).map((a, id) => {
     return {
       id,
       average: (a.household / selectedCensus.value.total_population) * 100,
@@ -50,6 +50,7 @@ const axiosCall = () => {
       selectedCensus.value = data.populations[0] // current population
       loading.value = false
       populations.value = data.populations // get all populations
+      censusYear.value = data.populations.map((a) => a.census_year)
 
       //   calculat the percentage of the populations size each barangay and sort them
       populationSize.value = JSON.parse(selectedCensus.value.barangays).map((a, id) => {
@@ -103,7 +104,7 @@ onMounted(() => {
     <!-- select the census year -->
     <select
       class="mt-14 px-3 py-1 bg-slate-100 text-sm capitalize border"
-      @change="handleSelectCensusYear"
+      @change.capture="handleSelectCensusYear"
     >
       <option value="latest census year" selected disabled>
         select for census year (default latest)

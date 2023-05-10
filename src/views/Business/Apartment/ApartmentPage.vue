@@ -8,6 +8,7 @@ import { fetchData } from '../../../utils/axios-instance'
 import BusinessesCard from '../BusinessesCard.vue'
 import DisplayModal from '../DisplayModal.vue'
 import Loading from '../../../components/Loading.vue'
+import { useApartmentStore } from '../../../stores/apartments-store'
 
 const UNMODIFIABLE_APARTMENTS = ref([])
 const apartments = ref([])
@@ -17,9 +18,16 @@ const loading = ref(true)
 
 // category filtering
 function barangayFilter(e) {
+  if (e.target.id === 'all') {
+    // return all the apartments
+    apartments.value = UNMODIFIABLE_APARTMENTS.value
+    return
+  }
+  // filter the apartments
   apartments.value = UNMODIFIABLE_APARTMENTS.value.filter((b) => b.location.includes(e.target.id))
 }
 
+const store = useApartmentStore()
 const isShowDisplay = ref(false)
 function showDisplayModal(data) {
   isShowDisplay.value = !isShowDisplay.value
@@ -31,7 +39,9 @@ const axiosCall = () => {
     .then((data) => {
       apartments.value = data.apartments
       UNMODIFIABLE_APARTMENTS.value = data.apartments
-      barangays.value = data.apartments.map((d) => d.location)
+      barangays.value = data.apartments.map((d) => d.location).map((a) => a.split(',')[0])
+      store.setApartments(data.apartments)
+      localStorage.setItem('apt', JSON.stringify(apartments.value))
       loading.value = false
     })
     .catch((err) => {

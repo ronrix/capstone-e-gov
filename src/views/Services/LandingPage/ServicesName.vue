@@ -2,16 +2,16 @@
 import { RouterLink } from 'vue-router'
 
 defineProps({
-  service: { type: Object, required: true }
+  service: { type: String, required: true }
 })
 </script>
 <template>
   <!-- Serrvices name -->
   <RouterLink
-    :to="service.path"
-    class="px-2 py-1 hover:bg-gray-300 dark:hover:bg-gray-400 block text-md text-dark dark:text-white mb-1 text-sm sm:text-base"
+    :to="'/services/' + service.replace(' ', '-')"
+    class="px-4 py-1 hover:bg-gray-300 dark:hover:bg-gray-400 block text-md text-dark dark:text-white mb-1 text-sm sm:text-base capitalize"
   >
-    {{ service.name }}
+    {{ service }}
   </RouterLink>
 </template>
 

@@ -1,54 +1,11 @@
 <script setup>
-import Dropdown from './Dropdown.vue';
+import { ref, onMounted } from 'vue'
+import Dropdown from './Dropdown.vue'
 
-const departments = [
-  {
-    name: 'Office of the Mayor',
-    services: [
-      { path: '/scholarship-program', name: 'Scholarship Program' },
-      { path: '/civil-wedding-program', name: 'Civil Wedding Program' },
-      { path: '/mayors-clearance', name: 'Mayors Clearance' }
-    ]
-  },
-  {
-    name: 'MSWD Department',
-    services: [
-      { path: '/government-id', name: 'Government ID' },
-      { path: '/replacement-of-senior-citizen', name: 'Replacement of Senior Citizen' }
-    ]
-  },
-  {
-    name: 'Agriculture Department',
-    services: [
-      { path: '/technical-assistance-for-farmer', name: 'Technical Assistance for Farmer' },
-      {
-        path: '/treatment-and-vaccination-of-animals',
-        name: 'Treatment and Vaccination of Animals'
-      },
-      {
-        path: '/distributions-of-assorted-seeds-seedling',
-        name: 'Distributions of Assorted Seeds or Seedling'
-      },
-      { path: '/delivery-of-farm-fishery-inputs', name: 'Delivery of Farm & Fishery Inputs' },
-      { path: '/issuance-of-moa-certification', name: 'Issuance of MOA Certification' },
-      {
-        path: '/capacity-building-enhancement-training',
-        name: 'Capacity Building Enhancement Training'
-      }
-    ]
-  },
-  {
-    name: 'Public Employment Service Office',
-    services: [
-      {
-        path: '/special-program-employment-for-students',
-        name: 'Special Program Employment for Students'
-      },
-      { path: '/job-fair', name: 'Job Fair' 
-      }
-    ]
-  }
-]
+const departments = ref(null)
+onMounted(() => {
+  departments.value = JSON.parse(localStorage.getItem('services'))
+})
 </script>
 
 <template>
@@ -59,8 +16,22 @@ const departments = [
   </div>
   <!-- departments with services -->
   <WrapperContainer>
-    <h2 class="text-xl md:text-2xl ml-2 sm:ml-1 font-semibold  text-dark dark:text-white mb-2">Departments</h2>
-    <Dropdown v-for="(department, id) in departments" :key="id" :department="department"/>
+    <h3 v-if="!departments" class="text-2xl text-dark dark:text-bggray text-center">
+      No services yet!
+    </h3>
+    <div v-else>
+      <h2 class="text-xl md:text-2xl font-semibold text-dark dark:text-white mb-2">Departments</h2>
+      <!-- <div v-for="(dep, key) in departments" :key="key">
+        <span>{{ key }}</span>
+        <div v-for="d in dep" :key="d">{{ d }}</div>
+      </div> -->
+      <Dropdown
+        v-for="(department, key) in departments"
+        :key="key"
+        :key-name="key"
+        :department="department"
+      />
+    </div>
   </WrapperContainer>
 </template>
 

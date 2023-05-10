@@ -1,15 +1,36 @@
 <script setup>
 import Apartment from './Apartment.vue'
-const apartments = [
-  {
-    location: 'M.A Roxas St. Bagumbayan Pililla, Rizal',
-    imgSrc: 'images/apartment.jpg'
-  },
-  {
-    location: 'M.A Roxas St. Bagumbayan Pililla, Rizal',
-    imgSrc: 'images/apartment.jpg'
+import { ref, onMounted } from 'vue'
+import { useApartmentStore } from '../../../stores/apartments-store'
+import { fetchData } from '../../../utils/axios-instance'
+import Loading from '../../../components/Loading.vue'
+
+const store = useApartmentStore()
+const apartments = ref([])
+const loading = ref(true)
+
+const axiosCall = () => {
+  fetchData('/apartments')
+    .then((data) => {
+      apartments.value = data.apartments
+      store.setApartments(data.apartments)
+      localStorage.setItem('apt', JSON.stringify(apartments.value))
+      loading.value = false
+    })
+    .catch((err) => {
+      console.log(err)
+      loading.value = false
+    })
+}
+
+onMounted(() => {
+  if (store.getApartments()) {
+    apartments.value = store.getApartments()
+    loading.value = false
+  } else {
+    axiosCall()
   }
-]
+})
 </script>
 
 <template>
@@ -19,16 +40,30 @@ const apartments = [
       Looking for apartment?
     </h1>
   </div>
-  <Apartment v-for="(apartment, idx) in apartments" :key="idx" :apartment="apartment" :idx="idx" />
+  <Loading v-if="loading" class="w-10 h-10 mx-auto" />
+  <h4 v-if="!apartments.length && !loading" class="text-3xl text-center font-bold mt-3">
+    No apartments yet!
+  </h4>
+  <div v-else>
+    <Apartment
+      v-for="(apartment, idx) in apartments"
+      :key="idx"
+      :apartment="apartment"
+      :idx="idx"
+    />
 
-  <div class="flex flex-col items-center mt-12">
-    <h2 class="text-primary dark:text-white text-base md:text-xl font-bold">
-      Find more available apartments
-    </h2>
-    <button class="bg-primary rounded-md px-2 py-1 text-white text-sm mt-2 hover:bg-primarylight">
-      Find here
-      <i class="uil uil-angle-right"></i>
-    </button>
+    <div class="flex flex-col items-center mt-12">
+      <h2 class="text-primary dark:text-white text-base md:text-xl font-bold">
+        Find more Apartments
+      </h2>
+      <RouterLink
+        to="/apartments"
+        class="bg-primary rounded-md px-2 py-1 text-white text-sm mt-2 hover:bg-primarylight"
+      >
+        Find here
+        <i class="uil uil-angle-right"></i>
+      </RouterLink>
+    </div>
   </div>
 </template>
 

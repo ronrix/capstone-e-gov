@@ -8,10 +8,13 @@ import ThirdSectionBusiness from './ThirdSectionBusiness.vue'
 </script>
 
 <template>
+  <head>
+    <title>Businesses | Pililla Rizal</title>
+  </head>
   <HeaderSection />
-  <!-- hero section -->
-  <HeroBusinessVue />
   <WrapperContainer>
+    <!-- hero section -->
+    <HeroBusinessVue />
     <!-- first section -->
     <FirstSectionBusiness />
     <!-- second section -->

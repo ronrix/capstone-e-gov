@@ -1,8 +1,32 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watchEffect } from 'vue'
 
 const barangays = ref([])
 const totalHousehold = ref(0)
+
+watchEffect(() => {
+  // sum all the populations (male, female)
+  if (props.population?.barangays) {
+    barangays.value = JSON.parse(props.population.barangays).map((a) => {
+      totalHousehold.value += a.household
+      return {
+        barangay: a.barangay,
+        population: a.male + a.female,
+        household: a.household
+      }
+    })
+    // sort the barangays
+    if (props.tableType === 'census') {
+      barangays.value = barangays.value.sort((a, b) => {
+        a.population > b.population
+      })
+    } else {
+      barangays.value = barangays.value.sort((a, b) => {
+        a.household > b.household
+      })
+    }
+  }
+})
 
 onMounted(() => {
   // sum all the populations (male, female)

@@ -1,6 +1,6 @@
 <script setup>
 defineProps({
-  requirements: { type: Object, required: true }
+  requirements: { type: String, required: true }
 })
 </script>
 <template>

@@ -1,4 +1,8 @@
 <script setup>
+import { formatImgs } from '../../../utils/imgFormat'
+import DOMPurify from 'dompurify'
+import { marked } from 'marked'
+
 defineProps({
   apartment: { type: Object, required: true },
   idx: { type: Number, required: true }
@@ -11,7 +15,7 @@ defineProps({
   >
     <img
       class="flex-1 w-full md:w-1/2 h-[300px] lg:h-[350px] rounded-lg"
-      :src="apartment?.imgSrc"
+      :src="formatImgs(apartment?.img_link.split(','))[0]"
       :class="{ 'order-first': idx % 2 === 0, 'order-first md:order-last': idx % 2 !== 0 }"
     />
 
@@ -19,21 +23,35 @@ defineProps({
       class="flex flex-col flex-1 gap-2"
       :class="{ 'order-last': idx % 2 === 0, 'order-first': idx % 2 !== 0 }"
     >
-      <p class="text-xl md:text-2xl font-semibold text-dark dark:text-white">Location at:</p>
-      <div class="flex items-center">
-        <i class="uil uil-map-marker text-red-700 text-2xl"></i>
-        <span class="text-base md:text-lg font-light text-dark dark:text-white">{{
-          apartment?.location
-        }}</span>
+      <p class="text-xl md:text-2xl font-semibold text-dark dark:text-white">
+        {{ apartment?.title }}
+      </p>
+      <div>
+        <div class="flex items-center">
+          <i class="uil uil-map-marker text-red-700 text-base"></i>
+          <span class="text-sm text-dark dark:text-white capitalize font-[600]">{{
+            apartment?.location
+          }}</span>
+        </div>
+        <div
+          class="markdown"
+          :innerHTML="DOMPurify.sanitize(marked.parse(apartment?.description))"
+        ></div>
       </div>
-      <button class="w-20 bg-primary p-1 rounded-md text-white text-sm mt-5 hover:bg-primarylight">
-        View
-        <i class="uil uil-angle-right"></i>
-      </button>
     </div>
   </div>
 </template>
 
-
-<style lang="scss" scoped>
+<style>
+.markdown p {
+  font-size: 1em;
+}
+.markdown ul {
+  list-style-type: disc;
+  margin-left: 1em;
+}
+.markdown ol {
+  list-style-type: decimal;
+  margin-left: 1em;
+}
 </style>

@@ -1,10 +1,18 @@
 <script setup>
+import { ref } from 'vue'
+
+const pick = ref()
+function clickToFilter(e) {
+  props.barangayFilter(e)
+  pick.value = e.target.id
+}
+
 function showFilter() {
   const dropdown = document.querySelector('.dropdown')
   dropdown.classList.toggle('hidden')
 }
 
-defineProps({
+const props = defineProps({
   barangayFilter: { type: Function, required: true },
   barangays: { type: Array, required: true }
 })
@@ -19,7 +27,7 @@ defineProps({
       class="cursor-pointer w-full md:w-[35%] rounded-md border border-gray-300 ml-2 py-1 px-2 flex items-center justify-between gap-3 relative mb-3"
       @click="showFilter"
     >
-      <h1 class="text-sm lg:text-lg text-gray-600 dark:text-white">Filter by</h1>
+      <h1 class="text-sm lg:text-lg text-gray-600 dark:text-white">Filter by: {{ pick }}</h1>
       <i class="uil uil-filter text-lg lg:text-2xl text-gray-600 dark:text-white"></i>
       <!-- dropdown -->
       <div
@@ -27,11 +35,18 @@ defineProps({
       >
         <div class="flex flex-col">
           <div
+            id="all"
+            class="text-sm md:text-base text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400 capitalize"
+            @click="clickToFilter"
+          >
+            All
+          </div>
+          <div
             v-for="barangay in new Set([...barangays])"
             :id="barangay"
             :key="barangay"
             class="text-sm md:text-base text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400 capitalize"
-            @click="barangayFilter"
+            @click="clickToFilter"
           >
             {{ barangay }}
           </div>
