@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="w-full mt-5 relative mb-[470px]">
+  <div class="w-full mt-5 relative mb-[470px] container mx-auto">
     <h1
       class="absolute top-44 text-gray-900 md:text-dark dark:text-white text-3xl md:text-2xl lg:text-4xl font-bold ml-12 lg:ml-24"
     >

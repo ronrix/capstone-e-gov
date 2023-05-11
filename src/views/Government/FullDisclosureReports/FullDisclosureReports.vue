@@ -20,6 +20,9 @@ onMounted(() => {
 })
 </script>
 <template>
+  <head>
+    <title>Full Disclosure Reports | Pililla Rizal</title>
+  </head>
   <HeaderSection></HeaderSection>
 
   <div class="mt-5 mb-5 dark:bg-dark bg-bggray">

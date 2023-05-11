@@ -17,9 +17,11 @@ defineProps({
         {{ data?.title }}
       </h1>
       <hr />
-      <div class="flex-1 flex items-center mt-2 ml-1">
-        <i class="uil uil-map-marker text-base text-gray-700 dark:text-white"></i>
-        <span class="text-base text-dark dark:text-white font-semibold mr-2">Address: </span>
+      <div class="flex-1 flex flex-col mt-2 ml-1">
+        <div>
+          <i class="uil uil-map-marker text-base text-gray-700 dark:text-white"></i>
+          <span class="text-base text-dark dark:text-white font-semibold mr-2">Address: </span>
+        </div>
         <p class="text-sm text-dark dark:text-white capitalize">
           {{ data?.location }}
         </p>

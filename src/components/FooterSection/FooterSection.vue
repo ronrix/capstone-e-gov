@@ -41,10 +41,12 @@ onMounted(() => {
         <!-- website navs -->
         <div class="flex flex-col items-start">
           <h6 class="font-bold">Municipality of Pililla</h6>
-          <RouterLink to="/about/mission-and-vision">Mission an Vision</RouterLink>
-          <RouterLink to="/about/history">History</RouterLink>
-          <RouterLink to="/tourism">Tourism</RouterLink>
-          <RouterLink to="/job-op">Job Opportunities</RouterLink>
+          <RouterLink to="/about/mission-and-vision" class="hover:underline"
+            >Mission an Vision</RouterLink
+          >
+          <RouterLink to="/about/history" class="hover:underline">History</RouterLink>
+          <RouterLink to="/tourism" class="hover:underline">Tourism</RouterLink>
+          <RouterLink to="/job-op" class="hover:underline">Job Opportunities</RouterLink>
           <div class="flex items-center gap-3">
             <a
               href="https://web.facebook.com/profile.php?id=100064848094892"
@@ -75,31 +77,43 @@ onMounted(() => {
         <!-- government links -->
         <div class="flex flex-col items-start">
           <h6 class="font-bold">Government Links</h6>
-          <a target="_blank" href="https://op-proper.gov.ph/">Office of the President</a>
-          <a href="http://ovp.gov.ph/">Office of the Vice President</a>
-          <a href="http://legacy.senate.gov.ph/">Senate of the Philippines</a>
-          <a href="http://www.congress.gov.ph/">House of the Representative</a>
-          <a href="https://sc.judiciary.gov.ph/">Supreme Court</a>
-          <a href="https://ca2.judiciary.gov.ph/caws-war/">Court of the Appeals</a>
-          <a href="https://sb.judiciary.gov.ph/">Sandiganbayan</a>
-          <a href="https://www.ombudsman.gov.ph/">Office of the Ombudsman</a>
-          <a href="http://www.csc.gov.ph/">Civil Services Commission</a>
-          <a href="https://www.dilg.gov.ph/">DILG</a>
-          <a href="https://www.dbm.gov.ph/">DBM</a>
-          <a href="https://blgf.gov.ph/region-4a/">BLGF Region IV-A</a>
-          <a href="http://www.rizalprovince.ph/">Provincial Government of Rizal</a>
-          <a href="https://asean.org/">ASEAN</a>
-          <a href="https://www.un.org/en/">United Nations</a>
+          <a target="_blank" href="https://op-proper.gov.ph/" class="hover:underline"
+            >Office of the President</a
+          >
+          <a href="http://ovp.gov.ph/" class="hover:underline">Office of the Vice President</a>
+          <a href="http://legacy.senate.gov.ph/" class="hover:underline"
+            >Senate of the Philippines</a
+          >
+          <a href="http://www.congress.gov.ph/" class="hover:underline"
+            >House of the Representative</a
+          >
+          <a href="https://sc.judiciary.gov.ph/" class="hover:underline">Supreme Court</a>
+          <a href="https://ca2.judiciary.gov.ph/caws-war/" class="hover:underline"
+            >Court of the Appeals</a
+          >
+          <a href="https://sb.judiciary.gov.ph/" class="hover:underline">Sandiganbayan</a>
+          <a href="https://www.ombudsman.gov.ph/" class="hover:underline"
+            >Office of the Ombudsman</a
+          >
+          <a href="http://www.csc.gov.ph/" class="hover:underline">Civil Services Commission</a>
+          <a href="https://www.dilg.gov.ph/" class="hover:underline">DILG</a>
+          <a href="https://www.dbm.gov.ph/" class="hover:underline">DBM</a>
+          <a href="https://blgf.gov.ph/region-4a/" class="hover:underline">BLGF Region IV-A</a>
+          <a href="http://www.rizalprovince.ph/" class="hover:underline"
+            >Provincial Government of Rizal</a
+          >
+          <a href="https://asean.org/" class="hover:underline">ASEAN</a>
+          <a href="https://www.un.org/en/" class="hover:underline">United Nations</a>
         </div>
         <!-- about GOVPH -->
         <div class="flex flex-col items-start">
           <h6 class="font-bold">About GOVPH</h6>
           <p class="mb-5">Learn more about Philippine Government</p>
 
-          <a href="https://www.gov.ph/">GOVPH</a>
-          <a href="https://www.officialgazette.gov.ph/">Official Gazete</a>
-          <a href="https://data.gov.ph/">Open Data Portal</a>
-          <a href="https://www.foi.gov.ph/">Freedom of Information</a>
+          <a href="https://www.gov.ph/" class="hover:underline">GOVPH</a>
+          <a href="https://www.officialgazette.gov.ph/" class="hover:underline">Official Gazete</a>
+          <a href="https://data.gov.ph/" class="hover:underline">Open Data Portal</a>
+          <a href="https://www.foi.gov.ph/" class="hover:underline">Freedom of Information</a>
 
           <!-- philippine government logos -->
           <img

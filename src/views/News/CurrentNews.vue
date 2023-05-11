@@ -18,11 +18,11 @@ defineProps({
       <div
         v-for="n in hotnews"
         :key="n.id"
-        class="p-5 flex flex-col justify-end mt-5 h-[500px] w-full bg-no-repeat bg-cover group overflow-hidden"
+        class="flex flex-col justify-end mt-5 h-[500px] w-full bg-no-repeat bg-cover group overflow-hidden"
         :style="{ backgroundImage: 'url(' + formatImgs(n.img_link.split(','))[0] + ')' }"
       >
         <div
-          class="duration-500 translate-y-10 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 flex flex-col items-start"
+          class="duration-500 translate-y-10 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 flex flex-col items-start bg-black/50 p-5"
         >
           <h3 class="font-bold text-xl md:text-3xl text-white w-3/4 capitalize">{{ n.title }}</h3>
           <RouterLink

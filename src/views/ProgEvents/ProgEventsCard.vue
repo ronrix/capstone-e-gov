@@ -19,7 +19,7 @@ defineProps({
       </span>
     </div>
     <div class="px-5 py-2">
-      <h3 class="font-bold text-lg md:text-xl lg:text-2xl text-dark dark:text-bggray">
+      <h3 class="font-bold text-lg md:text-xl lg:text-2xl text-dark dark:text-bggray capitalize">
         {{ event.title }}
       </h3>
       <p class="text-xs md:text-sm text-dark dark:text-bggray">
