@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Business\Business;
 use App\Models\Government\JobPosting;
 use App\Models\Government\News;
+use App\Models\Government\ProgramsEvents;
 use App\Models\Services\Service;
 use App\Models\Tourism\Festival;
 use App\Models\Tourism\Tourism;
@@ -34,9 +35,12 @@ class SearchQueryController extends Controller
         $services = Service::select('id', 'title', 'description')
             ->whereRaw("MATCH (title, description) AGAINST (? IN BOOLEAN MODE)", [$searchQuery])
             ->get()->toArray();
+        $events = ProgramsEvents::select('id', 'title', 'description')
+            ->whereRaw("MATCH (title, description) AGAINST (? IN BOOLEAN MODE)", [$searchQuery])
+            ->get()->toArray();
 
         // Combine the results from the users and products tables
-        $results = array_merge(["tourist-attractions" => $tourism], ["festivals" => $festivals], ["business" => $business], ["news" => $news], ["job" => $job], ["services" => $services]);
+        $results = array_merge(["tourist-attractions" => $tourism], ["festivals" => $festivals], ["business" => $business], ["news" => $news], ["job" => $job], ["services" => $services], ["programs-events" => $events]);
 
         return response()->json(["results" => $results]);
     }
