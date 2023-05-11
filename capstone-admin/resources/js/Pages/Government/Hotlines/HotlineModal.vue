@@ -5,16 +5,19 @@
       <i @click="showHotlineModal"
         class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
       <h4 class="font-bold text-xl text-gray-900">Create new hotline</h4>
-      <p class="text-sm text-gray-500">Create new hotline number to help citizens contact departments when emergency
-        comes.</p>
+      <p class="text-sm text-gray-500">
+        Create new hotline number to help citizens contact departments when
+        emergency comes.
+      </p>
 
       <form @submit.prevent="onSubmit" class="w-full mt-3 flex flex-col gap-3">
         <label class="flex flex-col w-full">
           <span class="font-bold text-gray-500">Department</span>
           <p class="text-xs text-gray-500">add the department name below</p>
-          <input v-model="formData.department" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600">
-          <p v-if="v$.department.$error && isError" class="text-xs text-red-400 mb-2"> {{
-            v$.department.$errors[0].$message }}</p>
+          <input v-model="formData.department" type="text" class="border w-full p-2 rounded-lg focus:outline-blue-600" />
+          <p v-if="v$.department.$error && isError" class="text-xs text-red-400 mb-2">
+            {{ v$.department.$errors[0].$message }}
+          </p>
         </label>
         <label class="flex flex-col w-full">
           <span class="font-bold text-gray-500">Mobile Number</span>
@@ -23,8 +26,9 @@
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
             maxlength="11" v-model="formData.mobile_number"
             class="focus:outline-blue-500 py-1 w-full overflow-scroll no-scrollbar m-0 text-xs h-[40px] max-h-[40ppx] border" />
-          <p v-if="v$.mobile_number.$error && isError" class="text-xs text-red-400 mb-2"> {{
-            v$.mobile_number.$errors[0].$message }}</p>
+          <p v-if="v$.mobile_number.$error && isError" class="text-xs text-red-400 mb-2">
+            {{ v$.mobile_number.$errors[0].$message }}
+          </p>
         </label>
         <button
           class="active:-translate-y-1 px-3 upperase font-bold text-white bg-blue-600 self-end rounded-md mt-5 flex items-center justify-center">
@@ -42,15 +46,28 @@ import { useForm } from "@inertiajs/inertia-vue3";
 import Loading from "../../../Components/Loading.vue";
 // validation
 import useVuelidate from "@vuelidate/core";
-import { required, helpers, numeric, minLength, maxLength } from "@vuelidate/validators"
+import {
+  required,
+  helpers,
+  numeric,
+  minLength,
+  maxLength,
+} from "@vuelidate/validators";
 
 const isSubmitting = ref(false);
 const isError = ref(false);
 
 // adding rules for validation of the form
 const rules = computed(() => ({
-  department: { required: helpers.withMessage("The field department is required", required) },
-  mobile_number: { required, numeric, maxLength: maxLength(11), minLength: minLength(11) },
+  department: {
+    required: helpers.withMessage("The field department is required", required),
+  },
+  mobile_number: {
+    required,
+    numeric,
+    maxLength: maxLength(11),
+    minLength: minLength(11),
+  },
 }));
 const formData = useForm({
   department: "",
@@ -70,11 +87,12 @@ async function onSubmit() {
   isSubmitting.value = true;
   handleSubmit(formData).then(() => {
     isSubmitting.value = false;
+    formData.reset();
   });
 }
 
 const { handleSubmit } = defineProps({
   showHotlineModal: Function,
-  handleSubmit: Function
-})
+  handleSubmit: Function,
+});
 </script>

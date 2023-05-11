@@ -146,7 +146,7 @@ class ServicesController extends Controller
     */
     public function get(string $_service)
     {
-        return response()->json(["services" => Service::where("service_type", "=", str_replace("_", " ", $_service))->orWhere("title", "=", str_replace("_", " ", $_service))->get()]);
+        return response()->json(["services" => Service::where("service_type", "=", str_replace("_", " ", $_service))->orWhere("title", "=", str_replace("_", " ", $_service))->orWhere("service_type", "=", str_replace("-", " ", $_service))->get()]);
     }
 
     /*
