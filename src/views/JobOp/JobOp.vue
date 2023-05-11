@@ -6,12 +6,21 @@ import { onMounted, ref } from 'vue'
 import { fetchData } from '../../utils/axios-instance'
 import Loading from '../../components/Loading.vue'
 
+const inputSearch = ref('')
+function onSubmit() {
+  jobs.value = OR_JOBS.value.filter((a) =>
+    a.job_title.toLowerCase().includes(inputSearch.value.toLowerCase())
+  )
+}
+
+const OR_JOBS = ref([])
 const jobs = ref([])
 const loading = ref(true)
 const axiosCall = () => {
   fetchData('/job-postings')
     .then((data) => {
       jobs.value = data.jobs
+      OR_JOBS.value = data.jobs
       loading.value = false
     })
     .catch((err) => {
@@ -55,13 +64,15 @@ onMounted(() => {
       </div>
     </div>
     <!-- search input -->
-    <form class="flex items-center justify-center mt-10 gap-2">
+    <form class="flex items-center justify-center mt-10 gap-2" @submit.prevent="onSubmit">
       <input
+        v-model="inputSearch"
         type="search"
         placeholder="Search a job"
         class="border border-dark py-2 rounded-full px-5 w-[500px] outline-none"
       />
       <button
+        type="submit"
         class="border rounded-full w-10 h-10 flex items-center justify-center bg-primary text-bggray hover:bg-primarylight"
       >
         <i class="uil uil-search text-xl"></i>
