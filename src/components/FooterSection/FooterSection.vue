@@ -96,10 +96,10 @@ onMounted(() => {
           <h6 class="font-bold">About GOVPH</h6>
           <p class="mb-5">Learn more about Philippine Government</p>
 
-          <a href="">GOVPH</a>
-          <a href="">Official Gazete</a>
-          <a href="">Open Data Portal</a>
-          <a href="">Portal of Information</a>
+          <a href="https://www.gov.ph/">GOVPH</a>
+          <a href="https://www.officialgazette.gov.ph/">Official Gazete</a>
+          <a href="https://data.gov.ph/">Open Data Portal</a>
+          <a href="https://www.foi.gov.ph/">Freedom of Information</a>
 
           <!-- philippine government logos -->
           <img
