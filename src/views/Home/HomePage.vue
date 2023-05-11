@@ -33,12 +33,13 @@ onMounted(() => {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
   }).addTo(map)
-  L.circle([14.478705773206618, 121.3150200059879], {
+  const marker = L.circle([14.478705773206618, 121.3150200059879], {
     color: 'red',
     fillColor: '#f03',
     fillOpacity: 0.5,
     radius: 2000
   }).addTo(map)
+  marker.bindPopup('<b>Pililla Rizal</b>.').openPopup()
 })
 </script>
 
@@ -64,7 +65,7 @@ onMounted(() => {
     <!-- top places -->
     <section class="mt-20 flex flex-col gap-5">
       <h4 class="font-['display'] text-5xl sm:w-3/4 text-center mx-auto dark:text-bggray">
-        Highlights of <span class="bg-primary px-3 text-white">3</span> places you want to come and
+        These are the <span class="bg-primary px-3 text-white">3</span> places you want to come and
         visit in Pililla
       </h4>
 
