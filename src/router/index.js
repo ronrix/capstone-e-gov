@@ -176,5 +176,11 @@ export default createRouter({
       name: "Ordinance1",
       component: () => import("../views/Government/MunicipalOrdinances/MunicipalOrdinances.vue")
     },
+    // search
+    {
+      path: "/search",
+      name: "SearchPage",
+      component: () => import("../views/Search/Search.vue")
+    },
   ]
 })

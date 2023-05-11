@@ -78,7 +78,7 @@ fetchData("/service-types").then(data => {
   const mergedServices = Object.values(data.service_types).flat()
   services = mergedServices.map(a => {
     return {
-      link: "/services/" + a.replace(" ", "-"),
+      link: "/services/" + a.replace(" ", "_"),
       title: a,
       desc: "Service"
     }

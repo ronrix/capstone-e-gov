@@ -88,6 +88,10 @@ const row = [
 </script>
 
 <template>
+  <head>
+    <title>History | Pililla Rizal</title>
+  </head>
+
   <HeaderSection />
   <WrapperContainer>
     <div class="mt-10 flex flex-col">
@@ -130,7 +134,7 @@ const row = [
                 <th>Significance Event</th>
               </tr>
             </thead>
-            <tbody class= "text-dark text-sm md:text-base md:font-normal">
+            <tbody class="text-dark text-sm md:text-base md:font-normal">
               <TableRow v-for="(data, idx) in row" :key="idx" :data="data" :idx="idx" />
             </tbody>
           </table>

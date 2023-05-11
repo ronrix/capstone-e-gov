@@ -33,7 +33,7 @@ defineProps({
         <RouterLink
           v-for="(service, id) in services"
           :key="id"
-          :to="'/services/' + service.replace(' ', '-')"
+          :to="'/services/' + service.replace(' ', '_')"
           class="w-full flex justify-between items-center border gap-2 rounded-b px-3 py-2"
         >
           <p class="tflex-1 text-dark dark:text-white font-normal capitalize">{{ service }}</p>

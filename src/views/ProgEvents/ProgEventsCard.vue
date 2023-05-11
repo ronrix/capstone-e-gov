@@ -7,7 +7,7 @@ defineProps({
 </script>
 <template>
   <RouterLink
-    :to="'/programs-events/' + event.title.replace(/\s+/g, '-').replace(/\n/g, ' ').toLowerCase()"
+    :to="'/programs-events/' + event.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()"
     class="flex border rounded-lg hover:shadow-md cursor-pointer"
   >
     <div
