@@ -48,7 +48,7 @@ onMounted(() => {
         <p class="text-lg text-center text-dark dark:text-bggray">Error has occured.</p>
       </div>
       <Loading v-if="loading" class="w-10 h-10 mx-auto" />
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
         <h4 v-if="!loading && !progEvents.length" class="text-3xl text-center">No data found</h4>
         <ProgEventsCard v-for="event in progEvents" v-else :key="event.id" :event="event" />
       </div>

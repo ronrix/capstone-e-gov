@@ -15,7 +15,7 @@ const useCustomStyles = ref(true) // Set to true if you want to apply custom sty
 
 // paremeter :title
 const route = useRoute()
-const pogEventsTitle = computed(() => route.params.title.replace(/-/g, ' '))
+const pogEventsTitle = computed(() => route.params.title.replace(/_/g, ' '))
 const progEvents = ref()
 const description = ref('')
 const imgURL = ref()

@@ -59,9 +59,6 @@ onMounted(() => {
       <Assistance />
     </section>
 
-    <!-- programs and events -->
-    <Programs />
-
     <!-- top places -->
     <section class="mt-20 flex flex-col gap-5">
       <h4 class="font-['display'] text-5xl sm:w-3/4 text-center mx-auto dark:text-bggray">

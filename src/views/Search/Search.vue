@@ -14,7 +14,7 @@ const searchInput = ref(null)
 const searchCache = ref([])
 
 // search fetch request
-async function search(query) {
+async function searchFn(query) {
   return await axios
     .get(be_url + '/api/search', {
       params: {
@@ -36,7 +36,7 @@ function onSubmit() {
   searchCache.value.push(searchInput.value.value)
   searchCache.value = [...new Set(searchCache.value)]
   localStorage.setItem('searches', JSON.stringify(searchCache.value))
-  search(searchInput.value.value)
+  searchFn(searchInput.value.value)
     .then((data) => {
       searchResults.value = data.results
     })
@@ -45,7 +45,7 @@ function onSubmit() {
 
 // this function is for quick links, when that link was clicked this will get invoked
 function searchQuickLinks(searchText) {
-  search(searchText)
+  searchFn(searchText)
     .then((data) => {
       searchResults.value = data.results
     })
