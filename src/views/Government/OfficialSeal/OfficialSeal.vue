@@ -84,6 +84,9 @@ const symbols = [
 </script>
 
 <template>
+  <head>
+    <title>Official Seal | Pililla Rizal</title>
+  </head>
   <HeaderSection />
   <WrapperContainer>
     <div class="w-full flex flex-col mt-10 mb-10">
