@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -26,6 +27,7 @@ return new class extends Migration
             $table->string("job_salary");
             $table->timestamps();
         });
+        DB::statement('ALTER TABLE job_postings ADD FULLTEXT fulltext_index (job_title, job_description)');
     }
 
     /**

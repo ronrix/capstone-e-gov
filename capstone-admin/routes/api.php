@@ -12,6 +12,7 @@ use App\Http\Controllers\Government\OrdinancesController;
 use App\Http\Controllers\Government\PopulationController;
 use App\Http\Controllers\Government\ProgramsEventsController;
 use App\Http\Controllers\RequestNotificationController;
+use App\Http\Controllers\SearchQueryController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
@@ -69,3 +70,6 @@ Route::get("/ordinances", [OrdinancesController::class, "getOrdinances"])->middl
 
 // Broadcasting events
 Route::post("/event", [RequestNotificationController::class, 'eventHandler'])->middleware("cors");
+
+// search query
+Route::get("/search", [SearchQueryController::class, 'search'])->middleware("cors");
