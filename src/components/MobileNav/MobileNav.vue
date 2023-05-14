@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onUpdated } from 'vue'
-import { government, services, tourism, business } from '../../assets/config/sublinks'
+import { government, services, tourism, business, about } from '../../assets/config/sublinks'
 import { RouterLink } from 'vue-router'
 import MobileSubNavs from './MobileSubNavs.vue'
 
@@ -25,6 +25,10 @@ function setSubLinkOnClick(e) {
   }
   if (e.target.id === 'tourism') {
     selectedSubLinks.value = tourism
+    return
+  }
+  if (e.target.id === 'about') {
+    selectedSubLinks.value = about
     return
   }
 
@@ -62,8 +66,8 @@ onUpdated(() => {
       <RouterLink
         to="/"
         class="text-3xl text-dark dark:text-bggray dark:hover:text-white hover:text-black"
-        >Home</RouterLink
-      >
+        >Home
+      </RouterLink>
       <div
         id="government"
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
@@ -104,11 +108,14 @@ onUpdated(() => {
           @click="setSubLinkOnClick"
         />
       </div>
-      <RouterLink
-        to="/about"
-        class="text-3xl text-dark dark:text-bggray dark:hover:text-white hover:text-black"
-        >About</RouterLink
+      <div
+        id="about"
+        class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
+        @click="setSubLinkOnClick"
       >
+        About
+        <i class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300" />
+      </div>
     </div>
   </div>
 </template>
