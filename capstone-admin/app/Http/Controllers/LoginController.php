@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 class LoginController extends Controller
@@ -46,19 +47,32 @@ class LoginController extends Controller
     public function changePassword(Request $request)
     {
         # Validation
-        $request->validate([
-            'old_password' => 'required',
-            'password' => 'required|min:8|confirmed',
+        $validator = Validator::make($request->all(), [
+            "old_password" => "required",
+            "password" => "required|min:8|confirmed",
         ]);
 
+        /*
+        * customizing the validation response
+        */
+        if ($validator->fails()) {
+            # send the second error message if exists otherwise send the first one
+            return response()->json([
+                "res" => [
+                    "msg" => $validator->messages()->all()[1] ?: $validator->messages()->all()[0],
+                    "status" => 400,
+                ]
+            ], 400);
+        }
+
         #Match The Old Password
-        if (!Hash::check($request->currentPassword, auth()->user()->password)) {
-            return response()->json(["res" => ["msg" => "Old Password Doesn't match!", "status" => 403]], 403);
+        if (!Hash::check($request->input('old_password'), auth()->user()->password)) {
+            return response()->json(["res" => ["msg" => "Old password doesn't match!", "status" => 403]], 403);
         }
 
         #Update the new Password
         User::whereId(auth()->user()->id)->update([
-            'password' => Hash::make($request->newPassword)
+            'password' => Hash::make($request->input('password'))
         ]);
 
 

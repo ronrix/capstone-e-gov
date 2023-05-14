@@ -99,7 +99,7 @@ async function submitForm() {
 
     // send login request
     try {
-        const response = await axios.post(be_url + '/login', formData);
+        const response = await axios.post(be_url + '/login', { email: formData.email, password: formData.password });
 
         // success
         // redirect to '/dashboard'

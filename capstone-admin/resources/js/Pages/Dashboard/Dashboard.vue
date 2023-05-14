@@ -33,10 +33,10 @@
         <div class="flex flex-wrap">
           <RouterLink to="/government/news"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">News</RouterLink>
-          <RouterLink to="/government/programs-anad-events"
+          <RouterLink to="/government/programs-and-events"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Programs & Events
           </RouterLink>
-          <RouterLink to="/government/job-opportunities"
+          <RouterLink to="/government/job-postings"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Job Opportunities
           </RouterLink>
           <RouterLink to="/government/full-disclosure-reports"
@@ -54,16 +54,16 @@
           <RouterLink to="/tourism/festivals"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Festivals
           </RouterLink>
-          <RouterLink to="/government/business-establishment"
+          <RouterLink to="/government/business-establishments"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Business establishments
           </RouterLink>
           <RouterLink to="/businesses/apartments"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Apartments
           </RouterLink>
-          <RouterLink to="/businesses/bplo"
+          <RouterLink to="/businesses/business-permit-license-office"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">BPLO
           </RouterLink>
-          <RouterLink to="/about/official-seal"
+          <RouterLink to="/government/official-seal"
             class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Official seal
           </RouterLink>
           <RouterLink to="/about/contacts"
