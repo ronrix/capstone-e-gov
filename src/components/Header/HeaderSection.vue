@@ -163,7 +163,7 @@ onMounted(() => {
       <RouterLink
         to="/"
         active-class="!text-primarylight"
-        class="uppercase font-['display'] font-bold text-dark hover:text-primary dark:text-bggray dark:hover:text-white py-5 text-xs md:text-sm"
+        class="uppercase font-['display'] text-dark hover:text-primary dark:text-bggray dark:hover:text-white py-5 text-xs md:text-sm"
       >
         home
       </RouterLink>

@@ -1,1 +1,1 @@
-export const be_url = "http://localhost:8000";
+export const be_url = "http://admin.pililla-rizal.online";

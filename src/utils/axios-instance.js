@@ -37,7 +37,8 @@ import { be_url } from '../assets/config/config';
 // }
 
 const axiosInstance = axios.create({
-  baseURL: be_url + "/api"
+  baseURL: be_url + "/api",
+  withCredentials: true
 });
 
 // create a function that takes a route as a parameter and returns a promise

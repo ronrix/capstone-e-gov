@@ -75,33 +75,33 @@ onUpdated(() => {
         />
       </div>
       <div
-        id="business"
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
-        @click="setSubLinkOnClick"
       >
-        Business
+        <RouterLink to="/business">Business</RouterLink>
         <i
-          class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300 pointer-events-none"
+          id="business"
+          class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300"
+          @click="setSubLinkOnClick"
         />
       </div>
       <div
-        id="tourism"
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
-        @click="setSubLinkOnClick"
       >
-        Tourism
+        <RouterLink to="/tourism"> Tourism </RouterLink>
         <i
-          class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300 pointer-events-none"
+          id="tourism"
+          class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300"
+          @click="setSubLinkOnClick"
         />
       </div>
       <div
-        id="services"
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
-        @click="setSubLinkOnClick"
       >
-        Services
+        <RouterLink to="/services"> Services </RouterLink>
         <i
-          class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300 pointer-events-none"
+          id="services"
+          class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300"
+          @click="setSubLinkOnClick"
         />
       </div>
       <RouterLink
