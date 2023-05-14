@@ -21,7 +21,7 @@
 
     <!-- job type -->
     <div class="flex-1">
-      <h5 class="text-xl font-bold text-gray-800 line-clamp-1">{{ data?.job_title }}</h5>
+      <h5 class="text-xl font-bold text-gray-800 line-clamp-1 capitalize">{{ data?.job_title }}</h5>
       <h6 class="text-sm font-bold text-gray-500">{{ data?.job_type }}</h6>
       <div class="flex items-center gap-2 mt-3 overflow-x-scroll">
         <div v-for="jt in workTypes" :key="jt"
