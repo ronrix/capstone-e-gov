@@ -150,10 +150,8 @@ Route::middleware(["auth"])->group(function () {
     // delete requests
     Route::post("/hotlines/delete", [HotlinesController::class, "delete"]);
     Route::post("/delete-news", [NewsController::class, "deleteOneNews"]);
-    Route::post("/delete-current-official/", [ExecutivesController::class, "deleteOneFromCurrent"]);
-    Route::post("/delete-former-official/", [ExecutivesController::class, "deleteOneFromFormer"]);
-    Route::post("/delete-barangay-official/", [ExecutivesController::class, "deleteOneBarangay"]);
-    Route::post("/delete-deparment-head/", [ExecutivesController::class, "deleteOneDepHead"]);
+    Route::post("/delete-current-official", [ExecutivesController::class, "deleteOneFromCurrent"]);
+    Route::post("/delete-former-official", [ExecutivesController::class, "deleteOneFromFormer"]);
     Route::post("/delete-programs-events", [ProgramsEventsController::class, "deleteOne"]);
     Route::post("/delete-job-posting", [JobPostingController::class, "deleteOne"]);
     Route::post("/delete-population", [PopulationController::class, "deleteOne"]);

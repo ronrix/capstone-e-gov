@@ -124,7 +124,7 @@ async function handleSubmit(formData) {
 
 // this is for deleting a data
 function handleDelete(id, deleteRef) {
-  axios.post(be_url + "/delete-former-official/", { id }).then(({ data }) => {
+  axios.post(be_url + "/delete-former-official", { id }).then(({ data }) => {
     // this will remove the displaying of the delete modal
     deleteRef.classList.remove("!translate-y-0");
     deleteRef.classList.remove("!translate-x-0");

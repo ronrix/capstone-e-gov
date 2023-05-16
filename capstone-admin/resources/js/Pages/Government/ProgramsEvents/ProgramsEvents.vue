@@ -32,7 +32,9 @@
           added-class="!w-[200px]" />
 
         <!-- filter the deleted data -->
-        <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
+        <span class="text-gray-500 font-bold text-sm mx-2 capitalize">
+          active:
+        </span>
         <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']"
           added-class="!w-[200px]" />
       </div>
@@ -50,7 +52,9 @@
 
     <div v-for="group in dataToLoop.value" :key="group.month" class="flex flex-col gap-3 mt-5">
       <div class="flex items-center">
-        <span class="font-bold text-2xl text-gray-500 mr-5">{{ group.month }}</span>
+        <span class="font-bold text-2xl text-gray-500 mr-5">{{
+          group.month
+        }}</span>
         <div class="flex-1 border"></div>
       </div>
       <ProgramsEventsCard v-for="data in group.items" :key="data.id" :data="data" :showPreviewModal="showPreviewModal"
@@ -65,19 +69,19 @@
 </template>
 
 <script setup>
-import AddModal from '../../../Components/AddModal/AddModal.vue';
-import AddBtn from '../../../Components/AddModal/AddBtn.vue';
-import ProgramsEventsCard from './ProgramsEventsCard.vue';
-import { searchFilter } from '../../../utils/searchFilter';
+import AddModal from "../../../Components/AddModal/AddModal.vue";
+import AddBtn from "../../../Components/AddModal/AddBtn.vue";
+import ProgramsEventsCard from "./ProgramsEventsCard.vue";
+import { searchFilter } from "../../../utils/searchFilter";
 
-import axios from 'axios';
-import { computed, ref, onMounted } from 'vue';
-import PreviewModal from '../../../Components/PreviewModal.vue';
-import { be_url } from '../../../config/config';
-import Notifcation from '../../../Components/Notifcation.vue';
-import SelectTag from '../../../Components/SelectTag.vue';
-import { dateFormat } from '../../../utils/dateFormat';
-import Loading from '../../../Components/Loading.vue';
+import axios from "axios";
+import { computed, ref, onMounted } from "vue";
+import PreviewModal from "../../../Components/PreviewModal.vue";
+import { be_url } from "../../../config/config";
+import Notifcation from "../../../Components/Notifcation.vue";
+import SelectTag from "../../../Components/SelectTag.vue";
+import { dateFormat } from "../../../utils/dateFormat";
+import Loading from "../../../Components/Loading.vue";
 
 // filter deleted data
 const activeData = ref("active");
@@ -86,8 +90,9 @@ function filterDelete(type, value) {
   isLoading.value = true;
 
   // get request for deleted data
-  if (activeData.value === 'deleted') {
-    axios.get(be_url + '/programs-and-events/deleted')
+  if (activeData.value === "deleted") {
+    axios
+      .get(be_url + "/programs-and-events/deleted")
       .then(({ data }) => {
         isLoading.value = false;
         // add deleted data to dataNews and originalDataNews
@@ -102,7 +107,7 @@ function filterDelete(type, value) {
         dataProgramsEvents.value = data.programsEvents;
         originalDataProgramsEvents.value = data.programsEvents;
       })
-      .catch(err => {
+      .catch((err) => {
         // set the response msg
         resMsg.value = err.response.data.res;
         // hide the notification message in 3s
@@ -113,7 +118,8 @@ function filterDelete(type, value) {
     return;
   }
   // else the undeleted data
-  axios.get(be_url + '/programs-and-events')
+  axios
+    .get(be_url + "/programs-and-events")
     .then(({ data }) => {
       isLoading.value = false;
       isEmpty.value = false;
@@ -123,7 +129,7 @@ function filterDelete(type, value) {
         return;
       }
     })
-    .catch(err => {
+    .catch((err) => {
       // set the response msg
       resMsg.value = err.response.data.res;
       // hide the notification message in 3s
@@ -148,63 +154,71 @@ const dataProgramsEvents = ref([]); // this is the state where to store the data
 // fetch the news data from backend
 onMounted(() => {
   // requesting data from /news
-  axios.get(be_url + "/programs-and-events").then(({ data }) => {
-    originalDataProgramsEvents.value = data.programsEvents;
-    dataProgramsEvents.value = data.programsEvents;
-    if (!dataProgramsEvents.value.length) isEmpty.value = true;
-    isLoading.value = false;
-  }).catch(err => console.log(err));
+  axios
+    .get(be_url + "/programs-and-events")
+    .then(({ data }) => {
+      originalDataProgramsEvents.value = data.programsEvents;
+      dataProgramsEvents.value = data.programsEvents;
+      if (!dataProgramsEvents.value.length) isEmpty.value = true;
+      isLoading.value = false;
+    })
+    .catch((err) => console.log(err));
 });
 
 // delete programs and events based on the passed id
 function handleDelete(id) {
-  axios.post(be_url + "/delete-programs-events/", { id }).then(({ data }) => {
+  axios
+    .post(be_url + "/delete-programs-events", { id })
+    .then(({ data }) => {
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
-
-    // this will update the state variable of the news
-    dataProgramsEvents.value = data.programsEvents;
-    originalDataProgramsEvents.value = data.programsEvents;
-  }).catch(err => {
-    // set the response msg
-    resMsg.value = err.response.data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
-  });
+      // this will update the state variable of the news
+      dataProgramsEvents.value = data.programsEvents;
+      originalDataProgramsEvents.value = data.programsEvents;
+    })
+    .catch((err) => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // restore a news data based on the passed id
 async function handleRestore(id) {
-  return await axios.post(be_url + "/programs-and-events/restore", { id }).then(({ data }) => {
-    if (data.programsEvents) {
-      dataProgramsEvents.value = data.programsEvents;
-      originalDataProgramsEvents.value = data.programsEvents;
-    }
+  return await axios
+    .post(be_url + "/programs-and-events/restore", { id })
+    .then(({ data }) => {
+      if (data.programsEvents) {
+        dataProgramsEvents.value = data.programsEvents;
+        originalDataProgramsEvents.value = data.programsEvents;
+      }
 
-    // set the response msg
-    resMsg.value = data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
+      // set the response msg
+      resMsg.value = data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
 
-    activeData.value = "deleted";
-    return data;
-  }).catch(err => {
-    // set the response msg
-    resMsg.value = err.response.data.res;
-    // hide the notification message in 3s
-    setTimeout(() => {
-      resMsg.value = null;
-    }, 3000);
-  });
+      activeData.value = "deleted";
+      return data;
+    })
+    .catch((err) => {
+      // set the response msg
+      resMsg.value = err.response.data.res;
+      // hide the notification message in 3s
+      setTimeout(() => {
+        resMsg.value = null;
+      }, 3000);
+    });
 }
 
 // functions to show the preview modal
@@ -221,8 +235,22 @@ const search = ref("");
 // sort/filter function for select and input year
 const filterMonth = ref("All");
 const filterYear = ref("All");
-const filterMonths = ["All", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-const filterYears = ["All", 2023, 2022, 2021, 2020, 2019, 2018, 2017,];
+const filterMonths = [
+  "All",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const filterYears = ["All", 2023, 2022, 2021, 2020, 2019, 2018, 2017];
 
 // filter function
 function filterBy(type, value) {
@@ -231,59 +259,86 @@ function filterBy(type, value) {
     filterMonth.value = value;
 
     // if value is "all" select all the data
-    if (value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
+    if (
+      value === "All" &&
+      filterMonth.value === "All" &&
+      filterYear.value === "All"
+    ) {
       dataProgramsEvents.value = originalDataProgramsEvents.value;
       return;
     }
 
     // filter by month
     // and set the new value to dataProgramsEvents to re-render the filtered news
-    const groups = originalDataProgramsEvents.value.filter(group => {
+    const groups = originalDataProgramsEvents.value.filter((group) => {
       const date = dateFormat(group.created_at);
-      if (filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
-        return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
+      if (filterYear.value === "All") {
+        // check if the filterYear is all, then return only the data with filterMonth
+        return date
+          .toLocaleLowerCase()
+          .includes(filterMonth.value.toLowerCase());
       }
-      if (filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
-        return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      if (filterMonth.value === "All") {
+        // check if the filterMonth is all, then return only the data with filterMonth
+        return date
+          .toLocaleLowerCase()
+          .includes(filterYear.value.toLowerCase());
       }
-      // return the group if month exists 
-      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      // return the group if month exists
+      return (
+        date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) &&
+        date.toLocaleLowerCase().includes(filterYear.value.toLowerCase())
+      );
     });
     dataProgramsEvents.value = groups;
-  }
-  else {
+  } else {
     // update the value of filterYear selected one
     filterYear.value = value;
 
     // if value is "all" select all the data
-    if (value === "All" && filterMonth.value === "All" && filterYear.value === "All") {
+    if (
+      value === "All" &&
+      filterMonth.value === "All" &&
+      filterYear.value === "All"
+    ) {
       dataProgramsEvents.value = originalDataProgramsEvents.value;
       return;
     }
 
     // filter by year
     // and set the new value to dataProgramsEvents to re-render the filtered news
-    const groups = originalDataProgramsEvents.value.filter(group => {
+    const groups = originalDataProgramsEvents.value.filter((group) => {
       const date = dateFormat(group.created_at);
-      if (filterMonth.value === "All") { // check if the filterMonth is all, then return only the data with filterMonth
-        return date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      if (filterMonth.value === "All") {
+        // check if the filterMonth is all, then return only the data with filterMonth
+        return date
+          .toLocaleLowerCase()
+          .includes(filterYear.value.toLowerCase());
       }
-      if (filterYear.value === "All") { // check if the filterYear is all, then return only the data with filterMonth
-        return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase());
+      if (filterYear.value === "All") {
+        // check if the filterYear is all, then return only the data with filterMonth
+        return date
+          .toLocaleLowerCase()
+          .includes(filterMonth.value.toLowerCase());
       }
-      // return the group if month exists 
-      return date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) && date.toLocaleLowerCase().includes(filterYear.value.toLowerCase());
+      // return the group if month exists
+      return (
+        date.toLocaleLowerCase().includes(filterMonth.value.toLowerCase()) &&
+        date.toLocaleLowerCase().includes(filterYear.value.toLowerCase())
+      );
     });
     dataProgramsEvents.value = groups;
   }
-
 }
 
 const groupData = computed(() => {
   let groups = {};
 
   dataProgramsEvents.value.forEach((item) => {
-    const month = new Date(item.created_at).toLocaleString('default', { month: 'short', year: "numeric" });
+    const month = new Date(item.created_at).toLocaleString("default", {
+      month: "short",
+      year: "numeric",
+    });
     // group item by month
     if (!groups[month]) {
       groups[month] = { month, items: [] };
@@ -316,16 +371,21 @@ const dataToLoop = computed(() => {
 
 // submit function to handle update the programs and events
 function handleSubmitUpdate(id, formData) {
-  axios.post(be_url + "/programs-and-events/edit", {
-    id,
-    title: formData.title,
-    authors: formData.authors,
-    description: formData.description,
-    location: formData.location,
-    newImgs: formData.newImgs,
-    deletedImgs: formData.deletedImgIds,
-    defaultThumbnailId: formData.defaultThumbnailId
-  }, { headers: { "Content-Type": "multipart/form-data" } })
+  axios
+    .post(
+      be_url + "/programs-and-events/edit",
+      {
+        id,
+        title: formData.title,
+        authors: formData.authors,
+        description: formData.description,
+        location: formData.location,
+        newImgs: formData.newImgs,
+        deletedImgs: formData.deletedImgIds,
+        defaultThumbnailId: formData.defaultThumbnailId,
+      },
+      { headers: { "Content-Type": "multipart/form-data" } }
+    )
     .then(({ data }) => {
       dataProgramsEvents.value = data.programsEvents;
 
@@ -336,7 +396,7 @@ function handleSubmitUpdate(id, formData) {
         resMsg.value = null;
       }, 3000);
     })
-    .catch(err => {
+    .catch((err) => {
       // set the response msg
       resMsg.value = err.response.data.res;
       // hide the notification message in 3s
@@ -344,19 +404,22 @@ function handleSubmitUpdate(id, formData) {
         resMsg.value = null;
       }, 3000);
     });
-
 }
 
 // handle the submit function to update the new news
 async function handleCreateSubmit(formData) {
-  return await axios.post(be_url + "/programs-and-events/add", {
-    title: formData.title,
-    authors: formData.authors,
-    location: formData.location,
-    description: formData.content,
-    imgFile: formData.imgFile
-  },
-    { headers: { "Content-Type": "multipart/form-data" } })
+  return await axios
+    .post(
+      be_url + "/programs-and-events/add",
+      {
+        title: formData.title,
+        authors: formData.authors,
+        location: formData.location,
+        description: formData.content,
+        imgFile: formData.imgFile,
+      },
+      { headers: { "Content-Type": "multipart/form-data" } }
+    )
     .then(({ data }) => {
       dataProgramsEvents.value = data.programsEvents;
 
@@ -369,9 +432,8 @@ async function handleCreateSubmit(formData) {
 
       return data;
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 }
-
 </script>
 
 <style scoped></style>

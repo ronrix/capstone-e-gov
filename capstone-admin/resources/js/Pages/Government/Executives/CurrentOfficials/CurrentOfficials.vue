@@ -6,10 +6,7 @@
       Current officials of pililla rizal
     </h1>
     <!-- empty: this will display when there is no data to display -->
-    <h5
-      v-if="isEmpty"
-      class="font-bold text-xl capitarize text-red-600 mt-5 border border-x-0 border-b-0"
-    >
+    <h5 v-if="isEmpty" class="font-bold text-xl capitarize text-red-600 mt-5 border border-x-0 border-b-0">
       <i class="uil uil-folder-times text-3xl"></i>
       Empty Collection
     </h5>
@@ -20,18 +17,10 @@
 
     <!-- cards -->
     <div class="flex items-start flex-wrap gap-5 mt-5">
-      <CardOfficial
-        v-for="official in dataCurrentOfficials"
-        :key="official.id"
-        :official="official"
-        :handleDelete="handleDelete"
-      />
+      <CardOfficial v-for="official in dataCurrentOfficials" :key="official.id" :official="official"
+        :handleDelete="handleDelete" />
     </div>
-    <OfficialModal
-      v-if="isModalShow"
-      :closeModal="toggleShowModal"
-      :handleSubmit="handleSubmit"
-    />
+    <OfficialModal v-if="isModalShow" :closeModal="toggleShowModal" :handleSubmit="handleSubmit" />
 
     <!-- add btn -->
     <AddBtn :showAddModal="toggleShowModal" />
@@ -101,7 +90,7 @@ async function handleSubmit(formData) {
 
 // this is for deleting a data
 function handleDelete(id) {
-  axios.post(be_url + "/delete-current-official/", { id }).then(({ data }) => {
+  axios.post(be_url + "/delete-current-official", { id }).then(({ data }) => {
     // set the response msg
     resMsg.value = data.res;
     // hide the notification message in 3s
