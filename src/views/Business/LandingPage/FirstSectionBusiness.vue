@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useBusinessStore } from '../../../stores/business-store'
 
 const store = useBusinessStore()
@@ -11,30 +11,29 @@ const gasStationCount = ref(0)
 const pharmacyCount = ref(0)
 const bankCount = ref(0)
 
-onMounted(() => {
-  if (store.getBusiness()) {
-    setTimeout(() => {
-      store.getBusiness().forEach((a) => {
-        if (a.category.includes('restaurant')) {
-          restaurantCount.value++
-        }
-        if (a.category.includes('department store')) {
-          departmentStoreCount.value++
-        }
-        if (a.category.includes('gas')) {
-          gasStationCount.value++
-        }
-        if (a.category.includes('pharmacy')) {
-          pharmacyCount.value++
-        }
-        if (a.category.includes('bank')) {
-          bankCount.value++
-        }
-      })
-    }, 0)
-  }
-})
+// Fetch the data and update the counts
+const fetchData = async () => {
+  const businesses = await store.getBusiness()
+  businesses?.forEach((a) => {
+    if (a.category.includes('restaurant')) {
+      restaurantCount.value++
+    }
+    if (a.category.includes('department store')) {
+      departmentStoreCount.value++
+    }
+    if (a.category.includes('gas')) {
+      gasStationCount.value++
+    }
+    if (a.category.includes('pharmacy')) {
+      pharmacyCount.value++
+    }
+    if (a.category.includes('bank')) {
+      bankCount.value++
+    }
+  })
+}
 
+watch(() => store.getBusiness(), fetchData, { immediate: true })
 // Define computed properties to automatically update the counts
 const restaurant = computed(() => restaurantCount.value)
 const departmentStore = computed(() => departmentStoreCount.value)
