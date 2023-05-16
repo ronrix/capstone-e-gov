@@ -30,6 +30,9 @@ const axiosCall = () => {
 }
 
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
   axiosCall()
 })
 </script>

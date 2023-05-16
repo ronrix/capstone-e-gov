@@ -2,6 +2,7 @@
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import TableRow from './TableRow.vue'
+import { onMounted } from 'vue'
 
 const row = [
   {
@@ -85,6 +86,11 @@ const row = [
     desc: 'In the last political exercise, Hon. Dan Valencia Masinsin has been entrusted by the people of Pililla to lead the town for the next three years.'
   }
 ]
+
+onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+})
 </script>
 
 <template>

@@ -25,6 +25,9 @@ const axiosTourisms = () => {
 }
 
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
   axiosTourisms()
 
   const map = L.map('map').setView([14.478705773206618, 121.3150200059879], 13)

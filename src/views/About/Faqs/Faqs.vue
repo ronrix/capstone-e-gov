@@ -14,7 +14,6 @@ const axiosCall = () => {
   fetchData('/faq')
     .then((data) => {
       faqs.value = data.faqs
-      console.log(faqs.value)
       loading.value = false // set the loading to false
     })
     .catch((err) => {

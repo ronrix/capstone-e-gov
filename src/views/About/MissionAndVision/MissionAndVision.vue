@@ -1,6 +1,12 @@
 <script setup>
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
+import { onMounted } from 'vue'
+
+onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+})
 </script>
 <template>
   <head>

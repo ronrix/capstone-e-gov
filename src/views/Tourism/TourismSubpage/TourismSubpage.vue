@@ -24,7 +24,6 @@ const typeOfData = ref(route.path.split('/')[1])
 const loadTourisms = () => {
   // find which data should be rendered
   if (typeOfData.value === 'festivals') {
-    console.log('here festival')
     if (storeFestival.getFestivals()) {
       data.value = storeFestival.getOneFestival(dataTitle.value)
       suggestionData.value = storeFestival.getFestivals().slice(0, 3)
@@ -35,7 +34,6 @@ const loadTourisms = () => {
       suggestionData.value = festivalData.slice(0, 3)
     }
   } else {
-    console.log('here touriusm')
     if (storeTourism.getTourism()) {
       data.value = storeTourism.getOneTourism(dataTitle.value)
       suggestionData.value = storeTourism.getTourism().slice(0, 3)

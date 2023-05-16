@@ -1,4 +1,46 @@
 <script setup>
+import { onMounted, ref, computed } from 'vue'
+import { useBusinessStore } from '../../../stores/business-store'
+
+const store = useBusinessStore()
+
+// Define the counts as refs
+const restaurantCount = ref(0)
+const departmentStoreCount = ref(0)
+const gasStationCount = ref(0)
+const pharmacyCount = ref(0)
+const bankCount = ref(0)
+
+onMounted(() => {
+  if (store.getBusiness()) {
+    setTimeout(() => {
+      store.getBusiness().forEach((a) => {
+        if (a.category.includes('restaurant')) {
+          restaurantCount.value++
+        }
+        if (a.category.includes('department store')) {
+          departmentStoreCount.value++
+        }
+        if (a.category.includes('gas')) {
+          gasStationCount.value++
+        }
+        if (a.category.includes('pharmacy')) {
+          pharmacyCount.value++
+        }
+        if (a.category.includes('bank')) {
+          bankCount.value++
+        }
+      })
+    }, 0)
+  }
+})
+
+// Define computed properties to automatically update the counts
+const restaurant = computed(() => restaurantCount.value)
+const departmentStore = computed(() => departmentStoreCount.value)
+const gasStation = computed(() => gasStationCount.value)
+const pharmacy = computed(() => pharmacyCount.value)
+const bank = computed(() => bankCount.value)
 </script>
 
 <template>
@@ -28,7 +70,7 @@
     </h1>
     <div class="grid grid-cols-3 gap-0 lg:gap-3 mr-0 lg:mr-16">
       <!-- single item -->
-      <a href="" class="flex flex-col items-center mb-5">
+      <div class="flex flex-col items-center mb-5">
         <i
           class="uil uil-restaurant text-4xl sm:sm:text-5xl lg:text-6xl text-dark dark:text-white"
         ></i>
@@ -37,10 +79,10 @@
         >
           Restaurant
         </h2>
-        <span class="text-lg text-dark dark:text-white font-normal">10</span>
-      </a>
+        <span class="text-lg text-dark dark:text-white font-normal">{{ restaurant }}</span>
+      </div>
       <!-- single item -->
-      <a href="" class="flex flex-col items-center">
+      <div class="flex flex-col items-center">
         <i
           class="uil uil-shopping-cart-alt text-4xl sm:sm:text-5xl lg:text-6xl text-dark dark:text-white"
         ></i>
@@ -49,20 +91,20 @@
         >
           Department Stores
         </h2>
-        <span class="text-lg text-dark dark:text-white font-normal">10</span>
-      </a>
+        <span class="text-lg text-dark dark:text-white font-normal">{{ departmentStore }}</span>
+      </div>
       <!-- single item -->
-      <a href="" class="flex flex-col items-center">
+      <div class="flex flex-col items-center">
         <i class="uil uil-pump text-4xl sm:text-5xl lg:text-6xl text-dark dark:text-white"></i>
         <h2
           class="text-center text-normal md:text-lg font-bold text-dark dark:text-white hover:hover:text-gray-950 dark:hover:text-gray-200"
         >
           Gas Station
         </h2>
-        <span class="text-lg text-dark dark:text-white font-normal">10</span>
-      </a>
+        <span class="text-lg text-dark dark:text-white font-normal">{{ gasStation }}</span>
+      </div>
       <!-- single item -->
-      <a href="" class="flex flex-col items-center">
+      <div class="flex flex-col items-center">
         <i
           class="uil uil-medical-square text-4xl sm:text-5xl lg:text-6xl text-dark dark:text-white"
         ></i>
@@ -71,8 +113,8 @@
         >
           Pharmacy
         </h2>
-        <span class="text-lg text-dark dark:text-white font-normal">10</span>
-      </a>
+        <span class="text-lg text-dark dark:text-white font-normal">{{ pharmacy }}</span>
+      </div>
       <!-- single item -->
       <a href="" class="flex flex-col items-center">
         <i
@@ -83,7 +125,7 @@
         >
           Bank
         </h2>
-        <span class="text-lg text-dark dark:text-white font-normal">10</span>
+        <span class="text-lg text-dark dark:text-white font-normal">{{ bank }}</span>
       </a>
     </div>
     <div

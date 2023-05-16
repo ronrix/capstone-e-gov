@@ -23,7 +23,7 @@ defineProps({
       class="flex flex-col flex-1 gap-2"
       :class="{ 'order-last': idx % 2 === 0, 'order-first': idx % 2 !== 0 }"
     >
-      <p class="text-xl md:text-2xl font-semibold text-dark dark:text-white">
+      <p class="text-xl md:text-2xl font-semibold text-dark dark:text-white capitalize">
         {{ apartment?.title }}
       </p>
       <div>
@@ -34,7 +34,7 @@ defineProps({
           }}</span>
         </div>
         <div
-          class="markdown"
+          class="markdown text-dark dark:text-bggray"
           :innerHTML="DOMPurify.sanitize(marked.parse(apartment?.description))"
         ></div>
       </div>

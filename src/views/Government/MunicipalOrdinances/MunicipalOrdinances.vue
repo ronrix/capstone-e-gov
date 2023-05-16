@@ -13,7 +13,6 @@ const axiosCall = () => {
     .then((data) => {
       ordinances.value = data.ordinances
       activeOrdinance.value = data.ordinances[0]
-      console.log(activeOrdinance.value)
     })
     .catch((err) => {
       console.log(err)
@@ -22,10 +21,12 @@ const axiosCall = () => {
 
 function changeOrdinance(id) {
   activeOrdinance.value = ordinances.value.find((o) => o.id === id)
-  console.log(activeOrdinance.value)
 }
 
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
   axiosCall()
 })
 </script>
