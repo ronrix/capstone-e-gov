@@ -72,4 +72,4 @@ Route::get("/ordinances", [OrdinancesController::class, "getOrdinances"])->middl
 Route::post("/event", [RequestNotificationController::class, 'eventHandler'])->middleware("cors");
 
 // search query
-Route::get("/search", [SearchQueryController::class, 'search'])->middleware("cors");
+Route::post("/search", [SearchQueryController::class, 'search'])->middleware("cors");
