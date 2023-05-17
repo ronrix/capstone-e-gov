@@ -21,7 +21,7 @@ function showBenefit() {
     </RouterLink>
 
     <h3 class="text-center font-['display'] text-5xl sm:w-1/2 text-darkgray mt-5 dark:text-bggray">
-      Apply for assistance in as little as 15 minutes
+      Apply for Assistance/Services
     </h3>
     <p class="text-center text-sm dark:text-bggray">
       <!-- We help connect families to benefits and services that faster health, safety, resilience, and
@@ -39,7 +39,7 @@ function showBenefit() {
         class="text-sm sm:text-base px-3 py-2 bg-primary font-bold hover:bg-primarylight text-white rounded-md shadow-lg shadow-primarylight/50"
         @click="showBenefit"
       >
-        Apply for Benefits
+        Show services
       </button>
     </div>
   </div>
