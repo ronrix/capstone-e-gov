@@ -12,16 +12,20 @@ const store = useSearchStore()
 const searchResults = ref([])
 const searchInput = ref(null)
 const searchCache = ref([])
+const searchedText = ref(store.getInputSearch())
 
 // search fetch request
 async function searchFn(query) {
   return await axios
-    .get(be_url + '/api/search', {
-      params: {
+    .post(
+      be_url + '/api/search',
+      {
         query
       },
-      withCredentials: true
-    })
+      {
+        withCredentials: true
+      }
+    )
     .then(({ data }) => {
       return data
     })
@@ -36,6 +40,9 @@ function onSubmit() {
   searchCache.value.push(searchInput.value.value)
   searchCache.value = [...new Set(searchCache.value)]
   localStorage.setItem('searches', JSON.stringify(searchCache.value))
+
+  store.setInputSearch(searchInput.value.value)
+  searchedText.value = searchInput.value.value
   searchFn(searchInput.value.value)
     .then((data) => {
       searchResults.value = data.results
@@ -45,6 +52,8 @@ function onSubmit() {
 
 // this function is for quick links, when that link was clicked this will get invoked
 function searchQuickLinks(searchText) {
+  store.setInputSearch(searchText)
+  searchedText.value = searchText
   searchFn(searchText)
     .then((data) => {
       searchResults.value = data.results
@@ -53,6 +62,9 @@ function searchQuickLinks(searchText) {
 }
 
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
   searchResults.value = store.getSearch()
   searchCache.value = [...new Set(JSON.parse(localStorage.getItem('searches')))]
 })
@@ -66,7 +78,7 @@ onMounted(() => {
   <!-- <WrapperContainer> -->
   <HeaderSection />
   <WrapperContainer>
-    <form class="flex mt-10" @submit.prevent="onSubmit">
+    <form class="flex mt-10 gap-2" @submit.prevent="onSubmit">
       <input
         ref="searchInput"
         type="search"
@@ -75,11 +87,13 @@ onMounted(() => {
       />
       <button type="submit" class="px-3 text-bggray bg-primarylight rounded-md flex items-center">
         <i class="uil uil-search text-xl mr-2"></i>
-        Search
+        <span class="hidden md:block">Search</span>
       </button>
     </form>
     <div v-if="searchResults">
-      <h5 class="text-sm text-dark dark:text-bggray my-5 font-bold">Search results</h5>
+      <h5 class="text-sm text-dark dark:text-bggray my-5 font-bold">
+        Search results for "{{ searchedText }}"
+      </h5>
       <div v-for="(search, key) in searchResults" :key="search.id">
         <RouterLink
           v-for="(res, id) in search"
@@ -101,7 +115,7 @@ onMounted(() => {
     <!-- no results -->
     <h5 v-else class="text-2xl text-dark dark:text-bggray mt-5">No search results!</h5>
     <div class="mt-10">
-      <h5 class="capitalize text-xs text-bggray">quick links</h5>
+      <h5 class="capitalize text-xs text-dark dark:text-bggray">quick links</h5>
 
       <div
         v-for="(searchText, idx) in searchCache"

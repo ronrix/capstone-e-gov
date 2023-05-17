@@ -12,14 +12,14 @@ defineProps({
 <template>
   <div id="#apply">
     <h4 class="capitalize text-xl md:text-2xl text-dark dark:text-bggray font-bold">
-      To apply for this service
+      To apply for this service Online
     </h4>
     <p class="text-dark dark:text-bggray">
       Download the application form
       <a :href="be_url + '/' + service?.application_form" class="text-primarylight" target="_blank"
-        >here</a
+        >appliction form</a
       >
-      and fill it up then send the pdf version of it to
+      and send it to
       <span
         title="copy"
         class="text-primarylight cursor-pointer hover:bg-primarylight hover:text-bggray"

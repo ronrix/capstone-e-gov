@@ -1,3 +1,11 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+
+defineProps({
+  subLinks: { type: Array, required: true },
+  closeSubLink: { type: Function, required: true }
+})
+</script>
 <template>
   <div
     class="absolute z-20 top-14 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-700"
@@ -25,12 +33,3 @@
     <div class="backdrop-filter bg-white/50 dark:bg-dark/50 h-full"></div>
   </div>
 </template>
-
-<script setup>
-import { RouterLink } from 'vue-router'
-
-defineProps({
-  subLinks: { type: Array, required: true },
-  closeSubLink: { type: Function, required: true }
-})
-</script>

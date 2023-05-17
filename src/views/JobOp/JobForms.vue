@@ -2,7 +2,7 @@
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import axios from 'axios'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { helpers, required, email } from '@vuelidate/validators'
 import { be_url } from '../../assets/config/config'
@@ -126,6 +126,11 @@ async function onSubmit() {
       notification.value = err.response.data.res
     })
 }
+
+onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+})
 </script>
 <template>
   <head>

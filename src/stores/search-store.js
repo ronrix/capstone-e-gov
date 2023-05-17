@@ -3,6 +3,15 @@ import { defineStore } from 'pinia'
 
 export const useSearchStore = defineStore('search', () => {
   const search = ref(null)
+  const inputSearch = ref("")
+
+  function setInputSearch(query) {
+    inputSearch.value = query
+  }
+
+  function getInputSearch() {
+    return inputSearch.value
+  }
 
   function getSearch() {
     return search.value;
@@ -12,5 +21,5 @@ export const useSearchStore = defineStore('search', () => {
     search.value = data;
   }
 
-  return { search, getSearch, setSearch }
+  return { search, getSearch, setSearch, setInputSearch, getInputSearch }
 })

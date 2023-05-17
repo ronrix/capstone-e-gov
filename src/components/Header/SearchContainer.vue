@@ -13,12 +13,15 @@ defineProps({
 // search fetch request
 async function search(query) {
   return await axios
-    .get(be_url + '/api/search', {
-      params: {
+    .post(
+      be_url + '/api/search',
+      {
         query
       },
-      withCredentials: true
-    })
+      {
+        withCredentials: true
+      }
+    )
     .then(({ data }) => {
       return data
     })
@@ -35,6 +38,8 @@ function onSubmit() {
   searchCache.value.push(searchInput.value.value)
   searchCache.value = [...new Set(searchCache.value)]
   localStorage.setItem('searches', JSON.stringify(searchCache.value))
+
+  store.setInputSearch(searchInput.value.value)
   search(searchInput.value.value)
     .then((data) => {
       store.setSearch(data.results)
@@ -45,6 +50,7 @@ function onSubmit() {
 
 // this function is for quick links, when that link was clicked this will get invoked
 function searchQuickLinks(searchText) {
+  store.setInputSearch(searchText)
   search(searchText)
     .then((data) => {
       store.setSearch(data.results)

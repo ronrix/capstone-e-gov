@@ -42,7 +42,7 @@ const props = defineProps({
             All
           </div>
           <div
-            v-for="barangay in new Set([...barangays])"
+            v-for="barangay in new Set([...barangays.map((a) => a.split(' ')[1])])"
             :id="barangay"
             :key="barangay"
             class="text-sm md:text-base text-dark dark:text-white px-2 pb-1 hover:text-white hover:bg-blue-400 capitalize"
@@ -57,5 +57,4 @@ const props = defineProps({
   </div>
 </template>
 
-<style lang="scss" scoped>
-</style>
+<style lang="scss" scoped></style>
