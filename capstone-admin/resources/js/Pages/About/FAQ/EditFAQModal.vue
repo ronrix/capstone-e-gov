@@ -1,7 +1,7 @@
 <template>
     <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-30">
         <form @submit.prevent="onSubmit"
-            class="backdrop-blur-xl bg-white/70 h-full sm:h-auto sm:w-[500px] p-5 rounded-lg flex flex-col border overflow-y-auto scrollbar"
+            class="backdrop-blur-xl bg-white/70 h-auto sm:w-[500px] p-5 rounded-lg flex flex-col border overflow-y-auto scrollbar"
             enctype="multipart/form-data">
             <!-- close modal btn -->
             <i @click="closeModal"

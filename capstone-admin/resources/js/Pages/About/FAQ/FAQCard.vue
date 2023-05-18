@@ -10,31 +10,34 @@
     <div class="flex flex-col mt-5 cursor-pointer border border-x-0 border-t-0 border-b-gray-500 pb-5 relative"
         @click="showAnswer">
         <div class="flex items-center justify-between pointer-events-none">
-            <h2 class="text-normal text-dark font-medium text-dark">
+            <h2 class="text-normal text-dark font-medium text-dark w-1/2 md:w-full">
                 {{ data?.question }}
             </h2>
             <i ref="icon" class="uil text-2xl uil-angle-down"></i>
         </div>
-        <div class=" absolute top-2 right-10 flex items-center">
+        <div class="absolute top-2 right-10 flex items-center">
             <button type="button"
                 class="px-2 text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white text-xs rounded-md"
-                @click.stop="showEditModal">edit</button>
+                @click.stop="showEditModal">
+                edit
+            </button>
             <button type="button"
                 class="px-2 text-red-600 border border-red-600 hover:bg-red-600 hover:text-white text-xs rounded-md"
-                @click.stop="showDeleteVerificationModal">delete</button>
+                @click.stop="showDeleteVerificationModal">
+                delete
+            </button>
         </div>
         <div class="answer h-0 overflow-hidden duration-500 pointer-events-none">
             <div class="w-[85%] text-secondary font-normal text-sm mt-2 text-dark marked-desc"
-                :innerHTML="DOMpurify.sanitize(marked.parse(data?.answer))">
-            </div>
+                :innerHTML="DOMpurify.sanitize(marked.parse(data?.answer))"></div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import EditFAQModal from './EditFAQModal.vue';
-import DeleteVerificationModal from '../../../Components/DeleteVerificationModal.vue';
+import { ref } from "vue";
+import EditFAQModal from "./EditFAQModal.vue";
+import DeleteVerificationModal from "../../../Components/DeleteVerificationModal.vue";
 
 import { marked } from "marked";
 import DOMpurify from "dompurify";
@@ -52,20 +55,24 @@ function showDeleteVerificationModal() {
 function handleDelete() {
     handleDeleteFAQ(data.id).then(() => {
         isVerificationModal.value = false;
-    })
+    });
 }
 
 function showAnswer(e) {
-    const lastElement = e.target.lastElementChild
-    document.querySelectorAll('.answer').forEach((el) => {
+    const lastElement = e.target.lastElementChild;
+    document.querySelectorAll(".answer").forEach((el) => {
         if (lastElement === el) {
-            return
+            return;
         }
-        el.classList.remove('h-auto')
-        el.previousElementSibling.previousElementSibling.lastElementChild.classList.remove('uil-angle-up')
-        el.previousElementSibling.previousElementSibling.lastElementChild.classList.add('uil-angle-down')
-    })
-    lastElement.classList.toggle('h-auto')
+        el.classList.remove("h-auto");
+        el.previousElementSibling.previousElementSibling.lastElementChild.classList.remove(
+            "uil-angle-up"
+        );
+        el.previousElementSibling.previousElementSibling.lastElementChild.classList.add(
+            "uil-angle-down"
+        );
+    });
+    lastElement.classList.toggle("h-auto");
 
     // change icon
     e.target.firstElementChild.lastElementChild.classList.toggle("uil-angle-up");
