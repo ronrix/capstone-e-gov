@@ -1,7 +1,8 @@
 <template>
     <ImgPreview v-if="isPreviewImg" :img-src="selectedImg" :close-img-preview="toggleImgPreview" />
     <div class="fixed top-0 left-0 right-0 bottom-0 bg-black/20 flex items-center justify-center z-30">
-        <form @submit.prevent="onAccept" class="backdrop-blur-xl bg-white/70 p-5 rounded-lg flex-col flex border w-[500px]">
+        <form @submit.prevent="onAccept"
+            class="backdrop-blur-xl bg-white/70 p-5 rounded-lg flex-col flex border w-full md:w-[500px]">
             <!-- close modal btn -->
             <i @click="closeModal"
                 class="uil uil-times text-black hover:text-blue-500 text-xl absolute top-0 right-2 cursor-pointer"></i>
@@ -15,17 +16,28 @@
                     <p class="font-[500] text-xs mt-2">Email:</p>
                     <h5 class="underline">{{ selectedData?.email }}</h5>
 
-                    <p class="font-[500] text-xs mt-2">Company name: </p>
-                    <h5 class="underline capitalize">{{ selectedData?.data?.companyName ? selectedData?.data?.companyName :
-                        JSON.parse(selectedData?.data).companyName }}</h5>
+                    <p class="font-[500] text-xs mt-2">Company name:</p>
+                    <h5 class="underline capitalize">
+                        {{
+                            selectedData?.data?.companyName
+                            ? selectedData?.data?.companyName
+                            : JSON.parse(selectedData?.data).companyName
+                        }}
+                    </h5>
 
                     <div v-if="selectedData?.type_of_request !== 'business'">
                         <p class="font-[500] text-xs mt-2">Salary:</p>
                         <h5 class="underline capitalize">
-                            {{ new Intl.NumberFormat("en-US", {
-                                style: "currency", currency: "php"
-                            }).format(selectedData?.data.salary ? selectedData?.data.salary :
-                                JSON.parse(selectedData?.data).salary) }}
+                            {{
+                                new Intl.NumberFormat("en-US", {
+                                    style: "currency",
+                                    currency: "php",
+                                }).format(
+                                    selectedData?.data.salary
+                                        ? selectedData?.data.salary
+                                        : JSON.parse(selectedData?.data).salary
+                                )
+                            }}
                         </h5>
                     </div>
 
@@ -47,17 +59,23 @@
                     <p class="font-[500] text-xs mt-2">Description:</p>
                     <div class="line-clamp-2 h-[100px] max-h-[120px] overflow-y-auto scrollbar">
                         {{
-                            selectedData?.data?.description ? selectedData?.data?.description :
-                            JSON.parse(selectedData?.data)?.description
+                            selectedData?.data?.description
+                            ? selectedData?.data?.description
+                            : JSON.parse(selectedData?.data)?.description
                         }}
                     </div>
 
                     <p class="font-[500] text-xs mt-2">View pdf:</p>
-                    <a :href="be_url + '/' + (selectedData?.data.proofFiles ? selectedData?.data.proofFiles : JSON.parse(selectedData?.data)?.proofFiles)"
-                        target="_blank" class="underline">{{
-                            selectedData?.data.proofFiles ? selectedData?.data.proofFiles :
-                            JSON.parse(selectedData?.data)?.proofFiles
-                        }}</a>
+                    <a :href="be_url +
+                            '/' +
+                            (selectedData?.data.proofFiles
+                                ? selectedData?.data.proofFiles
+                                : JSON.parse(selectedData?.data)?.proofFiles)
+                            " target="_blank" class="underline">{{
+            selectedData?.data.proofFiles
+            ? selectedData?.data.proofFiles
+            : JSON.parse(selectedData?.data)?.proofFiles
+        }}</a>
                 </div>
 
                 <div class="overflow-y-auto scrollbar w-[150px]">
@@ -111,7 +129,9 @@ const selectedImg = ref("");
 const isPreviewImg = ref(false);
 const isAcceptSubmit = ref(false);
 const isDeclineSubmit = ref(false);
-const imgs = selectedData?.data.imgs ? selectedData?.data.imgs : JSON.parse(selectedData?.data)?.imgs;
+const imgs = selectedData?.data.imgs
+    ? selectedData?.data.imgs
+    : JSON.parse(selectedData?.data)?.imgs;
 
 // sending email to the requester on the update of their request
 function sendEmail(msg, companyName) {
@@ -144,8 +164,9 @@ function onDecline(id) {
     isDeclineSubmit.value = true;
     declineRequest(id)
         .then((data) => {
-            if (data.res.status == 400) { // don't send the email if error occurs
-                isDeclineSubmit.value = false
+            if (data.res.status == 400) {
+                // don't send the email if error occurs
+                isDeclineSubmit.value = false;
                 return;
             }
             // send an email after deleting the request
@@ -168,8 +189,9 @@ function onAccept() {
     isAcceptSubmit.value = true;
     acceptRequest(selectedData.id)
         .then((data) => {
-            console.log(data)
-            if (data.res.status == 400) { // don't send the email if error occurs
+            console.log(data);
+            if (data.res.status == 400) {
+                // don't send the email if error occurs
                 isAcceptSubmit.value = false;
                 return;
             }
