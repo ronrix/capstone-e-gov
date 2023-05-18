@@ -43,7 +43,17 @@ const rules = {
     required: helpers.withMessage(
       'Business permit a required field to prove that your company is legit',
       required
-    )
+    ),
+    fileSize: helpers.withMessage(
+      'File size should not exceed 5MB',
+      (value) => value && value.size <= 5242880
+    ),
+    fileExtension: helpers.withMessage('Only PDF files are allowed', (value) => {
+      if (!value) return true // Allow empty value (optional field)
+      const allowedExtensions = ['pdf']
+      const fileExtension = value.name.split('.').pop().toLowerCase()
+      return allowedExtensions.includes(fileExtension)
+    })
   }
 }
 const isError = ref(false) // this state is used to display the error message when inputs are not valid
