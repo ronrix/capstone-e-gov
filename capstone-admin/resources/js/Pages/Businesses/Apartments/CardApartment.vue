@@ -1,43 +1,39 @@
 <template>
-    <div class="flex">
-
+    <div class="relative">
         <!-- restore button -->
-        <div class="relative">
-            <div v-if="data.deleted_at" @click="showRestoreModal"
-                class="bg-blue-300 text-blue-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-blue-400 hover:text-blue-200 cursor-pointer z-10">
-                restore</div>
+        <div v-if="data.deleted_at" @click="showRestoreModal"
+            class="bg-blue-300 text-blue-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-blue-400 hover:text-blue-200 cursor-pointer z-10">
+            restore</div>
 
-            <!-- delete button -->
-            <div v-else @click="showDeleteVerificationModal"
-                class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer z-10">
-                delete</div>
+        <!-- delete button -->
+        <div v-else @click="showDeleteVerificationModal"
+            class="bg-red-300 text-red-500 absolute text-xs rounded-lg right-2 top-1 px-3 hover:bg-red-400 hover:text-red-200 cursor-pointer z-10">
+            delete</div>
 
-            <!-- restore -->
-            <RestoreVerificationModal v-if="isRestoreModal" :close-modal="showRestoreModal" :handle-restore="handleRestore"
-                :id="data.id" />
+        <!-- restore -->
+        <RestoreVerificationModal v-if="isRestoreModal" :close-modal="showRestoreModal" :handle-restore="handleRestore"
+            :id="data.id" />
 
-            <!-- delete -->
-            <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
-                :handle-delete="handleDelete" :id="data.id" />
+        <!-- delete -->
+        <DeleteVerificationModal v-if="isVerificationModal" :close-modal="showDeleteVerificationModal"
+            :handle-delete="handleDelete" :id="data.id" />
 
-            <button @click="showPreviewModal(data)">
-
-                <div class="flex flex-col w-[250px] bg-white">
-                    <!---Image-->
-                    <div :style="{ backgroundImage: `url(${imgSrc})` }"
-                        class="rounded-tt-md bg-no-repeat bg-cover bg-center h-[150px] max-h-[150px] object-cover relative">
-                    </div>
-                    <!--content-->
-                    <div class="p-2 flex-1 flex flex-col items-start">
-                        <h3 class="font-bold capitalize text-xl tracking-wide">{{ data.title }}</h3>
-                        <h5 class="text-sm text-gray-500 tracking-wide text-center">
-                            <i class="uil uil-location-arrow"></i>
-                            {{ data.location }}
-                        </h5>
-                    </div>
+        <button @click="showPreviewModal(data)">
+            <div class="flex flex-col w-full sm:w-[250px] bg-white h-[250px] max-h-[300px] overflow-hidden">
+                <!---Image-->
+                <div class="rounded-tt-md bg-no-repeat bg-cover bg-center h-[150px] max-h-[150px] overflow-hidden">
+                    <img :src="imgSrc" :alt="'apartment ' + data.title" class="object-cover">
                 </div>
-            </button>
-        </div>
+                <!--content-->
+                <div class="p-2 flex-1 flex flex-col items-start">
+                    <h3 class="font-bold capitalize text-xl">{{ data.title }}</h3>
+                    <h5 class="text-sm text-gray-500 line-clamp-3">
+                        <i class="uil uil-location-arrow"></i>
+                        {{ data.location }}
+                    </h5>
+                </div>
+            </div>
+        </button>
     </div>
 </template>
 

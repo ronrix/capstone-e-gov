@@ -10,7 +10,7 @@
       <SearchInput placeholder="search a festival" class="flex-1 mr-2 w-auto mb-3 md:mb-0" @searchFn="searchFn" />
 
       <!-- filter the deleted data -->
-      <div class="flex-1 flex itms-center">
+      <div class="flex-1 flex flex-col md:flex-row itms-center">
         <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
         <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
       </div>

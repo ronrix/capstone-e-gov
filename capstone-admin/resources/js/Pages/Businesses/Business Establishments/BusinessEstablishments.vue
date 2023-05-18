@@ -10,7 +10,7 @@
 
         <div class="w-full flex flex-col md:flex-row md:self-center items-center">
             <SearchInput placeholder="search" class="flex-1 mr-2 w-auto" @searchFn="searchFn" />
-            <div class="flex-1 flex items-center">
+            <div class="flex-1 flex flex-col md:flex-row w-full">
                 <SelectTag type="category" :value="filterValue" :filterFn="filterBy" :filterArray="filterBusiness"
                     addedClass="max-h-[300px] !w-[300px] overflow-y-scroll scrollbar" />
 

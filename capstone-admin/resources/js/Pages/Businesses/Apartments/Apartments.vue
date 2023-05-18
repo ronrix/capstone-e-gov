@@ -9,7 +9,7 @@
     <div class="w-full flex flex-col md:flex-row md:self-center items-center mb-5">
       <SearchInput class="flex-1 w-1/2 mr-3" @searchFn="searchFn" placeholder="Search for apartments" />
 
-      <div class="flex-1 flex items-center">
+      <div class="flex-1 flex w-full flex-col md:flex-row">
         <!-- filter the deleted data -->
         <span class="text-gray-500 font-bold text-sm mx-2 capitalize"> active: </span>
         <SelectTag type="active" :filterFn="filterDelete" :value="activeData" :filterArray="['active', 'deleted']" />
@@ -28,7 +28,7 @@
     </div>
 
 
-    <div v-else class="flex flex-wrap gap-2">
+    <div v-else class="flex flex-wrap gap-3">
       <CardApartment v-for="data in filteredData" :key="data.id" :data="data" :showPreviewModal="showPreviewModal"
         :handle-delete="handleDeleteApartment" :handle-restore="handleRestore" />
     </div>

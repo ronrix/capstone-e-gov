@@ -8,7 +8,7 @@
         class="block">COMPONENT OF PILILLA LOGO</span></h1>
 
     <div class="flex flex-col">
-      <div class="w-[460px] md:w-[480px] lg:w-[500px] flex flex-col bg-white rounded-lg pt-0 self-center">
+      <div class="md:w-[480px] lg:w-[500px] flex flex-col bg-white rounded-lg pt-0 self-center">
         <img class="w-[460px] md:w-[480px] lg:w-[500px]"
           :src="showSymbolImg ? showSymbolImg : validURL(dataOfficialSeal?.symbol_logo_img_link) ? dataOfficialSeal?.symbol_logo_img_link : be_url + '/' + dataOfficialSeal?.symbol_logo_img_link"
           alt="">
