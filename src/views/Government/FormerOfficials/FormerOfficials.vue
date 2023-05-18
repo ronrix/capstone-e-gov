@@ -3,7 +3,7 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import Loading from '../../../components/Loading.vue'
 import OfficialsCard from '../../../components/Officials/OfficialsCard.vue'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { fetchData } from '../../../utils/axios-instance'
 
 const loading = ref(true)
@@ -44,15 +44,17 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Former Officials | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>
-  <!-- add tab title -->
-  <head>
-    <title>Former Officials | Pililla Rizal</title>
-  </head>
-
   <HeaderSection />
   <!-- content -->
   <WrapperContainer class="mt-10">

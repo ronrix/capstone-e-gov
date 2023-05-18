@@ -6,7 +6,7 @@ import Requirements from './ServicesComponents/Requirements.vue'
 import TableSteps from './ServicesComponents/TableSteps.vue'
 import Hero from './ServicesComponents/Hero.vue'
 import ApplySection from './ServicesComponents/ApplySection.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { fetchData } from '../../utils/axios-instance'
 import { useRoute } from 'vue-router'
 
@@ -24,15 +24,18 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Services | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 
 <template>
-  <head>
-    <title>Scholarship Program | Pililla Rizal</title>
-  </head>
-
   <HeaderSection />
   <!-- hero section -->
 

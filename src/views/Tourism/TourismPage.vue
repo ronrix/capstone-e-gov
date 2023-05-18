@@ -1,7 +1,7 @@
 <script setup>
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { formatImgs } from '../../utils/imgFormat'
 import Loading from '../../components/Loading.vue'
 
@@ -26,7 +26,14 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Tourism | Pililla Rizal'
+
   tourism.value = JSON.parse(localStorage.getItem('tourisms'))
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>

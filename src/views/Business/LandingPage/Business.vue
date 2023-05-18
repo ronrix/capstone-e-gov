@@ -5,10 +5,17 @@ import HeroBusinessVue from '../LandingPage/HeroBusiness.vue'
 import FirstSectionBusiness from '../LandingPage/FirstSectionBusiness.vue'
 import SecondSectionBusiness from '../LandingPage/SecondSectionBusiness.vue'
 import ThirdSectionBusiness from './ThirdSectionBusiness.vue'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
+
+  // add tab title
+  document.title = 'Business | Pililla Rizal'
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 

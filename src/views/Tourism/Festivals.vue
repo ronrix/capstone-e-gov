@@ -3,7 +3,7 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { fetchData } from '../../utils/axios-instance'
 import Loading from '../../components/Loading.vue'
 import { useFestivalStore } from '../../stores/festival-store'
@@ -36,7 +36,14 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Festivals | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 const texthover = ref(false)
 function hoverover() {

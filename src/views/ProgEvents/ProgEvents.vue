@@ -6,7 +6,7 @@ import { useProgEventsStore } from '../../stores/prog-events-store'
 import { fetchData } from '../../utils/axios-instance'
 import HeroEvents from './HeroEvents.vue'
 import ProgEventsCard from './ProgEventsCard.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const store = useProgEventsStore()
 const loading = ref(true)
@@ -33,13 +33,17 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Program and Events | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>
-  <head>
-    <title>Programs and Events | Pililla</title>
-  </head>
   <HeaderSection />
 
   <div class="">

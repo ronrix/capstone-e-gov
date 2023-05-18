@@ -3,7 +3,7 @@ import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSectionVue from '../../../components/FooterSection/FooterSection.vue'
 import HeroApartment from './HeroApartment.vue'
 import Filter from './Filter.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { fetchData } from '../../../utils/axios-instance'
 import BusinessesCard from '../BusinessesCard.vue'
 import DisplayModal from '../DisplayModal.vue'
@@ -54,7 +54,14 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Apartments | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 

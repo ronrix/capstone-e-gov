@@ -1,11 +1,18 @@
 <script setup>
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 
 onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
+
+  // add tab title
+  document.title = 'Mission and Vision | Pililla Rizal'
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>

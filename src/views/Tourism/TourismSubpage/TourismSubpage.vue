@@ -4,7 +4,7 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, onUnmounted } from 'vue'
 import { formatImgs } from '../../../utils/imgFormat'
 import { useRoute } from 'vue-router'
 import { useTourism } from '../../../stores/tourisms-store'
@@ -52,8 +52,15 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Tourism | Pililla Rizal'
+
   // call the data
   loadTourisms()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>

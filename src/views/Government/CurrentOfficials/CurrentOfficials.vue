@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import OfficialsCard from '../../../components/Officials/OfficialsCard.vue'
@@ -34,15 +34,17 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Current Officials | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>
-  <!-- add tab title -->
-  <head>
-    <title>Current Officials | Pililla Rizal</title>
-  </head>
-
   <HeaderSection />
   <!-- content -->
   <WrapperContainer class="mt-10">

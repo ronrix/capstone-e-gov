@@ -4,7 +4,7 @@ import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import TablesRows from './TablesRows.vue'
 import CardOfficialSeal from './CardOfficialSeal.vue'
 import { fetchData } from '../../../utils/axios-instance'
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
 import { ref } from 'vue'
 import Loading from '../../../components/Loading.vue'
 
@@ -25,7 +25,14 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Official Seal | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 
 const colors = [
@@ -84,9 +91,6 @@ const symbols = [
 </script>
 
 <template>
-  <head>
-    <title>Official Seal | Pililla Rizal</title>
-  </head>
   <HeaderSection />
   <WrapperContainer>
     <div class="w-full flex flex-col mt-10 mb-10">

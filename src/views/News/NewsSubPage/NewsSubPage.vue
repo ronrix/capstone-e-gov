@@ -5,7 +5,7 @@ import SuggestionCard from './Suggestions/SuggestionCard.vue'
 
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import moment from 'moment'
 import { useNewsStore } from '../../../stores/news-store'
@@ -40,14 +40,17 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'News | Pililla Rizal'
+
   loadNews()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>
-  <!-- add tab title -->
-  <head>
-    <title>News | Pililla Rizal</title>
-  </head>
   <HeaderSection />
 
   <WrapperContainer>

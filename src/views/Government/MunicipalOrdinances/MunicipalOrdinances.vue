@@ -2,7 +2,7 @@
 import HeaderSection from '../../../components/Header/HeaderSection.vue'
 import FooterSection from '../../../components/FooterSection/FooterSection.vue'
 import PDFViewer from 'pdf-viewer-vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { fetchData } from '../../../utils/axios-instance'
 import { be_url } from '../../../assets/config/config'
 
@@ -27,14 +27,17 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Municipal Ordinances | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>
-  <head>
-    <title>Ordinances | Pililla Rizal</title>
-  </head>
-
   <HeaderSection />
   <WrapperContainer>
     <div class="flex items-center">

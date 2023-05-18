@@ -2,7 +2,7 @@
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import Carousel from '../../components/Carousel/Carousel.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { formatImgs } from '../../utils/imgFormat'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
@@ -12,14 +12,17 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Tourist Attractions | Pililla Rizal'
+
   tourism.value = JSON.parse(localStorage.getItem('tourisms'))
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template >
-  <head>
-    <title>Tourist Attractions | Pililla Rizal</title>
-  </head>
-
   <HeaderSection></HeaderSection>
   <div
     class="flex bg-no-repeat h-[600px] bg-cover bg-[url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/16/14/23/b1/pililla-wind-farm.jpg?w=1200&h=-1&s=1')]"

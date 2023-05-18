@@ -3,7 +3,7 @@ import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import CurrentNews from './CurrentNews.vue'
 import NewsCard from './NewsCard.vue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { fetchData } from '../../utils/axios-instance'
 import { useNewsStore } from '../../stores/news-store'
 import Loading from '../../components/Loading.vue'
@@ -35,16 +35,18 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'News | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 
 <template>
-  <!-- add tab title -->
-  <head>
-    <title>News | Pililla Rizal</title>
-  </head>
-
   <HeaderSection />
   <!-- error occured -->
   <WrapperContainer v-if="isError">

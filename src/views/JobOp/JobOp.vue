@@ -2,7 +2,7 @@
 import HeaderSection from '../../components/Header/HeaderSection.vue'
 import JobCard from './JobCard.vue'
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { fetchData } from '../../utils/axios-instance'
 import Loading from '../../components/Loading.vue'
 
@@ -33,13 +33,17 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  // add tab title
+  document.title = 'Job Opportunities | Pililla Rizal'
+
   axiosCall()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>
-  <head>
-    <title>Job Opportunities | Pililla Rizal</title>
-  </head>
   <HeaderSection />
 
   <WrapperContainer class="mt-10">

@@ -4,7 +4,7 @@ import HeaderSection from '../../components/Header/HeaderSection.vue'
 
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 import moment from 'moment'
 import { formatImgs } from '../../utils/imgFormat'
@@ -34,14 +34,19 @@ const loadNews = () => {
 }
 
 onMounted(() => {
+  // scroll on top when this component rendered
+  window.scrollTo(0, 0)
+
+  // add tab title
+  document.title = 'Program and Events | Pililla Rizal'
   loadNews()
+})
+onUnmounted(() => {
+  // add tab title
+  document.title = 'Municipality of Pililla Rizal'
 })
 </script>
 <template>
-  <!-- add tab title -->
-  <head>
-    <title>News | Pililla Rizal</title>
-  </head>
   <HeaderSection />
 
   <WrapperContainer>
