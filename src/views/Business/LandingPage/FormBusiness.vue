@@ -127,6 +127,8 @@ async function onSubmit() {
       }
       // set the isSubmitting to false to remove the loading animation
       isSubmitting.value = false
+      // scroll on top when this component rendered
+      window.scrollTo(0, 0)
     })
     .catch((err) => {
       notification.value = err.response.data.res
@@ -155,7 +157,7 @@ onMounted(() => {
             <p class="text-secondary text-sm font-normal">enter your full name here</p>
             <input
               v-model="form.fullname"
-              class="outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full"
+              class="outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full text-dark"
               type="text"
             />
             <p v-if="v$.fullname.$error && isError" class="text-xs text-red-400 mb-2">
@@ -167,7 +169,7 @@ onMounted(() => {
             <p class="text-secondary text-sm font-normal">enter your email here</p>
             <input
               v-model="form.email"
-              class="flex-1 outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full"
+              class="flex-1 outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full text-dark"
               type="text"
             />
             <p v-if="v$.email.$error && isError" class="text-xs text-red-400 mb-2">
@@ -181,7 +183,7 @@ onMounted(() => {
             <p class="text-secondary text-sm font-normal">enter your full name here</p>
             <input
               v-model="form.companyName"
-              class="outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full"
+              class="outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full text-dark"
               type="text"
             />
             <p v-if="v$.companyName.$error && isError" class="text-xs text-red-400 mb-2">
@@ -193,7 +195,7 @@ onMounted(() => {
             <p class="text-secondary text-sm font-normal">enter your business address here</p>
             <input
               v-model="form.location"
-              class="flex-1 outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full"
+              class="flex-1 outline-blue-300 bg-white border p-2 md:p-0.5 text-normal rounded-sm w-full text-dark"
               type="text"
             />
             <p v-if="v$.location.$error && isError" class="text-xs text-red-400 mb-2">
@@ -204,7 +206,7 @@ onMounted(() => {
         <label class="text-sm md:text-lg text-darkgray dark:text-bggray w-full flex-1 block mb-3"
           >Category
           <p class="text-secondary text-sm font-normal">which category your business belongs to</p>
-          <select v-model="form.category" class="bg-slate-100 px-2">
+          <select v-model="form.category" class="bg-slate-100 px-2 text-dark">
             <option value="convenience store" selected>convenience store</option>
             <option value="mall">mall</option>
             <option value="restaurant">restaurant</option>
@@ -220,7 +222,7 @@ onMounted(() => {
           <p class="text-secondary text-sm font-normal mb-1">enter your business descrition here</p>
           <textarea
             v-model="form.description"
-            class="w-full overflow-y-auto scrollbar h-[400px] max-h-[400px] outline-blue-300 bg-white border p-0.5 text-normal rounded-sm"
+            class="w-full overflow-y-auto scrollbar h-[400px] max-h-[400px] outline-blue-300 bg-white border p-0.5 text-normal rounded-sm text-dark"
           ></textarea>
           <p v-if="v$.description.$error && isError" class="text-xs text-red-400 mb-2">
             {{ v$.description.$errors[0].$message }}
