@@ -89,6 +89,11 @@ class ServicesController extends Controller
             $service = new Service;
             $service->service_department = $request->input("department");
             $service->title = $request->input("title");
+
+            # adding empty values for email and appliaction_form
+            $service->email = "";
+            $service->application_form = "";
+
             $service->description = $request->input("description");
             $service->service_type = $request->input("serviceType");
             $service->save(); #save the new service
