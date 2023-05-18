@@ -182,5 +182,12 @@ export default createRouter({
       name: "SearchPage",
       component: () => import("../views/Search/Search.vue")
     },
+
+    // error router handler
+    {
+      path: "/:any(.*)",
+      name: "404NotFound",
+      component: () => import("../views/error/404.vue")
+    }
   ]
 })
