@@ -20,7 +20,9 @@ function showBenefit() {
       <i class="uil uil-arrow-right arrow-animate" />
     </RouterLink>
 
-    <h3 class="text-center font-['display'] text-5xl sm:w-1/2 text-darkgray mt-5 dark:text-bggray">
+    <h3
+      class="text-center font-['display'] text-3xl md:text-5xl sm:w-1/2 text-darkgray mt-5 dark:text-bggray font-bold"
+    >
       Apply for Assistance/Services
     </h3>
     <p class="text-center text-sm dark:text-bggray">

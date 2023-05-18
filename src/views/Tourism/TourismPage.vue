@@ -90,28 +90,28 @@ onMounted(() => {
   </div>
 
   <WrapperContainer>
-    <div class="flex justify-between items-center">
-      <p class="text-3xl font-semibold w-1/2 text-dark dark:text-bggray capitalize">
+    <div class="flex flex-col sm:flex-row items-start md:justify-between md:items-center">
+      <p class="text-xl md:text-3xl font-semibold w-1/2 text-dark dark:text-bggray capitalize">
         Find your Best Destination.
       </p>
-      <div>
+      <div class="flex-1 w-full">
         <p class="text-xs pb-1 text-secondary">We have more destination you can</p>
         <form
-          class="relative flex items-center justify-center drop-shadow-lg rounded-3xl text-sm bg-gray-100 text-dark px-3 py-2"
+          class="w-full relative flex items-center justify-center drop-shadow-lg rounded-3xl bg-gray-100 text-dark px-3 py-1"
           @submit.prevent="handleSearch"
         >
           <i class="uil uil-map-marker text-base text-dark mr-2" />
           <input
             v-model="searchInput"
-            class="bg-transparent w-full outline-none"
+            class="bg-transparent w-full outline-none text-sm"
             type="text"
             placeholder="Search destinations"
           />
           <button
             type="submit"
-            class="w-12 h-10 rounded-full bg-primarylight flex items-center justify-center hover:bg-primary"
+            class="w-[40px] h-[30px] rounded-full bg-primarylight flex items-center justify-center hover:bg-primary"
           >
-            <i class="uil uil-search text-white text-base" />
+            <i class="uil uil-search text-white m-0 text-sm" />
           </button>
         </form>
       </div>

@@ -8,7 +8,7 @@ defineProps({
 
 <template>
   <div
-    class="fixed z-20 top-0 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-700 bg-white dark:bg-dark delay-300 h-screen z-100"
+    class="fixed z-20 top-0 bottom-0 right-0 left-0 flex flex-col overflow-hidden duration-700 bg-white dark:bg-dark delay-300 h-screen z-100 overflow-y-auto"
     :class="{
       'translate-x-0 opacity-100': selectedSubLinks,
       'translate-x-full opacity-0': !selectedSubLinks
