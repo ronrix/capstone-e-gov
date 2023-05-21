@@ -1,1 +1,1 @@
-export const be_url = "http://admin.pililla-rizal.online";
+export const be_url = "https://admin.pililla-rizal.online";

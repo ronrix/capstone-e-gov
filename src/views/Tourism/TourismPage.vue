@@ -98,7 +98,9 @@ onUnmounted(() => {
 
   <WrapperContainer>
     <div class="flex flex-col sm:flex-row items-start md:justify-between md:items-center">
-      <p class="text-xl md:text-3xl font-semibold w-1/2 text-dark dark:text-bggray capitalize">
+      <p
+        class="text-xl sm:text-3xl font-semibold w-1/2 md:w-2/3 text-dark dark:text-bggray capitalize"
+      >
         Find your Best Destination.
       </p>
       <div class="flex-1 w-full">
