@@ -1,5 +1,17 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
+import { fetchData } from '../../utils/axios-instance'
+
+const socMed = ref()
+const axiosCall = () => {
+  fetchData('/contacts')
+    .then((data) => {
+      socMed.value = data.contacts[1]
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+}
 
 const logoByTheme = ref('/images/better-pililla-white.png')
 // Watch localStorage for changes
@@ -17,6 +29,8 @@ watch(
 
 // set the appropriate logo
 onMounted(() => {
+  axiosCall()
+
   // Update logo image source based on localStorage value
   if (localStorage.getItem('theme') === 'white') {
     logoByTheme.value = '/images/better-pililla-black.png'
@@ -47,31 +61,19 @@ onMounted(() => {
           <RouterLink to="/about/history" class="hover:underline">History</RouterLink>
           <RouterLink to="/tourism" class="hover:underline">Tourism</RouterLink>
           <RouterLink to="/job-op" class="hover:underline">Job Opportunities</RouterLink>
-          <div class="flex items-center gap-3">
-            <a
-              href="https://web.facebook.com/profile.php?id=100064848094892"
-              target="_blank"
-              class="hover:text-primarylight"
-              ><i class="uil uil-facebook text-lg"></i
-            ></a>
-            <a
-              href="https://web.facebook.com/profile.php?id=100064848094892"
-              target="_blank"
-              class="hover:text-primarylight"
-              ><i class="uil uil-instagram text-lg"></i
-            ></a>
-            <a
-              href="https://web.facebook.com/profile.php?id=100064848094892"
-              target="_blank"
-              class="hover:text-primarylight"
-              ><i class="uil uil-twitter text-lg"></i
-            ></a>
-            <a
-              href="https://web.facebook.com/profile.php?id=100064848094892"
-              target="_blank"
-              class="hover:text-primarylight"
-              ><i class="uil uil-youtube text-lg"></i
-            ></a>
+          <div v-if="socMed" class="flex flex-col items-center">
+            <div v-for="(media, key) in JSON.parse(socMed.contact_details)" :key="key">
+              <div v-if="key !== 'gmail'">
+                <a
+                  v-for="(link, id) in media"
+                  :key="id"
+                  :href="link"
+                  target="_blank"
+                  class="hover:text-primarylight"
+                  ><i :class="`uil uil-${key} text-lg`"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
         <!-- government links -->
