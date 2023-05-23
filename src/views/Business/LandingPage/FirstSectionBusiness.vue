@@ -115,7 +115,7 @@ const bank = computed(() => bankCount.value)
         <span class="text-lg text-dark dark:text-white font-normal">{{ pharmacy }}</span>
       </div>
       <!-- single item -->
-      <a href="" class="flex flex-col items-center">
+      <div class="flex flex-col items-center">
         <i
           class="uil uil-university text-4xl sm:text-5xl lg:text-6xl text-dark dark:text-white"
         ></i>
@@ -125,7 +125,7 @@ const bank = computed(() => bankCount.value)
           Bank
         </h2>
         <span class="text-lg text-dark dark:text-white font-normal">{{ bank }}</span>
-      </a>
+      </div>
     </div>
     <div
       class="absolute w-0 md:w-[340px] h-[340px] bg-primary opacity-10 -z-10- -left-52 lg:-left-32 rounded-full"

@@ -4,7 +4,7 @@
   <!-- business permits -->
   <div class="mt-10 bg-secondary p-5">
     <WrapperContainer class="flex items-center justify-center flex-col">
-      <h4 class="text-2xl text-bggray font-bold">Want to Establish a Business here in Pililla</h4>
+      <h4 class="text-2xl text-bggray font-bold">Want to Establish a Business here in Pililla?</h4>
       <h5 class="text-bggray text-xl">
         Get to know the process and requirements and fill up the application form
       </h5>

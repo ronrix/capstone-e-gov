@@ -61,7 +61,7 @@ onMounted(() => {
     >
       <div class="flex flex-col items-center gap-1">
         <div class="text-xl md:text-2xl text-white dark:tex-dark font-light">
-          {{ apartments?.length }}+
+          {{ apartments?.length }}
         </div>
         <a
           href="#"
@@ -72,7 +72,7 @@ onMounted(() => {
       <div class="border border-white h-[100px]"></div>
       <div class="flex flex-col items-center gap-1">
         <div class="text-xl md:text-2xl text-white dark:tex-dark font-light">
-          {{ business?.length }}+
+          {{ business?.length }}
         </div>
         <a
           href="#"
