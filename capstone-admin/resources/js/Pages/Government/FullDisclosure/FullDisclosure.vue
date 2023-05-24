@@ -26,11 +26,12 @@
         class="border border-x-0 border-b-0 border-t-2 border-t-slate-100 py-2 px-3 text-sm text-gray-800 my-2 flex items-center justify-between">
         <span class="font-semibold">{{ file.filename }}</span>
         <div>
+          <a :href="`${be_url}/${file.filepath}`" target="_blank" class="text-sm mr-3 text-blue-700">view</a>
           <a :href="`${be_url}/file/download/${file.filepath.split('/')[2] + '_' + file.filename}`">
-            <i title="download" class="uil uil-download-alt text-blue-600 text-lg cursor-pointer"></i>
+            <i title="download" class="uil uil-download-alt text-blue-600 text-lg cursor-pointer hover:text-blue-500"></i>
           </a>
           <i @click="showDeleteVerificationModal(file.id, 'fdr')" title="delete"
-            class="uil uil-trash-alt text-red-600 text-base ml-3 cursor-pointer"></i>
+            class="uil uil-trash-alt text-red-600 text-base ml-3 cursor-pointer hover:text-red-500"></i>
         </div>
       </div>
     </div>
