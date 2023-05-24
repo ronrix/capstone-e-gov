@@ -105,5 +105,12 @@ export const router = createRouter({
       component: () => import("../Pages/Services/Services.vue"),
       props: true
     },
+
+    // error router handler
+    {
+      path: "/:any(.*)",
+      name: "404NotFound",
+      component: () => import("../Pages/error/404.vue")
+    }
   ]
 });
