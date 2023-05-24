@@ -23,7 +23,8 @@
             <p>Loading...</p>
         </div>
         <OrdinanceCard v-else v-for="ordinance in dataOrdinances" :key="ordinance.id" :ordinance="ordinance"
-            :handle-update-ordinance="handleUpdateOrdinance" :handle-delete-ordinance="handleDeleteOrdinance" />
+            :handle-update-ordinance="handleUpdateOrdinance" :handle-delete-ordinance="handleDeleteOrdinance"
+            :handle-restore="handleRestore" />
 
         <!-- add new news btn -->
         <AddBtn :showAddModal="showAddNewModal" class="z-20" />
@@ -86,6 +87,8 @@ function filterDelete(type, value) {
                 originalDataOrdinances.value = data.ordinances;
                 return;
             }
+            dataOrdinances.value = [];
+            originalDataOrdinances.value = [];
             isEmpty.value = true;
         })
         .catch(err => {
@@ -206,6 +209,33 @@ async function handleCreateNewOrdinance(formData) {
             return;
         });
 
+}
+
+// restore a news data based on the passed id
+async function handleRestore(id) {
+    return await axios.post(be_url + "/ordinances/restore", { id }).then(({ data }) => {
+        // set the response msg
+        resMsg.value = data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+
+        dataOrdinances.value = data.ordinances;
+        originalDataOrdinances.value = data.ordinances;
+        if (!dataOrdinances.value.length) isEmpty.value = true;
+        isLoading.value = false;
+
+        activeData.value = "deleted";
+        return;
+    }).catch(err => {
+        // set the response msg
+        resMsg.value = err.response.data.res;
+        // hide the notification message in 3s
+        setTimeout(() => {
+            resMsg.value = null;
+        }, 3000);
+    });
 }
 
 onMounted(() => {
