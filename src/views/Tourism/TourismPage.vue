@@ -4,6 +4,7 @@ import HeaderSection from '../../components/Header/HeaderSection.vue'
 import { onMounted, onUnmounted, ref } from 'vue'
 import { formatImgs } from '../../utils/imgFormat'
 import Loading from '../../components/Loading.vue'
+import { fetchData } from '../../utils/axios-instance'
 
 function handleSearch() {
   loading.value = true
@@ -19,12 +20,24 @@ function handleSearch() {
   })
 }
 
+// call the api
+const axiosTourisms = () => {
+  fetchData('/tourist-attractions')
+    .then((data) => {
+      tourism.value = data.tourisms
+      localStorage.setItem('tourisms', JSON.stringify(data.tourism))
+    })
+    .catch((err) => console.log(err))
+}
+
 const loading = ref(false)
 const searchInput = ref('')
 const tourism = ref()
 onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
+
+  axiosTourisms()
 
   // add tab title
   document.title = 'Tourism | Pililla Rizal'
@@ -140,7 +153,7 @@ onUnmounted(() => {
       >
         <img
           class="object-cover h-[250px] w-full"
-          :src="formatImgs(data.img_link.split(','))"
+          :src="formatImgs(data.img_link.split(','))[0]"
           alt=""
         />
         <div class="py-5 px-3">

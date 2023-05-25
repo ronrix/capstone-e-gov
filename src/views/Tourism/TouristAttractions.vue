@@ -6,11 +6,24 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { formatImgs } from '../../utils/imgFormat'
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
+import { fetchData } from '../../utils/axios-instance'
 
 const tourism = ref()
+
+const axiosTourisms = () => {
+  fetchData('/tourist-attractions')
+    .then((data) => {
+      tourism.value = data.tourism
+      localStorage.setItem('tourisms', JSON.stringify(data.tourism))
+    })
+    .catch((err) => console.log(err))
+}
+
 onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
+
+  axiosTourisms()
 
   // add tab title
   document.title = 'Tourist Attractions | Pililla Rizal'
@@ -95,7 +108,7 @@ onUnmounted(() => {
           {{ data.title }}
         </h2>
         <div
-          class=":text-dark dark:text-bgLightyBlue leading-loose markdown line-clamp-5"
+          class=":text-dark dark:text-bgLightyBlue leading-loose markdown line-clamp-5 overflow-hidden max-h-[300px]"
           :innerHTML="DOMPurify.sanitize(marked(data.description))"
         ></div>
         <div class="group flex w-fit">
@@ -174,5 +187,12 @@ onUnmounted(() => {
   font-size: 1.5em;
   margin-top: 0.5em;
   font-weight: bold;
+}
+.markdown a {
+  font-size: 1em;
+  text-decoration: underline;
+}
+.markdown a:hover {
+  color: #cd4945;
 }
 </style>

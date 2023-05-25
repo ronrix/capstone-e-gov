@@ -10,6 +10,7 @@ import { useRoute } from 'vue-router'
 import { useTourism } from '../../../stores/tourisms-store'
 import TourismSuggestionCard from '../TourismSuggestions/TourismSuggestionCard.vue'
 import { useFestivalStore } from '../../../stores/festival-store'
+import { fetchData } from '../../../utils/axios-instance'
 
 const storeTourism = useTourism()
 const storeFestival = useFestivalStore()
@@ -20,6 +21,26 @@ const description = ref('')
 const imgURL = ref()
 const suggestionData = ref()
 const typeOfData = ref(route.path.split('/')[1])
+
+const store = useTourism()
+
+const axiosTourisms = () => {
+  if (typeOfData.value === 'festivals') {
+    fetchData('/festivals')
+      .then((data) => {
+        storeFestival.setFestivals(data.festivals)
+        localStorage.setItem('fest', JSON.stringify(data.festivals))
+      })
+      .catch((err) => console.log(err))
+  } else {
+    fetchData('/tourist-attractions')
+      .then((data) => {
+        store.setTourism(data.tourism)
+        localStorage.setItem('tourisms', JSON.stringify(data.tourism))
+      })
+      .catch((err) => console.log(err))
+  }
+}
 
 const loadTourisms = () => {
   // find which data should be rendered
@@ -51,6 +72,8 @@ const loadTourisms = () => {
 onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
+
+  axiosTourisms()
 
   // add tab title
   document.title = 'Tourism | Pililla Rizal'
@@ -117,5 +140,12 @@ onUnmounted(() => {
   font-size: 1.5em;
   margin-top: 0.5em;
   font-weight: bold;
+}
+.markdown a {
+  font-size: 1em;
+  text-decoration: underline;
+}
+.markdown a:hover {
+  color: #cd4945;
 }
 </style>
