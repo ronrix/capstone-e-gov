@@ -60,7 +60,7 @@ onMounted(() => {
           >
           <RouterLink to="/about/history" class="hover:underline">History</RouterLink>
           <RouterLink to="/tourism" class="hover:underline">Tourism</RouterLink>
-          <RouterLink to="/job-op" class="hover:underline">Job Opportunities</RouterLink>
+          <RouterLink to="/government/job-op" class="hover:underline">Job Opportunities</RouterLink>
           <div v-if="socMed" class="flex flex-col items-center">
             <div v-for="(media, key) in JSON.parse(socMed.contact_details)" :key="key">
               <div v-if="key !== 'gmail'">

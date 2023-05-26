@@ -12,7 +12,7 @@ function showBenefit() {
 <template>
   <div class="flex items-center justify-center flex-col gap-2 relative">
     <RouterLink
-      to="/news"
+      to="/government/news"
       class="flex items-center px-3 rounded-full bg-primary py-1 text-white font-bold text-xs"
     >
       <span class="px-2 bg-white rounded-full text-darkgray mr-3">news</span>

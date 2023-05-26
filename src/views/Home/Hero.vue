@@ -51,7 +51,7 @@ onMounted(() => {
         Get to know the places in pililla
       </h3>
       <RouterLink
-        to="/tourist-attractions"
+        to="/tourism/tourist-attractions"
         class="text-sm sm:text-base capitalize bg-primary rounded-md text-white px-3 py-1 cursor-pointer hover:bg-primarylight font-bold"
       >
         <i class="uil uil-map-marker-question mr-2" />
