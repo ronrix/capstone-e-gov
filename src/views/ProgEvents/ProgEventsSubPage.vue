@@ -69,7 +69,7 @@ onUnmounted(() => {
           {{ progEvents?.title }}
         </h3>
 
-        <img class="w-full" :src="imgURL" alt="" />
+        <img class="w-full" :src="imgURL" :alt="progEvents?.title" />
 
         <div
           class=":text-dark dark:text-bgLightyBlue text-justify leading-loose"

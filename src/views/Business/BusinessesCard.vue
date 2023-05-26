@@ -11,7 +11,7 @@ defineProps({
   <div
     class="flex flex-col gap-3 md:gap-4 mt-3 bg-white dark:bg-dark px-0 pt-0 pb-3 border dark:border-gray-500 shadow-sm"
   >
-    <img :src="formatImgs(data.img_link.split(','))[0]" alt="" class="h-[250px] object-cover" />
+    <img :src="formatImgs(data.img_link.split(','))[0]" :alt="`this is the view of the apartment from ${data?.location}`" class="h-[250px] object-cover" />
     <div class="flex-1 flex flex-col gap-1">
       <h1 class="text-sm sm:text-xl lg:text-lg text-dark dark:text-white font-bold ml-1 capitalize">
         {{ data?.title }}

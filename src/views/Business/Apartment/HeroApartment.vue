@@ -20,7 +20,7 @@
     <img
       class="absolute w-full md:w-[50%] lg:w-[40%] h-[400px] top-0 right-0 -z-10 opacity-90 md:opacity-100"
       src="/images/apartment.png"
-      alt=""
+      alt="showing the apartments subdivision"
     />
   </div>
 </template>

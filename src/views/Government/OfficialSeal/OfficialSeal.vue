@@ -7,6 +7,7 @@ import { fetchData } from '../../../utils/axios-instance'
 import { onMounted, onUnmounted } from 'vue'
 import { ref } from 'vue'
 import Loading from '../../../components/Loading.vue'
+import { be_url } from '../../../assets/config/config'
 
 const seal = ref([])
 const loading = ref(true)
@@ -100,9 +101,10 @@ const symbols = [
         photographs and symbolism of <span class="block">component of pililla logo</span>
       </h1>
       <img
+        v-if="seal?.symbol_logo_img_link"
         class="self-center xs:w-full sm:w-[500px] md:w-[600px] h-300 md:h-[390px] lg:h-[400px] rounded-md"
-        src="/images/official-seal.jpg"
-        alt=""
+        :src="be_url + '/' + seal?.symbol_logo_img_link"
+        alt="symbolism of component of pililla rizal logo"
       />
       <!-- tables -->
       <div class="flex flex-col md:flex-row gap-5 mt-20 mx-2 md:mx-5 lg:mx-24">

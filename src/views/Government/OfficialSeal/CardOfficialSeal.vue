@@ -27,9 +27,8 @@ defineProps({
         </p>
       </div>
       <img
-        class=""
         :src="formatImgs(data.img_link.split(','))[0]"
-        alt=""
+        :alt="`pililla rizal logo of ${data?.title}`"
         :class="{
           'order-first md:order-last w-[300px]': idx % 2 === 0,
           'order-first': idx % 2 !== 0

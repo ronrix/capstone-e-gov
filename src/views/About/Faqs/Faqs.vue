@@ -50,10 +50,10 @@ onUnmounted(() => {
       <p class="text-sm md:text-normal text-primary dark:text-primarylight font-bold uppercase">
         faq<span class="lowercase">s</span>
       </p>
-      <h1 class="text-dark dark:text-white font-light text-3xl md:text-4xl capitalize">
+      <h1 class="text-dark dark:text-white font-light text-3xl md:text-4xl capitalize text-center">
         Frequenlty asked questions
       </h1>
-      <h4 class="text-secondary text-sm text-center">
+      <h4 class="text-secondary dark:text-bggray text-sm text-center">
         Got any question? Find our FAQs here. If your questions hasn't been answered here, drop us a
         line or use our
         <RouterLink to="/about/contacts" class="text-primarylight">contacts</RouterLink>

@@ -17,6 +17,7 @@ defineProps({
       class="flex-1 w-full md:w-1/2 h-[300px] lg:h-[350px] rounded-lg"
       :src="formatImgs(apartment?.img_link.split(','))[0]"
       :class="{ 'order-first': idx % 2 === 0, 'order-first md:order-last': idx % 2 !== 0 }"
+      :alt="`apartment view of ${apartment?.title}`"
     />
 
     <div
