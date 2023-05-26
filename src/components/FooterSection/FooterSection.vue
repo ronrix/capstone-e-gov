@@ -131,6 +131,16 @@ onMounted(() => {
         </div>
       </div>
     </WrapperContainer>
+
+    <!-- capyright -->
+    <div class="bg-primary p-1 text-left">
+      <WrapperContainer>
+        <p class="text-bggray text-xs">
+          Copyright &copy; 2023 Municipal Government of Pililla, Rizal
+          <span class="block">All rights reserved</span>
+        </p>
+      </WrapperContainer>
+    </div>
   </div>
 </template>
 <style scoped>
