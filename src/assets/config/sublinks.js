@@ -1,41 +1,41 @@
 import { fetchData } from "../../utils/axios-instance";
 
 export const government = [
-  { link: '/news', title: 'news', desc: 'Current news happening around pililla' },
+  { link: '/government/news', title: 'news', desc: 'Current news happening around pililla' },
   {
-    link: '/programs-events',
+    link: '/government/programs-events',
     title: 'programs and events',
     desc: 'Updated programs and events in pililla'
   },
-  { link: '/job-op', title: 'job opportunities', desc: 'Looking for opportunities' },
+  { link: '/government/job-op', title: 'job opportunities', desc: 'Looking for opportunities' },
   {
-    link: '/demographic-profile',
+    link: '/government/demographic-profile',
     title: 'demographic profile',
     desc: 'You can see the population growth in pillla'
   },
   {
-    link: '/current-officials',
+    link: '/government/current-officials',
     title: 'Current Officials',
     desc: 'View the current officials of the municipality'
   },
   {
-    link: '/former-officials',
+    link: '/government/former-officials',
     title: 'Former Officials',
     desc: 'View the former officials of the municipality'
   },
-  { link: '/emergency-hotlines', title: 'emergency hotlines', desc: 'Call for help/inquiries' },
+  { link: '/government/emergency-hotlines', title: 'emergency hotlines', desc: 'Call for help/inquiries' },
   {
-    link: '/full-disclosure-report',
+    link: '/government/full-disclosure-report',
     title: 'full disclosure reports',
     desc: 'Transparency for disclosing of the budget of pililla'
   },
   {
-    link: '/official-seal',
+    link: '/government/official-seal',
     title: 'Official Seal',
     desc: 'Photographs and symbolisms of component of pililla logo'
   },
   {
-    link: '/municipal-ordinances',
+    link: '/government/municipal-ordinances',
     title: 'municipal ordinances',
     desc: 'The Municipal ordinances of Pililla Rizal'
   }
@@ -43,12 +43,12 @@ export const government = [
 
 export const tourism = [
   {
-    link: '/tourist-attractions',
+    link: '/tourism/tourist-attractions',
     title: 'tourist attractions',
     desc: 'You can here all the tourists spots in pilila'
   },
   {
-    link: '/festivals',
+    link: '/tourism/festivals',
     title: 'festivals',
     desc: 'Highlights of the festivals in pililla and its history'
   }
@@ -58,12 +58,12 @@ export let services = []
 
 export const business = [
   {
-    link: '/business-establishment',
+    link: '/business/business-establishment',
     title: 'business establishments',
     desc: 'Acknowledge the busines establishments in pillla'
   },
-  { link: '/apartments', title: 'apartments', desc: 'Looking for nice apartment?' },
-  { link: '/business-permit-and-licensing-office', title: 'Business Permit and Licensing Office', desc: 'Get business permit and licensing office requirements' }
+  { link: '/business/apartments', title: 'apartments', desc: 'Looking for nice apartment?' },
+  { link: '/business/business-permit-and-licensing-office', title: 'Business Permit and Licensing Office', desc: 'Get business permit and licensing office requirements' }
 ]
 
 export const about = [
@@ -75,7 +75,7 @@ export const about = [
 
 fetchData("/service-types").then(data => {
   localStorage.setItem("services", JSON.stringify(data.service_types))
-  const mergedServices = Object.values(data.service_types).flat()
+  const mergedServices = Object.values(data.service_types).flat() // merged all array values into one
   services = mergedServices.map(a => {
     return {
       link: "/services/" + a.replace(" ", "_"),

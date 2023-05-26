@@ -26,7 +26,9 @@ defineProps({
         >
           <h3 class="font-bold text-xl md:text-3xl text-white w-3/4 capitalize">{{ n.title }}</h3>
           <RouterLink
-            :to="'/news/' + n.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()"
+            :to="
+              '/government/news/' + n.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
+            "
             type="button"
             class="bg-white px-3 py-1 font-bold text-dark capitalize rounded-md flex items-center active:-translate-y-1 mt-5"
           >

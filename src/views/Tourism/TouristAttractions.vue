@@ -114,7 +114,7 @@ onUnmounted(() => {
         <div class="group flex w-fit">
           <RouterLink
             :to="
-              '/tourist-attractions/' +
+              '/tourism/tourist-attractions/' +
               data.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
             "
             class="cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primary pr-2"

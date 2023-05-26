@@ -108,7 +108,10 @@ function hoverout() {
 
         <div class="group flex w-fit">
           <RouterLink
-            :to="'/festivals/' + fest.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()"
+            :to="
+              '/tourism/festivals/' +
+              fest.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
+            "
             class="cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primarylight pr-2"
             >Read more
           </RouterLink>

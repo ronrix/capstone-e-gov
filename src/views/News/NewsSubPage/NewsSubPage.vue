@@ -24,12 +24,15 @@ const suggestionNews = ref()
 const loadNews = () => {
   if (store.getNews()) {
     news.value = store.getOneNews(newsTitle.value)
-    suggestionNews.value = store.getNews().slice(0, 3)
+    suggestionNews.value = store
+      .getNews()
+      .filter((a) => a.id !== news.value.id)
+      .slice(0, 3)
   } else {
     store.setNews(JSON.parse(localStorage.getItem('hnd')))
     const newsData = JSON.parse(localStorage.getItem('hnd'))
     news.value = newsData.find((n) => n.title.toLowerCase() == newsTitle.value)
-    suggestionNews.value = newsData.slice(0, 3)
+    suggestionNews.value = newsData.filter((a) => a.id !== news.value.id).slice(0, 3)
   }
 
   description.value = DOMPurify.sanitize(marked.parse(news.value.description))
@@ -73,7 +76,7 @@ onUnmounted(() => {
           {{ news?.title }}
         </h3>
 
-        <img class="w-full" :src="imgURL" alt="" />
+        <img class="w-full" :src="imgURL" :alt="news?.title" />
 
         <div
           class=":text-dark dark:text-bgLightyBlue text-justify leading-loose mardown"

@@ -20,7 +20,7 @@ const data = ref()
 const description = ref('')
 const imgURL = ref()
 const suggestionData = ref()
-const typeOfData = ref(route.path.split('/')[1])
+const typeOfData = ref(route.path.split('/')[2])
 
 const store = useTourism()
 
@@ -47,22 +47,28 @@ const loadTourisms = () => {
   if (typeOfData.value === 'festivals') {
     if (storeFestival.getFestivals()) {
       data.value = storeFestival.getOneFestival(dataTitle.value)
-      suggestionData.value = storeFestival.getFestivals().slice(0, 3)
+      suggestionData.value = storeFestival
+        .getFestivals()
+        .filter((a) => a.id !== data.value.id)
+        .slice(0, 3)
     } else {
       storeFestival.setFestivals(JSON.parse(localStorage.getItem('fest')))
       const festivalData = JSON.parse(localStorage.getItem('fest'))
       data.value = festivalData.find((n) => n.title.toLowerCase() == dataTitle.value)
-      suggestionData.value = festivalData.slice(0, 3)
+      suggestionData.value = festivalData.filter((a) => a.id !== data.value.id).slice(0, 3)
     }
   } else {
     if (storeTourism.getTourism()) {
       data.value = storeTourism.getOneTourism(dataTitle.value)
-      suggestionData.value = storeTourism.getTourism().slice(0, 3)
+      suggestionData.value = storeTourism
+        .getTourism()
+        .filter((a) => a.id !== data.value.id)
+        .slice(0, 3)
     } else {
       storeTourism.setTourism(JSON.parse(localStorage.getItem('tourisms')))
       const tourismData = JSON.parse(localStorage.getItem('tourisms'))
       data.value = tourismData.find((n) => n.title.toLowerCase() == dataTitle.value.toLowerCase())
-      suggestionData.value = tourismData.slice(0, 3)
+      suggestionData.value = tourismData.filter((a) => a.id !== data.value.id).slice(0, 3)
     }
   }
   description.value = DOMPurify.sanitize(marked(data.value?.description))
@@ -98,11 +104,10 @@ onUnmounted(() => {
       >
     </div>
     <div class="flex-[3]">
-      <h1 class="text-2xl font-semibold pb-5 text-dark dark:text-bggray">Tourist Attraction</h1>
       <p class="text-dark dark:text-bggray">{{ data?.category }}</p>
-      <P class="text-3xl font-semibold md:w-1/2 text-dark dark:text-bggray capitalize">{{
-        data?.title
-      }}</P>
+      <h1 class="text-3xl font-semibold md:w-1/2 text-dark dark:text-bggray capitalize">
+        {{ data?.title }}
+      </h1>
       <h5 class="text-dark dark:text-bggray mb-3">
         Posted by <span class="font-[600]">{{ data?.authors }}</span>
       </h5>

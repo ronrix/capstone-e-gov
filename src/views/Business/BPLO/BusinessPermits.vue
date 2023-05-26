@@ -14,7 +14,7 @@ defineProps({
       {{ data.title }}
     </h4>
     <RouterLink
-      :to="'/business-permit-and-licensing-office/' + data.id"
+      :to="'/business/business-permit-and-licensing-office/' + data.id"
       class="flex items-center gap-1 bg-gray-100 hover:bg-gray-200 rounded-full ml-2 py-1 px-4 md:px-5 lg:px-6 text-xs sm:text-sm text-gray-500 hover:text-gray-600 uppercase font-bold"
     >
       view

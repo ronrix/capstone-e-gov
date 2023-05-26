@@ -12,7 +12,10 @@ const props = defineProps({
 <template>
   <RouterLink
     :to="
-      '/' + typeOfData + '/' + tourist.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
+      '/tourism/' +
+      (typeOfData === 'tourism' ? 'tourist-attractions' : 'festivals') +
+      '/' +
+      tourist.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
     "
     class="flex flex-col items-start border border-x-0 border-t-0 py-3 gap-2 group cursor-pointer border-secondary"
   >
