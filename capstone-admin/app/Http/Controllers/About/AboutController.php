@@ -9,6 +9,7 @@ use App\Models\About\OfficialSeal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Image;
+use Illuminate\Support\Facades\File;
 
 class AboutController extends Controller
 {
@@ -194,6 +195,17 @@ class AboutController extends Controller
                     mkdir($folder, 0777, true);
                 }
                 Image::make($file)->save(public_path($path)); // save the file image
+
+                # after saving the new file
+                # delete the old file
+                $old_file = $official_seal->symbol_logo_img_link;
+                if (File::exists($old_file)) {
+                    File::delete($old_file);
+                    // Optionally, you can also use the unlink function directly:
+                    // unlink($file);
+                }
+
+                # then store the path of the new image
                 $official_seal->symbol_logo_img_link = $path;
             }
 
