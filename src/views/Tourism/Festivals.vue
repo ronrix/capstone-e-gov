@@ -97,7 +97,7 @@ function hoverout() {
       :key="fest.id"
       class="flex flex-col md:flex-row justify-evenly gap-5 mt-10"
     >
-      <div class="flex-1 flex flex-col justify-evenly">
+      <div class="flex-1 flex flex-col justify-evenly order-2 sm:order-1">
         <h2 class="text-3xl font-semibold text-dark dark:text-bggray mb-3">
           {{ fest.title }}
         </h2>
@@ -120,7 +120,7 @@ function hoverout() {
           ></i>
         </div>
       </div>
-      <Carousel class="overflow-hidden flex-1">
+      <Carousel class="overflow-hidden flex-1 order-1 sm:order-2">
         <Slide
           v-for="slide in formatImgs(fest.img_link.split(','))"
           :key="slide"

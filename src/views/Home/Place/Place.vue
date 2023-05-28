@@ -16,7 +16,7 @@ const props = defineProps({
 <template>
   <div class="flex flex-col sm:flex-row p-5 items-start xl:items-center justify-evenly gap-5">
     <div
-      class="flex-1"
+      class="flex-1 order-2"
       :class="{ 'sm:order-first': idx % 2 === 0, 'sm:order-last sm:text-end': idx % 2 !== 0 }"
     >
       <h3 class="text-xl sm:text-4xl font-bold capitalize">
@@ -45,7 +45,7 @@ const props = defineProps({
       </RouterLink>
     </div>
     <div
-      class="flex-1 overflow-hidden"
+      class="flex-1 overflow-hidden order-1 sm:order-2"
       :class="{ 'sm:order-last': idx % 2 === 0, 'sm:order-first': idx % 2 !== 0 }"
     >
       <img :src="imgURL" :alt="'this is a picture of ' + place.title" class="w-full" />
