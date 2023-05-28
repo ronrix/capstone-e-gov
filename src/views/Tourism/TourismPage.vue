@@ -6,6 +6,10 @@ import { formatImgs } from '../../utils/imgFormat'
 import Loading from '../../components/Loading.vue'
 import { fetchData } from '../../utils/axios-instance'
 
+const tourism = ref()
+const loading = ref(false)
+const searchInput = ref('')
+
 function handleSearch() {
   loading.value = true
   tourism.value = JSON.parse(localStorage.getItem('tourisms')).filter((t) => {
@@ -24,15 +28,12 @@ function handleSearch() {
 const axiosTourisms = () => {
   fetchData('/tourist-attractions')
     .then((data) => {
-      tourism.value = data.tourisms
+      tourism.value = data.tourism
       localStorage.setItem('tourisms', JSON.stringify(data.tourism))
     })
     .catch((err) => console.log(err))
 }
 
-const loading = ref(false)
-const searchInput = ref('')
-const tourism = ref()
 onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
@@ -41,8 +42,6 @@ onMounted(() => {
 
   // add tab title
   document.title = 'Tourism | Pililla Rizal'
-
-  tourism.value = JSON.parse(localStorage.getItem('tourisms'))
 })
 onUnmounted(() => {
   // add tab title

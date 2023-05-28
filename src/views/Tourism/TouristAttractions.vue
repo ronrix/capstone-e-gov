@@ -95,8 +95,10 @@ onUnmounted(() => {
       </p>
     </div>
   </div>
+  <!-- display data on mobile phone, making it carousel display -->
   <carousel :tourism="tourism" class="block sm:hidden"></carousel>
   <WrapperContainer>
+    <!-- display data for bigger viewports -->
     <div
       v-for="(data, index) in tourism"
       :key="index"

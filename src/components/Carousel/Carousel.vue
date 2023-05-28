@@ -40,23 +40,25 @@ export default defineComponent({
     <Carousel :breakpoints="breakpoints" :transition="900">
       <Slide v-for="(card, index) in tourism" :key="index">
         <div
-          class="sm:flex sm:justify-evenly md:flex drop-shadow-md rounded-md bg-white h-auto cursor-grab"
+          class="sm:flex sm:justify-evenly md:flex drop-shadow-md rounded-md dark:bg-dark h-auto cursor-grab shadow"
         >
           <img
             :src="formatImgs(card.img_link.split(','))[0]"
             alt=""
             class="w-full sm:w-1/2 h-[400px] object-cover rounded-l-lg"
           />
-          <div class="flex flex-col gap-4 text-left self-start pt-10 pl-6 pr-6 text-dark">
-            <h1 class="!text-4xl !font-semibold">{{ card.title }}</h1>
+          <div
+            class="flex flex-col gap-4 text-left self-start pt-10 pl-6 pr-6 text-dark dark:text-bggray bg-bggray dark:bg-dark"
+          >
+            <h1 class="!text-4xl !font-semibold capitalize">{{ card.title }}</h1>
             <div
-              class=":text-dark dark:text-bgLightyBlue leading-loose markdown line-clamp-5"
+              class="leading-loose markdown line-clamp-5"
               :innerHTML="DOMPurify.sanitize(marked(card.description))"
             ></div>
             <div class="group flex w-fit">
               <RouterLink
                 :to="
-                  '/tourist-attractions/' +
+                  '/tourism/tourist-attractions/' +
                   card.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
                 "
                 class="cursor-pointer group-hover:underline mb-8 sm:mb-0 text-primary pr-2"
