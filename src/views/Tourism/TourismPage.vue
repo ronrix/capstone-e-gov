@@ -22,14 +22,20 @@ function handleSearch() {
       return t
     }
   })
+  // set 1s before setting the loading to false
+  setTimeout(() => {
+    loading.value = false
+  }, 1000)
 }
 
 // call the api
 const axiosTourisms = () => {
+  loading.value = true
   fetchData('/tourist-attractions')
     .then((data) => {
       tourism.value = data.tourism
       localStorage.setItem('tourisms', JSON.stringify(data.tourism))
+      loading.value = false
     })
     .catch((err) => console.log(err))
 }
@@ -65,7 +71,7 @@ onUnmounted(() => {
     <div class="flex justify-center relative">
       <img
         class="w-[600px] absolute bg-center object-cover -z-10"
-        src="../../../public/images/Tourismbg-Circle.png"
+        src="/images/Tourismbg-Circle.png"
       />
       <div class="flex pt-5">
         <img
@@ -140,7 +146,8 @@ onUnmounted(() => {
   </WrapperContainer>
   <WrapperContainer>
     <Loading v-if="loading" class="w-10 h-10 mx-auto" />
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 gap-5">
+    <p v-if="!loading && !tourism.length" class="font-bold text-xl text-center mt-5">No result!</p>
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 gap-5">
       <RouterLink
         v-for="data in tourism"
         :key="data.id"
