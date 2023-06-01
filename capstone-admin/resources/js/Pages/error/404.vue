@@ -7,7 +7,8 @@
       <span class="block text-5xl">Sorry!</span>
       We can't find the page you're looking for!
 
-      <a href="/" class="block text-xl text-[#3cbfc5] hover:underline uppercase mt-2 w-fit mx-auto">return home</a>
+      <a href="/" @click="$router.back()"
+        class="block text-xl text-[#3cbfc5] hover:underline uppercase mt-2 w-fit mx-auto">go back</a>
     </h1>
   </div>
 </template>
