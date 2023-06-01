@@ -36,14 +36,14 @@
       span {
         font-weight: 700;
       }
-      a {
+      button {
         color: #3cbfc5;
         font-size: 1em;
         text-transform: uppercase;
         width: auto;
         margin 0 auto;
       }
-      a:hover {
+      button:hover {
         text-decoration: underline;
       }
     </style>
@@ -60,8 +60,8 @@
         <span >Sorry!</span>
         We can't find the page you're looking for!
 
-        <a href="/" class="block text-xl text-[] hover:underline uppercase mt-2 w-fit mx-auto"
-          >return home</a
+        <button onclick="history.back()" class="block text-xl text-[] hover:underline uppercase mt-2 w-fit mx-auto"
+          >go back</button
         >
       </h1>
     </div>
