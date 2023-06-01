@@ -197,7 +197,7 @@ class ServicesController extends Controller
             if ($request->file("file")) {
                 // save the images
                 $file = $request->file("file");
-                $filename = str_replace(" ", "-", $request->input("filename")) . "." . strtolower($file->getClientOriginalExtension());
+                $filename = str_replace(" ", "-", $file->getClientOriginalName()) . "." . strtolower($file->getClientOriginalExtension());
                 $file->move(public_path($folder), $filename); // move the file to the $path
                 $service->application_form = $folder . $filename;
             }
