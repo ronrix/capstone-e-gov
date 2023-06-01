@@ -11,7 +11,7 @@ defineProps({
 </script>
 <template>
   <div
-    class="fixed bg-white/50 dark:bg-dark/50 bottom-0 left-0 w-full right-0 h-[70%] border rounded-tl-2xl rounded-tr-2xl duration-100 backdrop-blur-lg z-10"
+    class="fixed bg-white/50 dark:bg-dark/50 bottom-0 left-0 w-full right-0 h-[80%] border rounded-tl-2xl rounded-tr-2xl duration-100 backdrop-blur-lg z-10"
     :class="{ 'translate-y-0': isShowJobModal, 'translate-y-full': !isShowJobModal }"
   >
     <!-- close btn -->
@@ -30,7 +30,7 @@ defineProps({
           <img
             :src="formatImgs(selectedJob?.logo.split(','))[0]"
             alt="company logo"
-            class="object-cover"
+            class="object-cover rounded-full"
           />
         </div>
         <h4 class="text-2xl font-bold text-dark dark:text-bggray">

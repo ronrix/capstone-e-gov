@@ -92,7 +92,7 @@ onUnmounted(() => {
 
       <!-- card jobs -->
       <Loading v-if="loading" class="w-10 h-10 mx-auto" />
-      <div class="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+      <div v-else class="mt-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
         <JobCard v-for="job in jobs" :key="job.id" :job="job" />
       </div>
     </div>

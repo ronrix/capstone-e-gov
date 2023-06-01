@@ -1,15 +1,25 @@
 <script setup>
 import moment from 'moment'
 import JobOpModal from './JobOpModal.vue'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { formatImgs } from '../../utils/imgFormat'
+import { useRoute } from 'vue-router'
 
+const routes = useRoute()
 const isShowJobModal = ref(false)
 function handleShowJobModal() {
   isShowJobModal.value = !isShowJobModal.value
 }
 
-defineProps({
+onMounted(() => {
+  // show the jobOpModal if there is title params.
+  // that means it was redirected from search page
+  if (routes.params.title.includes(props.job.job_title.toLowerCase())) {
+    isShowJobModal.value = true
+  }
+})
+
+const props = defineProps({
   job: { type: Object, required: true }
 })
 </script>
@@ -21,7 +31,11 @@ defineProps({
     <!-- logo -->
     <section class="gap-2 pointer-events-none">
       <div class="w-[40px] h-[40px] rounded-full overflow-hidden bg-white border p-2">
-        <img :src="formatImgs(job?.logo.split(','))[0]" alt="company logo" class="object-cover" />
+        <img
+          :src="formatImgs(job?.logo.split(','))[0]"
+          alt="company logo"
+          class="object-cover rounded-full"
+        />
       </div>
       <h3 class="font-bold text-base capitalize text-dar dark:text-bggray">{{ job.job_title }}</h3>
     </section>

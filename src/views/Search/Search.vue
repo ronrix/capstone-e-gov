@@ -61,6 +61,26 @@ function searchQuickLinks(searchText) {
     .catch((err) => console.log(err))
 }
 
+// get the right route path for the link
+function getRightRoute(key) {
+  console.log(key)
+  if (key.includes('tourist-attractions') || key.includes('festivals')) {
+    return 'tourism/' + key
+  }
+  if (key.includes('programs-events') || key.includes('news') || key.includes('job')) {
+    if (key.includes('job')) {
+      return 'government/' + key + '-op'
+    }
+    return 'government/' + key
+  }
+  if (key.includes('events')) {
+    return 'business/' + key
+  }
+  if (key.includes('services')) {
+    return key
+  }
+}
+
 onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
@@ -77,7 +97,7 @@ onMounted(() => {
 
   <!-- <WrapperContainer> -->
   <HeaderSection />
-  <WrapperContainer>
+  <WrapperContainer class="h-screen">
     <form class="flex mt-10 gap-2" @submit.prevent="onSubmit">
       <input
         ref="searchInput"
@@ -98,7 +118,11 @@ onMounted(() => {
         <RouterLink
           v-for="(res, id) in search"
           :key="id"
-          :to="key + '/' + res.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()"
+          :to="
+            getRightRoute(key) +
+            '/' +
+            res.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
+          "
           class="group my-5 block"
         >
           <h4 class="text-xl font-bold text-dark dark:text-bggray group-hover:underline capitalize">

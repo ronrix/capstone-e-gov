@@ -79,13 +79,13 @@ onUpdated(() => {
           <input
             ref="searchInput"
             type="search"
-            placeholder="Search pililla"
+            placeholder="Search pililla, news, programs and events, tourism, festivals, services"
             class="rounded-md md:text-base p-3 w-full outline-none placeholder-darkgray dark:placeholder-secondary font-bold placeholder:text-xl bg-transparent dark:text-bggray"
           />
         </form>
         <!-- quick links -->
         <div class="flex flex-col items-start gap-3">
-          <h5 class="capitalize text-xs text-bggray">quick links</h5>
+          <h5 class="capitalize text-xs text-secondary">quick links</h5>
           <div
             v-for="(searchText, idx) in searchCache"
             :key="idx"

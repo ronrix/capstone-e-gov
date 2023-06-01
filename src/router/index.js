@@ -112,6 +112,11 @@ export default createRouter({
       component: () => import('../views/JobOp/JobOp.vue')
     },
     {
+      path: '/government/job-op/:title(.*)',
+      name: 'Job Opportunities',
+      component: () => import('../views/JobOp/JobOp.vue')
+    },
+    {
       path: '/government/programs-events',
       name: 'Programs and Events',
       component: () => import('../views/ProgEvents/ProgEvents.vue')
