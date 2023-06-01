@@ -113,7 +113,7 @@ export default createRouter({
     },
     {
       path: '/government/job-op/:title(.*)',
-      name: 'Job Opportunities',
+      name: 'Job Opportunities Open Job',
       component: () => import('../views/JobOp/JobOp.vue')
     },
     {
