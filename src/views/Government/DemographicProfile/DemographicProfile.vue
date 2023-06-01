@@ -93,7 +93,7 @@ onUnmounted(() => {
 </script>
 <template>
   <HeaderSection />
-  <WrapperContainer class="mt-14">
+  <WrapperContainer class="mt-14 sm:px-3">
     <div class="flex flex-col gap-3">
       <h1 class="text-base font-bold text-primarylight">Demographics</h1>
       <h3 class="text-5xl font-bold w-1/2 text-dark dark:text-bggray">

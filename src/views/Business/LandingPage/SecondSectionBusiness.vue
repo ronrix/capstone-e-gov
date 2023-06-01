@@ -12,7 +12,7 @@ const loading = ref(true)
 const axiosCall = () => {
   fetchData('/apartments')
     .then((data) => {
-      apartments.value = data.apartments
+      apartments.value = data.apartments.slice(0, 3)
       store.setApartments(data.apartments)
       localStorage.setItem('apt', JSON.stringify(apartments.value))
       loading.value = false
@@ -25,7 +25,7 @@ const axiosCall = () => {
 
 onMounted(() => {
   if (store.getApartments()) {
-    apartments.value = store.getApartments()
+    apartments.value = store.getApartments().slice(0, 3)
     loading.value = false
   } else {
     axiosCall()
@@ -57,7 +57,7 @@ onMounted(() => {
         Find more Apartments
       </h2>
       <RouterLink
-        to="/apartments"
+        to="/business/apartments"
         class="bg-primary rounded-md px-2 py-1 text-white text-sm mt-2 hover:bg-primarylight"
       >
         Find here

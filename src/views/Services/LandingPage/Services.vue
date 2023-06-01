@@ -25,10 +25,12 @@ onUnmounted(() => {
 
   <!-- header -->
   <HeaderSection />
-  <!-- hero -->
-  <HeroServices />
-  <!-- section -->
-  <Department />
+  <div class="sm:px-3">
+    <!-- hero -->
+    <HeroServices />
+    <!-- section -->
+    <Department />
+  </div>
   <!-- footer -->
   <FooterSection />
 </template>

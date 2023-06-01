@@ -30,7 +30,7 @@ onUnmounted(() => {
 <template>
   <HeaderSection />
   <!-- content -->
-  <WrapperContainer class="mt-10">
+  <WrapperContainer class="mt-14 sm:px-3">
     <h3 class="font-bold text-2xl mb-2 text-dark dark:text-bggray">Emergency Hotlines</h3>
     <p class="mb-5 text-secondary dark:text-bggray">
       To use the emergency hotlines, simply dial the appropriate number and provide the necessary

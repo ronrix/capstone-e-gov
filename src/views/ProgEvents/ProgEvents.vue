@@ -46,12 +46,14 @@ onUnmounted(() => {
 <template>
   <HeaderSection />
 
-  <div class="">
+  <div>
     <HeroEvents />
-    <WrapperContainer class="mt-5">
+    <WrapperContainer class="mt-5 sm:px-3">
       <h4 class="text-sm font-bold mb-3 text-dark dark:text-bggray">All programs and events</h4>
       <div v-if="isError && !loading">
-        <h4 class="font-bold text-3xl text-center text-dark dark:text-bggray">{{ isError.msg }}</h4>
+        <h4 class="font-bold text-3xl text-center text-dark dark:text-bggray">
+          {{ isError.msg }}
+        </h4>
         <p class="text-lg text-center text-dark dark:text-bggray">Error has occured.</p>
       </div>
       <Loading v-if="loading" class="w-10 h-10 mx-auto" />

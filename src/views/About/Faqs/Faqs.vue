@@ -45,7 +45,7 @@ onUnmounted(() => {
   </head>
 
   <HeaderSection />
-  <WrapperContainer>
+  <WrapperContainer class="sm:px-3">
     <div class="w-full flex flex-col gap-5 items-center mt-10">
       <p class="text-sm md:text-normal text-primary dark:text-primarylight font-bold uppercase">
         faq<span class="lowercase">s</span>

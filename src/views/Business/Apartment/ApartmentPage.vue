@@ -79,7 +79,7 @@ onUnmounted(() => {
     :close-modal="showDisplayModal"
     :selected-data="selectedData"
   />
-  <WrapperContainer>
+  <WrapperContainer class="sm:px-3">
     <!-- filter by -->
     <Filter :barangay-filter="barangayFilter" :barangays="barangays" />
     <h4 v-if="!apartments.length && !loading" class="text-3xl text-center font-bold mt-3">

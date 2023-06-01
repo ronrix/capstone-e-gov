@@ -32,7 +32,7 @@ onUnmounted(() => {
 </script>
 <template>
   <HeaderSection />
-  <WrapperContainer>
+  <WrapperContainer class="sm:px-3">
     <div class="flex items-center">
       <h1 class="text-2xl md:text-3xl py-10 font-bold dark:text-bggray">Municipal Ordinances</h1>
     </div>

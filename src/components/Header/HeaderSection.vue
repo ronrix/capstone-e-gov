@@ -106,7 +106,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <nav class="sticky top-0 z-[500] bg-white dark:bg-dark duration-200">
+  <nav class="sticky top-0 z-[500] bg-white dark:bg-dark duration-200 px-2">
     <!-- mobile nav view -->
     <div class="flex sm:hidden items-center justify-end gap-3">
       <!-- theme emode  -->

@@ -85,8 +85,8 @@ function hoverout() {
       >Festival</span
     >
   </p>
-  <WrapperContainer class="mt-20">
-    <h5 class="font-bold text-4xl text-dark dark:text-bggray">
+  <WrapperContainer class="mt-20 md:px-3">
+    <h5 class="font-bold text-4xl text-dark dark:text-bggray px-3">
       Festivals that we celebrate in Pililla
     </h5>
     <div class="w-full h-[2px] bg-dark dark:bg-secondary mt-5"></div>
@@ -95,7 +95,7 @@ function hoverout() {
       v-for="fest in festivals"
       v-else
       :key="fest.id"
-      class="flex flex-col md:flex-row justify-evenly gap-5 mt-10"
+      class="flex flex-col md:flex-row justify-evenly gap-5 mt-10 sm:px-3"
     >
       <div class="flex-1 flex flex-col justify-evenly order-2 sm:order-1">
         <h2 class="text-3xl font-semibold text-dark dark:text-bggray mb-3">

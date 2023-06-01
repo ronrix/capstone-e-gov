@@ -14,7 +14,7 @@ function handleShowJobModal() {
 onMounted(() => {
   // show the jobOpModal if there is title params.
   // that means it was redirected from search page
-  if (routes.params.title.includes(props.job.job_title.toLowerCase())) {
+  if (routes.params.title && routes.params.title.includes(props.job.job_title.toLowerCase())) {
     isShowJobModal.value = true
   }
 })

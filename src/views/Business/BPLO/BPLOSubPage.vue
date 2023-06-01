@@ -29,7 +29,7 @@ onMounted(() => {
   </head>
 
   <HeaderSection />
-  <WrapperContainer class="mt-10 p-5">
+  <WrapperContainer class="mt-14 sm:px-3">
     <h4 v-if="!bplo" class="text-3xl text-center font-bold text-dark dark:text-bggray">
       We can't find the BPLO you are requesting
     </h4>

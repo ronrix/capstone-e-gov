@@ -44,8 +44,8 @@ onUnmounted(() => {
   <HeaderSection></HeaderSection>
 
   <div class="mt-5 mb-5 dark:bg-dark bg-bggray">
-    <WrapperContainer>
-      <h1 class="text-5xl pt-4 pb-3 border-b-2 dark:text-white">Annual Budget</h1>
+    <WrapperContainer class="sm:px-3">
+      <h1 class="text-4xl pt-4 pb-3 border-b-2 dark:text-white">Disclosure Reports</h1>
       <div class="flex flex-col gap-2 pb-5 pt-4 w-fit dark:text-white">
         <a
           v-for="reports in fullDisclosures"
@@ -60,9 +60,8 @@ onUnmounted(() => {
   </div>
 
   <WrapperContainer class="p-5">
-    <div class="flex items-center mb-8">
-      <h2 class="text-5xl dark:text-white">Emergency Hotlines</h2>
-      <div class="ml-2 border-t-[2px] flex-1 w-full"></div>
+    <div class="flex items-center mb-3">
+      <h2 class="text-3xl dark:text-white">Emergency Hotlines</h2>
     </div>
 
     <HotlinesTable :hotlines="hotlines" />

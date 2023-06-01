@@ -50,7 +50,7 @@ onUnmounted(() => {
   <HeaderSection />
 
   <WrapperContainer>
-    <div class="mt-10 flex flex-col md:flex-row gap-5">
+    <div class="mt-10 flex flex-col md:flex-row gap-5 sm:px-3">
       <!-- 404 not found -->
       <div v-if="is404" class="flex-1 text-center">
         <h4 class="font-bold text-5xl capitalize">404 not found</h4>

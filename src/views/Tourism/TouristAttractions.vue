@@ -102,7 +102,7 @@ onUnmounted(() => {
     <div
       v-for="(data, index) in tourism"
       :key="index"
-      class="data hidden sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5 overflow-hidden mt-32"
+      class="data hidden sm:flex flex-col sm:flex-row sm:pb-10 justify-between drop-shadow-md gap-5 overflow-hidden mt-32 px-3"
       :class="{ reverse: index % 2 !== 0 }"
     >
       <div class="-order-first sm:-order-last">

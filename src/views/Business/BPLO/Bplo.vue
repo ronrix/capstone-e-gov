@@ -61,7 +61,7 @@ onUnmounted(() => {
   </head>
 
   <HeaderSection class="relative" />
-  <WrapperContainer>
+  <WrapperContainer class="sm:px-3">
     <div class="w-full flex flex-col gap-4 items-center mt-24">
       <div class="relative mt-10">
         <h1 class="text-dark dark:text-white font-bold text-4xl md:text-5xl">

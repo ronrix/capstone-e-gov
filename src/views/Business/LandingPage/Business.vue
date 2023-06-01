@@ -24,7 +24,7 @@ onUnmounted(() => {
     <title>Businesses | Pililla Rizal</title>
   </head>
   <HeaderSection />
-  <WrapperContainer>
+  <WrapperContainer class="sm:px-3">
     <!-- hero section -->
     <HeroBusinessVue />
     <!-- first section -->

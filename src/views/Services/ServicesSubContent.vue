@@ -39,7 +39,7 @@ onUnmounted(() => {
   <HeaderSection />
   <!-- hero section -->
 
-  <WrapperContainer>
+  <WrapperContainer class="sm:px-3">
     <!-- <HeroScholar /> -->
     <Hero :title="services?.title" :description="services?.description" />
 

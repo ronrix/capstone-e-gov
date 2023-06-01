@@ -87,7 +87,7 @@ onUnmounted(() => {
     </form>
 
     <!-- lists of jobs -->
-    <div class="mt-10">
+    <div class="mt-10 sm:px-3">
       <h5 class="text-sm font-bold text-dark dark:text-secondary">All jobs</h5>
 
       <!-- card jobs -->
