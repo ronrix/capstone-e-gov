@@ -1,3 +1,4 @@
+<script setup></script>
 <template>
   <div class="relative">
     <object
@@ -14,11 +15,11 @@
       We can't find the page you're looking for!
 
       <a
-        href="/"
         class="block text-xl text-[#3cbfc5] hover:underline uppercase mt-2 w-fit mx-auto"
         @click="$router.back()"
-        >go back</a
       >
+        go back
+      </a>
     </h1>
   </div>
 </template>

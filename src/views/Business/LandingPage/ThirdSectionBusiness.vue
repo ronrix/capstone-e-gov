@@ -9,7 +9,7 @@
         Get to know the process and requirements and fill up the application form
       </h5>
       <RouterLink
-        to="/business-permit-and-licensing-office"
+        to="/business/business-permit-and-licensing-office"
         class="bg-primary hover:bg-primarylight rounded-md text-white mt-5 px-3"
       >
         Go here
