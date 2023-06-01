@@ -6,7 +6,7 @@ import { formatImgs } from '../../utils/imgFormat'
 import Loading from '../../components/Loading.vue'
 import { fetchData } from '../../utils/axios-instance'
 
-const tourism = ref()
+const tourism = ref([])
 const loading = ref(false)
 const searchInput = ref('')
 
@@ -152,7 +152,7 @@ onUnmounted(() => {
         v-for="data in tourism"
         :key="data.id"
         :to="
-          '/tourist-attractions/' +
+          '/tourism/tourist-attractions/' +
           data.title.replace(/\s+/g, '_').replace(/\n/g, ' ').toLowerCase()
         "
         class="flex flex-col border hover:drop-shadow-lg bg-white dark:bg-dark"
