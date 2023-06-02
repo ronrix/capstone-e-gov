@@ -59,27 +59,19 @@ onMounted(() => {
     <div
       class="flex items-center bg-primary w-full h-[80px] md:h-[95px] lg:h-[100px] justify-evenly"
     >
-      <div class="flex flex-col items-center gap-1">
+      <a href="/business/apartments" class="flex flex-col items-center gap-1">
         <div class="text-xl md:text-2xl text-white dark:tex-dark font-light">
           {{ apartments?.length }}
         </div>
-        <a
-          href="#"
-          class="text-base md:text-lg text-white dark:tex-dark font-bold hover:text-gray-200"
-          >Apartment</a
-        >
-      </div>
+        <p class="text-base md:text-lg text-white dark:tex-dark hover:text-gray-200">Apartment</p>
+      </a>
       <div class="border border-white h-[100px]"></div>
-      <div class="flex flex-col items-center gap-1">
+      <a href="/business/business-establishment" class="flex flex-col items-center gap-1">
         <div class="text-xl md:text-2xl text-white dark:tex-dark font-light">
           {{ business?.length }}
         </div>
-        <a
-          href="#"
-          class="text-base md:text-lg text-white dark:tex-dark font-bold hover:text-gray-200"
-          >Businesses</a
-        >
-      </div>
+        <p class="text-base md:text-lg text-white dark:tex-dark hover:text-gray-200">Businesses</p>
+      </a>
     </div>
   </div>
 </template>

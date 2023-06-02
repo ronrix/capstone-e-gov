@@ -170,8 +170,8 @@ onMounted(() => {
 
       <div
         id="government"
-        active-class="!text-primarylight"
         class="capitalize text-dark dark:text-bggray dark:hover:text-white hover:text-primary text-xs md:text-sm"
+        :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'government' }"
         @mouseover="setSubLinkOnHover"
       >
         government
@@ -182,6 +182,7 @@ onMounted(() => {
         active-class="!text-primarylight"
         to="/tourism"
         class="capitalize hover:text-primary text-dark dark:text-bggray dark:hover:text-white text-xs md:text-sm"
+        :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'tourism' }"
         @mouseover="setSubLinkOnHover"
       >
         tourism
@@ -193,6 +194,7 @@ onMounted(() => {
         active-class="!text-primarylight"
         to="/business"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
+        :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'business' }"
         @mouseover="setSubLinkOnHover"
       >
         business
@@ -203,6 +205,7 @@ onMounted(() => {
         active-class="!text-primarylight"
         to="/services"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
+        :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'services' }"
         @mouseover="setSubLinkOnHover"
       >
         services
@@ -213,6 +216,7 @@ onMounted(() => {
         id="about"
         active-class="!text-primarylight"
         class="capitalize hover:text-primary dark:text-bggray dark:hover:text-white text-xs md:text-sm"
+        :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'about' }"
         @mouseover="setSubLinkOnHover"
       >
         about

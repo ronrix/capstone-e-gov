@@ -65,12 +65,14 @@ onUpdated(() => {
     <div class="pt-8 px-5 flex flex-col gap-3">
       <RouterLink
         to="/"
+        active-class="!text-primarylight"
         class="text-3xl text-dark dark:text-bggray dark:hover:text-white hover:text-black"
         >Home
       </RouterLink>
       <div
         id="government"
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
+        :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'government' }"
         @click="setSubLinkOnClick"
       >
         Government
@@ -81,7 +83,12 @@ onUpdated(() => {
       <div
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
       >
-        <RouterLink to="/business">Business</RouterLink>
+        <RouterLink
+          active-class="!text-primarylight"
+          to="/business"
+          :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'business' }"
+          >Business</RouterLink
+        >
         <i
           id="business"
           class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300"
@@ -91,7 +98,13 @@ onUpdated(() => {
       <div
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
       >
-        <RouterLink to="/tourism"> Tourism </RouterLink>
+        <RouterLink
+          active-class="!text-primarylight"
+          to="/tourism"
+          :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'tourism' }"
+        >
+          Tourism
+        </RouterLink>
         <i
           id="tourism"
           class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300"
@@ -101,7 +114,13 @@ onUpdated(() => {
       <div
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
       >
-        <RouterLink to="/services"> Services </RouterLink>
+        <RouterLink
+          active-class="!text-primarylight"
+          to="/services"
+          :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'services' }"
+        >
+          Services
+        </RouterLink>
         <i
           id="services"
           class="uil uil-angle-right opacity-0 group-hover:opacity-100 duration-300"
@@ -111,6 +130,7 @@ onUpdated(() => {
       <div
         id="about"
         class="text-3xl flex justify-between items-center group cursor-pointer text-dark dark:text-bggray dark:hover:text-white hover:text-black"
+        :class="{ '!text-primarylight': $route.path.split('/')[1].toLowerCase() === 'about' }"
         @click="setSubLinkOnClick"
       >
         About
