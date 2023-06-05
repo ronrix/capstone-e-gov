@@ -1,7 +1,7 @@
 import { fetchData } from "../../utils/axios-instance";
 
 export const government = [
-  { link: '/government/news', title: 'news', desc: 'Current news happening around pililla' },
+  { link: '/government/news', title: 'news | announcements', desc: 'Current news and announcements happening around pililla' },
   {
     link: '/government/programs-events',
     title: 'programs and events',
