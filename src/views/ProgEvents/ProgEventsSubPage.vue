@@ -1,6 +1,7 @@
 <script setup>
 import FooterSection from '../../components/FooterSection/FooterSection.vue'
 import HeaderSection from '../../components/Header/HeaderSection.vue'
+import BackBtn from '../../components/BackBtn.vue'
 
 import { marked } from 'marked'
 import DOMPurify from 'dompurify'
@@ -50,7 +51,8 @@ onUnmounted(() => {
   <HeaderSection />
 
   <WrapperContainer>
-    <div class="mt-10 flex flex-col md:flex-row gap-5 sm:px-3">
+    <BackBtn />
+    <div class="mt-5 flex flex-col md:flex-row gap-5 sm:px-3">
       <!-- 404 not found -->
       <div v-if="is404" class="flex-1 text-center">
         <h4 class="font-bold text-5xl capitalize">404 not found</h4>

@@ -11,6 +11,7 @@ import { useTourism } from '../../../stores/tourisms-store'
 import TourismSuggestionCard from '../TourismSuggestions/TourismSuggestionCard.vue'
 import { useFestivalStore } from '../../../stores/festival-store'
 import { fetchData } from '../../../utils/axios-instance'
+import BackBtn from '../../../components/BackBtn.vue'
 
 const storeTourism = useTourism()
 const storeFestival = useFestivalStore()
@@ -94,38 +95,41 @@ onUnmounted(() => {
 </script>
 <template>
   <HeaderSection />
-  <WrapperContainer class="flex flex-col md:flex-row gap-5 mt-10 sm:px-3">
-    <!-- 404 not found -->
-    <div v-if="is404" class="flex-1 text-center">
-      <h4 class="font-bold text-5xl capitalize">404 not found</h4>
-      <h5 class="text-2xl mb-3">News can't be found</h5>
-      <RouterLink to="/news" class="text-bggray bg-primarylight px-3 py-1 rounded-md"
-        >Go back</RouterLink
-      >
-    </div>
-    <div class="flex-[3]">
-      <p class="text-dark dark:text-bggray">{{ data?.category }}</p>
-      <h1 class="text-3xl font-semibold md:w-1/2 text-dark dark:text-bggray capitalize">
-        {{ data?.title }}
-      </h1>
-      <h5 class="text-dark dark:text-bggray mb-3">
-        Posted by <span class="font-[600]">{{ data?.authors }}</span>
-      </h5>
-      <img :src="imgURL" :alt="'this is an image of' + data?.title" class="w-full" />
-      <div
-        class=":text-dark dark:text-bgLightyBlue text-justify leading-loose markdown"
-        :innerHTML="description"
-      ></div>
-    </div>
-    <!-- suggestions -->
-    <div class="flex-1">
-      <h4 class="font-bold text-sm text-dark dark:text-bggray mb-5">Suggestions</h4>
-      <TourismSuggestionCard
-        v-for="a in suggestionData"
-        :key="a.id"
-        :tourist="a"
-        :type-of-data="typeOfData"
-      />
+  <WrapperContainer>
+    <BackBtn />
+    <div class="flex flex-col md:flex-row gap-5 mt-10 sm:px-3">
+      <!-- 404 not found -->
+      <div v-if="is404" class="flex-1 text-center">
+        <h4 class="font-bold text-5xl capitalize">404 not found</h4>
+        <h5 class="text-2xl mb-3">News can't be found</h5>
+        <RouterLink to="/news" class="text-bggray bg-primarylight px-3 py-1 rounded-md"
+          >Go back</RouterLink
+        >
+      </div>
+      <div class="flex-[3]">
+        <p class="text-dark dark:text-bggray">{{ data?.category }}</p>
+        <h1 class="text-3xl font-semibold md:w-1/2 text-dark dark:text-bggray capitalize">
+          {{ data?.title }}
+        </h1>
+        <h5 class="text-dark dark:text-bggray mb-3">
+          Posted by <span class="font-[600]">{{ data?.authors }}</span>
+        </h5>
+        <img :src="imgURL" :alt="'this is an image of' + data?.title" class="w-full" />
+        <div
+          class=":text-dark dark:text-bgLightyBlue text-justify leading-loose markdown"
+          :innerHTML="description"
+        ></div>
+      </div>
+      <!-- suggestions -->
+      <div class="flex-1">
+        <h4 class="font-bold text-sm text-dark dark:text-bggray mb-5">Suggestions</h4>
+        <TourismSuggestionCard
+          v-for="a in suggestionData"
+          :key="a.id"
+          :tourist="a"
+          :type-of-data="typeOfData"
+        />
+      </div>
     </div>
   </WrapperContainer>
   <FooterSection />
