@@ -73,3 +73,9 @@ Route::post("/event", [RequestNotificationController::class, 'eventHandler'])->m
 
 // search query
 Route::post("/search", [SearchQueryController::class, 'search'])->middleware("cors");
+
+// serve files
+Route::get('/uploads/files/ordinances/{filename}', function ($filename) {
+    $path = public_path('uploads/files/ordinances/' . $filename);
+    return response()->file($path);
+})->where('filename', '.*\.pdf');

@@ -61,6 +61,12 @@ Route::get("/full-disclosure-reports", [FilesController::class, "getDisclosureRe
 Route::get("/application-forms", [FilesController::class, "getApplicationForms"])->middleware("cors");
 Route::get("/file/download/{file}", [FilesController::class, "download"])->middleware("cors");
 
+// serve files
+Route::get('/uploads/files/ordinances/{filename}', function ($filename) {
+    $path = public_path('uploads/files/ordinances/' . $filename);
+    return response()->file($path);
+})->where('filename', '.*\.pdf');
+
 // government
 Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', [LoginController::class, "dashboard"]);

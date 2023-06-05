@@ -11,6 +11,7 @@ import { router } from './router';
 // inertia components
 import { Head } from "@inertiajs/inertia-vue3";
 
+try {
 createInertiaApp({
     resolve: name => {
         const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
@@ -30,3 +31,6 @@ createInertiaApp({
     },
     title: title => `${title} | Pililla`,
 });
+} catch(err) {
+    console.log(err)
+}
