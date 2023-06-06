@@ -17,6 +17,16 @@ const isShowNewsAnnouncement = ref(false)
 const store = useTourism()
 const places = ref()
 
+// call api to count the new visitor
+const fetchCount = () => {
+  fetchData('/visits')
+    .then((data) => {
+      console.log(data.msg)
+    })
+    .catch((err) => console.log(err))
+}
+
+// fetch tourism data
 const axiosTourisms = () => {
   fetchData('/tourist-attractions')
     .then((data) => {
@@ -31,6 +41,7 @@ onMounted(() => {
   // scroll on top when this component rendered
   window.scrollTo(0, 0)
 
+  fetchCount()
   axiosTourisms()
 
   const map = L.map('map').setView([14.478705773206618, 121.3150200059879], 13)
@@ -52,7 +63,6 @@ onMounted(() => {
 function showNewsAnnouncement(e) {
   e.target.firstElementChild.classList.toggle('rotate-180')
   isShowNewsAnnouncement.value = !isShowNewsAnnouncement.value
-  console.log('here..')
 }
 </script>
 
