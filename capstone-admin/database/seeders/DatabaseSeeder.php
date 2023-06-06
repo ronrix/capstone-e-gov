@@ -20,6 +20,7 @@ use App\Models\Services\Service;
 use App\Models\Tourism\Festival;
 use App\Models\Tourism\Tourism;
 use App\Models\User;
+use App\Models\VisitorCounter;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -656,5 +657,8 @@ These are just some of the tourist destinations that Pililla has to offer. Visit
 If yuou want to know more about tourism in pililla go [here](http://localhost:3000/tourisms)
             "
         ]);
+
+        // visitors counter
+        VisitorCounter::factory(1)->create();
     }
 }

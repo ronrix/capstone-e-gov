@@ -17,7 +17,7 @@ use App\Http\Controllers\RequestNotificationController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\VisitorCounterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +70,9 @@ Route::get('/uploads/files/ordinances/{filename}', function ($filename) {
 // government
 Route::middleware(["auth"])->group(function () {
     Route::get('/dashboard', [LoginController::class, "dashboard"]);
+
+    // get visitors count
+    Route::get('/visitors-count', [VisitorCounterController::class, 'getVisitors']);
 
     # notifications
     Route::get("/notifications", [RequestNotificationController::class, 'getNotifications']); # get all the notifications

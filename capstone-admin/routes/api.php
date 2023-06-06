@@ -16,6 +16,7 @@ use App\Http\Controllers\SearchQueryController;
 use App\Http\Controllers\Services\ServicesController;
 use App\Http\Controllers\Tourism\FestivalsController;
 use App\Http\Controllers\Tourism\TourismController;
+use App\Http\Controllers\VisitorCounterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,3 +80,6 @@ Route::get('/uploads/files/ordinances/{filename}', function ($filename) {
     $path = public_path('uploads/files/ordinances/' . $filename);
     return response()->file($path);
 })->where('filename', '.*\.pdf');
+
+// visitor counter api
+Route::get('/visits', [VisitorCounterController::class, 'incrementVisitors'])->middleware("cors");
