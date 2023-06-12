@@ -15,33 +15,33 @@ class VisitorCounterController extends Controller
     */
     public function incrementVisitors(Request $request)
     {
-        $visitor_id = $request->cookie('visitor_id');
+        // $visitor_id = $request->cookie('visitor_id');
         try {
-            if (!$visitor_id) {
-                // Generate a new visitor ID
-                $visitor_id = uniqid();
+            // if (!$visitor_id) {
+            // Generate a new visitor ID
+            $visitor_id = uniqid();
 
 
-                // Create a new visitor record, if row does not exists
-                $visitor = VisitorCounter::findOrCreate(1);
-                $visitor->counter = $visitor->counter ? $visitor->counter + 1 : 1;
-                $ids = json_decode($visitor->visitors_id);
+            // Create a new visitor record, if row does not exists
+            $visitor = VisitorCounter::findOrCreate(1);
+            $visitor->counter = $visitor->counter ? $visitor->counter + 1 : 1;
+            $ids = json_decode($visitor->visitors_id);
 
-                # check if visitors_id has data
-                if ($ids) { # append the new visitor
-                    array_push($ids, $visitor_id);
-                    $visitor->visitors_id = json_encode($ids);
-                    $visitor->total_visitors = count($ids);
-                } else { # add visitor for the first time
-                    $visitor->visitors_id = json_encode([$visitor_id]);
-                    $visitor->total_visitors = 1;
-                }
+            # check if visitors_id has data
+            // if ($ids) { # append the new visitor
+            array_push($ids, $visitor_id);
+            $visitor->visitors_id = json_encode($ids);
+            $visitor->total_visitors = count($ids);
+            // } else { # add visitor for the first time
+            //     $visitor->visitors_id = json_encode([$visitor_id]);
+            //     $visitor->total_visitors = 1;
+            // }
 
-                $visitor->save();
+            $visitor->save();
 
-                // Set the visitor ID as a cookie to track the visitor
-                return response()->json(['visitor_id' => $visitor_id, 'msg' => 'SUCCESS'], 200)->cookie('visitor_id', $visitor_id);
-            }
+            // Set the visitor ID as a cookie to track the visitor
+            // return response()->json(['visitor_id' => $visitor_id, 'msg' => 'SUCCESS'], 200)->cookie('visitor_id', $visitor_id);
+            // }
 
             // Visitor ID exists in the cookie, no need to increment the count
             return response()->json(['visitor_id' => $visitor_id, 'msg' => 'SUCCESS'], 200);

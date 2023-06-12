@@ -4,13 +4,8 @@
   <Notifcation :msg="resMsg" class="z-[1000]" />
 
   <!-- this is the display requests modal where the form requests is going to display -->
-  <DisplayRequestModal
-    v-if="isDisplayRequestModal && selectedData"
-    :close-modal="closeDisplayRequestModal"
-    :selected-data="selectedData"
-    :decline-request="declineRequest"
-    :accept-request="acceptRequest"
-  />
+  <DisplayRequestModal v-if="isDisplayRequestModal && selectedData" :close-modal="closeDisplayRequestModal"
+    :selected-data="selectedData" :decline-request="declineRequest" :accept-request="acceptRequest" />
 
   <div class="container mx-auto flex mt-2 flex-col md:flex-row">
     <!-- left -->
@@ -22,9 +17,7 @@
         </h5>
       </div>
 
-      <div
-        class="flex-1 flex flex-col justify-evenly bg-gradient-to-r from-sky-500 to-indigo-500 text-white px-3"
-      >
+      <div class="flex-1 flex flex-col justify-evenly bg-gradient-to-r from-sky-500 to-indigo-500 text-white px-3">
         <p class="text-slate-100 tracking-wide text-xs uppercase">
           qoute of the day
         </p>
@@ -38,70 +31,43 @@
       <div class="p-3 bg-gray-900 text-white">
         <h5 class="text-sm font-[500] mb-3">Shortcut navigations</h5>
         <div class="flex flex-wrap">
-          <RouterLink
-            to="/government/news"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >News</RouterLink
-          >
-          <RouterLink
-            to="/government/programs-and-events"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Programs & Events
+          <RouterLink to="/government/news"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">News</RouterLink>
+          <RouterLink to="/government/programs-and-events"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Programs & Events
           </RouterLink>
-          <RouterLink
-            to="/government/job-postings"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Job Opportunities
+          <RouterLink to="/government/job-postings"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Job Opportunities
           </RouterLink>
-          <RouterLink
-            to="/government/full-disclosure-reports"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Full disclosure reports
+          <RouterLink to="/government/full-disclosure-reports"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Full disclosure reports
           </RouterLink>
-          <RouterLink
-            to="/government/hotlines"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Hotlines
+          <RouterLink to="/government/hotlines"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Hotlines
           </RouterLink>
-          <RouterLink
-            to="/government/demographic-profile"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Demographic profile
+          <RouterLink to="/government/demographic-profile"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Demographic profile
           </RouterLink>
-          <RouterLink
-            to="/tourism/tourist-spots"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Tourist Attractions
+          <RouterLink to="/tourism/tourist-spots"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Tourist Attractions
           </RouterLink>
-          <RouterLink
-            to="/tourism/festivals"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Festivals
+          <RouterLink to="/tourism/festivals"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Festivals
           </RouterLink>
-          <RouterLink
-            to="/government/business-establishments"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Business establishments
+          <RouterLink to="/government/business-establishments"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Business establishments
           </RouterLink>
-          <RouterLink
-            to="/businesses/apartments"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Apartments
+          <RouterLink to="/businesses/apartments"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Apartments
           </RouterLink>
-          <RouterLink
-            to="/businesses/business-permit-license-office"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >BPLO
+          <RouterLink to="/businesses/business-permit-license-office"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">BPLO
           </RouterLink>
-          <RouterLink
-            to="/government/official-seal"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Official seal
+          <RouterLink to="/government/official-seal"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Official seal
           </RouterLink>
-          <RouterLink
-            to="/about/contacts"
-            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800"
-            >Contacts
+          <RouterLink to="/about/contacts"
+            class="border border-slate-100 px-3 py-1 hover:bg-slate-100 hover:text-gray-800">Contacts
           </RouterLink>
         </div>
       </div>
@@ -112,27 +78,24 @@
       <!-- metrics. total counts of visitors -->
       <div class="flex items-start gap-2 mb-5">
         <div
-          class="flex-1 border rounded-md p-5 bg-gradient-to-tr from-purple-800 via-violet-900 to-purple-800 text-white"
-        >
+          class="flex-1 border rounded-md p-5 bg-gradient-to-tr from-purple-800 via-violet-900 to-purple-800 text-white">
           <h6 class="mb-2 text-sm">
             <i class="fa-solid fa-users"></i>
             For Today
           </h6>
           <h6 class="text-5xl font-bold">
             {{ nFormatter(visitorCount?.counter) ?? 0 }}
-            <span class="text-base font-thin">visitors</span>
+            <span class="text-base font-thin">views</span>
           </h6>
         </div>
-        <div
-          class="flex-1 border rounded-md p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white"
-        >
+        <div class="flex-1 border rounded-md p-5 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-white">
           <h6 class="mb-2 text-sm">
             <i class="fa-solid fa-users"></i>
             General Total
           </h6>
           <h6 class="text-5xl font-bold">
             {{ nFormatter(visitorCount?.total_visitors) ?? 0 }}
-            <span class="text-base font-thin">visitors</span>
+            <span class="text-base font-thin">views</span>
           </h6>
         </div>
       </div>
@@ -144,16 +107,9 @@
         <i class="uil uil-folder-times"></i>
         No requests
       </h5>
-      <div
-        v-else
-        class="overflow-y-auto max-h-[500px] h-[500px] flex flex-col gap-3 scrollbar"
-      >
-        <NotificationCard
-          :show-display-request-modal="showDisplayRequestModal"
-          v-for="notif in notifications"
-          :key="notif.id"
-          :notif="notif"
-        />
+      <div v-else class="overflow-y-auto max-h-[500px] h-[500px] flex flex-col gap-3 scrollbar">
+        <NotificationCard :show-display-request-modal="showDisplayRequestModal" v-for="notif in notifications"
+          :key="notif.id" :notif="notif" />
       </div>
     </section>
   </div>
