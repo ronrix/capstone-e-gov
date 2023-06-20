@@ -174,14 +174,18 @@ function onDecline(id) {
                 ? selectedData?.data?.companyName
                 : JSON.parse(selectedData?.data)?.companyName;
             if (selectedData.type_of_request === "business") {
-                sendEmail(businessDeclinedMsg, ompanyName);
+                sendEmail(businessDeclinedMsg, companyName);
             } else {
                 sendEmail(jobDeclinedMsg, companyName);
             }
             isDeclineSubmit.value = false;
             closeModal();
         })
-        .catch(() => (isDeclineSubmit.value = false));
+        .catch((err) => {
+            console.log(err)
+            isDeclineSubmit.value = false
+            closeModal();
+        });
 }
 
 // accept post request fetching
@@ -207,7 +211,12 @@ function onAccept() {
             isAcceptSubmit.value = false;
             closeModal();
         })
-        .catch(() => (isDeclineSubmit.value = false));
+        .catch((err) => {
+            console.log(err)
+            isDeclineSubmit.value = false
+            closeModal();
+        });
+
 }
 
 function toggleImgPreview(img) {

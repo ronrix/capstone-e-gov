@@ -135,7 +135,7 @@ const visitorCount = ref();
 // declining the post request of the public
 // will delete the notification from the table
 async function declineRequest(id) {
-  await axios
+  return await axios
     .get(be_url + "/post-request/decline/" + id)
     .then(({ data }) => {
       // set the response msg
@@ -145,7 +145,7 @@ async function declineRequest(id) {
         resMsg.value = null;
       }, 3000);
 
-      notifications.value = data.notifications.sort(
+      notifications.value = data.notifications?.sort(
         (a, b) => a.created_at < b.created_at
       );
       store.removeOne(id);
@@ -175,7 +175,7 @@ async function acceptRequest(id) {
         resMsg.value = null;
       }, 3000);
 
-      notifications.value = data.notifications.sort(
+      notifications.value = data.notifications?.sort(
         (a, b) => a.created_at < b.created_at
       );
       store.removeOne(id);
